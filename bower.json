@@ -1,0 +1,23 @@
+{
+  "name": "electron-lexicon",
+  "main": "index.js",
+  "version": "0.0.0",
+  "authors": [
+    "Robert-Frampton <ROBERT.FRAMPTON@LIFERAY.COM>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.6",
+    "babel": "*",
+    "sass.js": "~0.9.4",
+    "bourbon": "~4.2.6"
+  }
+}
