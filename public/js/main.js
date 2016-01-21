@@ -2,10 +2,41 @@
 
 var _ = require('lodash');
 var fs = require('fs');
+var he = require('he');
 var path = require('path');
 
 var componentScraper = require('../../lib/component-scraper');
 var sass = require('../../lib/sass');
+var theme = require('../../lib/theme');
+
+document.addEventListener('dragover', function(event){
+	event.preventDefault();
+	//console.log(event);
+	return false;
+}, false);
+
+var Header = React.createClass({
+	render: function() {
+		var themePath = this.props.theme;
+
+		if (themePath) {
+			themePath = path.basename(themePath);
+		}
+
+		return (
+			<header>
+				<h1>Lexicon Customizer</h1>
+
+				<div className="header-actions">
+					<span>Current theme: {themePath}</span>
+
+					<button className="btn btn-default" onClick={this.props.onReset}>Reset</button>
+					<button className="btn btn-default" onClick={this.props.onClearTheme}>Clear Theme</button>
+				</div>
+			</header>
+		);
+	}
+});
 
 var ComponentMenu = React.createClass({
 	render: function() {
@@ -62,6 +93,20 @@ var PreviewBox = React.createClass({
 			htmlContent = fs.readFileSync(path.join(process.cwd(), 'node_modules/lexicon/src/content', componentHTMLFileName), {
 				encoding: 'utf8'
 			});
+
+			var imagesPath = path.join(process.cwd(), 'node_modules/lexicon/src/images');
+
+			htmlContent = htmlContent.replace(/\.\.\/\.\.\/images/g, imagesPath);
+			htmlContent = htmlContent.replace(/{{rootPath}}\/images/g, imagesPath);
+			htmlContent = htmlContent.replace(/\`\`\`([\s\S]+?)\`\`\`/gi, function(match, group) {
+				if (group) {
+					return he.encode(group, {
+						useNamedReferences: true
+					});
+				}
+
+				return '';
+			});
 		}
 
 		return (
@@ -76,25 +121,27 @@ var VariablesEditor = React.createClass({
 	render: function() {
 		var instance = this;
 
-		var variableMap = componentScraper.getVariablesFromFile(this.props.componentFile);
+		var componentVariableMap = componentScraper.getComponentVariables(this.props.componentName, 'lexicon-base') || [];
+
+		var variableMap = this.props.variables;
+
+		// these inputs are not controlled components, therefore the default value only applies on init render
 
 		return (
 			<div className="variables-editor">
-				{Object.keys(variableMap).map(function(variableName) {
-					var variableValue = variableMap[variableName];
-
+				{Object.keys(componentVariableMap).map(function(variableName) {
 					return (
 						<div className="form-group">
 							<label for={variableName}>{variableName}</label>
 							<input
 								className="form-control"
-								defaultValue={variableValue}
 								key={variableName}
 								maxLength="100"
 								name={variableName}
 								onInput={instance.handleInput}
 								ref={variableName}
 								type="text"
+								value={variableMap[variableName]}
 							/>
 						</div>
 					);
@@ -127,37 +174,65 @@ var LexiconCustomizer = React.createClass({
 	getInitialState: function() {
 		return {
 			components: {},
-			//styleHREF: '../../node_modules/lexicon/build/css/lexicon-base.css'
-			styleHREF: path.join(process.cwd(), 'lexicon/build/lexicon-base.css')
+			styleHREF: path.join(process.cwd(), 'lexicon/build/lexicon-base.css'),
+			theme: '',
+			variables: this.props.baseVariables
 		}
 	},
 
 	componentDidMount: function() {
 		var instance = this;
 
-		componentScraper.getLexiconBaseComponents(function(err, componentData) {
-			instance.setState({
-				components: componentData
-			});
+		var componentData = componentScraper.getLexiconBaseComponents();
+
+		instance.setState({
+			components: componentData
 		});
+
+		document.addEventListener('drop', function(event) {
+			event.preventDefault();
+
+			if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length) {
+				instance.handleFileDrop(event);
+			}
+
+			return false;
+		}, false);
 	},
 
 	render: function() {
 		return (
 			<div className="lexicon-customizer">
+				<Header
+					theme={this.state.theme}
+					onReset={this.handleReset}
+					onClearTheme={this.handleClearTheme}
+				/>
+
 				<StyleLink href={this.state.styleHREF} />
 
 				<ComponentMenu components={this.state.components} onUserClick={this.handleComponentItemClick} />
 
-				<PreviewBox componentFile={this.state.componentFile} componentName={this.state.componentName} />
+				<PreviewBox
+					componentFile={this.state.componentFile}
+					componentName={this.state.componentName}
+				/>
 
 				<VariablesEditor
 					componentFile={this.state.componentFile}
 					componentName={this.state.componentName}
 					onUserInput={this.handleUserInput}
+					theme={this.state.theme}
+					variables={this.state.variables}
 				/>
 			</div>
 		);
+	},
+
+	handleClearTheme: function(event) {
+		this.setState({
+			theme: null
+		});
 	},
 
 	handleComponentItemClick: function(event) {
@@ -169,8 +244,42 @@ var LexiconCustomizer = React.createClass({
 		});
 	},
 
+	handleFileDrop: function(event) {
+		var file = event.dataTransfer.files[0];
+
+		if (theme.isTheme(file.path)) {
+			this.setState({
+				theme: file.path
+			});
+		}
+	},
+
+	handleReset: function(event) {
+		this.setState({
+			variables: this.props.baseVariables
+		});
+
+		this._buildLexiconBase({});
+	},
+
 	handleUserInput: function(variableMap, variableName) {
 		var instance = this;
+
+		var mergedVariables = _.assign({}, this.state.variables, variableMap);
+
+		this.setState({
+			variables: mergedVariables
+		});
+
+		var baseVariables = this.props.baseVariables;
+
+		variableMap = _.reduce(mergedVariables, function(result, item, index) {
+			if (item != baseVariables[index]) {
+				result[index] = item;
+			}
+
+			return result;
+		}, {});
 
 		this._buildLexiconBase(variableMap);
 	},
@@ -178,22 +287,16 @@ var LexiconCustomizer = React.createClass({
 	_buildLexiconBase: _.debounce(function(variableMap) {
 		var instance = this;
 
-		sass.writeVariablesFile(this.state.componentName, this._generateVariablesString(variableMap))
+		sass.writeCustomVariablesFile(variableMap);
 
 		sass.renderLexiconBase(function(err, result) {
 			instance.setState({
 				styleHREF: path.join(process.cwd(), 'lexicon/build/lexicon-base.css') + '?t=' + Date.now()
 			});
 		});
-	}, 200),
-
-	_generateVariablesString: function(variableMap) {
-		return _.reduce(variableMap, function(result, item, index) {
-			result += index + ': ' + item + ';\n'
-
-			return result
-		}, '');
-	}
+	}, 200)
 });
 
-ReactDOM.render(<LexiconCustomizer />, document.getElementById('main'));
+var lexiconBaseVariables = componentScraper.mapLexiconVariables();
+
+ReactDOM.render(<LexiconCustomizer baseVariables={lexiconBaseVariables} />, document.getElementById('main'));

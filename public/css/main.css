@@ -18,6 +18,14 @@ header {
 	top: 0;
 }
 
+header h1, .header-actions {
+	display: inline-block;
+}
+
+.header-actions {
+	float: right;
+}
+
 div.container {
 	padding: 0;
 	width: auto;
