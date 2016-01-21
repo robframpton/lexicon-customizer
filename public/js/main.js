@@ -146,35 +146,42 @@ var VariablesEditor = React.createClass({
 	render: function() {
 		var instance = this;
 
-		var componentVariableMap = componentScraper.getComponentVariables(this.props.componentName, 'lexicon-base') || [];
-
-		var variableMap = this.props.variables;
-
 		return (
 			<div className="variables-editor">
 				<h2>SASS Variables</h2>
 
 				<form>
-					{Object.keys(componentVariableMap).map(function(variableName) {
-						return (
-							<div className="form-group" key={variableName + '_wrapper'}>
-								<label htmlFor={variableName}>{variableName}</label>
-								<input
-									className="form-control"
-									key={variableName}
-									maxLength="100"
-									name={variableName}
-									onInput={instance.handleInput}
-									ref={variableName}
-									type="text"
-									value={variableMap[variableName]}
-								/>
-							</div>
-						);
-					})}
+					{this.renderInputs()}
 				</form>
 			</div>
 		);
+	},
+
+	renderInputs: function() {
+		var instance = this;
+
+		var componentVariableMap = componentScraper.getComponentVariables(this.props.componentName, 'lexicon-base') || [];
+
+		var variableMap = this.props.variables;
+
+		return Object.keys(componentVariableMap).map(function(variableName) {
+			return (
+				<div className="form-group" key={variableName + '_wrapper'}>
+					<label htmlFor={variableName}>{variableName}</label>
+					<input
+						className="form-control"
+						key={variableName}
+						maxLength="100"
+						name={variableName}
+						onChange={instance.handleInput}
+						onInput={instance.handleInput}
+						ref={variableName}
+						type="text"
+						value={variableMap[variableName]}
+					/>
+				</div>
+			);
+		});
 	},
 
 	getVariableMap: function() {
