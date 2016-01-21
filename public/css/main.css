@@ -7,10 +7,14 @@ body {
 	font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
-header {
+.lexicon-customizer-header {
+	align-items: center;
 	background-color: #444;
 	color: #FFF;
+	display: flex;
+	flex-direction: row;
 	height: 10vh;
+	justify-content: space-around;
 	left: 0;
 	padding-left: 20px;
 	position: fixed;
@@ -18,12 +22,37 @@ header {
 	top: 0;
 }
 
-header h1, .header-actions {
-	display: inline-block;
+.lexicon-customizer-header h1 {
+	margin: 0;
 }
 
-.header-actions {
-	float: right;
+.lexicon-customizer-actions {
+	height: 90%;
+}
+
+.lexicon-customizer-actions .btn {
+	border-radius: 0;
+	border-width: 0 0 4px;
+	height: 100%;
+}
+
+.lexicon-customizer-config-panel {
+	background-color: #333;
+	height: 0;
+	overflow: hidden;
+	position: fixed;
+	right: 0;
+	top: 10vh;
+	transition: height 200ms;
+}
+
+.lexicon-customizer-config-panel.open {
+	height: 200px;
+}
+
+.lexicon-customizer-config-panel .btn {
+	height: auto;
+	width: 100%;
 }
 
 div.container {
@@ -38,7 +67,7 @@ div.container {
 	margin-top: 10vh;
 	overflow-x: hidden;
 	overflow-y: auto;
-	padding: 5px;
+	padding: 20px;
 }
 
 .component-menu {

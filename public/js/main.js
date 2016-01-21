@@ -8,14 +8,23 @@ var path = require('path');
 var componentScraper = require('../../lib/component-scraper');
 var sass = require('../../lib/sass');
 var theme = require('../../lib/theme');
+var UserConfig = require('../../lib/user_config');
 
-document.addEventListener('dragover', function(event){
+var userConfig = new UserConfig();
+
+document.addEventListener('dragover', function(event) {
 	event.preventDefault();
 	//console.log(event);
 	return false;
 }, false);
 
 var Header = React.createClass({
+	getInitialState: function() {
+		return {
+			configPanelOpen: false
+		};
+	},
+
 	render: function() {
 		var themePath = this.props.theme;
 
@@ -23,18 +32,34 @@ var Header = React.createClass({
 			themePath = path.basename(themePath);
 		}
 
+		var configPanelClassName = 'lexicon-customizer-config-panel';
+
+		if (this.state.configPanelOpen) {
+			configPanelClassName += ' open';
+		}
+
 		return (
-			<header>
+			<header className="lexicon-customizer-header">
 				<h1>Lexicon Customizer</h1>
 
-				<div className="header-actions">
-					<span>Current theme: {themePath}</span>
+				<div className="lexicon-customizer-actions">
+					<button className="btn btn-default" onClick={this.toggleConfigPanel}>Config</button>
 
-					<button className="btn btn-default" onClick={this.props.onReset}>Reset</button>
-					<button className="btn btn-default" onClick={this.props.onClearTheme}>Clear Theme</button>
+					<div className={configPanelClassName}>
+						<span>Current theme: {themePath}</span>
+
+						<button className="btn btn-default" onClick={this.props.onReset}>Reset</button>
+						<button className="btn btn-default" onClick={this.props.onClearTheme}>Clear Theme</button>
+					</div>
 				</div>
 			</header>
 		);
+	},
+
+	toggleConfigPanel: function() {
+		this.setState({
+			configPanelOpen: !this.state.configPanelOpen
+		});
 	}
 });
 
@@ -111,7 +136,7 @@ var PreviewBox = React.createClass({
 
 		return (
 			<div className="preview-box">
-				<div dangerouslySetInnerHTML={{__html: htmlContent}}></div>
+				<div className="lexicon-base" dangerouslySetInnerHTML={{__html: htmlContent}}></div>
 			</div>
 		);
 	}
@@ -125,27 +150,29 @@ var VariablesEditor = React.createClass({
 
 		var variableMap = this.props.variables;
 
-		// these inputs are not controlled components, therefore the default value only applies on init render
-
 		return (
 			<div className="variables-editor">
-				{Object.keys(componentVariableMap).map(function(variableName) {
-					return (
-						<div className="form-group">
-							<label for={variableName}>{variableName}</label>
-							<input
-								className="form-control"
-								key={variableName}
-								maxLength="100"
-								name={variableName}
-								onInput={instance.handleInput}
-								ref={variableName}
-								type="text"
-								value={variableMap[variableName]}
-							/>
-						</div>
-					);
-				})}
+				<h2>SASS Variables</h2>
+
+				<form>
+					{Object.keys(componentVariableMap).map(function(variableName) {
+						return (
+							<div className="form-group" key={variableName + '_wrapper'}>
+								<label htmlFor={variableName}>{variableName}</label>
+								<input
+									className="form-control"
+									key={variableName}
+									maxLength="100"
+									name={variableName}
+									onInput={instance.handleInput}
+									ref={variableName}
+									type="text"
+									value={variableMap[variableName]}
+								/>
+							</div>
+						);
+					})}
+				</form>
 			</div>
 		);
 	},
@@ -172,11 +199,19 @@ var VariablesEditor = React.createClass({
 
 var LexiconCustomizer = React.createClass({
 	getInitialState: function() {
+		var customVariables = componentScraper.getVariablesFromFile(path.join(process.cwd(), 'lexicon/_custom_variables.scss'));
+
+		var variables = _.assign({}, this.props.baseVariables, customVariables);
+
+		var config = userConfig.getConfig();
+
 		return {
+			componentFile: '_cards.scss',
+			componentName: 'cards',
 			components: {},
 			styleHREF: path.join(process.cwd(), 'lexicon/build/lexicon-base.css'),
-			theme: '',
-			variables: this.props.baseVariables
+			theme: config.theme || '',
+			variables: variables
 		}
 	},
 
@@ -248,6 +283,8 @@ var LexiconCustomizer = React.createClass({
 		var file = event.dataTransfer.files[0];
 
 		if (theme.isTheme(file.path)) {
+			userConfig.setConfig('theme', file.path);
+
 			this.setState({
 				theme: file.path
 			});
@@ -287,7 +324,7 @@ var LexiconCustomizer = React.createClass({
 	_buildLexiconBase: _.debounce(function(variableMap) {
 		var instance = this;
 
-		sass.writeCustomVariablesFile(variableMap);
+		sass.writeCustomVariablesFile(variableMap, this.state.theme);
 
 		sass.renderLexiconBase(function(err, result) {
 			instance.setState({
