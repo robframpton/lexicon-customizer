@@ -65,26 +65,31 @@ var Header = React.createClass({
 
 var ComponentMenu = React.createClass({
 	render: function() {
+		return (
+			<div className="component-menu">
+				<ul className="component-list">
+					{this.renderComponentList()}
+				</ul>
+			</div>
+		);
+	},
+
+	renderComponentList: function() {
 		var instance = this;
 
 		var components = this.props.components;
 
-		return (
-			<div className="component-menu">
-				<ul className="component-list">
-					{Object.keys(components).map(function(name) {
-						var file = components[name];
-						return (<li
-							className="component-item"
-							data-file={file}
-							key={name}
-						>
-							<a href="javascript:;" data-file={file} data-name={name} onClick={instance.handleClick}>{name}</a>
-						</li>);
-					})}
-				</ul>
-			</div>
-		);
+		return Object.keys(components).map(function(name) {
+			var file = components[name];
+
+			return (<li
+				className="component-item"
+				data-file={file}
+				key={name}
+			>
+				<a href="javascript:;" data-file={file} data-name={name} onClick={instance.handleClick}>{name}</a>
+			</li>);
+		});
 	},
 
 	handleClick: function(event) {
