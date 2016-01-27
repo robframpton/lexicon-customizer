@@ -5,6 +5,9 @@ var fs = require('fs');
 var he = require('he');
 var path = require('path');
 
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 var componentScraper = require('../../lib/component-scraper');
 var sass = require('../../lib/sass');
 var theme = require('../../lib/theme');
@@ -262,7 +265,7 @@ var VariablesEditor = React.createClass({
 	_isColorVariable: function(variableName, variableValue) {
 		var colorVariable = false;
 
-		if ((variableName.indexOf('-bg') != -1) || (varuableName.indexOf('color') != -1)) {
+		if ((variableName.indexOf('-bg') != -1) || (variableName.indexOf('color') != -1)) {
 			colorVariable = true;
 		}
 
