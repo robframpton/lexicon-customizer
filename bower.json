@@ -15,9 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "react": "~0.14.6",
     "babel": "*",
-    "sass.js": "~0.9.4",
     "bourbon": "~4.2.6",
     "bootstrap": "~3.3.6"
   }
