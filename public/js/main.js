@@ -12,12 +12,6 @@ var UserConfig = require('../../lib/user_config');
 
 var userConfig = new UserConfig();
 
-document.addEventListener('dragover', function(event) {
-	event.preventDefault();
-	//console.log(event);
-	return false;
-}, false);
-
 var Header = React.createClass({
 	getInitialState: function() {
 		return {
@@ -38,14 +32,29 @@ var Header = React.createClass({
 			configPanelClassName += ' open';
 		}
 
+		var baseLexiconTheme = this.props.baseLexiconTheme;
+
 		return (
 			<header className="lexicon-customizer-header">
 				<h1>Lexicon Customizer</h1>
 
 				<div className="lexicon-customizer-actions">
-					<button className="btn btn-default" onClick={this.toggleConfigPanel}>Config</button>
+					<a className="config-panel-toggle-btn" href="javascript:;" onClick={this.toggleConfigPanel}><img src="../images/cog_white.svg"></img></a>
 
 					<div className={configPanelClassName}>
+						<div className="radio">
+							<label>
+								<input checked={baseLexiconTheme == 'lexiconBase'} name="baseLexiconTheme" onChange={this.handleBaseLexiconThemeChange} type="radio" value="lexiconBase" />
+								Lexicon Base
+							</label>
+						</div>
+						<div className="radio">
+							<label>
+								<input checked={baseLexiconTheme == 'atlasTheme'} name="baseLexiconTheme" onChange={this.handleBaseLexiconThemeChange} type="radio" value="atlasTheme" />
+								Atlast Theme
+							</label>
+						</div>
+
 						<span>Current theme: {themePath}</span>
 
 						<button className="btn btn-default" onClick={this.props.onReset}>Reset</button>
@@ -54,6 +63,12 @@ var Header = React.createClass({
 				</div>
 			</header>
 		);
+	},
+
+	handleBaseLexiconThemeChange: function(event) {
+		var value = event.currentTarget.value;
+
+		this.props.onBaseLexiconThemeChange(value);
 	},
 
 	toggleConfigPanel: function() {
@@ -67,6 +82,8 @@ var ComponentMenu = React.createClass({
 	render: function() {
 		return (
 			<div className="component-menu">
+				<h3>Componenets</h3>
+
 				<ul className="component-list">
 					{this.renderComponentList()}
 				</ul>
@@ -82,8 +99,14 @@ var ComponentMenu = React.createClass({
 		return Object.keys(components).map(function(name) {
 			var file = components[name];
 
+			var className = 'component-item';
+
+			if (name == instance.props.componentName) {
+				className += ' selected';
+			}
+
 			return (<li
-				className="component-item"
+				className={className}
 				data-file={file}
 				key={name}
 			>
@@ -108,6 +131,14 @@ var StyleLink = React.createClass({
 });
 
 var PreviewBox = React.createClass({
+	componentDidMount: function() {
+		var webview = document.getElementsByTagName('webview')[0];
+
+		webview.addEventListener('dom-ready', function() {
+			//webview.openDevTools();
+		});
+	},
+
 	render: function() {
 		var componentName = this.props.componentName;
 
@@ -137,11 +168,26 @@ var PreviewBox = React.createClass({
 
 				return '';
 			});
+			htmlContent = htmlContent.replace(/(---[\s\S]+---)/, '<h3>Preview</h3>');
 		}
+
+		var baseLexiconTheme = _.kebabCase(this.props.baseLexiconTheme);
+
+		var filePath = path.join(process.cwd(), 'lexicon/build/' + baseLexiconTheme + '.css');
+
+		var linkElement = '<link rel="stylesheet" href="' + filePath + '" />'
+
+		htmlContent = '<html><head>' + linkElement + '</head><body class="lexicon-customizer-preview-box">' + htmlContent + '</body></html>';
+
+		var lexiconHTMLPath = path.join(process.cwd(), 'lexicon/build/lexicon-preview.html');
+
+		fs.writeFileSync(lexiconHTMLPath, htmlContent);
+
+		lexiconHTMLPath += '?t=' + Date.now();
 
 		return (
 			<div className="preview-box">
-				<div className="lexicon-base" dangerouslySetInnerHTML={{__html: htmlContent}}></div>
+				<webview autosize="on" maxWidth="100%" src={lexiconHTMLPath}></webview>
 			</div>
 		);
 	}
@@ -153,7 +199,7 @@ var VariablesEditor = React.createClass({
 
 		return (
 			<div className="variables-editor">
-				<h2>SASS Variables</h2>
+				<h3>Variables</h3>
 
 				<form>
 					{this.renderInputs()}
@@ -170,11 +216,16 @@ var VariablesEditor = React.createClass({
 		var variableMap = this.props.variables;
 
 		return Object.keys(componentVariableMap).map(function(variableName) {
+			var value = variableMap[variableName];
+
+			var colorVariable = instance._isColorVariable(variableName, value);
+
 			return (
 				<div className="form-group" key={variableName + '_wrapper'}>
 					<label htmlFor={variableName}>{variableName}</label>
 					<input
 						className="form-control"
+						data-color-variable={colorVariable}
 						key={variableName}
 						maxLength="100"
 						name={variableName}
@@ -206,6 +257,16 @@ var VariablesEditor = React.createClass({
 		if (this.props.onUserInput) {
 			this.props.onUserInput(this.getVariableMap(), variableName);
 		}
+	},
+
+	_isColorVariable: function(variableName, variableValue) {
+		var colorVariable = false;
+
+		if ((variableName.indexOf('-bg') != -1) || (varuableName.indexOf('color') != -1)) {
+			colorVariable = true;
+		}
+
+		return colorVariable;
 	}
 });
 
@@ -218,9 +279,11 @@ var LexiconCustomizer = React.createClass({
 		var config = userConfig.getConfig();
 
 		return {
+			baseLexiconTheme: config.baseLexiconTheme || 'lexiconBase',
 			componentFile: '_cards.scss',
 			componentName: 'cards',
 			components: {},
+			folderHovering: false,
 			styleHREF: path.join(process.cwd(), 'lexicon/build/lexicon-base.css'),
 			theme: config.theme || '',
 			variables: variables
@@ -228,13 +291,35 @@ var LexiconCustomizer = React.createClass({
 	},
 
 	componentDidMount: function() {
-		var instance = this;
-
 		var componentData = componentScraper.getLexiconBaseComponents();
 
-		instance.setState({
+		this.setState({
 			components: componentData
 		});
+
+		this.attachDocumentEventListeners()
+	},
+
+	attachDocumentEventListeners: function() {
+		var instance = this;
+
+		document.addEventListener('dragleave', function(event) {
+			if (event.target.className.indexOf('folder-hovering-mask') != -1) {
+				instance.setState({
+					folderHovering: false
+				});
+			}
+		}, false);
+
+		document.addEventListener('dragenter', function(event) {
+			event.preventDefault();
+
+			instance.setState({
+				folderHovering: true
+			});
+
+			return false;
+		}, false);
 
 		document.addEventListener('drop', function(event) {
 			event.preventDefault();
@@ -248,32 +333,56 @@ var LexiconCustomizer = React.createClass({
 	},
 
 	render: function() {
+		var folderHoveringMask = this.state.folderHovering ? <div className="folder-hovering-mask"><span>Drop theme to sync</span></div> : '';
+
 		return (
 			<div className="lexicon-customizer">
 				<Header
-					theme={this.state.theme}
+					baseLexiconTheme={this.state.baseLexiconTheme}
 					onReset={this.handleReset}
+					onBaseLexiconThemeChange={this.handleBaseLexiconThemeChange}
 					onClearTheme={this.handleClearTheme}
-				/>
-
-				<StyleLink href={this.state.styleHREF} />
-
-				<ComponentMenu components={this.state.components} onUserClick={this.handleComponentItemClick} />
-
-				<PreviewBox
-					componentFile={this.state.componentFile}
-					componentName={this.state.componentName}
-				/>
-
-				<VariablesEditor
-					componentFile={this.state.componentFile}
-					componentName={this.state.componentName}
-					onUserInput={this.handleUserInput}
 					theme={this.state.theme}
-					variables={this.state.variables}
 				/>
+
+				<div className="lexicon-customizer-content">
+					<ComponentMenu
+						componentFile={this.state.componentFile}
+						componentName={this.state.componentName}
+						components={this.state.components}
+						onUserClick={this.handleComponentItemClick}
+					/>
+
+					<PreviewBox
+						baseLexiconTheme={this.state.baseLexiconTheme}
+						componentFile={this.state.componentFile}
+						componentName={this.state.componentName}
+					/>
+
+					<VariablesEditor
+						componentFile={this.state.componentFile}
+						componentName={this.state.componentName}
+						onUserInput={this.handleUserInput}
+						theme={this.state.theme}
+						variables={this.state.variables}
+					/>
+				</div>
+
+				{folderHoveringMask}
 			</div>
 		);
+	},
+
+	handleBaseLexiconThemeChange: function(value) {
+		var state = {
+			baseLexiconTheme: value
+		};
+
+		this.setState(state);
+
+		this._buildLexiconBase();
+
+		userConfig.setConfig(state);
 	},
 
 	handleClearTheme: function(event) {
@@ -294,13 +403,17 @@ var LexiconCustomizer = React.createClass({
 	handleFileDrop: function(event) {
 		var file = event.dataTransfer.files[0];
 
+		var state = {
+			folderHovering: false
+		};
+
 		if (theme.isTheme(file.path)) {
 			userConfig.setConfig('theme', file.path);
 
-			this.setState({
-				theme: file.path
-			});
+			state.theme = file.path;
 		}
+
+		this.setState(state);
 	},
 
 	handleReset: function(event) {
@@ -308,7 +421,8 @@ var LexiconCustomizer = React.createClass({
 			variables: this.props.baseVariables
 		});
 
-		this._buildLexiconBase({});
+		this._buildCustomVariablesFile({});
+		this._buildLexiconBase();
 	},
 
 	handleUserInput: function(variableMap, variableName) {
@@ -330,17 +444,24 @@ var LexiconCustomizer = React.createClass({
 			return result;
 		}, {});
 
+		this._buildCustomVariablesFile(variableMap);
 		this._buildLexiconBase(variableMap);
 	},
 
-	_buildLexiconBase: _.debounce(function(variableMap) {
+	_buildCustomVariablesFile: _.debounce(function(variableMap) {
+		sass.writeCustomVariablesFile(variableMap, this.state.theme);
+	}, 200),
+
+	_buildLexiconBase: _.debounce(function() {
 		var instance = this;
 
-		sass.writeCustomVariablesFile(variableMap, this.state.theme);
+		var baseLexiconTheme = _.kebabCase(this.state.baseLexiconTheme);
 
-		sass.renderLexiconBase(function(err, result) {
+		sass.renderLexiconBase({
+			baseLexiconTheme: baseLexiconTheme
+		}, function(err, result) {
 			instance.setState({
-				styleHREF: path.join(process.cwd(), 'lexicon/build/lexicon-base.css') + '?t=' + Date.now()
+				styleHREF: path.join(process.cwd(), 'lexicon/build', baseLexiconTheme + '.css') + '?t=' + Date.now()
 			});
 		});
 	}, 200)

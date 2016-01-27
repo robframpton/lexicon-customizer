@@ -1,10 +1,16 @@
 @import "./node_modules/lexicon/src/scss/bootstrap/variables";
 
 @import "./node_modules/lexicon/src/scss/lexicon-base/variables";
+@import "./node_modules/lexicon/src/scss/lexicon-base/mixins";
+
+@import "./node_modules/lexicon/src/scss/atlas-theme/variables";
+@import "./node_modules/lexicon/src/scss/atlas-theme/mixins";
 
 @import "custom_variables";
 
 @import "node_modules/lexicon/src/scss/lexicon-base/main";
+
+@import "node_modules/lexicon/src/scss/atlas-theme/atlas";
 
 .lexicon-customizer-preview-box {
 	overflow: auto;

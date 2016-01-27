@@ -34,6 +34,8 @@
   "devDependencies": {
     "electron-packager": "^5.0.0",
     "electron-prebuilt": "^0.36.0",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.1.1",
     "xo": "^0.12.0"
   },
   "xo": {
