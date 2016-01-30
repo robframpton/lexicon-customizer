@@ -1,10 +1,10 @@
 {
-  "name": "electron-lexicon",
-  "productName": "ElectronLexicon",
+  "name": "lexicon-customizer",
+  "productName": "LexiconCustomizer",
   "version": "0.0.0",
-  "description": "My impressive app",
+  "description": "A desktop app for customizing lexicon look and feel that integrates with Liferay themes.",
   "license": "MIT",
-  "repository": "Robert-Frampton/electron-lexicon",
+  "repository": "Robert-Frampton/lexicon-customizer",
   "author": {
     "name": "Robert-Frampton",
     "email": "ROBERT.FRAMPTON@LIFERAY.COM",
@@ -16,14 +16,11 @@
     "start": "electron .",
     "build": "electron-packager . $npm_package_productName --out=dist --ignore='^/dist$' --prune --asar --all --version=$npm_package_electronVersion"
   },
-  "files": [
-    "index.js",
-    "index.html",
-    "index.css"
-  ],
   "keywords": [
+    "electron",
     "electron-app",
-    "electron"
+    "lexicon",
+    "liferay"
   ],
   "dependencies": {
     "electron-debug": "^0.5.0",
