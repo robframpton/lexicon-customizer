@@ -1,7 +1,6 @@
 # Lexicon Customizer
 
-> My impressive app
-
+> A desktop app for customizing lexicon look and feel that integrates with Liferay themes
 
 ## Dev
 
