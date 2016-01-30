@@ -1,4 +1,4 @@
-# electron-lexicon
+# Lexicon Customizer
 
 > My impressive app
 
