@@ -25,7 +25,7 @@ function createMainWindow() {
 		width: 1200
 	});
 
-	win.loadURL(`file://${__dirname}/public/html/index.html`);
+	win.loadURL(`file://${__dirname}/build/public/html/index.html`);
 	win.on('closed', onClosed);
 
 	return win;

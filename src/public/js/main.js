@@ -1,17 +1,18 @@
 'use strict';
 
-var _ = require('lodash');
-var fs = require('fs');
-var he = require('he');
-var path = require('path');
+import _ from 'lodash';
+import fs from 'fs';
+import he from 'he';
+import path from 'path';
 
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Autosuggest from 'react-autosuggest';
 
-var componentScraper = require('../../lib/component-scraper');
-var sass = require('../../lib/sass');
-var theme = require('../../lib/theme');
-var UserConfig = require('../../lib/user_config');
+import componentScraper from '../../../lib/component-scraper';
+import sass from '../../../lib/sass';
+import theme from '../../../lib/theme';
+import UserConfig from '../../../lib/user_config';
 
 var userConfig = new UserConfig();
 
@@ -223,20 +224,33 @@ var VariablesEditor = React.createClass({
 
 			var colorVariable = instance._isColorVariable(variableName, value);
 
+			var inputProps = {
+				'data-color-variable': colorVariable,
+				className: 'form-control',
+				name: variableName,
+				onChange: instance.handleInput,
+				onInput: instance.handleInput,
+				value: variableMap[variableName]
+			};
+
+			var getSuggestionValue = function(suggestion) {
+				return suggestion;
+			};
+
+			var renderSuggestion = function(suggestion) {
+				return (<span>{suggestion}</span>);
+			};
+
 			return (
 				<div className="form-group" key={variableName + '_wrapper'}>
 					<label htmlFor={variableName}>{variableName}</label>
-					<input
-						className="form-control"
-						data-color-variable={colorVariable}
-						key={variableName}
-						maxLength="100"
-						name={variableName}
-						onChange={instance.handleInput}
-						onInput={instance.handleInput}
+
+					<Autosuggest
 						ref={variableName}
-						type="text"
-						value={variableMap[variableName]}
+						getSuggestionValue={getSuggestionValue}
+						inputProps={inputProps}
+						renderSuggestion={renderSuggestion}
+						suggestions={Object.keys(instance.props.variables)}
 					/>
 				</div>
 			);
@@ -245,7 +259,7 @@ var VariablesEditor = React.createClass({
 
 	getVariableMap: function() {
 		return _.reduce(this.refs, function(result, item, index) {
-			result[index] = item.value;
+			result[index] = item.input.value;
 
 			return result;
 		}, {});

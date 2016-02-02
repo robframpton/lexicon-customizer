@@ -24,35 +24,35 @@ body {
 	right: 0;
 	top: 0;
 	-webkit-app-region: drag;
-}
 
-.lexicon-customizer-header h1 {
-	margin: 0;
-	text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+	h1 {
+		margin: 0;
+		text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+	}
 }
 
 .lexicon-customizer-actions {
 	margin-right: 20px;
-}
 
-.lexicon-customizer-actions .btn {
-	border-radius: 0;
-	border-width: 0 0 4px;
-	height: 100%;
-	-webkit-app-region: no-drag;
+	.btn {
+		border-radius: 0;
+		border-width: 0 0 4px;
+		height: 100%;
+		-webkit-app-region: no-drag;
+	}
 }
 
 .config-panel-toggle-btn {
 	border-radius: 2px;
 	padding: 14px;
-}
 
-.config-panel-toggle-btn:hover {
-	background-color: #222;
-}
+	&:hover {
+		background-color: #222;
+	}
 
-.config-panel-toggle-btn img {
-	height: 34px;
+	img {
+		height: 34px;
+	}
 }
 
 .lexicon-customizer-config-panel {
@@ -65,16 +65,16 @@ body {
 	top: 70px;
 	transition: right 200ms;
 	width: 250px;
-}
 
-.lexicon-customizer-config-panel.open {
-	right: 0;
-}
+	&.open {
+		right: 0;
+	}
 
-.lexicon-customizer-config-panel .btn {
-	height: auto;
-	margin-top: 10px;
-	width: 100%;
+	.btn {
+		height: auto;
+		margin-top: 10px;
+		width: 100%;
+	}
 }
 
 div.container {
@@ -110,15 +110,23 @@ div.container {
 }
 
 .component-item {
-	padding: 0 5px;
+	padding: 2px 8px;
+	transition: background-color 400ms, box-shadow 400ms;
+
+	&.selected {
+		background-color: #5BBFDC;
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	}
 }
 
-.component-item.selected {
-	background-color: #337AB7;
-}
+.component-item {
+	a {
+		color: #5BBFDC;
+	}
 
-.component-item.selected a {
-	color: #FFF;
+	&.selected a {
+		color: #FFF;
+	}
 }
 
 .preview-box {
@@ -129,14 +137,16 @@ div.container {
 	width: 30%;
 }
 
-.variables-editor input, .variables-editor input:focus {
-	border-radius: 0;
-	border-width: 0 0 4px;
-	box-shadow: none;
-}
+.variables-editor input {
+	&, &:focus {
+		border-radius: 0;
+		border-width: 0 0 4px;
+		box-shadow: none;
+	}
 
-.variables-editor input:focus {
-	border-color: #5BBFDC;
+	&:focus {
+		border-color: #5BBFDC;
+	}
 }
 
 .folder-hovering-mask {
@@ -147,10 +157,10 @@ div.container {
 	position: fixed;
 	right: 0;
 	top: 0;
-}
 
-.folder-hovering-mask span {
-	color: #FFF;
-	margin: auto;
-	width: 200px;
+	span {
+		color: #FFF;
+		margin: auto;
+		width: 200px;
+	}
 }

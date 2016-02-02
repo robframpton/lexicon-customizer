@@ -1,0 +1,126 @@
+body, html {
+  padding: 0;
+  margin: 0; }
+
+body {
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif; }
+
+.lexicon-customizer-header {
+  align-items: center;
+  background-color: #444;
+  background: -webkit-linear-gradient(left, #575757 0%, #3d3d3d 100%);
+  box-shadow: 0 0 4px #222;
+  border-bottom: 4px solid #5BBFDC;
+  color: #FFF;
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  justify-content: space-between;
+  left: 0;
+  padding: 8px 0 0 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -webkit-app-region: drag; }
+  .lexicon-customizer-header h1 {
+    margin: 0;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); }
+
+.lexicon-customizer-actions {
+  margin-right: 20px; }
+  .lexicon-customizer-actions .btn {
+    border-radius: 0;
+    border-width: 0 0 4px;
+    height: 100%;
+    -webkit-app-region: no-drag; }
+
+.config-panel-toggle-btn {
+  border-radius: 2px;
+  padding: 14px; }
+  .config-panel-toggle-btn:hover {
+    background-color: #222; }
+  .config-panel-toggle-btn img {
+    height: 34px; }
+
+.lexicon-customizer-config-panel {
+  background-color: #333;
+  box-shadow: 0 0 5px #333;
+  overflow: hidden;
+  padding: 20px;
+  position: fixed;
+  right: -255px;
+  top: 70px;
+  transition: right 200ms;
+  width: 250px; }
+  .lexicon-customizer-config-panel.open {
+    right: 0; }
+  .lexicon-customizer-config-panel .btn {
+    height: auto;
+    margin-top: 10px;
+    width: 100%; }
+
+div.container {
+  padding: 0;
+  width: auto; }
+
+.lexicon-customizer-content {
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 70px; }
+
+.component-menu, .preview-box, .variables-editor {
+  display: inline-block;
+  float: left;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto; }
+
+.component-menu, .variables-editor {
+  padding: 20px; }
+
+.component-menu {
+  width: 20%; }
+
+.component-list {
+  list-style: none;
+  padding: 0; }
+
+.component-item {
+  padding: 2px 8px;
+  transition: background-color 400ms, box-shadow 400ms; }
+  .component-item.selected {
+    background-color: #5BBFDC;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); }
+
+.component-item a {
+  color: #5BBFDC; }
+
+.component-item.selected a {
+  color: #FFF; }
+
+.preview-box {
+  width: 50%; }
+
+.variables-editor {
+  width: 30%; }
+
+.variables-editor input, .variables-editor input:focus {
+  border-radius: 0;
+  border-width: 0 0 4px;
+  box-shadow: none; }
+
+.variables-editor input:focus {
+  border-color: #5BBFDC; }
+
+.folder-hovering-mask {
+  background-color: rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  display: flex;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0; }
+  .folder-hovering-mask span {
+    color: #FFF;
+    margin: auto;
+    width: 200px; }
