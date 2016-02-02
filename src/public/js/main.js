@@ -126,14 +126,6 @@ var ComponentMenu = React.createClass({
 	}
 });
 
-var StyleLink = React.createClass({
-	render: function() {
-		return (
-			<link rel="stylesheet" href={this.props.href} />
-		);
-	}
-});
-
 var PreviewBox = React.createClass({
 	componentDidMount: function() {
 		var webview = document.getElementsByTagName('webview')[0];
