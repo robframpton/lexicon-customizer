@@ -5,7 +5,7 @@ import fs from 'fs';
 import he from 'he';
 import path from 'path';
 
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Autosuggest from 'react-autosuggest';
 
@@ -16,14 +16,16 @@ import UserConfig from '../../../lib/user_config';
 
 var userConfig = new UserConfig();
 
-var Header = React.createClass({
-	getInitialState: function() {
-		return {
-			configPanelOpen: false
-		};
-	},
+class Header extends React.Component {
+	constructor(props) {
+		super(props);
 
-	render: function() {
+		this.state = {
+			configPanelOpen: false
+		}
+	}
+
+	render() {
 		var themePath = this.props.theme;
 
 		if (themePath) {
@@ -67,23 +69,23 @@ var Header = React.createClass({
 				</div>
 			</header>
 		);
-	},
+	}
 
-	handleBaseLexiconThemeChange: function(event) {
+	handleBaseLexiconThemeChange(event) {
 		var value = event.currentTarget.value;
 
 		this.props.onBaseLexiconThemeChange(value);
-	},
+	}
 
-	toggleConfigPanel: function() {
+	toggleConfigPanel() {
 		this.setState({
 			configPanelOpen: !this.state.configPanelOpen
 		});
 	}
-});
+};
 
-var ComponentMenu = React.createClass({
-	render: function() {
+class ComponentMenu extends Component {
+	render() {
 		return (
 			<div className="component-menu">
 				<h3>Componenets</h3>
@@ -93,9 +95,9 @@ var ComponentMenu = React.createClass({
 				</ul>
 			</div>
 		);
-	},
+	}
 
-	renderComponentList: function() {
+	renderComponentList() {
 		var instance = this;
 
 		var components = this.props.components;
@@ -117,25 +119,17 @@ var ComponentMenu = React.createClass({
 				<a href="javascript:;" data-file={file} data-name={name} onClick={instance.handleClick}>{name}</a>
 			</li>);
 		});
-	},
+	}
 
-	handleClick: function(event) {
+	handleClick(event) {
 		if (this.props.onUserClick) {
 			this.props.onUserClick(event);
 		}
 	}
-});
+};
 
-var PreviewBox = React.createClass({
-	componentDidMount: function() {
-		var webview = document.getElementsByTagName('webview')[0];
-
-		webview.addEventListener('dom-ready', function() {
-			//webview.openDevTools();
-		});
-	},
-
-	render: function() {
+class PreviewBox extends Component {
+	render() {
 		var componentName = this.props.componentName;
 
 		var htmlContent = '';
@@ -187,10 +181,10 @@ var PreviewBox = React.createClass({
 			</div>
 		);
 	}
-});
+};
 
-var VariablesEditor = React.createClass({
-	render: function() {
+class VariablesEditor extends Component {
+	render() {
 		var instance = this;
 
 		return (
@@ -202,9 +196,9 @@ var VariablesEditor = React.createClass({
 				</form>
 			</div>
 		);
-	},
+	}
 
-	renderInputs: function() {
+	renderInputs() {
 		var instance = this;
 
 		var componentVariableMap = componentScraper.getComponentVariables(this.props.componentName, 'lexicon-base') || [];
@@ -220,8 +214,8 @@ var VariablesEditor = React.createClass({
 				'data-color-variable': colorVariable,
 				className: 'form-control',
 				name: variableName,
-				onChange: instance.handleInput,
-				onInput: instance.handleInput,
+				onChange: instance.handleInput.bind(instance),
+				onInput: instance.handleInput.bind(instance),
 				value: variableMap[variableName]
 			};
 
@@ -247,17 +241,17 @@ var VariablesEditor = React.createClass({
 				</div>
 			);
 		});
-	},
+	}
 
-	getVariableMap: function() {
+	getVariableMap() {
 		return _.reduce(this.refs, function(result, item, index) {
 			result[index] = item.input.value;
 
 			return result;
 		}, {});
-	},
+	}
 
-	handleInput: function(event) {
+	handleInput(event) {
 		var currentTarget = event.currentTarget;
 
 		var variableName = currentTarget.getAttribute('name');
@@ -266,9 +260,9 @@ var VariablesEditor = React.createClass({
 		if (this.props.onUserInput) {
 			this.props.onUserInput(this.getVariableMap(), variableName);
 		}
-	},
+	}
 
-	_isColorVariable: function(variableName, variableValue) {
+	_isColorVariable(variableName, variableValue) {
 		var colorVariable = false;
 
 		if ((variableName.indexOf('-bg') != -1) || (variableName.indexOf('color') != -1)) {
@@ -277,17 +271,19 @@ var VariablesEditor = React.createClass({
 
 		return colorVariable;
 	}
-});
+};
 
-var LexiconCustomizer = React.createClass({
-	getInitialState: function() {
+class LexiconCustomizer extends Component {
+	constructor(props) {
+		super(props);
+
 		var customVariables = componentScraper.getVariablesFromFile(path.join(process.cwd(), 'lexicon/_custom_variables.scss'));
 
-		var variables = _.assign({}, this.props.baseVariables, customVariables);
+		var variables = _.assign({}, props.baseVariables, customVariables);
 
 		var config = userConfig.getConfig();
 
-		return {
+		this.state = {
 			baseLexiconTheme: config.baseLexiconTheme || 'lexiconBase',
 			componentFile: '_cards.scss',
 			componentName: 'cards',
@@ -297,9 +293,9 @@ var LexiconCustomizer = React.createClass({
 			theme: config.theme || '',
 			variables: variables
 		}
-	},
+	}
 
-	componentDidMount: function() {
+	componentDidMount() {
 		var componentData = componentScraper.getLexiconBaseComponents();
 
 		this.setState({
@@ -307,9 +303,9 @@ var LexiconCustomizer = React.createClass({
 		});
 
 		this.attachDocumentEventListeners()
-	},
+	}
 
-	attachDocumentEventListeners: function() {
+	attachDocumentEventListeners() {
 		var instance = this;
 
 		document.addEventListener('dragleave', function(event) {
@@ -339,9 +335,9 @@ var LexiconCustomizer = React.createClass({
 
 			return false;
 		}, false);
-	},
+	}
 
-	render: function() {
+	render() {
 		var folderHoveringMask = this.state.folderHovering ? <div className="folder-hovering-mask"><span>Drop theme to sync</span></div> : '';
 
 		return (
@@ -371,7 +367,7 @@ var LexiconCustomizer = React.createClass({
 					<VariablesEditor
 						componentFile={this.state.componentFile}
 						componentName={this.state.componentName}
-						onUserInput={this.handleUserInput}
+						onUserInput={this.handleUserInput.bind(this)}
 						theme={this.state.theme}
 						variables={this.state.variables}
 					/>
@@ -380,9 +376,9 @@ var LexiconCustomizer = React.createClass({
 				{folderHoveringMask}
 			</div>
 		);
-	},
+	}
 
-	handleBaseLexiconThemeChange: function(value) {
+	handleBaseLexiconThemeChange(value) {
 		var state = {
 			baseLexiconTheme: value
 		};
@@ -392,24 +388,24 @@ var LexiconCustomizer = React.createClass({
 		this._buildLexiconBase();
 
 		userConfig.setConfig(state);
-	},
+	}
 
-	handleClearTheme: function(event) {
+	handleClearTheme(event) {
 		this.setState({
 			theme: null
 		});
-	},
+	}
 
-	handleComponentItemClick: function(event) {
+	handleComponentItemClick(event) {
 		var currentTarget = event.currentTarget;
 
 		this.setState({
 			componentFile: currentTarget.getAttribute('data-file'),
 			componentName: currentTarget.getAttribute('data-name')
 		});
-	},
+	}
 
-	handleFileDrop: function(event) {
+	handleFileDrop(event) {
 		var file = event.dataTransfer.files[0];
 
 		var state = {
@@ -423,18 +419,18 @@ var LexiconCustomizer = React.createClass({
 		}
 
 		this.setState(state);
-	},
+	}
 
-	handleReset: function(event) {
+	handleReset(event) {
 		this.setState({
 			variables: this.props.baseVariables
 		});
 
 		this._buildCustomVariablesFile({});
 		this._buildLexiconBase();
-	},
+	}
 
-	handleUserInput: function(variableMap, variableName) {
+	handleUserInput(variableMap, variableName) {
 		var instance = this;
 
 		var mergedVariables = _.assign({}, this.state.variables, variableMap);
@@ -455,13 +451,13 @@ var LexiconCustomizer = React.createClass({
 
 		this._buildCustomVariablesFile(variableMap);
 		this._buildLexiconBase(variableMap);
-	},
+	}
 
-	_buildCustomVariablesFile: _.debounce(function(variableMap) {
+	_buildCustomVariablesFile(variableMap) {
 		sass.writeCustomVariablesFile(variableMap, this.state.theme);
-	}, 200),
+	}
 
-	_buildLexiconBase: _.debounce(function() {
+	_buildLexiconBase() {
 		var instance = this;
 
 		var baseLexiconTheme = _.kebabCase(this.state.baseLexiconTheme);
@@ -473,8 +469,8 @@ var LexiconCustomizer = React.createClass({
 				styleHREF: path.join(process.cwd(), 'lexicon/build', baseLexiconTheme + '.css') + '?t=' + Date.now()
 			});
 		});
-	}, 200)
-});
+	}
+};
 
 var lexiconBaseVariables = componentScraper.mapLexiconVariables();
 
