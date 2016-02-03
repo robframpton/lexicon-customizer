@@ -2,6 +2,7 @@ const babel = require('gulp-babel');
 const ejs = require('gulp-ejs');
 const gulp = require('gulp');
 const path = require('path');
+const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
@@ -12,6 +13,7 @@ gulp.task('build', ['build:css', 'build:html', 'build:images', 'build:js']);
 
 gulp.task('build:css', () => {
 	return gulp.src('src/public/css/*')
+		.pipe(plumber())
 		.pipe(sass())
 		.pipe(gulp.dest(path.join(pathBuild, 'css')));
 });
@@ -34,9 +36,10 @@ gulp.task('build:images', () => {
 
 gulp.task('build:js', () => {
 	return gulp.src('src/public/js/*.js')
+		.pipe(plumber())
 		.pipe(babel({
-			plugins: ['transform-react-jsx']
-			,presets: ['es2015']
+			plugins: ['transform-react-jsx'],
+			presets: ['es2015']
 		}))
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
 });
