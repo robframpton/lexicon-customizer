@@ -14,10 +14,6 @@ import themeUtil from '../../../../lib/theme';
 import UserConfig from '../../../../lib/user_config';
 
 class LexiconCustomizer extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return (
 			<div className="lexicon-customizer">
