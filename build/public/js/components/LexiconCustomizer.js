@@ -61,10 +61,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var LexiconCustomizer = function (_Component) {
 	_inherits(LexiconCustomizer, _Component);
 
-	function LexiconCustomizer(props) {
+	function LexiconCustomizer() {
 		_classCallCheck(this, LexiconCustomizer);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(LexiconCustomizer).call(this, props));
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(LexiconCustomizer).apply(this, arguments));
 	}
 
 	_createClass(LexiconCustomizer, [{
