@@ -23,6 +23,7 @@ body {
 	position: fixed;
 	right: 0;
 	top: 0;
+	z-index: 1;
 	-webkit-app-region: drag;
 
 	h1 {
@@ -163,4 +164,35 @@ div.container {
 		margin: auto;
 		width: 200px;
 	}
+}
+
+.react-autosuggest__container {
+	position: relative;
+}
+
+.react-autosuggest__suggestions-container {
+	background-color: #5BBFDC;
+	color: #FFF;
+	left: 0;
+	list-style: none;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	z-index: 1;
+}
+
+.react-autosuggest__suggestion {
+	padding: 4px 8px;
+	color: #FFF;
+
+	a {
+		&, &:active, &:focus, &:hover {
+			color: #FFF;
+			text-decoration: none;
+		}
+	}
+}
+
+.react-autosuggest__suggestion--focused {
+	background-color: #7FCEE4;
 }

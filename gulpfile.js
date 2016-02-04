@@ -35,7 +35,7 @@ gulp.task('build:images', () => {
 });
 
 gulp.task('build:js', () => {
-	return gulp.src('src/public/js/*.js')
+	return gulp.src('src/public/js/**/*.js')
 		.pipe(plumber())
 		.pipe(babel({
 			plugins: ['transform-react-jsx'],
@@ -46,8 +46,8 @@ gulp.task('build:js', () => {
 
 gulp.task('watch', () => {
 	watch('src/**/*', vinyl => {
-		var dirname = path.basename(path.dirname(vinyl.path));
+		//var dirname = path.basename(path.dirname(vinyl.path));
 
-		gulp.start(`build:${dirname}`);
+		gulp.start(`build`);
 	});
 });

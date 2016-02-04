@@ -28,7 +28,10 @@
     "lexicon": "https://github.com/liferay/lexicon.git",
     "lodash": "^4.2.0",
     "react": "^0.14.6",
-    "react-dom": "^0.14.6"
+    "react-dom": "^0.14.6",
+    "react-redux": "^4.2.1",
+    "redux": "^3.2.1",
+    "redux-devtools": "^3.1.0"
   },
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.4.0",
