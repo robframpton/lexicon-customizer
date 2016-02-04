@@ -1,6 +1,7 @@
 .sass-cache
 /dist
 bower_components
+build
 lexicon/_custom_variables.scss
 lexicon/build
 node_modules
