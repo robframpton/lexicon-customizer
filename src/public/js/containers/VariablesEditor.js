@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import componentScraper from '../../../../lib/component-scraper';
 import VariableInput from '../components/VariableInput';
 import { createVariablesFile, setVariable } from '../actions/index';
 

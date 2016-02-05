@@ -13,9 +13,14 @@ import UserConfig from '../../../lib/user_config';
 
 let userConfig = new UserConfig();
 
-let initalState = {
+
+let lexiconBaseVariables = componentScraper.mapLexiconVariables();
+
+componentScraper.mergeCustomVariables(lexiconBaseVariables);
+
+const initalState = {
 	components: componentScraper.getLexiconBaseComponents(),
-	variables: componentScraper.mapLexiconVariables()
+	variables: lexiconBaseVariables
 };
 
 const store = createStore(
