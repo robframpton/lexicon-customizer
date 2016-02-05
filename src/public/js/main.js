@@ -32,16 +32,17 @@ const store = createStore(
 let userConfig = new UserConfig();
 
 let lexiconBaseVariables = componentScraper.mapLexiconVariables();
+
 store.dispatch({
 	type: 'SET_VARIABLES',
 	variables: lexiconBaseVariables
 });
 
-let customVariables = componentScraper.getVariablesFromFile(path.join(process.cwd(), 'lexicon/_custom_variables.scss'));
-store.dispatch({
-	type: 'SET_VARIABLES',
-	variables: customVariables
-});
+// let customVariables = componentScraper.getVariablesFromFile(path.join(process.cwd(), 'lexicon/_custom_variables.scss'));
+// store.dispatch({
+// 	type: 'SET_VARIABLES',
+// 	variables: customVariables
+// });
 
 let components = componentScraper.getLexiconBaseComponents();
 store.dispatch({

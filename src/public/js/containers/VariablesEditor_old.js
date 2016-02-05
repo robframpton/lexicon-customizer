@@ -4,6 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import _ from 'lodash';
 
 import componentScraper from '../../../../lib/component-scraper';
+import { setVariable } from '../actions/index';
 
 class VariablesEditor extends Component {
 	constructor(props) {
@@ -52,11 +53,7 @@ class VariablesEditor extends Component {
 			};
 
 			var getSuggestionValue = function(suggestion) {
-				store.dispatch({
-					name: variableName,
-					type: 'SET_VARIABLE',
-					value: suggestion
-				});
+				store.dispatch(setVariable(variableName, suggestion));
 
 				return suggestion;
 			};
@@ -104,11 +101,7 @@ class VariablesEditor extends Component {
 	handleInput(event) {
 		var currentTarget = event.currentTarget;
 
-		store.dispatch({
-			name: currentTarget.getAttribute('name'),
-			type: 'SET_VARIABLE',
-			value: currentTarget.value
-		});
+		store.dispatch(setVariable(currentTarget.getAttribute('name'), currentTarget.value));
 	}
 
 	_getSuggestions(value) {

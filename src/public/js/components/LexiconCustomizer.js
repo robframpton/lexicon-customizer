@@ -7,7 +7,7 @@ import ComponentSideMenu from '../containers/ComponentSideMenu';
 import Header from './Header';
 import PreviewBox from '../containers/PreviewBox';
 
-import VariablesEditor from './VariablesEditor';
+import VariablesEditor from '../containers/VariablesEditor';
 
 import componentScraper from '../../../../lib/component-scraper';
 import sass from '../../../../lib/sass';
@@ -24,6 +24,8 @@ class LexiconCustomizer extends Component {
 					<ComponentSideMenu header="Components" />
 
 					<PreviewBox />
+
+					<VariablesEditor />
 				</div>
 			</div>
 		)
@@ -93,45 +95,6 @@ class LexiconCustomizer_OLD extends Component {
 		}, false);
 	}
 
-	render() {
-		var folderHoveringMask = this.state.folderHovering ? <div className="folder-hovering-mask"><span>Drop theme to sync</span></div> : '';
-
-		return (
-			<div className="lexicon-customizer">
-				<Header
-					baseLexiconTheme={this.state.baseLexiconTheme}
-					onReset={this.handleReset.bind(this)}
-					onBaseLexiconThemeChange={this.handleBaseLexiconThemeChange.bind(this)}
-					onClearTheme={this.handleClearTheme.bind(this)}
-					theme={this.state.theme}
-				/>
-
-				<div className="lexicon-customizer-content">
-					<ComponentMenu
-						components={this.state.components}
-						onUserClick={this.handleComponentItemClick.bind(this)}
-						selectedComponent={this.state.componentName}
-					/>
-
-					<PreviewBox
-						baseLexiconTheme={this.state.baseLexiconTheme}
-						componentFile={this.state.componentFile}
-						componentName={this.state.componentName}
-					/>
-
-					<VariablesEditor
-						componentFile={this.state.componentFile}
-						componentName={this.state.componentName}
-						theme={this.state.theme}
-						variables={this.props.variables}
-					/>
-				</div>
-
-				{folderHoveringMask}
-			</div>
-		);
-	}
-
 	handleBaseLexiconThemeChange(value) {
 		var state = {
 			baseLexiconTheme: value
@@ -142,21 +105,6 @@ class LexiconCustomizer_OLD extends Component {
 		this._buildLexiconBase();
 
 		userConfig.setConfig(state);
-	}
-
-	handleClearTheme(event) {
-		this.setState({
-			theme: null
-		});
-	}
-
-	handleComponentItemClick(event) {
-		var currentTarget = event.currentTarget;
-
-		this.setState({
-			componentFile: currentTarget.getAttribute('data-file'),
-			componentName: currentTarget.getAttribute('data-name')
-		});
 	}
 
 	handleFileDrop(event) {
@@ -183,47 +131,6 @@ class LexiconCustomizer_OLD extends Component {
 
 		this._buildCustomVariablesFile({});
 		this._buildLexiconBase();
-	}
-
-	// handleUserInput(variableMap, test) {
-	// 	var instance = this;
-
-	// 	var mergedVariables = _.assign({}, this.state.variables, variableMap);
-
-	// 	this.setState({
-	// 		variables: mergedVariables
-	// 	});
-
-	// 	var baseVariables = this.props.baseVariables;
-
-	// 	variableMap = _.reduce(mergedVariables, function(result, item, index) {
-	// 		if (item != baseVariables[index]) {
-	// 			result[index] = item;
-	// 		}
-
-	// 		return result;
-	// 	}, {});
-
-	// 	this._buildCustomVariablesFile(variableMap);
-	// 	this._buildLexiconBase(variableMap);
-	// }
-
-	_buildCustomVariablesFile(variableMap) {
-		sass.writeCustomVariablesFile(variableMap, this.state.theme);
-	}
-
-	_buildLexiconBase() {
-		var instance = this;
-
-		var baseLexiconTheme = _.kebabCase(this.state.baseLexiconTheme);
-
-		sass.renderLexiconBase({
-			baseLexiconTheme: baseLexiconTheme
-		}, function(err, result) {
-			instance.setState({
-				styleHREF: path.join(process.cwd(), 'lexicon/build', baseLexiconTheme + '.css') + '?t=' + Date.now()
-			});
-		});
 	}
 };
 

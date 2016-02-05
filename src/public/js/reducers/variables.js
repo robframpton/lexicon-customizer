@@ -4,16 +4,15 @@ const variables = (state = {}, action) => {
 			// TODO: need a way to reset state to original set of variables
 			return state;
 		case 'SET_VARIABLE':
-			let newVariables = {};
+			let newVariables = Object.assign({}, state);
+			newVariables[action.component][action.name] = action.value;
 
-			newVariables[action.name] = action.value;
-
-			return Object.assign({}, state, newVariables);
+			return newVariables;
 		case 'SET_VARIABLES':
 			return Object.assign({}, state, action.variables);
 		default:
 			return state;
 	}
-}
+};
 
-export default variables
+export default variables;

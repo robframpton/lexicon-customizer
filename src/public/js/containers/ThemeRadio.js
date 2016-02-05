@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import Radio from '../components/Radio';
+import { setBaseLexiconTheme } from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -11,10 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		onChange: () => {
-			dispatch({
-				type: 'SET_BASE_LEXICON_THEME',
-				value: ownProps.value
-			});
+			dispatch(setBaseLexiconTheme(ownProps.value));
 		}
 	}
 }
