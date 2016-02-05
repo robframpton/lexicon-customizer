@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import path from 'path';
 
-import ComponentMenu from './ComponentMenu';
+import ComponentSideMenu from '../containers/ComponentSideMenu';
 import Header from './Header';
-import PreviewBox from './PreviewBox';
+import PreviewBox from '../containers/PreviewBox';
+
 import VariablesEditor from './VariablesEditor';
 
 import componentScraper from '../../../../lib/component-scraper';
@@ -20,7 +21,9 @@ class LexiconCustomizer extends Component {
 				<Header />
 
 				<div className="lexicon-customizer-content">
+					<ComponentSideMenu header="Components" />
 
+					<PreviewBox />
 				</div>
 			</div>
 		)

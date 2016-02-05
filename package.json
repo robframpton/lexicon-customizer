@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "electron-debug": "^0.5.0",
+    "fs-promise": "^0.4.1",
     "he": "^0.5.0",
     "lexicon": "https://github.com/liferay/lexicon.git",
     "lodash": "^4.2.0",
@@ -31,7 +32,8 @@
     "react-dom": "^0.14.6",
     "react-redux": "^4.2.1",
     "redux": "^3.2.1",
-    "redux-devtools": "^3.1.0"
+    "redux-devtools": "^3.1.0",
+    "redux-thunk": "^1.0.3"
   },
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.4.0",

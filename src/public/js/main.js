@@ -19,24 +19,34 @@ import lexiconCustomizerReducer from '../js/reducers/index'
 import LexiconCustomizer from '../js/components/LexiconCustomizer'
 
 // <Extract to different file>
-import { combineReducers, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import { connect, Provider } from 'react-redux';
 
-const store = createStore(lexiconCustomizerReducer);
+const store = createStore(
+	lexiconCustomizerReducer,
+	applyMiddleware(thunk)
+);
 // </Extract to different file>
 
-var userConfig = new UserConfig();
+let userConfig = new UserConfig();
 
-var lexiconBaseVariables = componentScraper.mapLexiconVariables();
+let lexiconBaseVariables = componentScraper.mapLexiconVariables();
 store.dispatch({
 	type: 'SET_VARIABLES',
 	variables: lexiconBaseVariables
 });
 
-var customVariables = componentScraper.getVariablesFromFile(path.join(process.cwd(), 'lexicon/_custom_variables.scss'));
+let customVariables = componentScraper.getVariablesFromFile(path.join(process.cwd(), 'lexicon/_custom_variables.scss'));
 store.dispatch({
 	type: 'SET_VARIABLES',
 	variables: customVariables
+});
+
+let components = componentScraper.getLexiconBaseComponents();
+store.dispatch({
+	type: 'SET_COMPONENTS',
+	components
 });
 
 const render = () => {
@@ -52,5 +62,3 @@ const render = () => {
 };
 
 render();
-
-store.subscribe(render);

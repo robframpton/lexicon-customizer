@@ -89,7 +89,7 @@ div.container {
 	padding-top: 70px;
 }
 
-.component-menu, .preview-box, .variables-editor {
+.side-menu, .preview-box, .variables-editor {
 	display: inline-block;
 	float: left;
 	height: 100%;
@@ -97,20 +97,20 @@ div.container {
 	overflow-y: auto;
 }
 
-.component-menu, .variables-editor {
+.side-menu, .variables-editor {
 	padding: 20px;
 }
 
-.component-menu {
+.side-menu {
 	width: 20%;
 }
 
-.component-list {
+.side-menu-list {
 	list-style: none;
 	padding: 0;
 }
 
-.component-item {
+.side-menu-list-item {
 	padding: 2px 8px;
 	transition: background-color 400ms, box-shadow 400ms;
 
@@ -118,9 +118,7 @@ div.container {
 		background-color: #5BBFDC;
 		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 	}
-}
 
-.component-item {
 	a {
 		color: #5BBFDC;
 	}
