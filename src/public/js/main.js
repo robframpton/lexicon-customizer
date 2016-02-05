@@ -53,10 +53,7 @@ store.dispatch({
 const render = () => {
 	ReactDOM.render(
 		<Provider store={store}>
-			<LexiconCustomizer
-				baseVariables={lexiconBaseVariables}
-				variables={store.getState().variables}
-			/>
+			<LexiconCustomizer />
 		</Provider>,
 		document.getElementById('main')
 	);
