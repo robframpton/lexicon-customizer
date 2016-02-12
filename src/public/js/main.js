@@ -27,7 +27,7 @@ componentScraper.mergeCustomVariables(variables);
 
 const initalState = {
 	baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
-	components: componentScraper.getLexiconBaseComponents();
+	components: componentScraper.getLexiconBaseComponents(),
 	variables
 };
 
