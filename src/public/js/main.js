@@ -11,16 +11,24 @@ import LexiconCustomizer from '../js/components/LexiconCustomizer'
 import lexiconCustomizerReducer from '../js/reducers/index'
 import UserConfig from '../../../lib/user_config';
 
-let userConfig = new UserConfig();
+const userConfig = new UserConfig();
+const persistedConfig = userConfig.getConfig();
 
+let variables;
 
-let lexiconBaseVariables = componentScraper.mapLexiconVariables();
+if (persistedConfig.baseLexiconTheme === 'atlasTheme') {
+	variables = componentScraper.mapAtlasVariables();
+}
+else {
+	variables = componentScraper.mapLexiconVariables();
+}
 
-componentScraper.mergeCustomVariables(lexiconBaseVariables);
+componentScraper.mergeCustomVariables(variables);
 
 const initalState = {
-	components: componentScraper.getLexiconBaseComponents(),
-	variables: lexiconBaseVariables
+	baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
+	components: componentScraper.getLexiconBaseComponents();
+	variables
 };
 
 const store = createStore(

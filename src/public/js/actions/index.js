@@ -4,6 +4,8 @@ import sass from '../../../../lib/sass';
 import themeUtil from '../../../../lib/theme';
 import UserConfig from '../../../../lib/user_config';
 
+const userConfig = new UserConfig();
+
 export function buildLexicon() {
 	return function(dispatch, getState) {
 		const state = getState();
@@ -43,17 +45,29 @@ export function renderPreview(component) {
 };
 
 export function resetVariables(variables) {
-	return {
-		type: 'RESET_VARIABLES',
-		variables
+	return function (dispatch, getState) {
+		let lexiconBaseVariables = componentScraper.mapLexiconVariables();
+
+		dispatch(setVariables(lexiconBaseVariables));
+
+		sass.clearCustomVariablesFile()
+			.then(function() {
+				dispatch(buildLexicon());
+			});
 	};
 };
 
 export function setBaseLexiconTheme(value) {
-	return {
-		type: 'SET_BASE_LEXICON_THEME',
-		value
-	};
+	return function (dispatch, getState) {
+		dispatch({
+			type: 'SET_BASE_LEXICON_THEME',
+			value
+		});
+
+		userConfig.setConfig('baseLexiconTheme', value);
+
+		dispatch(buildLexicon());
+	}
 };
 
 export function setBaseTheme(theme) {
@@ -76,5 +90,12 @@ export function setVariable(component, name, value) {
 		name,
 		type: 'SET_VARIABLE',
 		value
+	};
+};
+
+export function setVariables(variables) {
+	return {
+		type: 'SET_VARIABLES',
+		variables
 	};
 };
