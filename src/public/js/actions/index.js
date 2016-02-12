@@ -84,6 +84,21 @@ export function setSelectedComponent(component) {
 	};
 };
 
+export function setTheme(path) {
+	return function (dispatch, getState) {
+		if (!themeUtil.isTheme(path)) {
+			path = '';
+		}
+
+		userConfig.setConfig('theme', path);
+
+		dispatch({
+			path,
+			type: 'SET_THEME'
+		});
+	};
+};
+
 export function setVariable(component, name, value) {
 	return {
 		component,

@@ -6,30 +6,12 @@ import thunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-import componentScraper from '../../../lib/component-scraper';
 import LexiconCustomizer from '../js/components/LexiconCustomizer'
 import lexiconCustomizerReducer from '../js/reducers/index'
-import UserConfig from '../../../lib/user_config';
 
-const userConfig = new UserConfig();
-const persistedConfig = userConfig.getConfig();
+import hydrateState from '../../../lib/hydrate_state';
 
-let variables;
-
-if (persistedConfig.baseLexiconTheme === 'atlasTheme') {
-	variables = componentScraper.mapAtlasVariables();
-}
-else {
-	variables = componentScraper.mapLexiconVariables();
-}
-
-componentScraper.mergeCustomVariables(variables);
-
-const initalState = {
-	baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
-	components: componentScraper.getLexiconBaseComponents(),
-	variables
-};
+const initalState = hydrateState();
 
 const store = createStore(
 	lexiconCustomizerReducer,
