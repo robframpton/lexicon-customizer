@@ -5,6 +5,6 @@ const theme = (state = '', action) => {
 		default:
 			return state;
 	}
-}
+};
 
-export default theme
+export default theme;

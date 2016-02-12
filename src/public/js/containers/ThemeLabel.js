@@ -9,9 +9,9 @@ const mapStateToProps = (state, ownProps) => {
 	}
 
 	return {
-		themeName: themeName
-	}
-}
+		themeName
+	};
+};
 
 let ThemeLabel = ({ themeName }) => {
 	return (
