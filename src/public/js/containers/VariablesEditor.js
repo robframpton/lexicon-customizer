@@ -25,10 +25,10 @@ class VariablesEditor extends Component {
 	}
 
 	renderInputs() {
-		let { selectedComponent, variables } = this.props;
+		let { group, selectedComponent, variables } = this.props;
 		let handleChange = this.handleChange.bind(this);
 
-		let componentVariables = variables[selectedComponent];
+		let componentVariables = variables[group][selectedComponent];
 		let isColor = this._isColor.bind(this);
 
 		variables = this._flattenVariables(variables);
@@ -49,9 +49,9 @@ class VariablesEditor extends Component {
 	}
 
 	handleChange(name, value) {
-		let { dispatch, selectedComponent } = this.props;
+		let { dispatch, group, selectedComponent } = this.props;
 
-		dispatch(setVariable(selectedComponent, name, value));
+		dispatch(setVariable(group, selectedComponent, name, value));
 		dispatch(createVariablesFile());
 	}
 
@@ -66,7 +66,13 @@ class VariablesEditor extends Component {
 	}
 
 	_flattenVariables(variables) {
+		var instance = this;
+
 		return _.reduce(variables, (result, item, index) => {
+			if (index == 'bootstrap' || index == 'lexicon') {
+				item = instance._flattenVariables(item);
+			}
+
 			_.assign(result, item);
 
 			return result;
@@ -75,9 +81,10 @@ class VariablesEditor extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-	let { selectedComponent, variables } = state;
+	let { group, selectedComponent, variables } = state;
 
 	return {
+		group,
 		selectedComponent,
 		variables
 	};

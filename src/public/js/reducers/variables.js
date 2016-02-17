@@ -5,10 +5,12 @@ const variables = (state = {}, action) => {
 			return state;
 		case 'SET_VARIABLE':
 			let newVariables = Object.assign({}, state);
-			newVariables[action.component][action.name] = action.value;
+
+			newVariables[action.group][action.component][action.name] = action.value;
 
 			return newVariables;
 		case 'SET_VARIABLES':
+			// TODO: check if new variable mapping works with this
 			return Object.assign({}, state, action.variables);
 		default:
 			return state;

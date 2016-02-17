@@ -5,7 +5,18 @@ import { renderPreview, setSelectedComponent } from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		items: state.components || {},
+		groups: [
+			{
+				id: 'lexicon',
+				items: state.components || {},
+				title: 'Lexicon'
+			},
+			{
+				id: 'bootstrap',
+				items: state.bootstrapComponents || [],
+				title: 'Bootstrap'
+			}
+		],
 		selectedItem: state.selectedComponent
 	};
 };
@@ -14,11 +25,18 @@ const mapDispatchtoProps = (dispatch, ownProps) => {
 	return {
 		onClick: event => {
 			let currentTarget = event.currentTarget;
+
+			let groupId = currentTarget.getAttribute('data-group-id');
 			let selectedComponent = currentTarget.getAttribute('data-name');
 
-			dispatch(setSelectedComponent(selectedComponent));
+			if (groupId != 'bootstrap') {
+				dispatch(setSelectedComponent(selectedComponent));
 
-			dispatch(renderPreview(selectedComponent));
+				dispatch(renderPreview(selectedComponent));
+			}
+			else {
+				console.log('Bootstrap previews not yet supported!');
+			}
 		}
 	};
 };

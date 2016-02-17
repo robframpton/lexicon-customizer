@@ -99,9 +99,10 @@ export function setTheme(path) {
 	};
 };
 
-export function setVariable(component, name, value) {
+export function setVariable(group, component, name, value) {
 	return {
 		component,
+		group,
 		name,
 		type: 'SET_VARIABLE',
 		value

@@ -2,21 +2,29 @@ import React, { Component, PropTypes } from 'react';
 
 class SideMenu extends Component {
 	render() {
+		var instance = this;
+
 		return (
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
-				<ul className="side-menu-list">
-					{this.renderMenuListItems(this.props)}
-				</ul>
+				{this.props.groups.map(function(item, index) {
+					return (
+						<div className="side-menu-group" key={item.id}>
+							<h4>{item.title}</h4>
+
+							<ul className="side-menu-list">
+								{instance.renderMenuListItems(item, instance.props)}
+							</ul>
+						</div>
+					);
+				})}
 			</div>
 		);
 	}
 
-	renderMenuListItems({ items, onClick, selectedItem = '' }) {
-		return Object.keys(items).map(function(name) {
-			var value = items[name];
-
+	renderMenuListItems(item, { onClick, selectedItem = '' }) {
+		return item.items.map(function(name) {
 			var className = 'side-menu-list-item';
 
 			if (name == selectedItem) {
@@ -26,12 +34,11 @@ class SideMenu extends Component {
 			return (
 				<li
 					className={className}
-					data-value={value}
-					key={name}
+					key={`${item.it}_${name}`}
 				>
 					<a
+						data-group-id={item.id}
 						data-name={name}
-						data-value={value}
 						href="javascript:;"
 						onClick={onClick}
 					>
@@ -44,7 +51,7 @@ class SideMenu extends Component {
 };
 
 SideMenu.propTypes = {
-	items: PropTypes.object.isRequired,
+	groups: PropTypes.array.isRequired,
 	onClick: PropTypes.func.isRequired,
 	selectedItem: PropTypes.string
 };
