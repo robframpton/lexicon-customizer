@@ -13,23 +13,24 @@ class VariableInput extends Component {
 	render() {
 		let { label, name, onChange, value, variables } = this.props;
 
-		var colorPicker = '';
+		let colorPicker = '';
 
 		if (this.props.color) {
-			var handleColorPickerClick = this.handleColorPickerClick.bind(this);
+			let handleColorPickerClick = this.handleColorPickerClick.bind(this);
 
-			var colorPickerOverlay = '';
+			let colorPickerOverlay = '';
+			let resolvedValue = this._resolveColorValue(name, value, variables);
 
 			if (this.state.colorPickerVisible) {
 				colorPickerOverlay = (
 					<div className="color-picker-overlay" ref="colorPickerOverlay">
-						<ColorPicker color={value} onChange={this.handleColorPickerChange.bind(this)} type="chrome" />
+						<ColorPicker color={resolvedValue} onChange={this.handleColorPickerChange.bind(this)} type="chrome" />
 					</div>
 				);
 			}
 
 			var triggerStyle = {
-				backgroundColor: this._resolveColorValue(name, value, variables)
+				backgroundColor: resolvedValue
 			};
 
 			colorPicker = (
