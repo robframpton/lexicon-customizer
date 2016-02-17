@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { renderPreview } from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
@@ -21,7 +22,7 @@ class PreviewBox extends Component {
 	render() {
 		return (
 			<div className="preview-box">
-				<webview autosize="on" maxWidth="100%" src={this.props.preview}></webview>
+				<webview autosize="on" maxWidth="100%" ref="webview" src={this.props.preview}></webview>
 			</div>
 		);
 	}

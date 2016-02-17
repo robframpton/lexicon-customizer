@@ -1,4 +1,4 @@
-import componentScraper from '../../../../lib/component-scraper';
+import componentScraper from '../../../../lib/component_scraper';
 import createPreview from '../../../../lib/create_preview';
 import sass from '../../../../lib/sass';
 import themeUtil from '../../../../lib/theme';
