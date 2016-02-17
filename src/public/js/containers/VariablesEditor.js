@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -28,27 +29,48 @@ class VariablesEditor extends Component {
 		let handleChange = this.handleChange.bind(this);
 
 		let componentVariables = variables[selectedComponent];
+		let isColor = this._isColor.bind(this);
+
+		variables = this._flattenVariables(variables);
 
 		return Object.keys(componentVariables).map(function(variableName) {
 			return (
 				<VariableInput
+					color={isColor(variableName)}
 					key={variableName}
 					label={variableName}
 					name={variableName}
 					onChange={handleChange}
 					value={componentVariables[variableName]}
+					variables={variables}
 				/>
 			);
 		});
 	}
 
-	handleChange(event) {
+	handleChange(name, value) {
 		let { dispatch, selectedComponent } = this.props;
 
-		let { currentTarget } = event;
-
-		dispatch(setVariable(selectedComponent, currentTarget.getAttribute('name'), currentTarget.value));
+		dispatch(setVariable(selectedComponent, name, value));
 		dispatch(createVariablesFile());
+	}
+
+	_isColor(variableName) {
+		var color = false;
+
+		if (variableName.indexOf('-bg') > -1 || variableName.indexOf('color') > -1) {
+			color = true;
+		}
+
+		return color;
+	}
+
+	_flattenVariables(variables) {
+		return _.reduce(variables, (result, item, index) => {
+			_.assign(result, item);
+
+			return result;
+		}, {});
 	}
 };
 

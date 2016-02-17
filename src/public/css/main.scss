@@ -92,7 +92,6 @@ div.container {
 
 .side-menu, .preview-box, .variables-editor {
 	display: inline-block;
-	float: left;
 	height: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -194,4 +193,26 @@ div.container {
 
 .react-autosuggest__suggestion--focused {
 	background-color: #7FCEE4;
+}
+
+.variable-input {
+	position: relative;
+}
+
+.color-picker-trigger {
+	background: #EEE;
+	height: 24px;
+	position: absolute;
+	right: 0;
+	top: 31px;
+	width: 24px;
+}
+
+.color-picker-overlay {
+	background-color: #FFF;
+	margin-top: 10px;
+	position: absolute;
+	right: 0;
+	top: 100%;
+	z-index: 1;
 }

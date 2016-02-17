@@ -19,4 +19,4 @@ let ClearThemeButton = ({ dispatch }) => {
 
 ClearThemeButton = connect()(ClearThemeButton);
 
-export default ClearThemeButton
+export default ClearThemeButton;
