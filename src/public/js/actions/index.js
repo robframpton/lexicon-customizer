@@ -77,6 +77,13 @@ export function setBaseTheme(theme) {
 	};
 };
 
+export function setGroup(group) {
+	return {
+		group,
+		type: 'SET_GROUP'
+	}
+};
+
 export function setSelectedComponent(component) {
 	return {
 		component,

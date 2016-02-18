@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SideMenu from '../components/SideMenu';
-import { renderPreview, setSelectedComponent } from '../actions/index';
+import { setGroup, renderPreview, setSelectedComponent } from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -29,9 +29,10 @@ const mapDispatchtoProps = (dispatch, ownProps) => {
 			let groupId = currentTarget.getAttribute('data-group-id');
 			let selectedComponent = currentTarget.getAttribute('data-name');
 
-			if (groupId != 'bootstrap') {
-				dispatch(setSelectedComponent(selectedComponent));
+			dispatch(setGroup(groupId));
+			dispatch(setSelectedComponent(selectedComponent));
 
+			if (groupId != 'bootstrap') {
 				dispatch(renderPreview(selectedComponent));
 			}
 			else {
