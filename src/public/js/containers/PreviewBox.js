@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import { renderPreview } from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
-	const { preview, selectedComponent } = state;
+	let { preview, selectedComponent } = state;
+
+	let { cssPath, htmlPath } = preview;
 
 	return {
-		preview,
+		cssPath,
+		htmlPath,
 		selectedComponent
 	};
 };
@@ -19,10 +22,14 @@ class PreviewBox extends Component {
 		dispatch(renderPreview(selectedComponent));
 	}
 
+	componentWillReceiveProps() {
+		this.refs.webview.executeJavaScript(`document.getElementById('lexiconStylesheetLink').setAttribute('href', '${this.props.cssPath}');`);
+	}
+
 	render() {
 		return (
 			<div className="preview-box">
-				<webview autosize="on" maxWidth="100%" ref="webview" src={this.props.preview}></webview>
+				<webview autosize="on" maxWidth="100%" ref="webview" src={this.props.htmlPath}></webview>
 			</div>
 		);
 	}

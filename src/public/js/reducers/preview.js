@@ -1,7 +1,7 @@
-const preview = (state = '', action) => {
+const preview = (state = {}, action) => {
 	switch (action.type) {
 		case 'CREATE_PREVIEW':
-			return action.url;
+			return action.preview;
 		default:
 			return state;
 	}

@@ -35,10 +35,10 @@ export function renderPreview(component) {
 	return function (dispatch, getState) {
 		var baseLexiconTheme = getState().baseLexiconTheme;
 		createPreview(component, baseLexiconTheme)
-			.then(function(url) {
+			.then(function(preview) {
 				dispatch({
 					type: 'CREATE_PREVIEW',
-					url: url
+					preview: preview
 				});
 			});
 	};
