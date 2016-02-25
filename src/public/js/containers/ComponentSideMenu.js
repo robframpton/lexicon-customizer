@@ -31,13 +31,7 @@ const mapDispatchtoProps = (dispatch, ownProps) => {
 
 			dispatch(setGroup(groupId));
 			dispatch(setSelectedComponent(selectedComponent));
-
-			if (groupId != 'bootstrap') {
-				dispatch(renderPreview(selectedComponent));
-			}
-			else {
-				console.log('Bootstrap previews not yet supported!');
-			}
+			dispatch(renderPreview(selectedComponent));
 		}
 	};
 };
