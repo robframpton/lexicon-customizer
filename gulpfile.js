@@ -48,6 +48,6 @@ gulp.task('watch', () => {
 	watch('src/**/*', vinyl => {
 		//var dirname = path.basename(path.dirname(vinyl.path));
 
-		gulp.start(`build`);
+		gulp.start('build');
 	});
 });
