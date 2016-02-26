@@ -30,8 +30,14 @@ class PreviewBox extends Component {
 		return (
 			<div className="preview-box">
 				<webview autosize="on" maxWidth="100%" ref="webview" src={this.props.htmlPath}></webview>
+
+				<a className="preview-box-dev-tools-btn" href="javascript:;" onClick={this.openDevTools.bind(this)}>Dev Tools</a>
 			</div>
 		);
+	}
+
+	openDevTools() {
+		this.refs.webview.openDevTools();
 	}
 }
 
