@@ -1,25 +1,49 @@
 import React, { Component, PropTypes } from 'react';
 
 class SideMenu extends Component {
+	constructor(props) {
+		super(props);
+
+		const instance = this;
+
+		this.state = {};
+
+		props.groups.forEach(function(item, index) {
+			instance.state[instance._getListRef(item)] = true;
+		});
+	}
+
 	render() {
-		var instance = this;
+		const instance = this;
 
 		return (
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
 				{this.props.groups.map(function(item, index) {
+					let listRef = instance._getListRef(item);
+
+					let listContent = instance.state[listRef] ? instance.renderMenuList(item, instance.props) : '';
+
 					return (
 						<div className="side-menu-group" key={item.id}>
-							<h4>{item.title}</h4>
+							<a href="javascript:;" onClick={instance.onSideMenuHeaderClick.bind(instance, listRef)}><h4>{item.title}</h4></a>
 
-							<ul className="side-menu-list">
-								{instance.renderMenuListItems(item, instance.props)}
-							</ul>
+							{listContent}
 						</div>
 					);
 				})}
 			</div>
+		);
+	}
+
+	renderMenuList(item, props) {
+		let listRef = this._getListRef(item);
+
+		return (
+			<ul className="side-menu-list">
+				{this.renderMenuListItems(item, props)}
+			</ul>
 		);
 	}
 
@@ -47,6 +71,18 @@ class SideMenu extends Component {
 				</li>
 			);
 		});
+	}
+
+	onSideMenuHeaderClick(listRef) {
+		let newState = {};
+
+		newState[listRef] = !this.state[listRef];
+
+		this.setState(newState);
+	}
+
+	_getListRef(group) {
+		return group.id + 'List';
 	}
 };
 
