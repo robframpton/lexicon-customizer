@@ -45,7 +45,11 @@ class VariableInput extends Component {
 
 			colorPicker = (
 				<div className="color-picker">
-					<div className="color-picker-trigger" onClick={handleColorPickerClick} style={triggerStyle}></div>
+					<div className="color-picker-trigger" onClick={handleColorPickerClick}>
+						<div className="color-picker-trigger-preview" style={triggerStyle}></div>
+
+						<div className="color-picker-trigger-checkerboard"></div>
+					</div>
 
 					{colorPickerOverlay}
 				</div>

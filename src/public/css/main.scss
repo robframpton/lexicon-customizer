@@ -225,11 +225,46 @@ div.container {
 	width: 24px;
 }
 
+.color-picker-trigger-checkerboard, .color-picker-trigger-preview {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.color-picker-trigger-preview {
+	z-index: 1;
+}
+
+.color-picker-trigger-checkerboard {
+	background-color: #EFEFEF;
+	z-index: 0;
+
+	&:after, &:before {
+		background-color: #DDD;
+		content: '';
+		height: 12px;
+		position: absolute;
+		width: 12px;
+	}
+
+	&:after {
+		left: 0;
+		top: 0;
+	}
+
+	&:before {
+		bottom: 0;
+		right: 0;
+	}
+}
+
 .color-picker-overlay {
 	background-color: #FFF;
 	margin-top: 10px;
 	position: absolute;
 	right: 0;
 	top: 100%;
-	z-index: 1;
+	z-index: 2;
 }
