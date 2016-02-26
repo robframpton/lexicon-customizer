@@ -29,6 +29,10 @@ const mapDispatchtoProps = (dispatch, ownProps) => {
 			let groupId = currentTarget.getAttribute('data-group-id');
 			let selectedComponent = currentTarget.getAttribute('data-name');
 
+			dispatch({
+				loading: true,
+				type: 'SET_PREVIEW_LOADING'
+			});
 			dispatch(setGroup(groupId));
 			dispatch(setSelectedComponent(selectedComponent));
 			dispatch(renderPreview(selectedComponent));

@@ -148,6 +148,18 @@ div.container {
 	}
 }
 
+.preview-box-loading-mask {
+	align-items: center;
+	background-color: #FFF;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
 .variables-editor {
 	width: 30%;
 }
