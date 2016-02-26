@@ -23,7 +23,18 @@ class PreviewBox extends Component {
 	}
 
 	componentWillReceiveProps() {
-		this.refs.webview.executeJavaScript(`document.getElementById('lexiconStylesheetLink').setAttribute('href', '${this.props.cssPath}');`);
+		let { cssPath } = this.props;
+
+		let scriptString = `
+			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
+			var lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute('href');
+
+			if (lexiconStylesheetLinkHREF != '${cssPath}') {
+				lexiconStylesheetLink.setAttribute('href', '${cssPath}')
+			};
+		`;
+
+		this.refs.webview.executeJavaScript(scriptString);
 	}
 
 	render() {
