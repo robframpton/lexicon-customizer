@@ -73,7 +73,15 @@ class PreviewBox extends Component {
 	renderPreviewLoadingMask() {
 		return (
 			<div className="preview-box-loading-mask">
-				<span className="preview-box-loading-mask-text">Loading...</span>
+				<div className="preview-box-loading-mask-text">
+					<div className="spinner">
+						<div className="rect1"></div>
+						<div className="rect2"></div>
+						<div className="rect3"></div>
+						<div className="rect4"></div>
+						<div className="rect5"></div>
+					</div>
+				</div>
 			</div>
 		);
 	}
