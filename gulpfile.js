@@ -1,3 +1,5 @@
+'use strict';
+
 const babel = require('gulp-babel');
 const ejs = require('gulp-ejs');
 const gulp = require('gulp');
@@ -20,12 +22,6 @@ gulp.task('build:css', () => {
 
 gulp.task('build:html', () => {
 	return gulp.src('src/public/html/*.html')
-		// .pipe(ejs({
-
-		// }))
-		// .pipe(rename({
-		// 	extname: 'html'
-		// }))
 		.pipe(gulp.dest(path.join(pathBuild, 'html')));
 });
 
@@ -46,8 +42,12 @@ gulp.task('build:js', () => {
 
 gulp.task('watch', () => {
 	watch('src/**/*', vinyl => {
-		//var dirname = path.basename(path.dirname(vinyl.path));
+		var cwdName = path.basename(process.cwd());
 
-		gulp.start('build');
+		var regex = new RegExp(path.join(cwdName, 'src/public/') + '(.+?)\\/');
+
+		var subDirName = vinyl.path.match(regex)[1];
+
+		gulp.start(`build:${subDirName}`);
 	});
 });
