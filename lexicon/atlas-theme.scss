@@ -12,8 +12,4 @@
 
 @import "node_modules/lexicon/src/scss/atlas-theme/atlas";
 
-.lexicon-customizer-preview-box {
-	overflow: auto;
-	overflow-x: hidden;
-	padding: 20px;
-}
+@import "customizer_common";
