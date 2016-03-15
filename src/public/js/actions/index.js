@@ -21,7 +21,7 @@ export function buildLexicon() {
 };
 
 export function createVariablesFile() {
-	return function (dispatch, getState) {
+	return function(dispatch, getState) {
 		const state = getState();
 
 		sass.writeCustomVariablesFile(state.variables, state.theme)
@@ -32,8 +32,9 @@ export function createVariablesFile() {
 };
 
 export function renderPreview(component) {
-	return function (dispatch, getState) {
+	return function(dispatch, getState) {
 		var baseLexiconTheme = getState().baseLexiconTheme;
+
 		createPreview(getState().group, component, baseLexiconTheme)
 			.then(function(preview) {
 				dispatch({
@@ -45,7 +46,7 @@ export function renderPreview(component) {
 };
 
 export function resetVariables(variables) {
-	return function (dispatch, getState) {
+	return function(dispatch, getState) {
 		let lexiconBaseVariables = componentScraper.mapLexiconVariables();
 
 		dispatch(setVariables(lexiconBaseVariables));
@@ -58,7 +59,7 @@ export function resetVariables(variables) {
 };
 
 export function setBaseLexiconTheme(value) {
-	return function (dispatch, getState) {
+	return function(dispatch, getState) {
 		dispatch({
 			type: 'SET_BASE_LEXICON_THEME',
 			value
@@ -92,7 +93,7 @@ export function setSelectedComponent(component) {
 };
 
 export function setTheme(path) {
-	return function (dispatch, getState) {
+	return function(dispatch, getState) {
 		if (!themeUtil.isTheme(path)) {
 			path = '';
 		}
