@@ -58,7 +58,10 @@ class VariablesEditor extends Component {
 	_isColor(variableName) {
 		var color = false;
 
-		if (variableName.indexOf('-bg') > -1 || variableName.indexOf('color') > -1 || _.endsWith(variableName, '-border')) {
+		if (variableName.indexOf('-bg') > -1 ||
+			variableName.indexOf('color') > -1 ||
+			_.endsWith(variableName, '-border') ||
+			_.endsWith(variableName, '-text')) {
 			color = true;
 		}
 
