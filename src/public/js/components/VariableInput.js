@@ -19,7 +19,11 @@ class VariableInput extends Component {
 
 		let colorPicker = '';
 
+		let className = 'form-control';
+
 		if (this.props.color) {
+			className += ' color-input';
+
 			let handleColorPickerClick = this.handleColorPickerClick.bind(this);
 
 			let colorPickerOverlay = '';
@@ -61,7 +65,7 @@ class VariableInput extends Component {
 				<label htmlFor={name}>{name}</label>
 
 				<input
-					className="form-control"
+					className={className}
 					name={name}
 					onChange={this.handleInputChange.bind(this)}
 					type="text"

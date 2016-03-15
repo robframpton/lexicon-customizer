@@ -11,6 +11,12 @@ body {
 
 a {
 	color: $brand-primary;
+	transition: color 300ms;
+
+	&:active, &:focus, &:hover {
+		color: darken($brand-primary, 20%);
+		text-decoration: none;
+	}
 }
 
 .lexicon-customizer-header {
@@ -126,10 +132,6 @@ div.container {
 		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 	}
 
-	a {
-		color: $brand-primary;
-	}
-
 	&.selected a {
 		color: #FFF;
 	}
@@ -231,6 +233,10 @@ div.container {
 
 .variable-input {
 	position: relative;
+}
+
+.color-input {
+	padding-right: 30px;
 }
 
 .color-picker-trigger {
