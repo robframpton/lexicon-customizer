@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-import LexiconCustomizer from '../js/components/LexiconCustomizer'
+import LexiconCustomizer from '../js/containers/LexiconCustomizer'
 import lexiconCustomizerReducer from '../js/reducers/index'
 
 import hydrateState from '../../../lib/hydrate_state';

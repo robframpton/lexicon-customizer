@@ -26,7 +26,7 @@ class SideMenu extends Component {
 					let listContent = instance.state[listRef] ? instance.renderMenuList(item, instance.props) : '';
 
 					return (
-						<div className="side-menu-group" key={item.id}>
+						<div className="side-menu-group" data-id={item.id} key={item.id}>
 							<a href="javascript:;" onClick={instance.onSideMenuHeaderClick.bind(instance, listRef)}><h4>{item.title}</h4></a>
 
 							{listContent}
