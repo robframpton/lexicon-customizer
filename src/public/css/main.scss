@@ -390,3 +390,16 @@ div.container {
 		-webkit-transform: scaleY(1.0);
 	}
 }
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #D0D0D0;
+	border-radius: 10px;
+}
