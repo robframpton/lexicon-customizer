@@ -139,6 +139,10 @@ div.container {
 
 .preview-box {
 	width: 50%;
+
+	webview {
+		height: 100%;
+	}
 }
 
 .preview-box-dev-tools-btn {
