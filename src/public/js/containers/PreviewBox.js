@@ -41,9 +41,7 @@ class PreviewBox extends Component {
 		});
 	}
 
-	componentWillReceiveProps() {
-		let { cssPath } = this.props;
-
+	componentWillReceiveProps({ cssPath }) {
 		let scriptString = `
 			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
 			var lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute('href');
