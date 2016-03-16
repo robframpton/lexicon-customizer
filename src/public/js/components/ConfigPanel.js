@@ -3,6 +3,7 @@ import ClearThemeButton from '../containers/ClearThemeButton'
 import ResetButton from '../containers/ResetButton'
 import ThemeLabel from '../containers/ThemeLabel'
 import ThemeRadio from '../containers/ThemeRadio'
+import ConfigPanelGroup from '../components/ConfigPanelGroup'
 
 class ConfigPanel extends Component {
 	render() {
@@ -14,13 +15,18 @@ class ConfigPanel extends Component {
 
 		return (
 			<div className={className}>
-				<ThemeRadio label="Lexicon Base" value="lexiconBase" />
-				<ThemeRadio label="Atlas Theme" value="atlasTheme" />
+				<ConfigPanelGroup label="General">
+					<ThemeRadio label="Lexicon Base" value="lexiconBase" />
+					<ThemeRadio label="Atlas Theme" value="atlasTheme" />
 
-				<ThemeLabel />
+					<ResetButton />
+				</ConfigPanelGroup>
 
-				<ResetButton />
-				<ClearThemeButton />
+				<ConfigPanelGroup label="Theme">
+					<ThemeLabel />
+
+					<ClearThemeButton />
+				</ConfigPanelGroup>
 			</div>
 		)
 	}

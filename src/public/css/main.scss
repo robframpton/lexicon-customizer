@@ -91,6 +91,34 @@ a {
 	}
 }
 
+.config-panel-group {
+	margin-bottom: 20px;
+
+	.config-panel-group-label {
+		color: #888;
+		display: block;
+		position: relative;
+		text-align: center;
+
+		&:after {
+			background-color: #888;
+			content: '';
+			height: 1px;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 50%;
+		}
+
+		.config-panel-group-label-text {
+			background-color: #333;
+			padding: 0px 8px;
+			position: relative;
+			z-index: 10;
+		}
+	}
+}
+
 div.container {
 	padding: 0;
 	width: auto;
