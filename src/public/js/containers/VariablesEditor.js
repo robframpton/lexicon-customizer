@@ -25,13 +25,13 @@ class VariablesEditor extends Component {
 	}
 
 	renderInputs() {
-		let { group, selectedComponent, variables } = this.props;
+		let { group, selectedComponent, modifiedVariables } = this.props;
 		let handleChange = this.handleChange.bind(this);
 
-		let componentVariables = variables[group][selectedComponent];
+		let componentVariables = modifiedVariables[group][selectedComponent];
 		let isColor = this._isColor.bind(this);
 
-		variables = this._flattenVariables(variables);
+		modifiedVariables = this._flattenVariables(modifiedVariables);
 
 		return Object.keys(componentVariables).map(function(variableName) {
 			return (
@@ -42,7 +42,7 @@ class VariablesEditor extends Component {
 					name={variableName}
 					onChange={handleChange}
 					value={componentVariables[variableName]}
-					variables={variables}
+					modifiedVariables={modifiedVariables}
 				/>
 			);
 		});
@@ -68,10 +68,10 @@ class VariablesEditor extends Component {
 		return color;
 	}
 
-	_flattenVariables(variables) {
+	_flattenVariables(modifiedVariables) {
 		var instance = this;
 
-		return _.reduce(variables, (result, item, index) => {
+		return _.reduce(modifiedVariables, (result, item, index) => {
 			if (index == 'bootstrap' || index == 'lexicon') {
 				item = instance._flattenVariables(item);
 			}
@@ -84,12 +84,12 @@ class VariablesEditor extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-	let { group, selectedComponent, variables } = state;
+	let { group, selectedComponent, modifiedVariables } = state;
 
 	return {
 		group,
 		selectedComponent,
-		variables
+		modifiedVariables
 	};
 };
 

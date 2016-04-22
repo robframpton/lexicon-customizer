@@ -24,7 +24,7 @@ export function createVariablesFile() {
 	return function(dispatch, getState) {
 		const state = getState();
 
-		sass.writeCustomVariablesFile(state.variables, state.theme)
+		sass.writeCustomVariablesFile(state.modifiedVariables, state.theme)
 			.then(function() {
 				dispatch(buildLexicon());
 			});
@@ -45,13 +45,15 @@ export function renderPreview(component) {
 	};
 };
 
-export function resetVariables(variables) {
+export function resetVariables() {
 	return function(dispatch, getState) {
-		let lexiconBaseVariables = componentScraper.mapLexiconVariables();
+		var sourceVariables = getState().sourceVariables;
 
-		dispatch(setVariables(lexiconBaseVariables));
+		dispatch(setModifiedVariables(sourceVariables));
 
-		sass.clearCustomVariablesFile()
+		var state = getState();
+
+		sass.clearCustomVariablesFile(state.modifiedVariables, state.theme)
 			.then(function() {
 				dispatch(buildLexicon());
 			});
@@ -85,6 +87,13 @@ export function setGroup(group) {
 	}
 };
 
+export function setModifiedVariables(variables) {
+	return {
+		type: 'SET_MODIFIED_VARIABLES',
+		variables
+	};
+};
+
 export function setSelectedComponent(component) {
 	return {
 		component,
@@ -114,12 +123,5 @@ export function setVariable(group, component, name, value) {
 		name,
 		type: 'SET_VARIABLE',
 		value
-	};
-};
-
-export function setVariables(variables) {
-	return {
-		type: 'SET_VARIABLES',
-		variables
 	};
 };

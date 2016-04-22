@@ -9,7 +9,9 @@ let ResetButton = ({ dispatch }) => {
 		<Button
 			label="Reset"
 			onClick={e => {
-				dispatch(resetVariables());
+				if (confirm('Are you sure you want to reset? This will erase custom variables from your theme\'s _aui_variables.scss file.')) {
+					dispatch(resetVariables());
+				}
 			}}
 		/>
 	);

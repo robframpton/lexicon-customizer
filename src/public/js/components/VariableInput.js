@@ -15,7 +15,7 @@ class VariableInput extends Component {
 	}
 
 	render() {
-		let { label, name, onChange, value, variables } = this.props;
+		let { label, name, onChange, value, modifiedVariables } = this.props;
 
 		let colorPicker = '';
 
@@ -27,7 +27,7 @@ class VariableInput extends Component {
 			let handleColorPickerClick = this.handleColorPickerClick.bind(this);
 
 			let colorPickerOverlay = '';
-			let resolvedValue = this._resolveColorValue(name, value, variables);
+			let resolvedValue = this._resolveColorValue(name, value, modifiedVariables);
 
 			if (this.state.colorPickerVisible) {
 				colorPickerOverlay = (
@@ -122,7 +122,7 @@ class VariableInput extends Component {
 		return (pound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
 	}
 
-	_resolveSassColor(name, value, variables, darken) {
+	_resolveSassColor(name, value, modifiedVariables, darken) {
 		let regex = darken ? regexDarken : regexLighten;
 
 		let match = value.match(regex);
@@ -130,7 +130,7 @@ class VariableInput extends Component {
 		let color = match[1];
 
 		if (color.indexOf('$') > -1) {
-			color = this._resolveColorValue(name, color, variables);
+			color = this._resolveColorValue(name, color, modifiedVariables);
 		}
 
 		let percentage = parseInt(match[2]);
@@ -153,17 +153,17 @@ class VariableInput extends Component {
 		return value;
 	}
 
-	_resolveColorValue(name, value, variables = {}) {
-		var resolvedValue = variables[value];
+	_resolveColorValue(name, value, modifiedVariables = {}) {
+		var resolvedValue = modifiedVariables[value];
 
 		if (resolvedValue && resolvedValue != name) {
-			return this._resolveColorValue(name, resolvedValue, variables);
+			return this._resolveColorValue(name, resolvedValue, modifiedVariables);
 		}
 		else if (regexDarken.test(value)) {
-			value = this._resolveSassColor(name, value, variables, true);
+			value = this._resolveSassColor(name, value, modifiedVariables, true);
 		}
 		else if (regexLighten.test(value)) {
-			value = this._resolveSassColor(name, value, variables, false);
+			value = this._resolveSassColor(name, value, modifiedVariables, false);
 		}
 
 		return value;
