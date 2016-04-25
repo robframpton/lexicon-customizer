@@ -21,27 +21,23 @@ a {
 }
 
 .lexicon-customizer-header {
-	align-items: center;
 	background-color: #444;
 	background: -webkit-linear-gradient(left, rgba(87,87,87,1) 0%, rgba(61,61,61,1) 100%);
 	box-shadow: 0 0 4px #222;
 	border-bottom: 4px solid $brand-primary;
 	color: #FFF;
-	display: flex;
-	flex-direction: row;
-	height: 70px;
-	justify-content: space-between;
+	height: 40px;
 	left: 0;
 	padding: 8px 0 0 20px;
 	position: fixed;
 	right: 0;
+	text-align: center;
 	top: 0;
 	transition: border-color 300ms;
 	z-index: 2;
 	-webkit-app-region: drag;
 
-	h1 {
-		margin: 0;
+	.lexicon-customizer-header-title {
 		text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 	}
 }
@@ -51,6 +47,7 @@ a {
 }
 
 .lexicon-customizer-actions {
+	float: right;
 	margin-right: 20px;
 
 	.btn {
@@ -63,14 +60,14 @@ a {
 
 .config-panel-toggle-btn {
 	border-radius: 2px;
-	padding: 14px;
+	padding: 6px;
 
 	&:hover {
 		background-color: #222;
 	}
 
 	img {
-		height: 34px;
+		height: 24px;
 	}
 }
 
@@ -82,7 +79,7 @@ a {
 	padding: 20px;
 	position: fixed;
 	right: -255px;
-	top: 70px;
+	top: 40px;
 	transition: right 200ms;
 	width: 250px;
 
@@ -133,7 +130,7 @@ div.container {
 .lexicon-customizer-content {
 	height: 100vh;
 	overflow: hidden;
-	padding-top: 70px;
+	padding-top: 40px;
 }
 
 .side-menu, .preview-box, .variables-editor {

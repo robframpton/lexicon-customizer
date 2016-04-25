@@ -13,7 +13,7 @@ class Header extends Component {
 	render() {
 		return (
 			<header className="lexicon-customizer-header">
-				<h1>Lexicon Customizer</h1>
+				<span className="lexicon-customizer-header-title">Lexicon Customizer</span>
 
 				<div className="lexicon-customizer-actions">
 					<a
