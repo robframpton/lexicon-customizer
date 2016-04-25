@@ -55,6 +55,9 @@ class SideMenu extends Component {
 				className += ' selected';
 			}
 
+			var displayName = name.replace('-', ' ');
+			displayName = displayName[0].toUpperCase() + displayName.slice(1, displayName.length);
+
 			return (
 				<li
 					className={className}
@@ -66,7 +69,7 @@ class SideMenu extends Component {
 						href="javascript:;"
 						onClick={onClick}
 					>
-						{name}
+						{displayName}
 					</a>
 				</li>
 			);
