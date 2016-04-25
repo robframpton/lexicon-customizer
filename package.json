@@ -29,6 +29,7 @@
     "lexicon": "https://github.com/liferay/lexicon.git",
     "lodash": "^4.2.0",
     "react": "^0.14.6",
+    "react-click-outside": "^2.1.0",
     "react-color": "^1.3.7",
     "react-dom": "^0.14.6",
     "react-redux": "^4.2.1",

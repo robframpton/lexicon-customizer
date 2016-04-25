@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
 import ColorPicker from 'react-color';
+import enhanceWithClickOutside from 'react-click-outside';
+import React, { Component, PropTypes } from 'react';
 
 const regexDarken = /darken\((.*),(.*)\)/;
 
@@ -113,6 +114,10 @@ class VariableInput extends Component {
 
 		let { name, onChange } = this.props;
 
+		this.setState({
+			autoCompleteIndex: 0
+		});
+
 		onChange(name, value);
 	}
 
@@ -125,6 +130,12 @@ class VariableInput extends Component {
 	handleAutoCompleteMouseLeave(event) {
 		this.setState({
 			autoCompleteActive: false
+		});
+	}
+
+	handleClickOutside() {
+		this.setState({
+			colorPickerVisible: false
 		});
 	}
 
@@ -177,30 +188,38 @@ class VariableInput extends Component {
 
 		let key = event.key;
 
-		var autoCompleteList = this._getAutoCompleteMenuList();
+		let autoCompleteList = this._getAutoCompleteMenuList();
 
-		var listLength = autoCompleteList.length;
+		let listLength = autoCompleteList.length;
 
 		if (key == 'Enter') {
-			var value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
+			let value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
 
 			let { name, onChange } = this.props;
+
+			this.setState({
+				autoCompleteIndex: 0
+			});
 
 			onChange(name, value);
 		}
 		else if (key == 'ArrowDown') {
 			if (autoCompleteIndex + 1 < listLength) {
-				autoCompleteIndex++;
+				this.setState({
+					autoCompleteIndex: autoCompleteIndex + 1
+				});
 			}
 		}
 		else if (key == 'ArrowUp') {
 			if (autoCompleteIndex > 0) {
-				autoCompleteIndex--;
+				this.setState({
+					autoCompleteIndex: autoCompleteIndex - 1
+				});
 			}
 		}
 
 		this.setState({
-			autoCompleteIndex: autoCompleteIndex
+			colorPickerVisible: false
 		});
 	}
 
@@ -211,18 +230,18 @@ class VariableInput extends Component {
 	}
 
 	_adjustColor(color, percentage) {
-		var pound = false;
+		let pound = false;
 
 		if (color[0] == '#') {
 			color = color.slice(1);
 			pound = true;
 		}
 
-		var num = parseInt(color, 16);
+		let num = parseInt(color, 16);
 
-		var r = this._normalizeRGBAValue((num >> 16) + percentage);
-		var b = this._normalizeRGBAValue(((num >> 8) & 0x00FF) + percentage);
-		var g = this._normalizeRGBAValue((num & 0x0000FF) + percentage);
+		let r = this._normalizeRGBAValue((num >> 16) + percentage);
+		let b = this._normalizeRGBAValue(((num >> 8) & 0x00FF) + percentage);
+		let g = this._normalizeRGBAValue((num & 0x0000FF) + percentage);
 
 		return (pound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
 	}
@@ -239,7 +258,7 @@ class VariableInput extends Component {
 		let handleAutoCompleteClick = this.handleAutoCompleteClick.bind(this);
 
 		let autoCompleteIndex = this.state.autoCompleteIndex;
-		var reducedIndex = 0;
+		let reducedIndex = 0;
 
 		let items = Object.keys(modifiedVariables).reduce(function(previousValue, currentValue, currentIndex, array) {
 			if (currentValue.indexOf(value) == 0) {
@@ -305,7 +324,7 @@ class VariableInput extends Component {
 	}
 
 	_resolveColorValue(name, value, modifiedVariables = {}) {
-		var resolvedValue = modifiedVariables[value];
+		let resolvedValue = modifiedVariables[value];
 
 		if (resolvedValue && resolvedValue != name) {
 			return this._resolveColorValue(name, resolvedValue, modifiedVariables);
@@ -328,4 +347,4 @@ VariableInput.propTypes = {
 	value: PropTypes.string.isRequired
 };
 
-export default VariableInput;
+export default enhanceWithClickOutside(VariableInput);
