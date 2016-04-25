@@ -10,16 +10,29 @@ class VariableInput extends Component {
 		super(props);
 
 		this.state = {
-			colorPickerVisible: false
+			autoCompleteActive: false,
+			autoCompleteIndex: 0,
+			colorPickerVisible: false,
+			focused: false
 		};
 	}
 
 	render() {
 		let { label, name, onChange, value, modifiedVariables } = this.props;
+		let { autoCompleteActive, focused } = this.state;
 
+		let autoComplete = '';
 		let colorPicker = '';
 
 		let className = 'form-control';
+
+		if (autoCompleteActive) {
+			focused = true;
+		}
+
+		if (focused && value && value.length > 1 && value[0] == '$') {
+			autoComplete = this._renderAutoComplete(value, modifiedVariables);
+		}
 
 		if (this.props.color) {
 			className += ' color-input';
@@ -37,7 +50,7 @@ class VariableInput extends Component {
 				);
 			}
 
-			var triggerStyle = {
+			let triggerStyle = {
 				backgroundColor: resolvedValue
 			};
 
@@ -67,20 +80,52 @@ class VariableInput extends Component {
 				<input
 					className={className}
 					name={name}
+					onBlur={this.handleInputBlur.bind(this)}
 					onChange={this.handleInputChange.bind(this)}
+					onFocus={this.handleInputFocus.bind(this)}
+					onKeyDown={this.handleInputKeyDown.bind(this)}
+					ref="input"
 					type="text"
 					value={value}
 				/>
+
+				{autoComplete}
 
 				{colorPicker}
 			</div>
 		);
 	}
 
-	handleInputChange(event) {
-		let { onChange, name } = this.props;
+	componentDidUpdate(event) {
+		let { autoCompleteActive } = this.state;
 
-		onChange(name, event.currentTarget.value);
+		let active = this._isAutoCompleteActive();
+
+		if (autoCompleteActive != active) {
+			this.setState({
+				autoCompleteActive: active
+			});
+		}
+	}
+
+	handleAutoCompleteClick(event) {
+		let value = event.target.getAttribute('data-value');
+
+		let { name, onChange } = this.props;
+
+		onChange(name, value);
+	}
+
+	handleAutoCompleteMouseEnter(event) {
+		this.setState({
+			autoCompleteActive: true
+		});
+	}
+
+	handleAutoCompleteMouseLeave(event) {
+		this.setState({
+			autoCompleteActive: false
+		});
 	}
 
 	handleColorPickerChange(color) {
@@ -105,6 +150,66 @@ class VariableInput extends Component {
 		});
 	}
 
+	handleInputBlur(event) {
+		this.setState({
+			focused: false
+		});
+	}
+
+	handleInputChange(event) {
+		let { onChange, name } = this.props;
+
+		onChange(name, event.currentTarget.value);
+	}
+
+	handleInputFocus(event) {
+		this.setState({
+			focused: true
+		});
+	}
+
+	handleInputKeyDown(event) {
+		let { autoCompleteActive, autoCompleteIndex } = this.state;
+
+		if (!autoCompleteActive) {
+			return;
+		}
+
+		let key = event.key;
+
+		var autoCompleteList = this._getAutoCompleteMenuList();
+
+		var listLength = autoCompleteList.length;
+
+		if (key == 'Enter') {
+			var value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
+
+			let { name, onChange } = this.props;
+
+			onChange(name, value);
+		}
+		else if (key == 'ArrowDown') {
+			if (autoCompleteIndex + 1 < listLength) {
+				autoCompleteIndex++;
+			}
+		}
+		else if (key == 'ArrowUp') {
+			if (autoCompleteIndex > 0) {
+				autoCompleteIndex--;
+			}
+		}
+
+		this.setState({
+			autoCompleteIndex: autoCompleteIndex
+		});
+	}
+
+	_isAutoCompleteActive() {
+		let { autoCompleteMenu } = this.refs;
+
+		return autoCompleteMenu && autoCompleteMenu.children.length;
+	}
+
 	_adjustColor(color, percentage) {
 		var pound = false;
 
@@ -120,6 +225,52 @@ class VariableInput extends Component {
 		var g = this._normalizeRGBAValue((num & 0x0000FF) + percentage);
 
 		return (pound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
+	}
+
+	_getAutoCompleteMenuList() {
+		return this.refs.autoCompleteMenu.children;
+	}
+
+	_renderAutoComplete(value, modifiedVariables) {
+		if (modifiedVariables[value]) {
+			return '';
+		}
+
+		let handleAutoCompleteClick = this.handleAutoCompleteClick.bind(this);
+
+		let autoCompleteIndex = this.state.autoCompleteIndex;
+		var reducedIndex = 0;
+
+		let items = Object.keys(modifiedVariables).reduce(function(previousValue, currentValue, currentIndex, array) {
+			if (currentValue.indexOf(value) == 0) {
+				previousValue.push(
+					<div
+						className="auto-complete-item"
+						data-selected={autoCompleteIndex == reducedIndex}
+						data-value={currentValue}
+						key={currentValue}
+						onClick={handleAutoCompleteClick}
+					>
+						{currentValue}
+					</div>
+				);
+
+				reducedIndex++;
+			}
+
+			return previousValue;
+		}, []);
+
+		return (
+			<div
+				className="input-auto-complete-menu"
+				onMouseEnter={this.handleAutoCompleteMouseEnter.bind(this)}
+				onMouseLeave={this.handleAutoCompleteMouseLeave.bind(this)}
+				ref="autoCompleteMenu"
+			>
+				{items}
+			</div>
+		);
 	}
 
 	_resolveSassColor(name, value, modifiedVariables, darken) {
