@@ -1,17 +1,17 @@
-$font-awesome-path: "./node_modules/lexicon/build/fonts/alloy-font-awesome/font";
+$font-awesome-path: "./lexicon/build/fonts/alloy-font-awesome/font";
 
-@import "./node_modules/lexicon/src/scss/bootstrap/variables";
+@import "./lexicon/src/scss/bootstrap/variables";
 
-@import "./node_modules/lexicon/src/scss/lexicon-base/variables";
-@import "./node_modules/lexicon/src/scss/lexicon-base/mixins";
+@import "./lexicon/src/scss/lexicon-base/variables";
+@import "./lexicon/src/scss/lexicon-base/mixins";
 
-@import "./node_modules/lexicon/src/scss/atlas-theme/variables";
-@import "./node_modules/lexicon/src/scss/atlas-theme/mixins";
+@import "./lexicon/src/scss/atlas-theme/variables";
+@import "./lexicon/src/scss/atlas-theme/mixins";
 
 @import "custom_variables";
 
-@import "node_modules/lexicon/src/scss/lexicon-base/main";
+@import "./lexicon/src/scss/lexicon-base/main";
 
-@import "node_modules/lexicon/src/scss/atlas-theme/atlas";
+@import "./lexicon/src/scss/atlas-theme/atlas";
 
 @import "customizer_common";
