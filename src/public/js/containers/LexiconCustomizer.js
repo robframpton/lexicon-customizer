@@ -5,7 +5,6 @@ import ComponentSideMenu from '../containers/ComponentSideMenu';
 import Header from '../components/Header';
 import PreviewBox from '../containers/PreviewBox';
 import VariablesEditor from '../containers/VariablesEditor';
-import ThemeDropper from '../containers/ThemeDropper';
 
 const mapStateToProps = ({ group }, ownProps) => {
 	return {
@@ -14,9 +13,20 @@ const mapStateToProps = ({ group }, ownProps) => {
 };
 
 class LexiconCustomizer extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			hovering: false
+		};
+	}
+
 	render() {
 		return (
-			<div className="lexicon-customizer" data-group={this.props.group}>
+			<div
+				className="lexicon-customizer"
+				data-group={this.props.group}
+			>
 				<Header />
 
 				<div className="lexicon-customizer-content">
@@ -26,10 +36,6 @@ class LexiconCustomizer extends Component {
 
 					<VariablesEditor />
 				</div>
-
-				<ThemeDropper>
-					Drop theme here!
-				</ThemeDropper>
 			</div>
 		)
 	}

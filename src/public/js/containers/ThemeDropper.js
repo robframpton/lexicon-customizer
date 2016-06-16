@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import FileDropper from '../components/FileDropper';
-import { setTheme } from '../actions/index';
+import FileDropper from '../containers/FileDropper'
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		onDrop: function(event) {
-			var file = event.dataTransfer.files[0];
+class ThemeDropper extends Component {
+	constructor(props) {
+		super(props);
+	}
 
-			dispatch(setTheme(file.path));
-		}
-	};
-};
+	render() {
+		return (
+			<FileDropper onDrop={this.handleDrop.bind(this)}>
+				Drop your theme here!
+			</FileDropper>
+		);
+	}
 
-export default connect(null, mapDispatchToProps)(FileDropper);
+	handleDrop(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		var file = event.dataTransfer.files[0];
+
+		dispatch(setTheme(file.path));
+	}
+}
+
+export default ThemeDropper;
