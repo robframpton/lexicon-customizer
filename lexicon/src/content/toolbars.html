@@ -1,0 +1,971 @@
+---
+title: Toolbars
+section: Elements
+---
+
+<div class="row row-spacing">
+	<div class="col-md-12">
+		<h3>Toolbar</h3>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p>Quickly prototype a toolbar for your portlet, control panel, or site with this component. Vertically align content by adjusting the height of <code>.toolbar-group</code>, <code>.toolbar-group-right</code>, and <code>.toolbar-group-expand</code>.</p>
+
+			<p>Toolbar shouldn't be used to create a toolbar for your inline/text editing application; use <a href="http://getbootstrap.com/components/#btn-groups-toolbar">btn-toolbar</a> for that.</p>
+
+		</blockquote>
+	</div>
+</div>
+
+<div class="row row-spacing">
+	<div class="col-md-12">
+		<div class="toolbar">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<a href="#1" style="">Company</a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-right">
+				<div class="toolbar-group-content">
+					<a href="#1">+Username</a>
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+							<span class="icon-th"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+							<div class="user-icon user-icon-default user-icon-xs">
+								<span class="icon-bell-alt"></span>
+							</div>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+							<div>
+								<span class="icon-plus"></span>
+							</div>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+							<div class="user-icon user-icon-info user-icon-sm">
+								<span class="icon-user"></span>
+							</div>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand">
+				<div class="toolbar-group-field">
+					<div class="input-group">
+						<input class="form-control" type="text">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse0"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse0">
+<pre><code class="html">```<div class="toolbar">
+    <div class="toolbar-group">
+        <div class="toolbar-group-content">
+            <a href="#1" style="">Company</a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-right">
+      <div class="toolbar-group-content">
+          <a href="#1">+Username</a>
+      </div>
+      <div class="toolbar-group-content">
+          <div class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+                  <span class="icon-th"></span>
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a href="#1">Alphabetical</a></li>
+                  <li><a href="#1">Reverse</a></li>
+                  <li><a href="#1">Split</a></li>
+              </ul>
+          </div>
+      </div>
+      <div class="toolbar-group-content">
+          <div class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+                  <div class="user-icon user-icon-default user-icon-xs">
+                      <span class="icon-bell-alt"></span>
+                  </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="#1">Alphabetical</a></li>
+                  <li><a href="#1">Reverse</a></li>
+                  <li><a href="#1">Split</a></li>
+              </ul>
+          </div>
+      </div>
+      <div class="toolbar-group-content">
+          <div class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+                  <div>
+                      <span class="icon-plus"></span>
+                  </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="#1">Alphabetical</a></li>
+                  <li><a href="#1">Reverse</a></li>
+                  <li><a href="#1">Split</a></li>
+              </ul>
+          </div>
+      </div>
+      <div class="toolbar-group-content">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+                    <div class="user-icon user-icon-info user-icon-sm">
+                        <span class="icon-user"></span>
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#1">Alphabetical</a></li>
+                    <li><a href="#1">Reverse</a></li>
+                    <li><a href="#1">Split</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand">
+        <div class="toolbar-group-field">
+            <div class="input-group">
+                <input class="form-control" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+		<div class="toolbar">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+							Application <span class="icon-caret-down"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<button class="btn btn-default">
+						<input type="checkbox" /> <span class="icon-caret-down"></span>
+					</button>
+				</div>
+				<div class="toolbar-group-content">
+					<button class="btn btn-default">
+						<span class="icon-refresh"></span>
+					</button>
+				</div>
+				<div class="toolbar-group-content">
+					<button class="btn btn-default">
+						More <span class="icon-caret-down"></span>
+					</button>
+				</div>
+			</div>
+
+			<div class="toolbar-group-right">
+				<div class="toolbar-group-content">
+					<button class="btn btn-default">
+						<span class="icon-cog"></span> <span class="icon-caret-down"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse1"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse1">
+<pre><code class="html">```<div class="toolbar">
+    <div class="toolbar-group">
+        <div class="toolbar-group-content">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#1">
+                    Application <span class="icon-caret-down"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#1">Alphabetical</a></li>
+                    <li><a href="#1">Reverse</a></li>
+                    <li><a href="#1">Split</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-group">
+        <div class="toolbar-group-content">
+            <button class="btn btn-default">
+                <input type="checkbox" /> <span class="icon-caret-down"></span>
+            </button>
+        </div>
+        <div class="toolbar-group-content">
+            <button class="btn btn-default">
+                <span class="icon-refresh"></span>
+            </button>
+        </div>
+        <div class="toolbar-group-content">
+            <button class="btn btn-default">
+                More <span class="icon-caret-down"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="toolbar-group-right">
+        <div class="toolbar-group-content">
+            <button class="btn btn-default">
+                <span class="icon-cog"></span> <span class="icon-caret-down"></span>
+            </button>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+	</div>
+</div>
+
+<div class="row row-spacing">
+	<div class="col-md-12">
+		<h3>Fill Remaining Space with Form Element</h3>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p>To fill the remaining space with one form element such as a search box, declare <code>.toolbar-group-expand</code> last and use <code>.toolbar-group-field</code>. </p>
+		</blockquote>
+
+		<div class="toolbar">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<input type="checkbox">
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">Order by: <span class="icon-caret-down"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Date</a></li>
+							<li><a href="#1">Time</a></li>
+							<li><a href="#1">Status</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">Name: <span class="icon-caret-down"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="toolbar-group-right">
+				<div class="toolbar-group-content">
+					<a href="#1"><span class="icon-th-large"></span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1"><span class="icon-th-list"></span></a>
+				</div>
+				<div class="toolbar-group-content active">
+					<a href="#1"><span class="icon-reorder"></span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand">
+				<div class="toolbar-group-field">
+					<form>
+						<div class="input-group">
+							<input class="form-control" type="text">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse3"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse3">
+<pre><code class="html">```<div class="toolbar">
+    <div class="toolbar-group">
+        <div class="toolbar-group-content">
+            <input type="checkbox">
+        </div>
+        <div class="toolbar-group-content">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#1">Order by: <span class="icon-caret-down"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#1">Date</a></li>
+                    <li><a href="#1">Time</a></li>
+                    <li><a href="#1">Status</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="toolbar-group-content">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#1">Name: <span class="icon-caret-down"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#1">Alphabetical</a></li>
+                    <li><a href="#1">Reverse</a></li>
+                    <li><a href="#1">Split</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-group-right">
+        <div class="toolbar-group-content">
+            <a href="#1"><span class="icon-th-large"></span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1"><span class="icon-th-list"></span></a>
+        </div>
+        <div class="toolbar-group-content active">
+            <a href="#1"><span class="icon-reorder"></span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand">
+        <div class="toolbar-group-field">
+            <form>
+                <div class="input-group">
+                    <input class="form-control" type="text">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+	</div>
+</div>
+
+<div class="row row-spacing">
+	<div class="col-md-12">
+		<blockquote class="blockquote-sm blockquote-success">
+			<p>To fill the remaining space with multiple elements such as a search box, buttons and dropdowns, use a combination of <code>.toolbar-group-field</code> and <code>.toolbar-group-content</code>. The content that should fill the remaining space should be wrapped in <code>.toolbar-group-content</code> and all other content should be wrapped in <code>.toolbar-group-field</code>.</p>
+		</blockquote>
+
+		<div class="toolbar">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<input type="checkbox">
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">Order by: <span class="icon-caret-down"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Date</a></li>
+							<li><a href="#1">Time</a></li>
+							<li><a href="#1">Status</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">Name: <span class="icon-caret-down"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="toolbar-group-right">
+				<div class="toolbar-group-content">
+					<a href="#1"><span class="icon-th-large"></span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1"><span class="icon-th-list"></span></a>
+				</div>
+				<div class="toolbar-group-content active">
+					<a href="#1"><span class="icon-reorder"></span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand">
+				<div class="toolbar-group-field">
+					<a class="btn btn-default btn-xs" href="#1"><span class="icon-refresh"></span></a>
+				</div>
+				<div class="toolbar-group-field">
+					<a class="btn btn-default btn-xs" href="#1"><span class="icon-share-alt"></span></a>
+				</div>
+
+				<div class="toolbar-group-content">
+					<form>
+						<div class="input-group">
+							<input class="form-control" type="text">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+							</span>
+						</div>
+					</form>
+				</div>
+
+				<div class="toolbar-group-field">
+					<div class="dropdown">
+						<button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+							<span class="icon-cog"></span> <span class="icon-caret-down"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse4"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse4">
+<pre><code class="html">```<div class="toolbar">
+    <div class="toolbar-group">
+        <div class="toolbar-group-content">
+            <input type="checkbox">
+        </div>
+        <div class="toolbar-group-content">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#1">Order by: <span class="icon-caret-down"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#1">Date</a></li>
+                    <li><a href="#1">Time</a></li>
+                    <li><a href="#1">Status</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="toolbar-group-content">
+            <div class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#1">Name: <span class="icon-caret-down"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#1">Alphabetical</a></li>
+                    <li><a href="#1">Reverse</a></li>
+                    <li><a href="#1">Split</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-group-right">
+        <div class="toolbar-group-content">
+            <a href="#1"><span class="icon-th-large"></span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1"><span class="icon-th-list"></span></a>
+        </div>
+        <div class="toolbar-group-content active">
+            <a href="#1"><span class="icon-reorder"></span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand">
+        <div class="toolbar-group-field">
+            <a class="btn btn-default btn-xs" href="#1"><span class="icon-refresh"></span></a>
+        </div>
+        <div class="toolbar-group-field">
+            <a class="btn btn-default btn-xs" href="#1"><span class="icon-share-alt"></span></a>
+        </div>
+
+        <div class="toolbar-group-content">
+            <form>
+                <div class="input-group">
+                    <input class="form-control" type="text">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <div class="toolbar-group-field">
+            <div class="dropdown">
+                <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                    <span class="icon-cog"></span> <span class="icon-caret-down"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#1">Alphabetical</a></li>
+                    <li><a href="#1">Reverse</a></li>
+                    <li><a href="#1">Split</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+	</div>
+</div>
+
+<div class="row row-spacing">
+	<div class="col-md-12">
+		<h3>Fill Remaining Space with Text</h3>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p>This pattern is specifically for use with long text that should be displayed in a single line and the remainder truncated. Truncated text should have a title attribute or a tooltip so a user still can access the full content.</p>
+			<p>Use <code>.toolbar-group-expand-text</code> with <code>.toolbar-group</code> and <code>.toolbar-group-right</code> to fill the remaining space with text in your toolbar. <code>.toolbar-group-expand-text</code> must be the last toolbar-group declared. It can be vertically aligned by matching the css property <code>line-height</code> to the height of its sibling toolbar-groups.</p>
+		</blockquote>
+
+		<div class="toolbar">
+			<div class="toolbar-group-right">
+				<div class="toolbar-group-content">
+					<input type="checkbox">
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">Order by: <span class="icon-caret-down"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#1">Date</a></li>
+							<li><a href="#1">Time</a></li>
+							<li><a href="#1">Status</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="toolbar-group-content">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#1">Name: <span class="icon-caret-down"></span></a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="#1">Alphabetical</a></li>
+							<li><a href="#1">Reverse</a></li>
+							<li><a href="#1">Split</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="toolbar-group-right">
+				<div class="toolbar-group-content">
+					<a href="#1"><span class="icon-th-large"></span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1"><span class="icon-th-list"></span></a>
+				</div>
+				<div class="toolbar-group-content active">
+					<a href="#1"><span class="icon-reorder"></span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand-text">
+				<span title="Con panna plunger pot, café au lait barista so cream so affogato qui whipped. That doppio espresso, aromatic foam crema decaffeinated caramelization. Caramelization coffee, aged arabica sugar, so, half and half, grounds cultivar trifecta aroma chicory. Aromatic crema, cinnamon redeye cortado strong aftertaste sugar java.">Con panna plunger pot, café au lait barista so cream so affogato qui whipped. That doppio espresso, aromatic foam crema decaffeinated caramelization. Caramelization coffee, aged arabica sugar, so, half and half, grounds cultivar trifecta aroma chicory. Aromatic crema, cinnamon redeye cortado strong aftertaste sugar java.</span>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse5"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse5">
+	<pre><code>```<div class="toolbar">
+    <div class="toolbar-group-right">
+        <div class="toolbar-group-content">
+            <input type="checkbox">
+        </div>
+        <div class="toolbar-group-content">
+        	<div class="dropdown">
+	            <a class="dropdown-toggle" data-toggle="dropdown" href="#1">Order by: <span class="icon-caret-down"></span></a>
+	            <ul class="dropdown-menu">
+	                <li><a href="#1">Date</a></li>
+	                <li><a href="#1">Time</a></li>
+	                <li><a href="#1">Status</a></li>
+	            </ul>
+            </div>
+        </div>
+        <div class="toolbar-group-content">
+        	<div class="dropdown">
+	            <a class="dropdown-toggle" data-toggle="dropdown" href="#1">Name: <span class="icon-caret-down"></span></a>
+	            <ul class="dropdown-menu dropdown-menu-right">
+	                <li><a href="#1">Alphabetical</a></li>
+	                <li><a href="#1">Reverse</a></li>
+	                <li><a href="#1">Split</a></li>
+	            </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar-group-right">
+        <div class="toolbar-group-content">
+            <a href="#1"><span class="icon-th-large"></span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1"><span class="icon-th-list"></span></a>
+        </div>
+        <div class="toolbar-group-content active">
+            <a href="#1"><span class="icon-reorder"></span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand-text">
+        <span title="Con panna plunger pot, café au lait barista so cream so affogato qui whipped. That doppio espresso, aromatic foam crema decaffeinated caramelization. Caramelization coffee, aged arabica sugar, so, half and half, grounds cultivar trifecta aroma chicory. Aromatic crema, cinnamon redeye cortado strong aftertaste sugar java.">Con panna plunger pot, café au lait barista so cream so affogato qui whipped. That doppio espresso, aromatic foam crema decaffeinated caramelization. Caramelization coffee, aged arabica sugar, so, half and half, grounds cultivar trifecta aroma chicory. Aromatic crema, cinnamon redeye cortado strong aftertaste sugar java.</span>
+    </div>
+</div>```</code></pre>
+</div>
+
+	</div>
+</div>
+
+<div class="row row-spacing">
+	<div class="col-md-12">
+		<h3>Vertically centering different size content.</h3>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p>Variable height icons/content can be vertically centered by placing each one inside a <code>.toolbar-group-content</code>. Variable height toolbar-groups are vertically aligned by matching the height of each toolbar-group to the tallest one.</p>
+		</blockquote>
+
+		<div class="toolbar">
+			<div class="toolbar-group-right" style="height:70px;">
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand" style="height: 70px;">
+				<div class="toolbar-group-field">
+					<div class="input-group">
+						<input class="form-control" type="text">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse6"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse6">
+	<pre><code>```<div class="toolbar">
+    <div class="toolbar-group" style="height: 70px;">
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand" style="height: 70px;">
+        <div class="toolbar-group-field">
+            <div class="input-group">
+                <input class="form-control" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+	</div>
+</div>
+
+<div class="row row-spacing uxgl-newline-demo">
+	<div class="col-md-12">
+		<h3>Make Toolbar Groups break to a new line for specific screen widths.</h3>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p><code>.tbg-lg-newline</code> will break a <code>.toolbar-group</code> to a new line at screen sizes 1200px and above.</p>
+		</blockquote>
+
+		<div class="toolbar uxgl-lg-newline-demo">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content" style="height: 70px;">
+					<a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand tbg-lg-newline" style="height: 70px;">
+				<div class="toolbar-group-field">
+					<div class="input-group">
+						<input class="form-control" type="text">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+  <a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse7"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse7">
+  <pre><code>```<div class="toolbar">
+    <div class="toolbar-group" style="height: 70px;">
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand" style="height: 70px;">
+        <div class="toolbar-group-field">
+            <div class="input-group">
+                <input class="form-control" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p><code>.tbg-md-newline</code> will break a <code>.toolbar-group</code> to a new line between screen sizes 992px and 1199px.</p>
+		</blockquote>
+
+		<div class="toolbar uxgl-md-newline-demo">
+			<div class="toolbar-group" style="height: 70px;">
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand tbg-md-newline" style="height: 70px;">
+				<div class="toolbar-group-field">
+					<div class="input-group">
+						<input class="form-control" type="text">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse8"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse8">
+	<pre><code>```<div class="toolbar">
+    <div class="toolbar-group" style="height: 70px;">
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand tbg-md-newline" style="height: 70px;">
+        <div class="toolbar-group-field">
+            <div class="input-group">
+                <input class="form-control" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p><code>.tbg-sm-newline</code> will break a <code>.toolbar-group</code> to a new line between screen sizes 768px and 991px.</p>
+		</blockquote>
+
+		<div class="toolbar uxgl-sm-newline-demo">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand tbg-sm-newline" style="height: 70px;">
+				<div class="toolbar-group-field">
+					<div class="input-group">
+						<input class="form-control" type="text">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse9"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse9">
+	<pre><code>```<div class="toolbar uxgl-sm-newline-demo">
+    <div class="toolbar-group" style="height: 70px;">
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand tbg-sm-newline" style="height: 70px;">
+        <div class="toolbar-group-field">
+            <div class="input-group">
+                <input class="form-control" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+              </span>
+            </div>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+		<blockquote class="blockquote-sm blockquote-success">
+			<p><code>.tbg-xs-newline</code> will break a <code>.toolbar-group</code> to a new line at screen sizes less than 768px.</p>
+		</blockquote>
+
+		<div class="toolbar uxgl-xs-newline-demo">
+			<div class="toolbar-group" style="height: 70px;">
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+				</div>
+				<div class="toolbar-group-content">
+					<a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+				</div>
+			</div>
+
+			<div class="toolbar-group-expand tbg-xs-newline" style="height: 70px;">
+				<div class="toolbar-group-field">
+					<div class="input-group">
+						<input class="form-control" type="text">
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="uxgl-toggle-code">
+	<a class="btn btn-warning btn-xs" data-toggle="collapse" href="#codeCollapse10"><span class="icon-caret-down"></span></a>
+</div>
+<div class="collapse" id="codeCollapse10">
+	<pre><code>```<div class="toolbar uxgl-xs-newline-demo">
+    <div class="toolbar-group" style="height: 70px;">
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:20px;"><span class="icon-thumbs-up"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:10px;"><span class="icon-thumbs-down"></span> <span class="count">0</span></a>
+        </div>
+        <div class="toolbar-group-content">
+            <a href="#1" style="font-size:40px;"><span class="icon-flag-alt"></span> <span class="count">Flag</span></a>
+        </div>
+    </div>
+
+    <div class="toolbar-group-expand tbg-xs-newline" style="height: 70px;">
+        <div class="toolbar-group-field">
+            <div class="input-group">
+                <input class="form-control" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button"><span class="icon-search"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>```</code></pre>
+</div>
+
+	</div>
+</div>

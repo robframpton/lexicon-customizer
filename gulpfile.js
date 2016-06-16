@@ -13,6 +13,11 @@ const pathBuild = 'build/public';
 
 gulp.task('build', ['build:css', 'build:html', 'build:images', 'build:js']);
 
+gulp.task('build:lexicon-src', () => {
+	return gulp.src('node_modules/lexicon/src/**/*')
+		.pipe(gulp.dest('lexicon/src'));
+});
+
 gulp.task('build:css', () => {
 	return gulp.src('src/public/css/*')
 		.pipe(plumber())
