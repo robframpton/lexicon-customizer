@@ -1,0 +1,36 @@
+/* Preview box */
+
+.preview-box {
+	width: 50%;
+
+	webview {
+		height: 100%;
+	}
+}
+
+.preview-box-dev-tools-btn {
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 4px;
+	border: 2px solid;
+	bottom: 0;
+	margin: 10px 30px 10px;
+	padding: 2px 4px;
+	position: absolute;
+	right: 0;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.preview-box-loading-mask {
+	align-items: center;
+	background-color: #FFF;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}

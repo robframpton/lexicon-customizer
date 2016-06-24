@@ -9,7 +9,7 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 
-const pathBuild = 'build/public';
+const pathBuild = 'build';
 
 gulp.task('build', ['build:css', 'build:html', 'build:images', 'build:js']);
 
@@ -19,24 +19,24 @@ gulp.task('build:lexicon-src', () => {
 });
 
 gulp.task('build:css', () => {
-	return gulp.src('src/public/css/*')
+	return gulp.src('src/css/*')
 		.pipe(plumber())
 		.pipe(sass())
 		.pipe(gulp.dest(path.join(pathBuild, 'css')));
 });
 
 gulp.task('build:html', () => {
-	return gulp.src('src/public/html/*.html')
+	return gulp.src('src/html/*.html')
 		.pipe(gulp.dest(path.join(pathBuild, 'html')));
 });
 
 gulp.task('build:images', () => {
-	return gulp.src('src/public/images/*')
+	return gulp.src('src/images/*')
 		.pipe(gulp.dest(path.join(pathBuild, 'images')));
 });
 
 gulp.task('build:js', () => {
-	return gulp.src('src/public/js/**/*.js')
+	return gulp.src('src/js/**/*.js')
 		.pipe(plumber())
 		.pipe(babel({
 			plugins: ['transform-react-jsx'],
@@ -49,7 +49,7 @@ gulp.task('watch', () => {
 	watch('src/**/*', vinyl => {
 		var cwdName = path.basename(process.cwd());
 
-		var regex = new RegExp(path.join(cwdName, 'src/public/') + '(.+?)\\/');
+		var regex = new RegExp(path.join(cwdName, 'src/') + '(.+?)\\/');
 
 		var subDirName = vinyl.path.match(regex)[1];
 

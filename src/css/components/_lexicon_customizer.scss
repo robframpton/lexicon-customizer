@@ -1,0 +1,58 @@
+/* Lexicon customizer */
+
+.lexicon-customizer-header {
+	background-color: #444;
+	background: -webkit-linear-gradient(left, rgba(87,87,87,1) 0%, rgba(61,61,61,1) 100%);
+	box-shadow: 0 0 4px #222;
+	border-bottom: 4px solid $brand-primary;
+	color: #FFF;
+	height: 40px;
+	left: 0;
+	padding: 8px 0 0 20px;
+	position: fixed;
+	right: 0;
+	text-align: center;
+	top: 0;
+	transition: border-color 300ms;
+	z-index: 2;
+	-webkit-app-region: drag;
+
+	.lexicon-customizer-header-title {
+		text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+	}
+}
+
+.lexicon-customizer[data-group="bootstrap"] .lexicon-customizer-header {
+	border-color: $brand-secondary;
+}
+
+.lexicon-customizer-actions {
+	float: right;
+	margin-right: 20px;
+
+	.btn {
+		border-radius: 0;
+		border-width: 0 0 4px;
+		height: 100%;
+		-webkit-app-region: no-drag;
+	}
+}
+
+.side-menu, .preview-box, .variables-editor {
+	display: inline-block;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+}
+
+div.container {
+	padding: 0;
+	width: auto;
+}
+
+.lexicon-customizer-content {
+	height: 100vh;
+	overflow: hidden;
+	padding-top: 40px;
+}

@@ -1,0 +1,49 @@
+/* Variables editor */
+
+.variables-editor {
+	width: 30%;
+}
+
+.variables-editor input {
+	&, &:focus {
+		border-radius: 0;
+		border-width: 0 0 4px;
+		box-shadow: none;
+	}
+
+	&:focus {
+		border-color: $brand-primary;
+	}
+}
+
+.variable-input {
+	position: relative;
+
+	.input-auto-complete-menu {
+		background-color: #FFF;
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);
+		max-height: 200px;
+		overflow: auto;
+		position: absolute;
+		top: 100%;
+		width: 100%;
+		z-index: 2;
+
+		.auto-complete-item {
+			cursor: pointer;
+			padding: 4px;
+
+			&[data-selected="true"] {
+				background-color: #EFEFEF;
+			}
+
+			&:hover {
+				background: #EFEFEF;
+			}
+		}
+	}
+}
+
+.color-input {
+	padding-right: 30px;
+}

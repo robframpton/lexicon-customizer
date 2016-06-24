@@ -21,11 +21,11 @@ function createMainWindow() {
 	const win = new electron.BrowserWindow({
 		//frame: false,
 		height: 800,
-		titleBarStyle: 'hidden',
+		titleBarStyle: 'hidden-inset',
 		width: 1400
 	});
 
-	win.loadURL(`file://${__dirname}/build/public/html/index.html`);
+	win.loadURL(`file://${__dirname}/build/html/index.html`);
 	win.on('closed', onClosed);
 
 	return win;
