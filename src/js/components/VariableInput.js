@@ -2,9 +2,7 @@ import ColorPicker from 'react-color';
 import enhanceWithClickOutside from 'react-click-outside';
 import React, { Component, PropTypes } from 'react';
 
-const regexDarken = /darken\((.*),(.*)\)/;
-
-const regexLighten = /lighten\((.*),(.*)\)/;
+import {resolveColorValue} from '../lib/color';
 
 class VariableInput extends Component {
 	constructor(props) {
@@ -19,7 +17,7 @@ class VariableInput extends Component {
 	}
 
 	render() {
-		let { label, name, onChange, value, modifiedVariables } = this.props;
+		let { label, name, onChange, value, variables } = this.props;
 		let { autoCompleteActive, focused } = this.state;
 
 		let autoComplete = '';
@@ -32,7 +30,7 @@ class VariableInput extends Component {
 		}
 
 		if (focused && value && value.length > 1 && value[0] == '$') {
-			autoComplete = this._renderAutoComplete(value, modifiedVariables);
+			autoComplete = this._renderAutoComplete(value, variables);
 		}
 
 		if (this.props.color) {
@@ -41,7 +39,7 @@ class VariableInput extends Component {
 			let handleColorPickerClick = this.handleColorPickerClick.bind(this);
 
 			let colorPickerOverlay = '';
-			let resolvedValue = this._resolveColorValue(name, value, modifiedVariables);
+			let resolvedValue = resolveColorValue(name, value, variables);
 
 			if (this.state.colorPickerVisible) {
 				colorPickerOverlay = (
@@ -229,23 +227,6 @@ class VariableInput extends Component {
 		return autoCompleteMenu && autoCompleteMenu.children.length;
 	}
 
-	_adjustColor(color, percentage) {
-		let pound = false;
-
-		if (color[0] == '#') {
-			color = color.slice(1);
-			pound = true;
-		}
-
-		let num = parseInt(color, 16);
-
-		let r = this._normalizeRGBAValue((num >> 16) + percentage);
-		let b = this._normalizeRGBAValue(((num >> 8) & 0x00FF) + percentage);
-		let g = this._normalizeRGBAValue((num & 0x0000FF) + percentage);
-
-		return (pound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
-	}
-
 	_getAutoCompleteMenuList() {
 		return this.refs.autoCompleteMenu.children;
 	}
@@ -290,53 +271,6 @@ class VariableInput extends Component {
 				{items}
 			</div>
 		);
-	}
-
-	_resolveSassColor(name, value, modifiedVariables, darken) {
-		let regex = darken ? regexDarken : regexLighten;
-
-		let match = value.match(regex);
-
-		let color = match[1];
-
-		if (color.indexOf('$') > -1) {
-			color = this._resolveColorValue(name, color, modifiedVariables);
-		}
-
-		let percentage = parseInt(match[2]);
-
-		if (darken) {
-			percentage = percentage * -1;
-		}
-
-		return this._adjustColor(color, percentage);
-	}
-
-	_normalizeRGBAValue(value) {
-		if (value > 255) {
-			value = 255;
-		}
-		else if (value < 0) {
-			value = 0;
-		}
-
-		return value;
-	}
-
-	_resolveColorValue(name, value, modifiedVariables = {}) {
-		let resolvedValue = modifiedVariables[value];
-
-		if (resolvedValue && resolvedValue != name) {
-			return this._resolveColorValue(name, resolvedValue, modifiedVariables);
-		}
-		else if (regexDarken.test(value)) {
-			value = this._resolveSassColor(name, value, modifiedVariables, true);
-		}
-		else if (regexLighten.test(value)) {
-			value = this._resolveSassColor(name, value, modifiedVariables, false);
-		}
-
-		return value;
 	}
 }
 

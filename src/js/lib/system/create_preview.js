@@ -1,17 +1,16 @@
 'use strict';
 
-const _ = require('lodash');
-const fsp = require('fs-promise');
-const he = require('he');
-const path = require('path');
+import _ from 'lodash';
+import fsp from 'fs-promise';
+import path from 'path';
 
-const createPreview = function(group, componentName, baseLexiconTheme) {
+const PATH_LEXICON = path.join(process.cwd(), 'lexicon');
+
+export default function createPreview(group, componentName, baseLexiconTheme) {
 	componentName = _.snakeCase(componentName);
 
 	let cssPath;
 	let htmlPath = path.join(process.cwd(), 'lexicon/markup', group, componentName + '.html');
-
-	const lexiconPath = getLexiconPath();
 
 	return fsp.readFile(htmlPath, {
 		encoding: 'utf8'
@@ -28,8 +27,8 @@ const createPreview = function(group, componentName, baseLexiconTheme) {
 			'<head>' +
 				'<link href="' + cssPath + '" id="lexiconStylesheetLink" rel="stylesheet" />' +
 				'<script src="' + path.join(process.cwd(), 'bower_components/jquery/dist/jquery.js') + '"></script>' +
-				'<script src="' + path.join(lexiconPath, '..', 'build/js/bootstrap.js') + '"></script>' +
-				'<script src="' + path.join(lexiconPath, '..', 'build/js/svg4everybody.js') + '"></script>' +
+				'<script src="' + path.join(PATH_LEXICON, '..', 'build/js/bootstrap.js') + '"></script>' +
+				'<script src="' + path.join(PATH_LEXICON, '..', 'build/js/svg4everybody.js') + '"></script>' +
 			'</head>' +
 			'<body class="lexicon-customizer-preview-box">' +
 				'<h3>Preview</h3>';
@@ -50,9 +49,3 @@ const createPreview = function(group, componentName, baseLexiconTheme) {
 		}
 	});
 };
-
-function getLexiconPath() {
-	return path.join(process.cwd(), 'lexicon');
-}
-
-module.exports = createPreview;

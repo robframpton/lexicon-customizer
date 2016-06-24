@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import SideMenu from '../components/SideMenu';
 import { setGroup, renderPreview, setSelectedComponent } from '../actions/index';
 

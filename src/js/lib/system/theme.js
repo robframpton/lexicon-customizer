@@ -1,19 +1,17 @@
 'use strict';
 
-var _ = require('lodash');
-var fs = require('fs');
-var path = require('path');
+import _ from 'lodash';
+import fs from 'fs';
+import path from 'path';
 
-module.exports = {
-	isTheme: function(filePath) {
-		var pkgPath = path.join(filePath, 'package.json');
+export function isTheme(filePath) {
+	const pkgPath = path.join(filePath, 'package.json');
 
-		if (!fs.existsSync(pkgPath)) {
-			return false;
-		}
-
-		var pkg = require(pkgPath);
-
-		return !_.isUndefined(pkg.liferayTheme);
+	if (!fs.existsSync(pkgPath)) {
+		return false;
 	}
+
+	const pkg = require(pkgPath);
+
+	return !_.isUndefined(pkg.liferayTheme);
 };

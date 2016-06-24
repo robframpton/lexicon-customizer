@@ -1,6 +1,6 @@
+import * as sassUtil from '../lib/system/sass_util';
 import componentScraper from '../lib/system/component_scraper';
 import createPreview from '../lib/system/create_preview';
-import sassUtil from '../lib/system/sass_util';
 import themeUtil from '../lib/system/theme';
 import UserConfig from '../lib/system/user_config';
 

@@ -11,7 +11,7 @@ const actionHandlers = {
 	},
 
 	'SET_VARIABLE': (state, action) => {
-		let {component, group, name, value} = action;
+		let {name, value} = action;
 
 		let variable = state.get(name);
 

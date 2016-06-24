@@ -1,26 +1,23 @@
 'use strict';
 
-var _ = require('lodash');
-var fs = require('fs');
-var path = require('path');
+import _ from 'lodash';
+import fs from 'fs';
+import path from 'path';
+import {remote} from 'electron';
 
-var remote = require('electron').remote;
+const USER_DATA_PATH = remote.app.getPath('userData');
 
-var USER_DATA_PATH = remote.app.getPath('userData');
+class UserConfig {
+	constructor() {
+		this._userDataPath = USER_DATA_PATH;
+		this._userConfigFilePath = path.join(this._userDataPath, 'lexicon_user_config.json');
+	}
 
-var UserConfig = function() {
-	this._userDataPath = USER_DATA_PATH;
-	this._userConfigFilePath = path.join(this._userDataPath, 'lexicon_user_config.json');
-};
-
-UserConfig.prototype = {
-	getConfig: function() {
-		var config;
-
-		var filePath = path.join(this._userDataPath, 'lexicon_user_config.json');
+	getConfig() {
+		let config;
 
 		try {
-			var fileContent = fs.readFileSync(this._userConfigFilePath);
+			const fileContent = fs.readFileSync(this._userConfigFilePath);
 
 			config = JSON.parse(fileContent);
 		}
@@ -34,10 +31,10 @@ UserConfig.prototype = {
 		}
 
 		return config;
-	},
+	}
 
-	setConfig: function(key, value) {
-		var config = this.getConfig();
+	setConfig(key, value) {
+		let config = this.getConfig();
 
 		if (_.isObject(key)) {
 			_.assign(config, key);
@@ -48,6 +45,6 @@ UserConfig.prototype = {
 
 		fs.writeFileSync(this._userConfigFilePath, JSON.stringify(config));
 	}
-};
+}
 
-module.exports = UserConfig;
+export default UserConfig;

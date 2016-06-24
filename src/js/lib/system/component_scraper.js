@@ -13,6 +13,8 @@ const PATH_ATLAS_THEME_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/atlas-
 
 const PATH_BOOTSTRAP_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/bootstrap/_variables.scss');
 
+const PATH_CUSTOM_VARIABLES_FILE = path.join(PATH_LEXICON, '_custom_variables.scss');
+
 const PATH_LEXICON_BASE_VARIABLES = path.join(PATH_LEXICON, 'src/scss/lexicon-base/variables');
 
 const PATH_LEXICON_BASE_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/lexicon-base/_variables.scss');
@@ -20,15 +22,19 @@ const PATH_LEXICON_BASE_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/lexic
 const REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
 export function mapAtlasVariables() {
-	var lexiconBaseVariables = mapLexiconVariables();
+	let lexiconBaseVariables = mapLexiconVariables();
 
-	var atlasVariables = _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
+	let atlasVariables = _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
 
 	return lexiconBaseVariables.merge(atlasVariables);
 };
 
 export function mapBootstrapVariables() {
 	return _mapBootstrapVariablesFile();
+};
+
+export function mapCustomVariables() {
+	return mapVariablesFromFile(PATH_CUSTOM_VARIABLES_FILE, 'custom', '');
 };
 
 export function mapThemeVariables(themePath) {
@@ -44,7 +50,7 @@ export function mapVariablesFromFile(filePath, group, component) {
 		return OrderedMap();
 	}
 
-	var fileContents = fs.readFileSync(filePath, {
+	let fileContents = fs.readFileSync(filePath, {
 		encoding: 'utf8'
 	});
 
@@ -56,14 +62,14 @@ export function _getAtlasThemeComponents() {
 };
 
 export function _getComponentArrayFromVariablesFile(filePath) {
-	var fileContents = fs.readFileSync(filePath, {
+	let fileContents = fs.readFileSync(filePath, {
 		encoding: 'utf8'
 	});
 
-	var regex = /\@import\s\"variables\/(.*)\"/;
+	let regex = /\@import\s\"variables\/(.*)\"/;
 
 	return _.reduce(fileContents.split('\n'), function(result, item, index) {
-		var match = item.match(regex);
+		let match = item.match(regex);
 
 		if (match) {
 			result.push(match[1]);
@@ -78,20 +84,20 @@ export function _getLexiconBaseComponents() {
 };
 
 export function _mapBootstrapVariablesFile() {
-	var fileContents = fs.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
+	let fileContents = fs.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
 		encoding: 'utf8'
 	});
 
-	var fileSections = fileContents.split('//== ');
+	let fileSections = fileContents.split('//== ');
 
-	var orderedMap = OrderedMap();
+	let orderedMap = OrderedMap();
 
 	_.forEach(fileSections, function(item, index) {
 		if (index == 0) {
 			return;
 		}
 
-		var name = item.match(REGEX_BOOTSTRAP_COMPONENT_NAME);
+		let name = item.match(REGEX_BOOTSTRAP_COMPONENT_NAME);
 
 		if (name && name.length) {
 			orderedMap = orderedMap.merge(_mapVariablesFromString(item, 'bootstrap', name[1]));
@@ -102,12 +108,12 @@ export function _mapBootstrapVariablesFile() {
 };
 
 export function _mapVariablesFromComponentArray(componentArray, variablesDir, group) {
-	var orderedMap = OrderedMap();
+	let orderedMap = OrderedMap();
 
 	_.forEach(componentArray, function(item, index) {
-		var fileName = '_' + item + '.scss';
+		let fileName = '_' + item + '.scss';
 
-		var componentVariables = mapVariablesFromFile(path.join(variablesDir, fileName), group, item);
+		let componentVariables = mapVariablesFromFile(path.join(variablesDir, fileName), group, item);
 
 		orderedMap = orderedMap.merge(componentVariables);
 	});
@@ -116,7 +122,7 @@ export function _mapVariablesFromComponentArray(componentArray, variablesDir, gr
 };
 
 export function _mapVariablesFromString(fileContents, group, component) {
-	var orderedMap = OrderedMap();
+	let orderedMap = OrderedMap();
 
 	fileContents.replace(/(\$.*):[\s]*(.*);/g, function(match, variable, value) {
 		value = _.trim(value.replace('!default', ''));
