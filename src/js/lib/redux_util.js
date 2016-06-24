@@ -4,4 +4,4 @@ export function createReducer(initialState, actionHandlers) {
 
 		return handler ? handler(state, action) : state;
 	};
-}
+};

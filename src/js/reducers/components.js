@@ -1,4 +1,4 @@
-import {createReducer} from '../lib/util';
+import {createReducer} from '../lib/redux_util';
 import {Map} from 'immutable';
 
 const actionHandlers = {

@@ -1,4 +1,4 @@
-import {createReducer} from '../lib/util';
+import {createReducer} from '../lib/redux_util';
 
 const actionHandlers = {
 	'SET_GROUP': (state, {group}) => {
