@@ -19,138 +19,115 @@ const PATH_LEXICON_BASE_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/lexic
 
 const REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
-module.exports = {
-	flattenVariables: function(variables, object) {
-		var instance = this;
+export function mapAtlasVariables() {
+	var lexiconBaseVariables = mapLexiconVariables();
 
-		object = object || {};
+	var atlasVariables = _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
 
-		return _.reduce(variables, function(result, item, index, obj) {
-			if (_.isObject(item)) {
-				return instance.flattenVariables(item, result);
-			}
-			else {
-				result[index] = item;
-			}
+	return lexiconBaseVariables.merge(atlasVariables);
+};
 
-			return result;
-		}, object);
-	},
+export function mapBootstrapVariables() {
+	return _mapBootstrapVariablesFile();
+};
 
-	mapAtlasVariables: function() {
-		var lexiconBaseVariables = this.mapLexiconVariables();
+export function mapThemeVariables(themePath) {
+	return mapVariablesFromFile(path.join(themePath, 'src/css/_aui_variables.scss'), 'theme', '');
+};
 
-		var atlasVariables = this._mapVariablesFromComponentArray(this._getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
+export function mapLexiconVariables() {
+	return _mapVariablesFromComponentArray(_getLexiconBaseComponents(), PATH_LEXICON_BASE_VARIABLES, 'lexicon');
+};
 
-		return lexiconBaseVariables.merge(atlasVariables);
-	},
+export function mapVariablesFromFile(filePath, group, component) {
+	if (!filePath || !fs.existsSync(filePath)) {
+		return OrderedMap();
+	}
 
-	mapBootstrapVariables: function() {
-		return this._mapBootstrapVariablesFile();
-	},
+	var fileContents = fs.readFileSync(filePath, {
+		encoding: 'utf8'
+	});
 
-	mapThemeVariables: function(themePath) {
-		return this.mapVariablesFromFile(path.join(themePath, 'src/css/_aui_variables.scss'), 'theme', '');
-	},
+	return _mapVariablesFromString(fileContents, group, component);
+};
 
-	mapLexiconVariables: function() {
-		return this._mapVariablesFromComponentArray(this._getLexiconBaseComponents(), PATH_LEXICON_BASE_VARIABLES, 'lexicon');
-	},
+export function _getAtlasThemeComponents() {
+	return _getComponentArrayFromVariablesFile(PATH_ATLAS_THEME_VARIABLES_FILE);
+};
 
-	mapVariablesFromFile: function(filePath, group, component) {
-		if (!filePath || !fs.existsSync(filePath)) {
-			return OrderedMap();
+export function _getComponentArrayFromVariablesFile(filePath) {
+	var fileContents = fs.readFileSync(filePath, {
+		encoding: 'utf8'
+	});
+
+	var regex = /\@import\s\"variables\/(.*)\"/;
+
+	return _.reduce(fileContents.split('\n'), function(result, item, index) {
+		var match = item.match(regex);
+
+		if (match) {
+			result.push(match[1]);
 		}
 
-		var fileContents = fs.readFileSync(filePath, {
-			encoding: 'utf8'
-		});
+		return result;
+	}, []);
+};
 
-		return this._mapVariablesFromString(fileContents, group, component);
-	},
+export function _getLexiconBaseComponents() {
+	return _getComponentArrayFromVariablesFile(PATH_LEXICON_BASE_VARIABLES_FILE);
+};
 
-	_getAtlasThemeComponents: function() {
-		return this._getComponentArrayFromVariablesFile(PATH_ATLAS_THEME_VARIABLES_FILE);
-	},
+export function _mapBootstrapVariablesFile() {
+	var fileContents = fs.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
+		encoding: 'utf8'
+	});
 
-	_getComponentArrayFromVariablesFile: function(filePath) {
-		var fileContents = fs.readFileSync(filePath, {
-			encoding: 'utf8'
-		});
+	var fileSections = fileContents.split('//== ');
 
-		var regex = /\@import\s\"variables\/(.*)\"/;
+	var orderedMap = OrderedMap();
 
-		return _.reduce(fileContents.split('\n'), function(result, item, index) {
-			var match = item.match(regex);
+	_.forEach(fileSections, function(item, index) {
+		if (index == 0) {
+			return;
+		}
 
-			if (match) {
-				result.push(match[1]);
-			}
+		var name = item.match(REGEX_BOOTSTRAP_COMPONENT_NAME);
 
-			return result;
-		}, []);
-	},
+		if (name && name.length) {
+			orderedMap = orderedMap.merge(_mapVariablesFromString(item, 'bootstrap', name[1]));
+		}
+	});
 
-	_getLexiconBaseComponents: function() {
-		return this._getComponentArrayFromVariablesFile(PATH_LEXICON_BASE_VARIABLES_FILE);
-	},
+	return orderedMap;
+};
 
-	_mapBootstrapVariablesFile: function() {
-		var instance = this;
+export function _mapVariablesFromComponentArray(componentArray, variablesDir, group) {
+	var orderedMap = OrderedMap();
 
-		var fileContents = fs.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
-			encoding: 'utf8'
-		});
+	_.forEach(componentArray, function(item, index) {
+		var fileName = '_' + item + '.scss';
 
-		var fileSections = fileContents.split('//== ');
+		var componentVariables = mapVariablesFromFile(path.join(variablesDir, fileName), group, item);
 
-		var orderedMap = OrderedMap();
+		orderedMap = orderedMap.merge(componentVariables);
+	});
 
-		_.forEach(fileSections, function(item, index) {
-			if (index == 0) {
-				return;
-			}
+	return orderedMap;
+};
 
-			var name = item.match(REGEX_BOOTSTRAP_COMPONENT_NAME);
+export function _mapVariablesFromString(fileContents, group, component) {
+	var orderedMap = OrderedMap();
 
-			if (name && name.length) {
-				orderedMap = orderedMap.merge(instance._mapVariablesFromString(item, 'bootstrap', name[1]));
-			}
-		});
+	fileContents.replace(/(\$.*):[\s]*(.*);/g, function(match, variable, value) {
+		value = _.trim(value.replace('!default', ''));
 
-		return orderedMap;
-	},
+		orderedMap = orderedMap.set(variable, Map({
+			component: component,
+			group: group,
+			name: variable,
+			value: value
+		}));
+	});
 
-	_mapVariablesFromComponentArray: function(componentArray, variablesDir, group) {
-		var instance = this;
-
-		var orderedMap = OrderedMap();
-
-		_.forEach(componentArray, function(item, index) {
-			var fileName = '_' + item + '.scss';
-
-			var componentVariables = instance.mapVariablesFromFile(path.join(variablesDir, fileName), group, item);
-
-			orderedMap = orderedMap.merge(componentVariables);
-		});
-
-		return orderedMap;
-	},
-
-	_mapVariablesFromString: function(fileContents, group, component) {
-		var orderedMap = OrderedMap();
-
-		fileContents.replace(/(\$.*):[\s]*(.*);/g, function(match, variable, value) {
-			value = _.trim(value.replace('!default', ''));
-
-			orderedMap = orderedMap.set(variable, Map({
-				component: component,
-				group: group,
-				name: variable,
-				value: value
-			}));
-		});
-
-		return orderedMap;
-	}
+	return orderedMap;
 };

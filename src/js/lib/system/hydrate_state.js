@@ -1,17 +1,16 @@
 'use strict';
 
-var immutable = require('immutable');
+import immutable from 'immutable';
 
+import * as componentScraper from './component_scraper';
 import * as varUtil from '../var_util';
-
-var componentScraper = require('./component_scraper');
-var UserConfig = require('./user_config');
+import UserConfig from './user_config';
 
 module.exports = function() {
-	var userConfig = new UserConfig();
-	var persistedConfig = userConfig.getConfig();
+	let userConfig = new UserConfig();
+	let persistedConfig = userConfig.getConfig();
 
-	var lexiconVariables;
+	let lexiconVariables;
 
 	if (persistedConfig.baseLexiconTheme === 'atlasTheme') {
 		lexiconVariables = componentScraper.mapAtlasVariables();
@@ -20,13 +19,13 @@ module.exports = function() {
 		lexiconVariables = componentScraper.mapLexiconVariables();
 	}
 
-	var bootstrapVariables = componentScraper.mapBootstrapVariables();
+	let bootstrapVariables = componentScraper.mapBootstrapVariables();
 
-	var variables = bootstrapVariables.merge(lexiconVariables);
+	let variables = bootstrapVariables.merge(lexiconVariables);
 
-	var components = varUtil.getComponentsFromVariablesMap(variables);
+	let components = varUtil.getComponentsFromVariablesMap(variables);
 
-	var initialState = {
+	const initialState = {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
 		sourceVariables: variables,
