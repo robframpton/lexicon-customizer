@@ -38,10 +38,7 @@ gulp.task('build:images', () => {
 gulp.task('build:js', () => {
 	return gulp.src('src/js/**/*.js')
 		.pipe(plumber())
-		.pipe(babel({
-			plugins: ['transform-react-jsx'],
-			presets: ['es2015']
-		}))
+		.pipe(babel())
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
 });
 
