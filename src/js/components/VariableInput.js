@@ -1,7 +1,7 @@
-import ColorPicker from 'react-color';
 import enhanceWithClickOutside from 'react-click-outside';
 import React, { Component, PropTypes } from 'react';
 
+import ColorPicker from './ColorPicker';
 import {resolveColorValue} from '../lib/color';
 
 class VariableInput extends Component {
@@ -36,39 +36,10 @@ class VariableInput extends Component {
 		if (this.props.color) {
 			className += ' color-input';
 
-			let handleColorPickerClick = this.handleColorPickerClick.bind(this);
-
-			let colorPickerOverlay = '';
 			let resolvedValue = resolveColorValue(name, value, variables);
 
-			if (this.state.colorPickerVisible) {
-				colorPickerOverlay = (
-					<div className="color-picker-overlay" ref="colorPickerOverlay">
-						<ColorPicker color={resolvedValue} onChange={this.handleColorPickerChange.bind(this)} type="chrome" />
-					</div>
-				);
-			}
-
-			let triggerStyle = {
-				backgroundColor: resolvedValue
-			};
-
-			resolvedValue = resolvedValue.toLowerCase();
-
-			if (resolvedValue == '#fff' || resolvedValue == '#ffffff') {
-				triggerStyle.border = '1px solid #EEE';
-			}
-
 			colorPicker = (
-				<div className="color-picker">
-					<div className="color-picker-trigger" onClick={handleColorPickerClick}>
-						<div className="color-picker-trigger-preview" style={triggerStyle}></div>
-
-						<div className="color-picker-trigger-checkerboard"></div>
-					</div>
-
-					{colorPickerOverlay}
-				</div>
+				<ColorPicker onChange={this.handleColorPickerChange.bind(this)} value={resolvedValue} />
 			);
 		}
 
@@ -131,32 +102,10 @@ class VariableInput extends Component {
 		});
 	}
 
-	handleClickOutside() {
-		this.setState({
-			colorPickerVisible: false
-		});
-	}
-
-	handleColorPickerChange(color) {
+	handleColorPickerChange(value) {
 		let { onChange, name } = this.props;
-		let value;
-
-		if (color.rgb.a < 1) {
-			let { a, b, g, r } = color.rgb;
-
-			value = `rgba(${r}, ${g}, ${b}, ${a})`
-		}
-		else {
-			value = `#${color.hex.toUpperCase()}`
-		}
 
 		onChange(name, value);
-	}
-
-	handleColorPickerClick(event) {
-		this.setState({
-			colorPickerVisible: !this.state.colorPickerVisible
-		});
 	}
 
 	handleInputBlur(event) {
