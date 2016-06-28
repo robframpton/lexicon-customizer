@@ -38,7 +38,9 @@ export function render(options, filePath, cb) {
 	sass.render(options, cb);
 };
 
-export function renderLexiconBase(options, cb) {
+export const renderLexiconBase = _.debounce(renderLexiconBaseTask, 300);
+
+export function renderLexiconBaseTask(options, cb) {
 	if (!cb) {
 		cb = options;
 		options = {};
