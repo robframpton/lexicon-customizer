@@ -12,8 +12,6 @@ class VariablesEditor extends Component {
 	}
 
 	render() {
-		var instance = this;
-
 		return (
 			<div className="variables-editor">
 				<h3>Variables</h3>
@@ -72,11 +70,13 @@ class VariablesEditor extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 	let group = state.get('group');
+	let sassError = state.get('sassError');
 	let selectedComponent = state.get('selectedComponent');
 	let variables = state.get('variables');
 
 	return {
 		group,
+		sassError,
 		selectedComponent,
 		variables
 	};

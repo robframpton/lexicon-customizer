@@ -30,7 +30,7 @@ class VariableInput extends Component {
 		}
 
 		if (focused && value && value.length > 1 && value[0] == '$') {
-			autoComplete = this._renderAutoComplete(value, variables);
+			autoComplete = this._renderAutoComplete(name, value, variables);
 		}
 
 		if (this.props.color) {
@@ -180,34 +180,38 @@ class VariableInput extends Component {
 		return this.refs.autoCompleteMenu.children;
 	}
 
-	_renderAutoComplete(value, modifiedVariables) {
-		if (modifiedVariables[value]) {
+	_renderAutoComplete(name, value, variables) {
+		if (variables.has(value)) {
 			return '';
 		}
 
-		let handleAutoCompleteClick = this.handleAutoCompleteClick.bind(this);
+		variables = variables.takeUntil((value, key) => {
+			return key === name;
+		});
 
 		let autoCompleteIndex = this.state.autoCompleteIndex;
 		let reducedIndex = 0;
 
-		let items = Object.keys(modifiedVariables).reduce(function(previousValue, currentValue, currentIndex, array) {
-			if (currentValue.indexOf(value) == 0) {
-				previousValue.push(
+		let items = variables.toArray().reduce((result, item) => {
+			const itemName = item.get('name');
+
+			if (itemName.indexOf(value) == 0) {
+				result.push(
 					<div
 						className="auto-complete-item"
 						data-selected={autoCompleteIndex == reducedIndex}
-						data-value={currentValue}
-						key={currentValue}
-						onClick={handleAutoCompleteClick}
+						data-value={itemName}
+						key={itemName}
+						onClick={this.handleAutoCompleteClick.bind(this)}
 					>
-						{currentValue}
+						{itemName}
 					</div>
 				);
 
 				reducedIndex++;
 			}
 
-			return previousValue;
+			return result;
 		}, []);
 
 		return (

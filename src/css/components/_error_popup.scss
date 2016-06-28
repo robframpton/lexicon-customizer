@@ -1,0 +1,31 @@
+/* Error popup */
+
+.error-popup-wrapper {
+	position: absolute;
+	top: 40px;
+	z-index: 1;
+
+	.error-popup {
+		background-color: #DDD;
+		color: #FFF;
+		position: relative;
+	}
+}
+
+.error-popup-transition-group-enter {
+	left: -100%;
+}
+
+.error-popup-transition-group-enter.error-popup-transition-group-enter-active {
+	left: 0;
+	transition: left 300ms ease-in-out;
+}
+
+.error-popup-transition-group-leave {
+	left: 0;
+}
+
+.error-popup-transition-group-leave.error-popup-transition-group-leave-active {
+	left: -100%;
+	transition: left 300ms ease-in;
+}

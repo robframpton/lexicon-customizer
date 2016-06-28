@@ -49,10 +49,6 @@ export function renderLexiconBase(options, cb) {
 	options = _.omit(options, 'baseLexiconTheme');
 
 	render(options, path.join(CWD, 'lexicon', baseLexiconTheme + '.scss'), function(err, result) {
-		if (err) {
-			console.log(err);
-		}
-
 		let filePath;
 
 		if (!err) {
