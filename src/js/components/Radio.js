@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react';
 
-const Radio = ({ checked, label, onChange, value }) => {
+const Radio = ({checked, label, onChange, value}) => {
 	return (
 		<div className="radio">
 			<label>
@@ -12,10 +12,11 @@ const Radio = ({ checked, label, onChange, value }) => {
 					type="radio"
 					value={value}
 				/>
+
 				{label}
 			</label>
 		</div>
-	)
+	);
 }
 
 Radio.propTypes = {
@@ -23,6 +24,6 @@ Radio.propTypes = {
 	label:  PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 	value: PropTypes.string.isRequired
-}
+};
 
-export default Radio
+export default Radio;

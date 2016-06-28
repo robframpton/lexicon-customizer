@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import FileDropper from '../components/FileDropper';
 import ThemeLabel from '../containers/ThemeLabel';
-import { setTheme } from '../actions/index';
+import {setTheme} from '../actions/index';
 
 class ThemeDropper extends Component {
 	constructor(props) {

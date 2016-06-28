@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import ConfigPanel from './ConfigPanel'
+import ConfigPanel from './ConfigPanel';
+import React, {Component} from 'react';
 
 class Header extends Component {
 	constructor(props) {
@@ -35,4 +35,4 @@ class Header extends Component {
 	}
 }
 
-export default Header
+export default Header;

@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import * as varUtil from '../lib/var_util';
 import VariableInput from '../components/VariableInput';
-import { createVariablesFile, setVariable } from '../actions/index';
+import {createVariablesFile, setVariable} from '../actions/index';
 
 class VariablesEditor extends Component {
 	constructor(props) {
@@ -24,7 +24,7 @@ class VariablesEditor extends Component {
 	}
 
 	renderInputs() {
-		let { group, selectedComponent, variables } = this.props;
+		let {group, selectedComponent, variables} = this.props;
 		let handleChange = this.handleChange.bind(this);
 		let isColor = this._isColor.bind(this);
 
@@ -49,7 +49,7 @@ class VariablesEditor extends Component {
 	}
 
 	handleChange(name, value) {
-		let { dispatch, group, selectedComponent } = this.props;
+		let {dispatch, group, selectedComponent} = this.props;
 
 		dispatch(setVariable(group, selectedComponent, name, value));
 	}

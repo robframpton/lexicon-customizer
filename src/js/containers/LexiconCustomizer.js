@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import ComponentSideMenu from '../containers/ComponentSideMenu';
 import ErrorPopup from '../components/ErrorPopup';

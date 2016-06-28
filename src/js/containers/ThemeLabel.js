@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 const mapStateToProps = (state, ownProps) => {
 	let themeName = state.get('theme');
@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-let ThemeLabel = ({ themeName }) => {
+let ThemeLabel = ({themeName}) => {
 	let themeLabel = themeName || 'No theme selected';
 
 	return (

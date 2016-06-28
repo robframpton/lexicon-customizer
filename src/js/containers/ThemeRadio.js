@@ -1,14 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import Radio from '../components/Radio';
-import { setBaseLexiconTheme } from '../actions/index';
+import {setBaseLexiconTheme} from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
 		checked: ownProps.value === state.get('baseLexiconTheme')
 	}
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
@@ -16,11 +16,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			dispatch(setBaseLexiconTheme(ownProps.value));
 		}
 	}
-}
+};
 
 const ThemeRadio = connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Radio)
+)(Radio);
 
-export default ThemeRadio
+export default ThemeRadio;

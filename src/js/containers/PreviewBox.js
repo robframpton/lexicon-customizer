@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-import { renderPreview } from '../actions/index';
+import {renderPreview} from '../actions/index';
 
 class PreviewBox extends Component {
 	componentDidMount() {
-		const { dispatch, selectedComponent } = this.props;
+		const {dispatch, selectedComponent} = this.props;
 
 		dispatch(renderPreview(selectedComponent));
 
@@ -16,7 +16,7 @@ class PreviewBox extends Component {
 		});
 	}
 
-	componentWillReceiveProps({ cssPath }) {
+	componentWillReceiveProps({cssPath}) {
 		let scriptString = `
 			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
 			var lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute('href');
@@ -63,7 +63,7 @@ const mapStateToProps = (state, ownProps) => {
 	let previewLoading = state.get('previewLoading');
 	let selectedComponent = state.get('selectedComponent');
 
-	let { cssPath, htmlPath } = preview;
+	let {cssPath, htmlPath} = preview;
 
 	return {
 		cssPath,

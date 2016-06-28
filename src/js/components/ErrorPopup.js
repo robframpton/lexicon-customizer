@@ -1,5 +1,5 @@
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class ErrorPopup extends Component {
 	render() {

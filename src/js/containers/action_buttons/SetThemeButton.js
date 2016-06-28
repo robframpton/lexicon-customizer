@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { remote } from 'electron';
+import {connect} from 'react-redux';
+import {remote} from 'electron';
 
 import Button from '../../components/Button';
-import { setTheme } from '../../actions/index';
+import {setTheme} from '../../actions/index';
 
-let SetThemeButton = ({ dispatch }) => {
+let SetThemeButton = ({dispatch}) => {
 	return (
 		<Button
 			label="Set Theme"

@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { remote } from 'electron';
+import {connect} from 'react-redux';
+import {remote} from 'electron';
 
 import Button from '../../components/Button';
-import { importVariables } from '../../actions/index';
+import {importVariables} from '../../actions/index';
 
-let ImportButton = ({ dispatch }) => {
+let ImportButton = ({dispatch}) => {
 	return (
 		<Button
 			label="Import variables"

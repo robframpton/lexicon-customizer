@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 
 import SideMenu from '../components/SideMenu';
-import { setGroup, renderPreview, setSelectedComponent } from '../actions/index';
+import {setGroup, renderPreview, setSelectedComponent} from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
 	let components = state.get('components');

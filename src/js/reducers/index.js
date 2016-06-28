@@ -8,7 +8,7 @@ import sassError from './sassError';
 import selectedComponent from './selectedComponent';
 import sourceVariables from './sourceVariables';
 import theme from './theme';
-import { combineReducers } from 'redux-immutable';
+import {combineReducers} from 'redux-immutable';
 
 import variables from './variables';
 

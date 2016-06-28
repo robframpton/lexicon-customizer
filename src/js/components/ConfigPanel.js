@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import ClearThemeButton from '../containers/action_buttons/ClearThemeButton';
 import ConfigPanelGroup from '../components/ConfigPanelGroup';
@@ -48,4 +48,4 @@ class ConfigPanel extends Component {
 	}
 }
 
-export default ConfigPanel
+export default ConfigPanel;

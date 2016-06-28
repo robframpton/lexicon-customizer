@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import Button from '../../components/Button';
 
-let ClearThemeButton = ({ dispatch }) => {
+let ClearThemeButton = ({dispatch}) => {
 	return (
 		<Button
 			label="Clear Theme"
@@ -15,7 +15,7 @@ let ClearThemeButton = ({ dispatch }) => {
 			}}
 		/>
 	);
-}
+};
 
 ClearThemeButton = connect()(ClearThemeButton);
 

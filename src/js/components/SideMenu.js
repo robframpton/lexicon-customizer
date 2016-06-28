@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 
 class SideMenu extends Component {
 	constructor(props) {
@@ -47,7 +47,7 @@ class SideMenu extends Component {
 		);
 	}
 
-	renderMenuListItems(item, { onClick, selectedItem = '' }) {
+	renderMenuListItems(item, {onClick, selectedItem = ''}) {
 		return item.items.map(function(name) {
 			var className = 'side-menu-list-item';
 
@@ -56,6 +56,7 @@ class SideMenu extends Component {
 			}
 
 			var displayName = name.replace('-', ' ');
+
 			displayName = displayName[0].toUpperCase() + displayName.slice(1, displayName.length);
 
 			return (

@@ -1,5 +1,5 @@
 import enhanceWithClickOutside from 'react-click-outside';
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 
 import ColorPicker from './ColorPicker';
 import {resolveColorValue} from '../lib/color';
@@ -17,8 +17,8 @@ class VariableInput extends Component {
 	}
 
 	render() {
-		let { label, name, onChange, value, variables } = this.props;
-		let { autoCompleteActive, focused } = this.state;
+		let {label, name, onChange, value, variables} = this.props;
+		let {autoCompleteActive, focused} = this.state;
 
 		let autoComplete = '';
 		let colorPicker = '';
@@ -67,7 +67,7 @@ class VariableInput extends Component {
 	}
 
 	componentDidUpdate(event) {
-		let { autoCompleteActive } = this.state;
+		let {autoCompleteActive} = this.state;
 
 		let active = this._isAutoCompleteActive();
 
@@ -81,7 +81,7 @@ class VariableInput extends Component {
 	handleAutoCompleteClick(event) {
 		let value = event.target.getAttribute('data-value');
 
-		let { name, onChange } = this.props;
+		let {name, onChange} = this.props;
 
 		this.setState({
 			autoCompleteIndex: 0
@@ -103,7 +103,7 @@ class VariableInput extends Component {
 	}
 
 	handleColorPickerChange(value) {
-		let { onChange, name } = this.props;
+		let {onChange, name} = this.props;
 
 		onChange(name, value);
 	}
@@ -115,7 +115,7 @@ class VariableInput extends Component {
 	}
 
 	handleInputChange(event) {
-		let { onChange, name } = this.props;
+		let {onChange, name} = this.props;
 
 		onChange(name, event.currentTarget.value);
 	}
@@ -127,7 +127,7 @@ class VariableInput extends Component {
 	}
 
 	handleInputKeyDown(event) {
-		let { autoCompleteActive, autoCompleteIndex } = this.state;
+		let {autoCompleteActive, autoCompleteIndex} = this.state;
 
 		if (!autoCompleteActive) {
 			return;
@@ -142,7 +142,7 @@ class VariableInput extends Component {
 		if (key == 'Enter') {
 			let value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
 
-			let { name, onChange } = this.props;
+			let {name, onChange} = this.props;
 
 			this.setState({
 				autoCompleteIndex: 0
@@ -171,7 +171,7 @@ class VariableInput extends Component {
 	}
 
 	_isAutoCompleteActive() {
-		let { autoCompleteMenu } = this.refs;
+		let {autoCompleteMenu} = this.refs;
 
 		return autoCompleteMenu && autoCompleteMenu.children.length;
 	}

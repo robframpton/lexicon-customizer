@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { remote } from 'electron';
+import {connect} from 'react-redux';
+import {remote} from 'electron';
 
 import Button from '../../components/Button';
 
-let ExportButton = ({ dispatch }) => {
+let ExportButton = ({dispatch}) => {
 	return (
 		<Button
 			label="Export variables"

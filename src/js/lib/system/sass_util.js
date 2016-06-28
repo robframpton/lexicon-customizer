@@ -137,4 +137,4 @@ export function _writeThemeFile(modifiedVariables, variablesString, themePath) {
 
 export const _writeThemeFileTask = _.debounce(_writeThemeFile, 100);
 
-export { sass };
+export {sass};

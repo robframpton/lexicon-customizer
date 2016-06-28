@@ -1,6 +1,6 @@
 import ColorPicker from 'react-color';
 import enhanceWithClickOutside from 'react-click-outside';
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 
 class VariableInput extends Component {
 	constructor(props) {
@@ -41,7 +41,7 @@ class VariableInput extends Component {
 		let value;
 
 		if (color.rgb.a < 1) {
-			let { a, b, g, r } = color.rgb;
+			let {a, b, g, r} = color.rgb;
 
 			value = `rgba(${r}, ${g}, ${b}, ${a})`
 		}
