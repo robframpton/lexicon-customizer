@@ -17,16 +17,16 @@ const PATH_CUSTOM_VARIABLES = path.join(CWD, 'lexicon/_custom_variables.scss');
 
 const PATH_LEXICON_SCSS = path.join(CWD, 'lexicon/src/scss');
 
-export function clearCustomVariablesFile(modifiedVariables, themePath) {
+export function clearCustomVariablesFile(variables, themePath) {
 	if (themePath) {
-		clearModifiedVariablesFromTheme(modifiedVariables, themePath);
+		clearModifiedVariablesFromTheme(variables, themePath);
 	}
 
 	return fsp.writeFile(PATH_CUSTOM_VARIABLES, '');
 };
 
-export function clearModifiedVariablesFromTheme(modifiedVariables, themePath) {
-	_clearModifiedVariablesFromFile(modifiedVariables, _getThemeVariablesFileAbsolutePath(themePath));
+export function clearModifiedVariablesFromTheme(variables, themePath) {
+	_clearModifiedVariablesFromFile(variables, _getThemeVariablesFileAbsolutePath(themePath));
 };
 
 export function render(options, filePath, cb) {
@@ -75,10 +75,10 @@ export function writeCustomVariablesFile(variables, sourceVariables, themePath) 
 	return fsp.writeFile(path.join(CWD, 'lexicon/_custom_variables.scss'), variablesString);
 };
 
-export function _clearModifiedVariablesFromFile(modifiedVariables, filePath) {
-	let reducedVariables = _getThemeVariables(modifiedVariables, filePath);
+export function _clearModifiedVariablesFromFile(variables, filePath) {
+	let themeVariables = _getThemeVariables(variables, filePath);
 
-	return fsp.writeFile(filePath, _generateVariablesString(reducedVariables));
+	return fsp.writeFile(filePath, _generateVariablesString(themeVariables));
 };
 
 export function _getModifiedVariablesString(variables, sourceVariables) {
@@ -87,34 +87,12 @@ export function _getModifiedVariablesString(variables, sourceVariables) {
 	return _generateVariablesString(modifiedVariables);
 };
 
-export function _getThemeVariables(modifiedVariables, filePath) {
-	let fileVariables = componentScraper.getVariablesFromFile(filePath);
+export function _getThemeVariables(variables, filePath) {
+	let fileVariables = componentScraper.mapVariablesFromFile(filePath);
 
-	let flattenedVariables = componentScraper.flattenVariables(modifiedVariables);
-
-	return _.reduce(fileVariables, function(result, item, index) {
-		if (!flattenedVariables[index]) {
-			result[index] = item;
-		}
-
-		return result;
-	}, {});
-};
-
-export function _getUniqueVariables(variables, baseVariables) {
-	return _.reduce(variables, function(result, item, index) {
-		let baseComponentVariables = baseVariables[index];
-
-		let obj = _.omitBy(item, function(value, name) {
-			return value == baseComponentVariables[name];
-		});
-
-		if (!_.isEmpty(obj)) {
-			result[index] = obj;
-		}
-
-		return result;
-	}, {});
+	return fileVariables.filter((variable, key) => {
+		return !variables.has(key);
+	});
 };
 
 export function _generateVariablesString(modifiedVariables) {
@@ -127,8 +105,8 @@ export function _getThemeVariablesFileAbsolutePath(themePath) {
 	return path.join(themePath, 'src/css/_aui_variables.scss');
 };
 
-export function _writeThemeFile(modifiedVariables, variablesString, themePath) {
-	let themeVariables = _getThemeVariables(modifiedVariables, _getThemeVariablesFileAbsolutePath(themePath));
+export function _writeThemeFile(variables, variablesString, themePath) {
+	let themeVariables = _getThemeVariables(variables, _getThemeVariablesFileAbsolutePath(themePath));
 
 	variablesString = variablesString + '\n' + _generateVariablesString(themeVariables);
 

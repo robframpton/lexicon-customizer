@@ -1,7 +1,7 @@
 import * as sassUtil from '../lib/system/sass_util';
 import componentScraper from '../lib/system/component_scraper';
 import createPreview from '../lib/system/create_preview';
-import themeUtil from '../lib/system/theme';
+import {isTheme} from '../lib/system/theme';
 import UserConfig from '../lib/system/user_config';
 
 const userConfig = new UserConfig();
@@ -40,7 +40,7 @@ export function importVariables(filePath) {
 	return function(dispatch, getState) {
 		let variablesMap = componentScraper.getVariablesFromFile(filePath);
 
-		dispatch(setModifiedVariables(variablesMap));
+		dispatch(setVariables(variablesMap));
 	}
 };
 
@@ -62,12 +62,11 @@ export function resetVariables() {
 	return function(dispatch, getState) {
 		var state = getState();
 
-		// TODO: reset variables
-		var sourceVariables = state.get('sourceVariables');
+		const variables = state.get('variables');
 
-		dispatch(setModifiedVariables(sourceVariables));
+		dispatch(setVariables(state.get('sourceVariables')));
 
-		sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('theme'))
+		sassUtil.clearCustomVariablesFile(variables, state.get('theme'))
 			.then(function() {
 				dispatch(buildLexicon());
 			});
@@ -101,13 +100,6 @@ export function setGroup(group) {
 	}
 };
 
-export function setModifiedVariables(variables) {
-	return {
-		type: 'SET_MODIFIED_VARIABLES',
-		variables
-	};
-};
-
 export function setSelectedComponent(component) {
 	return {
 		component,
@@ -117,7 +109,7 @@ export function setSelectedComponent(component) {
 
 export function setTheme(path) {
 	return function(dispatch, getState) {
-		if (!themeUtil.isTheme(path)) {
+		if (!isTheme(path)) {
 			path = '';
 		}
 
@@ -141,6 +133,13 @@ export function setVariable(group, component, name, value) {
 		});
 
 		dispatch(createVariablesFile());
+	}
+};
+
+export function setVariables(variables) {
+	return {
+		type: 'SET_VARIABLES',
+		variables
 	}
 };
 

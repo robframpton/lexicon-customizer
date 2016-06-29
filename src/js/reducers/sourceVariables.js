@@ -1,9 +1,16 @@
+import {OrderedMap} from 'immutable';
+
 import {createReducer} from '../lib/redux_util';
 
 const actionHandlers = {
-	'SET_VARIABLES': (state, action) => {
-		return Object.assign({}, state, action.variables);
+	SET_SOURCE_VARIABLES: (state, {variables}) => {
+		if (OrderedMap.isOrderedMap(variables)) {
+			return variables;
+		}
+		else {
+			return state;
+		}
 	}
 };
 
-export default createReducer({}, actionHandlers);
+export default createReducer(OrderedMap(), actionHandlers);
