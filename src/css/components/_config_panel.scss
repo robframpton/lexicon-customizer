@@ -1,5 +1,7 @@
 /* Config panel */
 
+$config-panel-bg: #1F282F;
+
 .config-panel-toggle-btn {
 	border-radius: 2px;
 	padding: 6px;
@@ -14,14 +16,14 @@
 }
 
 .lexicon-customizer-config-panel {
-	background-color: #333;
+	background-color: $config-panel-bg;
 	bottom: 0;
 	box-shadow: 0 0 5px #333;
 	overflow: hidden;
 	padding: 20px;
 	position: fixed;
 	right: -255px;
-	top: 40px;
+	top: 50px;
 	transition: right 200ms;
 	width: 250px;
 
@@ -33,6 +35,10 @@
 		height: auto;
 		margin-top: 10px;
 		width: 100%;
+	}
+
+	.radio {
+		text-align: left;
 	}
 }
 
@@ -56,7 +62,7 @@
 		}
 
 		.config-panel-group-label-text {
-			background-color: #333;
+			background-color: $config-panel-bg;
 			padding: 0px 8px;
 			position: relative;
 			z-index: 10;
