@@ -1,7 +1,7 @@
 import {createReducer} from '../lib/redux_util';
 
 const actionHandlers = {
-	'SET_THEME': (state, {path}) => {
+	SET_THEME: (state, {path}) => {
 		return path;
 	}
 };

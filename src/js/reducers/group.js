@@ -1,7 +1,7 @@
 import {createReducer} from '../lib/redux_util';
 
 const actionHandlers = {
-	'SET_GROUP': (state, {group}) => {
+	SET_GROUP: (state, {group}) => {
 		return group;
 	}
 };
