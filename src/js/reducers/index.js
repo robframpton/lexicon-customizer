@@ -1,6 +1,7 @@
 import baseLexiconTheme from './baseLexiconTheme';
 import bootstrapComponents from './bootstrapComponents';
 import components from './components';
+import filePaths from './filePaths';
 import group from './group';
 import preview from './preview';
 import previewLoading from './previewLoading';
@@ -16,6 +17,7 @@ const lexiconCustomizerReducer = combineReducers({
 	baseLexiconTheme,
 	bootstrapComponents,
 	components,
+	filePaths,
 	group,
 	preview,
 	previewLoading,

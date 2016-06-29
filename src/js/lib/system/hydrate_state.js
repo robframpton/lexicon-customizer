@@ -1,6 +1,7 @@
 'use strict';
 
 import immutable from 'immutable';
+import path from 'path';
 
 import * as componentScraper from './component_scraper';
 import * as varUtil from '../var_util';
@@ -36,9 +37,14 @@ module.exports = function() {
 
 	const components = varUtil.getComponentsFromVariablesMap(variables);
 
+	const filePaths = immutable.Map({
+		customVariables: path.join(process.cwd(), 'lexicon', '_custom_variables.scss')
+	});
+
 	const initialState = {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
+		filePaths: filePaths,
 		sourceVariables: sourceVariable,
 		theme: persistedConfig.theme,
 		variables: variables

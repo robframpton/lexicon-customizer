@@ -1,20 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {remote} from 'electron';
 
 import Button from '../../components/Button';
 
-let ExportButton = ({dispatch}) => {
+let ExportButton = ({customVariablesPath}) => {
 	return (
 		<Button
+			download
+			href={customVariablesPath}
 			label="Export variables"
-			onClick={e => {
-				console.log('TODO: Export variables');
-			}}
 		/>
 	);
-}
+};
 
-ExportButton = connect()(ExportButton);
+const mapStateToProps = (state, ownProps) => {
+	return {
+		customVariablesPath: state.get('filePaths').get('customVariables')
+	}
+};
+
+ExportButton = connect(mapStateToProps)(ExportButton);
 
 export default ExportButton;
