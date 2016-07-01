@@ -11,7 +11,7 @@ const watch = require('gulp-watch');
 
 const pathBuild = 'build';
 
-gulp.task('build', ['build:css', 'build:html', 'build:images', 'build:js']);
+gulp.task('build', ['build:css', 'build:html', 'build:images', 'build:js', 'build:js:resources']);
 
 gulp.task('build:lexicon-src', () => {
 	return gulp.src('node_modules/lexicon/src/**/*')
@@ -42,14 +42,23 @@ gulp.task('build:js', () => {
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
 });
 
+gulp.task('build:js:resources', () => {
+	return gulp.src('src/js/**/*.!(js)')
+		.pipe(gulp.dest(path.join(pathBuild, 'js')));
+});
+
 gulp.task('watch', () => {
-	watch('src/**/*', vinyl => {
-		var cwdName = path.basename(process.cwd());
+	watch('src/css/**/*', vinyl => {
+		gulp.start('build:css');
+	});
 
-		var regex = new RegExp(path.join(cwdName, 'src/') + '(.+?)\\/');
+	watch('src/(html|images)/**/*', vinyl => {
+		gulp.start('build:html');
+		gulp.start('build:images');
+	});
 
-		var subDirName = vinyl.path.match(regex)[1];
-
-		gulp.start(`build:${subDirName}`);
+	watch('src/js/**/*', vinyl => {
+		gulp.start('build:js');
+		gulp.start('build:js:resources');
 	});
 });
