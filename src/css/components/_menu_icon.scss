@@ -1,0 +1,16 @@
+/* Menu icon */
+
+$menu-icon-size: 6px;
+
+.menu-icon {
+	margin: 8px 0;
+}
+
+.menu-icon-dot {
+	background-color: #FFF;
+	border-radius: 50%;
+	display: inline-block;
+	height: $menu-icon-size;
+	margin: 4px;
+	width: $menu-icon-size;
+}

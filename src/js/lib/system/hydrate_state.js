@@ -45,6 +45,7 @@ module.exports = function() {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
 		filePaths: filePaths,
+		previewLoading: true,
 		sourceVariables: sourceVariable,
 		theme: persistedConfig.theme,
 		variables: variables

@@ -1,51 +1,40 @@
 'use strict';
 
 import _ from 'lodash';
+import ejs from 'ejs';
+import fs from 'fs';
 import fsp from 'fs-promise';
 import path from 'path';
 
 const PATH_LEXICON = path.join(process.cwd(), 'lexicon');
 
-export default function createPreview(group, componentName, baseLexiconTheme) {
-	componentName = _.snakeCase(componentName);
+export default function createPreview(group, component, baseLexiconTheme, cb) {
+	baseLexiconTheme = _.kebabCase(baseLexiconTheme);
+	component = _.snakeCase(component);
 
-	let cssPath;
-	let htmlPath = path.join(process.cwd(), 'lexicon/markup', group, componentName + '.html');
+	const cssPath = path.join(process.cwd(), 'lexicon/build/' + baseLexiconTheme + '.css') + '?t=' + Date.now();
+	const previewFilePath = path.join(process.cwd(), 'lexicon/build/' + group + '-preview.html');
 
-	return fsp.readFile(htmlPath, {
-		encoding: 'utf8'
-	}).then(function(htmlContent) {
-		const imagesPath = path.join(process.cwd(), 'lexicon/images');
+	ejs.renderFile(path.join(__dirname, '..', 'templates', 'preview.ejs'), {
+		componentPreviewPath: path.join(process.cwd(), 'lexicon/markup', group, component + '.html'),
+		lexiconCSSPath: cssPath,
+		scripts: [
+			path.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'),
+			path.join(PATH_LEXICON, '..', 'build/js/bootstrap.js'),
+			path.join(PATH_LEXICON, '..', 'build/js/svg4everybody.js')
+		]
+	}, function(err, result) {
+		if (err) {
+			throw err;
+		}
 
-		htmlContent = htmlContent.replace(/{imagesPath}/g, imagesPath);
+		fs.writeFileSync(previewFilePath, result);
 
-		baseLexiconTheme = _.kebabCase(baseLexiconTheme);
+		const htmlPath = previewFilePath + '?component=' + component;
 
-		cssPath = path.join(process.cwd(), 'lexicon/build/' + baseLexiconTheme + '.css') + '?t=' + Date.now();
-
-		const header = '<html>' +
-			'<head>' +
-				'<link href="' + cssPath + '" id="lexiconStylesheetLink" rel="stylesheet" />' +
-				'<script src="' + path.join(process.cwd(), 'bower_components/jquery/dist/jquery.js') + '"></script>' +
-				'<script src="' + path.join(PATH_LEXICON, '..', 'build/js/bootstrap.js') + '"></script>' +
-				'<script src="' + path.join(PATH_LEXICON, '..', 'build/js/svg4everybody.js') + '"></script>' +
-			'</head>' +
-			'<body class="lexicon-customizer-preview-box">' +
-				'<h3>Preview</h3>';
-
-		const footer = '</body></html>';
-
-		htmlContent = header + htmlContent + footer;
-
-		const htmlWritePath = path.join(process.cwd(), 'lexicon/build/' + group + '-preview.html');
-
-		htmlPath = htmlWritePath + '?component=' + componentName;
-
-		return fsp.writeFile(htmlWritePath, htmlContent);
-	}).then(function() {
-		return {
+		cb({
 			cssPath,
 			htmlPath
-		}
+		});
 	});
 };

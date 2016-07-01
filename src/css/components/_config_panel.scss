@@ -2,19 +2,6 @@
 
 $config-panel-bg: #1F282F;
 
-.config-panel-toggle-btn {
-	border-radius: 2px;
-	padding: 6px;
-
-	&:hover {
-		background-color: #222;
-	}
-
-	img {
-		height: 24px;
-	}
-}
-
 .lexicon-customizer-config-panel {
 	background-color: $config-panel-bg;
 	bottom: 0;

@@ -1,5 +1,7 @@
-import ConfigPanel from './ConfigPanel';
 import React, {Component} from 'react';
+
+import ConfigPanel from './ConfigPanel';
+import MenuIcon from './MenuIcon';
 
 class Header extends Component {
 	constructor(props) {
@@ -25,7 +27,7 @@ class Header extends Component {
 							});
 						}}
 					>
-						<img src="../images/cog_white.svg"></img>
+						<MenuIcon />
 					</a>
 
 					<ConfigPanel open={this.state.configPanelOpen} />

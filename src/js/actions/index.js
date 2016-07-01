@@ -48,13 +48,17 @@ export function renderPreview(component) {
 	return function(dispatch, getState) {
 		var state = getState();
 
-		createPreview(state.get('group'), component, state.get('baseLexiconTheme'))
-			.then(function(preview) {
-				dispatch({
-					type: 'CREATE_PREVIEW',
-					preview: preview
-				});
+		createPreview(state.get('group'), component, state.get('baseLexiconTheme'), function(preview) {
+			dispatch({
+				preview,
+				type: 'CREATE_PREVIEW'
 			});
+
+			dispatch({
+				loading: false,
+				type: 'SET_PREVIEW_LOADING'
+			});
+		});
 	};
 };
 
@@ -108,17 +112,15 @@ export function setSelectedComponent(component) {
 };
 
 export function setTheme(path) {
-	return function(dispatch, getState) {
-		if (!isTheme(path)) {
-			path = '';
-		}
+	if (!path || !isTheme(path)) {
+		path = '';
+	}
 
-		userConfig.setConfig('theme', path);
+	userConfig.setConfig('theme', path);
 
-		dispatch({
-			path,
-			type: 'SET_THEME'
-		});
+	return {
+		path,
+		type: 'SET_THEME'
 	};
 };
 

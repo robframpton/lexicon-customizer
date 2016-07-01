@@ -2,21 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Button from '../../components/Button';
+import {setTheme} from '../../actions/index';
 
-let ClearThemeButton = ({dispatch}) => {
-	return (
-		<Button
-			label="Clear Theme"
-			onClick={e => {
-				dispatch({
-					path: '',
-					type: 'SET_THEME'
-				});
-			}}
-		/>
-	);
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		onClick: (e) => {
+			dispatch(setTheme(''));
+		}
+	};
 };
 
-ClearThemeButton = connect()(ClearThemeButton);
+const ClearThemeButton = connect(null, mapDispatchToProps)(Button);
 
 export default ClearThemeButton;

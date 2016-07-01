@@ -8,15 +8,11 @@ class PreviewBox extends Component {
 		const {dispatch, selectedComponent} = this.props;
 
 		dispatch(renderPreview(selectedComponent));
-
-		this.refs.webview.addEventListener('did-stop-loading', () => {
-			setTimeout(() => {
-				this.props.onLoaded();
-			}, 100);
-		});
 	}
 
-	componentWillReceiveProps({cssPath}) {
+	componentWillReceiveProps({preview}) {
+		const {cssPath} = preview;
+
 		let scriptString = `
 			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
 			var lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute('href');
@@ -26,15 +22,21 @@ class PreviewBox extends Component {
 			};
 		`;
 
-		this.refs.webview.executeJavaScript(scriptString);
+		if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
+			this.refs.webview.executeJavaScript(scriptString);
+		}
 	}
 
 	render() {
-		let previewLoadingMask = this.props.previewLoading ? this.renderPreviewLoadingMask(): '';
+		const htmlPath = this.props.preview.htmlPath;
+
+		const previewLoadingMask = this.props.previewLoading ? this.renderPreviewLoadingMask() : '';
+
+		const webview = htmlPath ? this.renderWebview() : '';
 
 		return (
 			<div className="preview-box">
-				<webview autosize="on" id="webview" maxWidth="100%" ref="webview" src={this.props.htmlPath}></webview>
+				{webview}
 
 				{previewLoadingMask}
 			</div>
@@ -56,6 +58,12 @@ class PreviewBox extends Component {
 			</div>
 		);
 	}
+
+	renderWebview() {
+		return (
+			<webview autosize="on" id="webview" maxWidth="100%" ref="webview" src={this.props.preview.htmlPath}></webview>
+		);
+	}
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -63,11 +71,8 @@ const mapStateToProps = (state, ownProps) => {
 	let previewLoading = state.get('previewLoading');
 	let selectedComponent = state.get('selectedComponent');
 
-	let {cssPath, htmlPath} = preview;
-
 	return {
-		cssPath,
-		htmlPath,
+		preview,
 		previewLoading,
 		selectedComponent
 	};
@@ -75,13 +80,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-		dispatch,
-		onLoaded: () => {
-			dispatch({
-				loading: false,
-				type: 'SET_PREVIEW_LOADING'
-			});
-		}
+		dispatch
 	}
 };
 
