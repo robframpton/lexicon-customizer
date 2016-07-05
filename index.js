@@ -3,11 +3,8 @@
 const _ = require('lodash');
 const path = require('path');
 const electron = require('electron');
-const spawn = require('cross-spawn').spawn;
 
 const app = electron.app;
-
-require('crash-reporter').start();
 
 require('electron-debug')();
 
@@ -23,19 +20,19 @@ function onClosed() {
 let building = false;
 
 try {
-	// Will throw error if libSass bindings are missing or incorrect
 	require('node-sass');
 }
 catch (err) {
 	building = true;
 
-	var child = spawn('npm', ['rebuild', 'node-sass']);
+	const npm = require('npm');
 
-	child.stderr.pipe(process.stderr);
-	child.stdout.pipe(process.stdout);
-
-	child.on('close', function(code) {
-		mainWindow.loadURL(indexURL);
+	npm.load({
+		loaded: false
+	}, function(err) {
+		npm.commands.rebuild(['node-sass'], function(err) {
+			mainWindow.loadURL(indexURL);
+		});
 	});
 }
 
