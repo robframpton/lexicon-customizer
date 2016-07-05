@@ -26,6 +26,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	};
 };
 
-var ClearThemeButton = (0, _reactRedux.connect)(null, mapDispatchToProps)(_Button2.default);
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+	return {
+		disabled: !state.get('theme')
+	};
+};
+
+var ClearThemeButton = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Button2.default);
 
 exports.default = ClearThemeButton;

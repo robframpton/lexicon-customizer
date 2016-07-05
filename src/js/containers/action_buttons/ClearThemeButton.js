@@ -12,6 +12,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	};
 };
 
-const ClearThemeButton = connect(null, mapDispatchToProps)(Button);
+const mapStateToProps = (state, ownProps) => {
+	return {
+		disabled: !state.get('theme')
+	}
+};
+
+const ClearThemeButton = connect(mapStateToProps, mapDispatchToProps)(Button);
 
 export default ClearThemeButton;
