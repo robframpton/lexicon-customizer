@@ -7,8 +7,8 @@ import {applyMiddleware, createStore} from 'redux';
 import {Map} from 'immutable';
 import {Provider} from 'react-redux';
 
-import LexiconCustomizer from '../js/containers/LexiconCustomizer'
-import lexiconCustomizerReducer from '../js/reducers/index'
+import LexiconCustomizer from '../js/containers/LexiconCustomizer';
+import lexiconCustomizerReducer from '../js/reducers/index';
 
 import hydrateState from '../js/lib/system/hydrate_state';
 
