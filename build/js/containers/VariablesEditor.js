@@ -26,6 +26,8 @@ var _VariableInput2 = _interopRequireDefault(_VariableInput);
 
 var _index = require('../actions/index');
 
+var _variables = require('../actions/variables');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -100,7 +102,7 @@ var VariablesEditor = function (_Component) {
 			var selectedComponent = _props2.selectedComponent;
 
 
-			dispatch((0, _index.setVariable)(group, selectedComponent, name, value));
+			dispatch((0, _variables.setVariable)(group, selectedComponent, name, value));
 		}
 	}, {
 		key: '_isColor',

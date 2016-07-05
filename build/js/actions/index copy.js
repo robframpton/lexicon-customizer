@@ -5,12 +5,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.buildLexicon = buildLexicon;
 exports.createVariablesFile = createVariablesFile;
+exports.importVariables = importVariables;
 exports.renderPreview = renderPreview;
+exports.resetVariables = resetVariables;
 exports.setBaseLexiconTheme = setBaseLexiconTheme;
 exports.setBaseTheme = setBaseTheme;
 exports.setGroup = setGroup;
 exports.setSelectedComponent = setSelectedComponent;
 exports.setTheme = setTheme;
+exports.setVariable = setVariable;
+exports.setVariables = setVariables;
 exports.showSassError = showSassError;
 
 var _sass_util = require('../lib/system/sass_util');
@@ -65,6 +69,16 @@ function createVariablesFile() {
 	};
 };
 
+function importVariables(filePath) {
+	return function (dispatch, getState) {
+		var variablesMap = componentScraper.mapVariablesFromFile(filePath, 'theme');
+
+		console.log(variablesMap);
+
+		dispatch(setVariables(variablesMap));
+	};
+};
+
 function renderPreview(component) {
 	return function (dispatch, getState) {
 		var state = getState();
@@ -79,6 +93,20 @@ function renderPreview(component) {
 				loading: false,
 				type: 'SET_PREVIEW_LOADING'
 			});
+		});
+	};
+};
+
+function resetVariables() {
+	return function (dispatch, getState) {
+		var state = getState();
+
+		var variables = state.get('variables');
+
+		dispatch(setVariables(state.get('sourceVariables')));
+
+		sassUtil.clearCustomVariablesFile(variables, state.get('theme')).then(function () {
+			dispatch(buildLexicon());
 		});
 	};
 };
@@ -127,6 +155,27 @@ function setTheme(path) {
 	return {
 		path: path,
 		type: 'SET_THEME'
+	};
+};
+
+function setVariable(group, component, name, value) {
+	return function (dispatch, getState) {
+		dispatch({
+			component: component,
+			group: group,
+			name: name,
+			type: 'SET_VARIABLE',
+			value: value
+		});
+
+		dispatch(createVariablesFile());
+	};
+};
+
+function setVariables(variables) {
+	return {
+		type: 'SET_VARIABLES',
+		variables: variables
 	};
 };
 

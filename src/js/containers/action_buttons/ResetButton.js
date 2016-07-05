@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import Button from '../../components/Button';
-import {resetVariables} from '../../actions/index';
+import {resetVariables} from '../../actions/variables';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {

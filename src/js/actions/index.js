@@ -1,5 +1,5 @@
 import * as sassUtil from '../lib/system/sass_util';
-import componentScraper from '../lib/system/component_scraper';
+import * as componentScraper from '../lib/system/component_scraper';
 import createPreview from '../lib/system/create_preview';
 import {isTheme} from '../lib/system/theme';
 import UserConfig from '../lib/system/user_config';
@@ -36,14 +36,6 @@ export function createVariablesFile() {
 	};
 };
 
-export function importVariables(filePath) {
-	return function(dispatch, getState) {
-		let variablesMap = componentScraper.getVariablesFromFile(filePath);
-
-		dispatch(setVariables(variablesMap));
-	}
-};
-
 export function renderPreview(component) {
 	return function(dispatch, getState) {
 		var state = getState();
@@ -59,21 +51,6 @@ export function renderPreview(component) {
 				type: 'SET_PREVIEW_LOADING'
 			});
 		});
-	};
-};
-
-export function resetVariables() {
-	return function(dispatch, getState) {
-		var state = getState();
-
-		const variables = state.get('variables');
-
-		dispatch(setVariables(state.get('sourceVariables')));
-
-		sassUtil.clearCustomVariablesFile(variables, state.get('theme'))
-			.then(function() {
-				dispatch(buildLexicon());
-			});
 	};
 };
 
@@ -122,27 +99,6 @@ export function setTheme(path) {
 		path,
 		type: 'SET_THEME'
 	};
-};
-
-export function setVariable(group, component, name, value) {
-	return (dispatch, getState) => {
-		dispatch({
-			component,
-			group,
-			name,
-			type: 'SET_VARIABLE',
-			value
-		});
-
-		dispatch(createVariablesFile());
-	}
-};
-
-export function setVariables(variables) {
-	return {
-		type: 'SET_VARIABLES',
-		variables
-	}
 };
 
 export function showSassError(errorMsg) {

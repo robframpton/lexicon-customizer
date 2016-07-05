@@ -12,7 +12,7 @@ var _Button = require('../../components/Button');
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _index = require('../../actions/index');
+var _variables = require('../../actions/variables');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23,7 +23,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 				properties: ['openFile']
 			}, function (filePaths) {
 				if (filePaths && filePaths.length) {
-					dispatch((0, _index.importVariables)(filePaths[0]));
+					dispatch((0, _variables.importVariables)(filePaths[0]));
 				}
 			});
 		}

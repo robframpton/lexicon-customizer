@@ -9,6 +9,16 @@ var _immutable = require('immutable');
 var _redux_util = require('../lib/redux_util');
 
 var actionHandlers = {
+	OVERRIDE_VARIABLES: function OVERRIDE_VARIABLES(state, _ref) {
+		var variables = _ref.variables;
+
+		if (_immutable.OrderedMap.isOrderedMap(variables)) {
+			return variables;
+		} else {
+			return state;
+		}
+	},
+
 	SET_GROUP_VARIABLES: function SET_GROUP_VARIABLES(state, action) {
 		return state;
 	},
@@ -27,14 +37,20 @@ var actionHandlers = {
 		return state.set(name, variable.set('value', value));
 	},
 
-	SET_VARIABLES: function SET_VARIABLES(state, _ref) {
-		var variables = _ref.variables;
+	SET_VARIABLES: function SET_VARIABLES(state, _ref2) {
+		var variables = _ref2.variables;
 
-		if (_immutable.OrderedMap.isOrderedMap(variables)) {
-			return variables;
-		} else {
+		if (!_immutable.OrderedMap.isOrderedMap(variables)) {
 			return state;
 		}
+
+		return state.map(function (variable, key) {
+			if (variables.has(key)) {
+				variable = variable.set('value', variables.get(key).get('value'));
+			}
+
+			return variable;
+		});
 	}
 };
 

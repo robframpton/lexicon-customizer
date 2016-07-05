@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 
 import * as varUtil from '../lib/var_util';
 import VariableInput from '../components/VariableInput';
-import {createVariablesFile, setVariable} from '../actions/index';
+import {createVariablesFile} from '../actions/index';
+import {setVariable} from '../actions/variables';
 
 class VariablesEditor extends Component {
 	constructor(props) {
