@@ -25,16 +25,11 @@ let building = false;
 try {
 	// Will throw error if libSass bindings are missing or incorrect
 	require('node-sass');
-
-	throw new Error('test');
 }
 catch (err) {
 	building = true;
 
-	var nodeSassPath = path.join(require.resolve('node-sass'), '..', '..');
-
-	var child = spawn('npm', ['run', 'install'], {
-		cwd: nodeSassPath,
+	var child = spawn('npm', ['rebuild', 'node-sass'], {
 		stdio: 'inherit'
 	});
 
