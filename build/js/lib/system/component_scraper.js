@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.initVariables = initVariables;
 exports.mapAtlasVariables = mapAtlasVariables;
 exports.mapBootstrapVariables = mapBootstrapVariables;
 exports.mapCustomVariables = mapCustomVariables;
@@ -47,6 +48,35 @@ var PATH_LEXICON_BASE_VARIABLES = _path2.default.join(PATH_LEXICON, 'src/scss/le
 var PATH_LEXICON_BASE_VARIABLES_FILE = _path2.default.join(PATH_LEXICON, 'src/scss/lexicon-base/_variables.scss');
 
 var REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
+
+function initVariables(baseTheme) {
+	var lexiconVariables = void 0;
+
+	if (baseTheme === 'atlasTheme') {
+		lexiconVariables = mapAtlasVariables();
+	} else {
+		lexiconVariables = mapLexiconVariables();
+	}
+
+	var bootstrapVariables = mapBootstrapVariables();
+
+	var customVariables = mapCustomVariables();
+
+	var variables = bootstrapVariables.merge(lexiconVariables);
+
+	var sourceVariables = variables;
+
+	customVariables.forEach(function (variable, key) {
+		var sourceVariable = variables.get(key);
+
+		variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
+	});
+
+	return {
+		sourceVariables: sourceVariables,
+		variables: variables
+	};
+};
 
 function mapAtlasVariables() {
 	var lexiconBaseVariables = mapLexiconVariables();

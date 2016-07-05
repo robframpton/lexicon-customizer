@@ -12,28 +12,7 @@ module.exports = function() {
 
 	const persistedConfig = userConfig.getConfig();
 
-	let lexiconVariables;
-
-	if (persistedConfig.baseLexiconTheme === 'atlasTheme') {
-		lexiconVariables = componentScraper.mapAtlasVariables();
-	}
-	else {
-		lexiconVariables = componentScraper.mapLexiconVariables();
-	}
-
-	const bootstrapVariables = componentScraper.mapBootstrapVariables();
-
-	const customVariables = componentScraper.mapCustomVariables();
-
-	let variables = bootstrapVariables.merge(lexiconVariables);
-
-	const sourceVariable = variables;
-
-	customVariables.forEach((variable, key) => {
-		let sourceVariable = variables.get(key);
-
-		variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
-	});
+	const {sourceVariables, variables} = componentScraper.initVariables(persistedConfig.baseLexiconTheme);
 
 	const components = varUtil.getComponentsFromVariablesMap(variables);
 
@@ -46,7 +25,7 @@ module.exports = function() {
 		components: components,
 		filePaths: filePaths,
 		previewLoading: true,
-		sourceVariables: sourceVariable,
+		sourceVariables: sourceVariables,
 		theme: persistedConfig.theme,
 		variables: variables
 	};

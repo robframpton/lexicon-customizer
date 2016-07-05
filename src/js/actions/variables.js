@@ -8,7 +8,7 @@ export function importVariables(filePath) {
 	}
 };
 
-export function overrideVariables(variables) {
+export function overwriteVariables(variables) {
 	return {
 		type: 'OVERRIDE_VARIABLES',
 		variables
@@ -19,7 +19,7 @@ export function resetVariables() {
 	return function(dispatch, getState) {
 		var state = getState();
 
-		dispatch(overrideVariables(state.get('sourceVariables')));
+		dispatch(overwriteVariables(state.get('sourceVariables')));
 
 		sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('theme'))
 			.then(function() {

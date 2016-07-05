@@ -21,6 +21,36 @@ const PATH_LEXICON_BASE_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/lexic
 
 const REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
+export function initVariables(baseTheme) {
+	let lexiconVariables;
+
+	if (baseTheme === 'atlasTheme') {
+		lexiconVariables = mapAtlasVariables();
+	}
+	else {
+		lexiconVariables = mapLexiconVariables();
+	}
+
+	const bootstrapVariables = mapBootstrapVariables();
+
+	const customVariables = mapCustomVariables();
+
+	let variables = bootstrapVariables.merge(lexiconVariables);
+
+	const sourceVariables = variables;
+
+	customVariables.forEach((variable, key) => {
+		let sourceVariable = variables.get(key);
+
+		variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
+	});
+
+	return {
+		sourceVariables: sourceVariables,
+		variables: variables
+	};
+};
+
 export function mapAtlasVariables() {
 	let lexiconBaseVariables = mapLexiconVariables();
 

@@ -29,27 +29,11 @@ module.exports = function () {
 
 	var persistedConfig = userConfig.getConfig();
 
-	var lexiconVariables = void 0;
+	var _componentScraper$ini = componentScraper.initVariables(persistedConfig.baseLexiconTheme);
 
-	if (persistedConfig.baseLexiconTheme === 'atlasTheme') {
-		lexiconVariables = componentScraper.mapAtlasVariables();
-	} else {
-		lexiconVariables = componentScraper.mapLexiconVariables();
-	}
+	var sourceVariables = _componentScraper$ini.sourceVariables;
+	var variables = _componentScraper$ini.variables;
 
-	var bootstrapVariables = componentScraper.mapBootstrapVariables();
-
-	var customVariables = componentScraper.mapCustomVariables();
-
-	var variables = bootstrapVariables.merge(lexiconVariables);
-
-	var sourceVariable = variables;
-
-	customVariables.forEach(function (variable, key) {
-		var sourceVariable = variables.get(key);
-
-		variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
-	});
 
 	var components = varUtil.getComponentsFromVariablesMap(variables);
 
@@ -62,7 +46,7 @@ module.exports = function () {
 		components: components,
 		filePaths: filePaths,
 		previewLoading: true,
-		sourceVariables: sourceVariable,
+		sourceVariables: sourceVariables,
 		theme: persistedConfig.theme,
 		variables: variables
 	};

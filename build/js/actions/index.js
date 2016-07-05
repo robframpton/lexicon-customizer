@@ -5,31 +5,39 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.buildLexicon = buildLexicon;
 exports.createVariablesFile = createVariablesFile;
+exports.overwriteSourceVariables = overwriteSourceVariables;
 exports.renderPreview = renderPreview;
 exports.setBaseLexiconTheme = setBaseLexiconTheme;
 exports.setBaseTheme = setBaseTheme;
+exports.setComponents = setComponents;
 exports.setGroup = setGroup;
 exports.setSelectedComponent = setSelectedComponent;
 exports.setTheme = setTheme;
 exports.showSassError = showSassError;
 
+var _component_scraper = require('../lib/system/component_scraper');
+
+var componentScraper = _interopRequireWildcard(_component_scraper);
+
 var _sass_util = require('../lib/system/sass_util');
 
 var sassUtil = _interopRequireWildcard(_sass_util);
 
-var _component_scraper = require('../lib/system/component_scraper');
+var _var_util = require('../lib/var_util');
 
-var componentScraper = _interopRequireWildcard(_component_scraper);
+var varUtil = _interopRequireWildcard(_var_util);
 
 var _create_preview = require('../lib/system/create_preview');
 
 var _create_preview2 = _interopRequireDefault(_create_preview);
 
-var _theme = require('../lib/system/theme');
-
 var _user_config = require('../lib/system/user_config');
 
 var _user_config2 = _interopRequireDefault(_user_config);
+
+var _theme = require('../lib/system/theme');
+
+var _variables = require('./variables');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65,6 +73,17 @@ function createVariablesFile() {
 	};
 };
 
+function overwriteSourceVariables(variables) {
+	return function (dispatch, getState) {
+		dispatch({
+			type: 'OVERWRITE_SOURCE_VARIABLES',
+			variables: variables
+		});
+
+		dispatch(setComponents(varUtil.getComponentsFromVariablesMap(variables)));
+	};
+};
+
 function renderPreview(component) {
 	return function (dispatch, getState) {
 		var state = getState();
@@ -92,6 +111,15 @@ function setBaseLexiconTheme(value) {
 
 		userConfig.setConfig('baseLexiconTheme', value);
 
+		var _componentScraper$ini = componentScraper.initVariables(value);
+
+		var sourceVariables = _componentScraper$ini.sourceVariables;
+		var variables = _componentScraper$ini.variables;
+
+
+		dispatch(overwriteSourceVariables(sourceVariables));
+		dispatch((0, _variables.overwriteVariables)(variables));
+
 		dispatch(buildLexicon());
 	};
 };
@@ -100,6 +128,13 @@ function setBaseTheme(theme) {
 	return {
 		theme: theme,
 		type: 'SET_BASE_THEME'
+	};
+};
+
+function setComponents(components) {
+	return {
+		components: components,
+		type: 'SET_COMPONENTS'
 	};
 };
 

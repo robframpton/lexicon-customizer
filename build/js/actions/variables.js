@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.importVariables = importVariables;
-exports.overrideVariables = overrideVariables;
+exports.overwriteVariables = overwriteVariables;
 exports.resetVariables = resetVariables;
 exports.setVariable = setVariable;
 exports.setVariables = setVariables;
@@ -27,7 +27,7 @@ function importVariables(filePath) {
 	};
 };
 
-function overrideVariables(variables) {
+function overwriteVariables(variables) {
 	return {
 		type: 'OVERRIDE_VARIABLES',
 		variables: variables
@@ -38,7 +38,7 @@ function resetVariables() {
 	return function (dispatch, getState) {
 		var state = getState();
 
-		dispatch(overrideVariables(state.get('sourceVariables')));
+		dispatch(overwriteVariables(state.get('sourceVariables')));
 
 		sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('theme')).then(function () {
 			dispatch((0, _index.buildLexicon)());

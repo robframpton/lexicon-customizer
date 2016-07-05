@@ -1,8 +1,10 @@
-import * as sassUtil from '../lib/system/sass_util';
 import * as componentScraper from '../lib/system/component_scraper';
+import * as sassUtil from '../lib/system/sass_util';
+import * as varUtil from '../lib/var_util';
 import createPreview from '../lib/system/create_preview';
-import {isTheme} from '../lib/system/theme';
 import UserConfig from '../lib/system/user_config';
+import {isTheme} from '../lib/system/theme';
+import {overwriteVariables} from './variables';
 
 const userConfig = new UserConfig();
 
@@ -36,6 +38,17 @@ export function createVariablesFile() {
 	};
 };
 
+export function overwriteSourceVariables(variables) {
+	return (dispatch, getState) => {
+		dispatch({
+			type: 'OVERWRITE_SOURCE_VARIABLES',
+			variables
+		});
+
+		dispatch(setComponents(varUtil.getComponentsFromVariablesMap(variables)));
+	};
+};
+
 export function renderPreview(component) {
 	return function(dispatch, getState) {
 		var state = getState();
@@ -63,8 +76,13 @@ export function setBaseLexiconTheme(value) {
 
 		userConfig.setConfig('baseLexiconTheme', value);
 
+		const {sourceVariables, variables} = componentScraper.initVariables(value);
+
+		dispatch(overwriteSourceVariables(sourceVariables));
+		dispatch(overwriteVariables(variables));
+
 		dispatch(buildLexicon());
-	}
+	};
 };
 
 export function setBaseTheme(theme) {
@@ -72,6 +90,13 @@ export function setBaseTheme(theme) {
 		theme,
 		type: 'SET_BASE_THEME'
 	};
+};
+
+export function setComponents(components) {
+	return {
+		components,
+		type: 'SET_COMPONENTS'
+	}
 };
 
 export function setGroup(group) {
