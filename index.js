@@ -1,51 +1,45 @@
 'use strict';
 
 const _ = require('lodash');
+const path = require('path');
 const electron = require('electron');
+const spawn = require('cross-spawn').spawn;
+
 const app = electron.app;
 
-const pkg = require('./package.json');
-
-// report crashes to the Electron project
 require('crash-reporter').start();
 
-// adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
 
 const indexURL = `file://${__dirname}/build/html/index.html`
 const loadingURL = `file://${__dirname}/build/html/loading.html`
 
-// prevent window being garbage collected
 let mainWindow;
 
 function onClosed() {
-	// dereference the window
-	// for multiple windows store them in an array
 	mainWindow = null;
 }
 
-let installingStartupDeps = false;
+let building = false;
 
 try {
-	_.forEach(pkg.startupDependencies, function(version, name) {
-		require(name);
-	});
+	// Will throw error if libSass bindings are missing or incorrect
+	require('node-sass');
+
+	throw new Error('test');
 }
 catch (err) {
-	installingStartupDeps = true;
+	building = true;
 
-	const npm = require('npm');
+	var nodeSassPath = path.join(require.resolve('node-sass'), '..', '..');
 
-	const args = _.map(pkg.startupDependencies, function(version, name) {
-		return `${name}@${version}`;
+	var child = spawn('npm', ['run', 'install'], {
+		cwd: nodeSassPath,
+		stdio: 'inherit'
 	});
 
-	npm.load({
-		loaded: false
-	}, function(err) {
-		npm.commands.install(args, function(err, data) {
-			mainWindow.loadURL(indexURL);
-		});
+	child.on('close', function(code) {
+		mainWindow.loadURL(indexURL);
 	});
 }
 
@@ -71,10 +65,10 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
 	if (!mainWindow) {
-		mainWindow = createMainWindow(installingStartupDeps ? loadingURL : indexURL);
+		mainWindow = createMainWindow(building ? loadingURL : indexURL);
 	}
 });
 
 app.on('ready', () => {
-	mainWindow = createMainWindow(installingStartupDeps ? loadingURL : indexURL);
+	mainWindow = createMainWindow(building ? loadingURL : indexURL);
 });

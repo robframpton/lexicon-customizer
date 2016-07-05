@@ -23,9 +23,11 @@
     "liferay"
   ],
   "dependencies": {
+    "cross-spawn": "^4.0.0",
     "ejs": "^2.4.2",
     "electron-debug": "^0.5.0",
     "fs-promise": "^0.4.1",
+    "gulp-sass": "^2.1.1",
     "he": "^0.5.0",
     "immutable": "^3.8.1",
     "lexicon": "https://github.com/liferay/lexicon.git",
@@ -58,9 +60,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-watch": "^4.3.5",
     "xo": "^0.12.0"
-  },
-  "startupDependencies": {
-    "gulp-sass": "^2.1.1"
   },
   "xo": {
     "esnext": true,
