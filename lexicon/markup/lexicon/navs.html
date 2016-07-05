@@ -1,31 +1,79 @@
 <section class="row">
 	<div class="col-md-12">
-		<div>
-			<h4>Pills</h4>
-			<ul class="nav nav-pills">
-			<li class="active"><a href="javascript:;">Home</a></li>
-			<li><a href="javascript:;">Profile</a></li>
-			<li class="disabled"><a href="javascript:;">Disabled link</a></li>
-			<li><a href="javascript:;">Messages</a></li>
-			</ul>
-		</div>
+		<h4>Nested Nav</h4>
 
-		<div>
-			<h4>Tabs</h4>
-			<ul class="nav nav-tabs">
-			<li class="active"><a href="javascript:;">Home</a></li>
-			<li><a href="javascript:;">Profile</a></li>
-			<li><a href="javascript:;">Messages</a></li>
-			</ul>
-		</div>
+		<ul class="nav nav-nested">
+			<li>
+				<a class="collapsed collapse-icon" data-toggle="collapse" href="#navCollapse01">
+					Basic Information
+					<span class="collapse-icon-closed icon-caret-right"></span>
+					<span class="collapse-icon-open icon-caret-down"></span>
+				</a>
+				<div class="collapse" id="navCollapse01">
+					<ul class="nav">
+						<li><a href="#1">Details</a></li>
+						<li><a href="#1">Catagorization</a></li>
+						<li>
+							<a class="collapsed collapse-icon" data-toggle="collapse" href="#navCollapse02">
+								Documents and Media
+								<span class="collapse-icon-closed icon-caret-right"></span>
+								<span class="collapse-icon-open icon-caret-down"></span>
+							</a>
+							<div class="collapse" id="navCollapse02">
+								<ul class="nav">
+									<li><a href="#1">Details</a></li>
+									<li><a href="#1">Catagorization</a></li>
+									<li><a href="#1">Documents and Media</a></li>
+									<li><a href="#1">Site Template</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a href="#1">Site Template</a></li>
+					</ul>
+				</div>
+			</li>
 
-		<div>
-			<h4>Justified</h4>
-			<ul class="nav nav-tabs nav-justified">
-			<li class="active"><a href="javascript:;">Home</a></li>
-			<li><a href="javascript:;">Profile</a></li>
-			<li><a href="javascript:;">Messages</a></li>
-			</ul>
-		</div>
+			<li>
+				<a class="collapsed collapse-icon" data-toggle="collapse" href="#navCollapse03">
+					SEO
+					<span class="collapse-icon-closed icon-caret-right"></span>
+					<span class="collapse-icon-open icon-caret-down"></span>
+				</a>
+				<div class="collapse" id="navCollapse03">
+					<ul class="nav">
+						<li><a href="#1">Sitemap</a></li>
+						<li><a href="#1">Robots</a></li>
+					</ul>
+				</div>
+			</li>
+
+			<li>
+				<a class="collapsed collapse-icon" data-toggle="collapse" href="#navCollapse04">
+					Advanced
+				</a>
+				<div class="collapse" id="navCollapse04">
+					<ul class="nav">
+						<li><a href="#1">Default User Associations</a></li>
+						<li><a href="#1">Staging</a></li>
+						<li><a href="#1">Analytics</a></li>
+						<li><a href="#1">Maps</a></li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<div class="col-md-12">
+		<h4>nav-equal-height-heading</h4>
+
+		<ul class="nav">
+			<li class="nav-heading">
+				<div class="nav-equal-height-heading"><span>Basic Information</span></div>
+			</li>
+			<li><a href="#">Details</a></li>
+			<li><a href="#">Catagorization</a></li>
+			<li><a href="#">Documents and Media</a></li>
+			<li><a href="#">Site Template</a></li>
+		</ul>
 	</div>
 </section>

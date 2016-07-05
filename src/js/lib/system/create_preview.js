@@ -20,8 +20,8 @@ export default function createPreview(group, component, baseLexiconTheme, cb) {
 		lexiconCSSPath: cssPath,
 		scripts: [
 			path.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'),
-			path.join(PATH_LEXICON, '..', 'build/js/bootstrap.js'),
-			path.join(PATH_LEXICON, '..', 'build/js/svg4everybody.js')
+			path.join(PATH_LEXICON, 'src/js/bootstrap.js'),
+			path.join(PATH_LEXICON, 'src/js/svg4everybody.js')
 		]
 	}, function(err, result) {
 		if (err) {

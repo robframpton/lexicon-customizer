@@ -39,7 +39,7 @@ function createPreview(group, component, baseLexiconTheme, cb) {
 	_ejs2.default.renderFile(_path2.default.join(__dirname, '..', 'templates', 'preview.ejs'), {
 		componentPreviewPath: _path2.default.join(process.cwd(), 'lexicon/markup', group, component + '.html'),
 		lexiconCSSPath: cssPath,
-		scripts: [_path2.default.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, '..', 'build/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, '..', 'build/js/svg4everybody.js')]
+		scripts: [_path2.default.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, 'src/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, 'src/js/svg4everybody.js')]
 	}, function (err, result) {
 		if (err) {
 			throw err;
