@@ -29,9 +29,10 @@ try {
 catch (err) {
 	building = true;
 
-	var child = spawn('npm', ['rebuild', 'node-sass'], {
-		stdio: 'inherit'
-	});
+	var child = spawn('npm', ['rebuild', 'node-sass']);
+
+	child.stderr.pipe(process.stderr);
+	child.stdout.pipe(process.stdout);
 
 	child.on('close', function(code) {
 		mainWindow.loadURL(indexURL);
