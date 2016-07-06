@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Button from '../../components/Button';
-import {setTheme} from '../../actions/index';
+import {setTheme} from '../../actions/theme';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {

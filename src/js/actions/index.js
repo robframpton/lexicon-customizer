@@ -4,7 +4,10 @@ import * as varUtil from '../lib/var_util';
 import createPreview from '../lib/system/create_preview';
 import UserConfig from '../lib/system/user_config';
 import {isTheme} from '../lib/system/theme';
+
+import {overwriteSourceVariables} from './sourceVariables';
 import {overwriteVariables} from './variables';
+import {showSassError} from './sassError';
 
 const userConfig = new UserConfig();
 
@@ -35,17 +38,6 @@ export function createVariablesFile() {
 			.then(function() {
 				dispatch(buildLexicon());
 			});
-	};
-};
-
-export function overwriteSourceVariables(variables) {
-	return (dispatch, getState) => {
-		dispatch({
-			type: 'OVERWRITE_SOURCE_VARIABLES',
-			variables
-		});
-
-		dispatch(setComponents(varUtil.getComponentsFromVariablesMap(variables)));
 	};
 };
 
@@ -83,68 +75,4 @@ export function setBaseLexiconTheme(value) {
 
 		dispatch(buildLexicon());
 	};
-};
-
-export function setBaseTheme(theme) {
-	return {
-		theme,
-		type: 'SET_BASE_THEME'
-	};
-};
-
-export function setComponents(components) {
-	return {
-		components,
-		type: 'SET_COMPONENTS'
-	}
-};
-
-export function setGroup(group) {
-	return {
-		group,
-		type: 'SET_GROUP'
-	}
-};
-
-export function setSelectedComponent(component) {
-	return {
-		component,
-		type: 'SET_SELECTED_COMPONENT'
-	};
-};
-
-export function setTheme(path) {
-	if (!path || !isTheme(path)) {
-		path = '';
-	}
-
-	userConfig.setConfig('theme', path);
-
-	return {
-		path,
-		type: 'SET_THEME'
-	};
-};
-
-export function showSassError(errorMsg) {
-	let timeout;
-
-	return (dispatch, getState) => {
-		if (timeout) {
-			clearTimeout(timeout);
-
-			timeout = null;
-		}
-
-		dispatch({
-			error: errorMsg,
-			type: 'SET_SASS_ERROR'
-		});
-
-		timeout = setTimeout(function() {
-			dispatch({
-				type: 'CLEAR_SASS_ERROR'
-			});
-		}, 4000);
-	}
 };

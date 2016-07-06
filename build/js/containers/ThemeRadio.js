@@ -14,7 +14,7 @@ var _Radio = require('../components/Radio');
 
 var _Radio2 = _interopRequireDefault(_Radio);
 
-var _index = require('../actions/index');
+var _baseLexiconTheme = require('../actions/baseLexiconTheme');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,7 +27,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	return {
 		onChange: function onChange() {
-			dispatch((0, _index.setBaseLexiconTheme)(ownProps.value));
+			dispatch((0, _baseLexiconTheme.setBaseLexiconTheme)(ownProps.value));
 		}
 	};
 };

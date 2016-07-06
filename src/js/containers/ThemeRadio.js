@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Radio from '../components/Radio';
-import {setBaseLexiconTheme} from '../actions/index';
+import {setBaseLexiconTheme} from '../actions/baseLexiconTheme';
 
 const mapStateToProps = (state, ownProps) => {
 	return {

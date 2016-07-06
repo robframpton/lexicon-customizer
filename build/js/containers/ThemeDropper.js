@@ -20,7 +20,7 @@ var _ThemeLabel = require('../containers/ThemeLabel');
 
 var _ThemeLabel2 = _interopRequireDefault(_ThemeLabel);
 
-var _index = require('../actions/index');
+var _theme = require('../actions/theme');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53,7 +53,7 @@ var ThemeDropper = function (_Component) {
 		value: function handleDrop(files) {
 			var file = files[0];
 
-			this.props.dispatch((0, _index.setTheme)(file.path));
+			this.props.dispatch((0, _theme.setTheme)(file.path));
 		}
 	}]);
 

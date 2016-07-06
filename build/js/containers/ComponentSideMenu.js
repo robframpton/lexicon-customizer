@@ -16,6 +16,10 @@ var _SideMenu2 = _interopRequireDefault(_SideMenu);
 
 var _index = require('../actions/index');
 
+var _group = require('../actions/group');
+
+var _selectedComponent = require('../actions/selectedComponent');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
@@ -47,8 +51,8 @@ var mapDispatchtoProps = function mapDispatchtoProps(dispatch, ownProps) {
 				loading: true,
 				type: 'SET_PREVIEW_LOADING'
 			});
-			dispatch((0, _index.setGroup)(groupId));
-			dispatch((0, _index.setSelectedComponent)(selectedComponent));
+			dispatch((0, _group.setGroup)(groupId));
+			dispatch((0, _selectedComponent.setSelectedComponent)(selectedComponent));
 			dispatch((0, _index.renderPreview)(selectedComponent));
 		}
 	};

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import FileDropper from '../components/FileDropper';
 import ThemeLabel from '../containers/ThemeLabel';
-import {setTheme} from '../actions/index';
+import {setTheme} from '../actions/theme';
 
 class ThemeDropper extends Component {
 	constructor(props) {

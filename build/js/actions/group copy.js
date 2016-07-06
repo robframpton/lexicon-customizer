@@ -5,8 +5,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.buildLexicon = buildLexicon;
 exports.createVariablesFile = createVariablesFile;
+exports.overwriteSourceVariables = overwriteSourceVariables;
 exports.renderPreview = renderPreview;
 exports.setBaseLexiconTheme = setBaseLexiconTheme;
+exports.setBaseTheme = setBaseTheme;
+exports.setComponents = setComponents;
+exports.setGroup = setGroup;
+exports.setSelectedComponent = setSelectedComponent;
+exports.setTheme = setTheme;
+exports.showSassError = showSassError;
 
 var _component_scraper = require('../lib/system/component_scraper');
 
@@ -30,11 +37,7 @@ var _user_config2 = _interopRequireDefault(_user_config);
 
 var _theme = require('../lib/system/theme');
 
-var _sourceVariables = require('./sourceVariables');
-
 var _variables = require('./variables');
-
-var _sassError = require('./sassError');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52,7 +55,7 @@ function buildLexicon() {
 			baseLexiconTheme: baseLexiconTheme
 		}, function (err, filePath) {
 			if (err) {
-				dispatch((0, _sassError.showSassError)(err));
+				dispatch(showSassError(err));
 			} else {
 				dispatch(renderPreview(state.get('selectedComponent')));
 			}
@@ -67,6 +70,17 @@ function createVariablesFile() {
 		sassUtil.writeCustomVariablesFile(state.get('variables'), state.get('sourceVariables'), state.get('theme')).then(function () {
 			dispatch(buildLexicon());
 		});
+	};
+};
+
+function overwriteSourceVariables(variables) {
+	return function (dispatch, getState) {
+		dispatch({
+			type: 'OVERWRITE_SOURCE_VARIABLES',
+			variables: variables
+		});
+
+		dispatch(setComponents(varUtil.getComponentsFromVariablesMap(variables)));
 	};
 };
 
@@ -103,9 +117,73 @@ function setBaseLexiconTheme(value) {
 		var variables = _componentScraper$ini.variables;
 
 
-		dispatch((0, _sourceVariables.overwriteSourceVariables)(sourceVariables));
+		dispatch(overwriteSourceVariables(sourceVariables));
 		dispatch((0, _variables.overwriteVariables)(variables));
 
 		dispatch(buildLexicon());
+	};
+};
+
+function setBaseTheme(theme) {
+	return {
+		theme: theme,
+		type: 'SET_BASE_THEME'
+	};
+};
+
+function setComponents(components) {
+	return {
+		components: components,
+		type: 'SET_COMPONENTS'
+	};
+};
+
+function setGroup(group) {
+	return {
+		group: group,
+		type: 'SET_GROUP'
+	};
+};
+
+function setSelectedComponent(component) {
+	return {
+		component: component,
+		type: 'SET_SELECTED_COMPONENT'
+	};
+};
+
+function setTheme(path) {
+	if (!path || !(0, _theme.isTheme)(path)) {
+		path = '';
+	}
+
+	userConfig.setConfig('theme', path);
+
+	return {
+		path: path,
+		type: 'SET_THEME'
+	};
+};
+
+function showSassError(errorMsg) {
+	var timeout = void 0;
+
+	return function (dispatch, getState) {
+		if (timeout) {
+			clearTimeout(timeout);
+
+			timeout = null;
+		}
+
+		dispatch({
+			error: errorMsg,
+			type: 'SET_SASS_ERROR'
+		});
+
+		timeout = setTimeout(function () {
+			dispatch({
+				type: 'CLEAR_SASS_ERROR'
+			});
+		}, 4000);
 	};
 };

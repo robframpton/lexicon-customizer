@@ -14,14 +14,14 @@ var _Button = require('../../components/Button');
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _index = require('../../actions/index');
+var _theme = require('../../actions/theme');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	return {
 		onClick: function onClick(e) {
-			dispatch((0, _index.setTheme)(''));
+			dispatch((0, _theme.setTheme)(''));
 		}
 	};
 };
