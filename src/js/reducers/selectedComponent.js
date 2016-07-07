@@ -6,4 +6,4 @@ const actionHandlers = {
 	}
 };
 
-export default createReducer('cards', actionHandlers);
+export default createReducer('alerts', actionHandlers);
