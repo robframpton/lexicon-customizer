@@ -116,7 +116,9 @@ class VariablesEditor extends Component {
 		var color = false;
 
 		if (variableName.indexOf('-bg') > -1 ||
+			variableName.indexOf('brand') > -1 ||
 			variableName.indexOf('color') > -1 ||
+			variableName.indexOf('gray') > -1 ||
 			_.endsWith(variableName, '-border') ||
 			_.endsWith(variableName, '-text')) {
 			color = true;
