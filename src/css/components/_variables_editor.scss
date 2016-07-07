@@ -50,6 +50,10 @@
 .variable-input {
 	position: relative;
 
+	label {
+		color: #555;
+	}
+
 	.input-auto-complete-menu {
 		background-color: #FFF;
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);
