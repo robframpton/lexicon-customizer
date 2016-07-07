@@ -9,7 +9,7 @@ import {setSelectedComponent} from '../actions/selectedComponent';
 const mapStateToProps = (state, ownProps) => {
 	return {
 		components: state.get('components'),
-		selectedItem: state.selectedComponent
+		selectedItem: state.get('selectedComponent')
 	};
 };
 

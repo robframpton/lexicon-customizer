@@ -6,13 +6,21 @@ class SideMenu extends Component {
 		const getDisplayName = this._getDisplayName;
 		const onClick = this.props.onClick;
 
+		const {components, selectedItem} = this.props;
+
+		let componentsArray = components.toArray().sort();
+
 		return (
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
 				<ul className="side-menu-list">
-					{this.props.components.toArray().map((item, index) => {
+					{componentsArray.map((item, index) => {
 						let className = 'side-menu-list-item';
+
+						if (item === selectedItem) {
+							className += ' selected';
+						}
 
 						return (
 							<li
