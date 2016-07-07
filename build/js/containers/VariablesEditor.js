@@ -172,7 +172,7 @@ var VariablesEditor = function (_Component) {
 		value: function _isColor(variableName) {
 			var color = false;
 
-			if (variableName.indexOf('-bg') > -1 || variableName.indexOf('color') > -1 || _lodash2.default.endsWith(variableName, '-border') || _lodash2.default.endsWith(variableName, '-text')) {
+			if (variableName.indexOf('-bg') > -1 || variableName.indexOf('brand') > -1 || variableName.indexOf('color') > -1 || variableName.indexOf('gray') > -1 || _lodash2.default.endsWith(variableName, '-border') || _lodash2.default.endsWith(variableName, '-text')) {
 				color = true;
 			}
 

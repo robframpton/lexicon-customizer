@@ -37,6 +37,13 @@ var SideMenu = function (_Component) {
 			var getDisplayName = this._getDisplayName;
 			var onClick = this.props.onClick;
 
+			var _props = this.props;
+			var components = _props.components;
+			var selectedItem = _props.selectedItem;
+
+
+			var componentsArray = components.toArray().sort();
+
 			return _react2.default.createElement(
 				'div',
 				{ className: 'side-menu' },
@@ -48,8 +55,12 @@ var SideMenu = function (_Component) {
 				_react2.default.createElement(
 					'ul',
 					{ className: 'side-menu-list' },
-					this.props.components.toArray().map(function (item, index) {
+					componentsArray.map(function (item, index) {
 						var className = 'side-menu-list-item';
+
+						if (item === selectedItem) {
+							className += ' selected';
+						}
 
 						return _react2.default.createElement(
 							'li',

@@ -245,7 +245,7 @@ div.container {
   transition: background-color 400ms, box-shadow 400ms; }
   .side-menu-list-item.selected {
     background-color: #5BBFDC;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); }
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); }
   .side-menu-list-item.selected a {
     color: #FFF; }
 
@@ -354,6 +354,8 @@ div.container {
 
 .variable-input {
   position: relative; }
+  .variable-input label {
+    color: #555; }
   .variable-input .input-auto-complete-menu {
     background-color: #FFF;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);

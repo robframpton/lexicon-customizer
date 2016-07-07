@@ -14,4 +14,4 @@ var actionHandlers = {
 	}
 };
 
-exports.default = (0, _redux_util.createReducer)('cards', actionHandlers);
+exports.default = (0, _redux_util.createReducer)('alerts', actionHandlers);
