@@ -1,97 +1,48 @@
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
 
 class SideMenu extends Component {
-	constructor(props) {
-		super(props);
-
-		const instance = this;
-
-		this.state = {};
-
-		props.groups.forEach(function(item, index) {
-			instance.state[instance._getListRef(item)] = true;
-		});
-	}
-
 	render() {
-		const instance = this;
+		const getDisplayName = this._getDisplayName;
+		const onClick = this.props.onClick;
 
 		return (
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
-				{this.props.groups.map(function(item, index) {
-					let listRef = instance._getListRef(item);
+				<ul className="side-menu-list">
+					{this.props.components.toArray().map((item, index) => {
+						let className = 'side-menu-list-item';
 
-					let listContent = instance.state[listRef] ? instance.renderMenuList(item, instance.props) : '';
-
-					return (
-						<div className="side-menu-group" data-id={item.id} key={item.id}>
-							<a href="javascript:;" onClick={instance.onSideMenuHeaderClick.bind(instance, listRef)}><h4>{item.title}</h4></a>
-
-							{listContent}
-						</div>
-					);
-				})}
+						return (
+							<li
+								className={className}
+								key={item}
+							>
+								<a
+									data-name={item}
+									href="javascript:;"
+									onClick={onClick}
+								>
+									{getDisplayName(item)}
+								</a>
+							</li>
+						);
+					})}
+				</ul>
 			</div>
 		);
 	}
 
-	renderMenuList(item, props) {
-		let listRef = this._getListRef(item);
+	_getDisplayName(name) {
+		var displayName = name.replace(/-/g, ' ');
 
-		return (
-			<ul className="side-menu-list">
-				{this.renderMenuListItems(item, props)}
-			</ul>
-		);
-	}
-
-	renderMenuListItems(item, {onClick, selectedItem = ''}) {
-		return item.items.map(function(name) {
-			var className = 'side-menu-list-item';
-
-			if (name == selectedItem) {
-				className += ' selected';
-			}
-
-			var displayName = name.replace('-', ' ');
-
-			displayName = displayName[0].toUpperCase() + displayName.slice(1, displayName.length);
-
-			return (
-				<li
-					className={className}
-					key={`${item.it}_${name}`}
-				>
-					<a
-						data-group-id={item.id}
-						data-name={name}
-						href="javascript:;"
-						onClick={onClick}
-					>
-						{displayName}
-					</a>
-				</li>
-			);
-		});
-	}
-
-	onSideMenuHeaderClick(listRef) {
-		let newState = {};
-
-		newState[listRef] = !this.state[listRef];
-
-		this.setState(newState);
-	}
-
-	_getListRef(group) {
-		return group.id + 'List';
+		return displayName[0].toUpperCase() + displayName.slice(1, displayName.length);
 	}
 };
 
 SideMenu.propTypes = {
-	groups: PropTypes.array.isRequired,
+	components: ImmutablePropTypes.list.isRequired,
 	onClick: PropTypes.func.isRequired,
 	selectedItem: PropTypes.string
 };

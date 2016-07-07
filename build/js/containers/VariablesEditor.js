@@ -44,12 +44,24 @@ var VariablesEditor = function (_Component) {
 	function VariablesEditor(props) {
 		_classCallCheck(this, VariablesEditor);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(VariablesEditor).call(this, props));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VariablesEditor).call(this, props));
+
+		_this.state = {
+			collapsedGroups: []
+		};
+		return _this;
 	}
 
 	_createClass(VariablesEditor, [{
 		key: 'render',
 		value: function render() {
+			var _props = this.props;
+			var selectedComponent = _props.selectedComponent;
+			var variables = _props.variables;
+
+
+			var componentVariables = varUtil.filterVariablesByComponent(variables, selectedComponent);
+
 			return _react2.default.createElement(
 				'div',
 				{ className: 'variables-editor' },
@@ -61,24 +73,57 @@ var VariablesEditor = function (_Component) {
 				_react2.default.createElement(
 					'form',
 					null,
-					this.renderInputs()
+					this.renderGroup(componentVariables, 'lexicon', 'Lexicon'),
+					this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap')
 				)
 			);
 		}
 	}, {
+		key: 'renderGroup',
+		value: function renderGroup(componentVariables, group, title) {
+			var groupContent = '';
+
+			var groupVariables = varUtil.filterVariablesByGroup(componentVariables, group);
+
+			if (!groupVariables.isEmpty()) {
+				var className = 'variables-editor-section';
+				var collapsedGroups = this.state.collapsedGroups;
+
+
+				if (collapsedGroups.includes(group)) {
+					className += ' collapsed';
+				}
+
+				groupContent = _react2.default.createElement(
+					'div',
+					{ className: className, 'data-group': group },
+					_react2.default.createElement(
+						'h4',
+						{
+							className: 'variables-editor-section-header',
+							onClick: this._handleHeaderClick.bind(this, group)
+						},
+						title
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'variables-editor-section-variables' },
+						this.renderInputs(groupVariables)
+					)
+				);
+			}
+
+			return groupContent;
+		}
+	}, {
 		key: 'renderInputs',
-		value: function renderInputs() {
-			var _props = this.props;
-			var group = _props.group;
-			var selectedComponent = _props.selectedComponent;
-			var variables = _props.variables;
-
-			var handleChange = this.handleChange.bind(this);
+		value: function renderInputs(groupVariables) {
+			var handleChange = this._handleChange.bind(this);
 			var isColor = this._isColor.bind(this);
+			var variables = this.props.variables;
 
-			var componentVariables = varUtil.getComponentVariablesMap(variables, group, selectedComponent);
 
-			return componentVariables.toArray().map(function (variable) {
+			return groupVariables.toArray().map(function (variable) {
 				var name = variable.get('name');
 				var value = variable.get('value');
 
@@ -94,8 +139,8 @@ var VariablesEditor = function (_Component) {
 			});
 		}
 	}, {
-		key: 'handleChange',
-		value: function handleChange(name, value) {
+		key: '_handleChange',
+		value: function _handleChange(name, value) {
 			var _props2 = this.props;
 			var dispatch = _props2.dispatch;
 			var group = _props2.group;
@@ -103,6 +148,24 @@ var VariablesEditor = function (_Component) {
 
 
 			dispatch((0, _variables.setVariable)(group, selectedComponent, name, value));
+		}
+	}, {
+		key: '_handleHeaderClick',
+		value: function _handleHeaderClick(group) {
+			var collapsedGroups = this.state.collapsedGroups;
+
+
+			var groupIndex = collapsedGroups.indexOf(group);
+
+			if (groupIndex > -1) {
+				collapsedGroups.splice(groupIndex, 1);
+			} else {
+				collapsedGroups.push(group);
+			}
+
+			this.setState({
+				collapsedGroups: collapsedGroups
+			});
 		}
 	}, {
 		key: '_isColor',
@@ -123,13 +186,11 @@ var VariablesEditor = function (_Component) {
 ;
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-	var group = state.get('group');
 	var sassError = state.get('sassError');
 	var selectedComponent = state.get('selectedComponent');
 	var variables = state.get('variables');
 
 	return {
-		group: group,
 		sassError: sassError,
 		selectedComponent: selectedComponent,
 		variables: variables

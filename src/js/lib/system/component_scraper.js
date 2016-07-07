@@ -22,27 +22,26 @@ const PATH_LEXICON_BASE_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/lexic
 const REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
 export function initVariables(baseTheme) {
-	let lexiconVariables;
-
-	if (baseTheme === 'atlasTheme') {
-		lexiconVariables = mapAtlasVariables();
-	}
-	else {
-		lexiconVariables = mapLexiconVariables();
-	}
-
 	const bootstrapVariables = mapBootstrapVariables();
 
-	const customVariables = mapCustomVariables();
+	const lexiconVariables = mapLexiconVariables();
 
-	let variables = bootstrapVariables.merge(lexiconVariables);
+	let variables = _mergeVariables(bootstrapVariables, lexiconVariables);
+
+	if (baseTheme === 'atlasTheme') {
+		const atlasVariables = mapAtlasVariables();
+
+		variables = _mergeVariables(variables, atlasVariables);
+	}
 
 	const sourceVariables = variables;
 
-	customVariables.forEach((variable, key) => {
-		let sourceVariable = variables.get(key);
+	mapCustomVariables().forEach((variable, key) => {
+		if (sourceVariables.has(key)) {
+			let sourceVariable = variables.get(key);
 
-		variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
+			variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
+		}
 	});
 
 	return {
@@ -52,11 +51,7 @@ export function initVariables(baseTheme) {
 };
 
 export function mapAtlasVariables() {
-	let lexiconBaseVariables = mapLexiconVariables();
-
-	let atlasVariables = _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
-
-	return lexiconBaseVariables.merge(atlasVariables);
+	return _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
 };
 
 export function mapBootstrapVariables() {
@@ -130,7 +125,9 @@ export function _mapBootstrapVariablesFile() {
 		let name = item.match(REGEX_BOOTSTRAP_COMPONENT_NAME);
 
 		if (name && name.length) {
-			orderedMap = orderedMap.merge(_mapVariablesFromString(item, 'bootstrap', name[1]));
+			let componentName = _.kebabCase(name[1]);
+
+			orderedMap = orderedMap.merge(_mapVariablesFromString(item, 'bootstrap', componentName));
 		}
 	});
 
@@ -166,4 +163,19 @@ export function _mapVariablesFromString(fileContents, group, component) {
 	});
 
 	return orderedMap;
+};
+
+export function _mergeVariables(variables, targetVariables) {
+	targetVariables.forEach((tragetVariable, key) => {
+		if (variables.has(key)) {
+			const modifiedVariable = variables.get(key).set('value', tragetVariable.get('value'));
+
+			variables = variables.set(key, modifiedVariable);
+		}
+		else {
+			variables = variables.set(key, tragetVariable);
+		}
+	});
+
+	return variables;
 };

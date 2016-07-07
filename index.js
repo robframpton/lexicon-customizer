@@ -8,8 +8,8 @@ const app = electron.app;
 
 require('electron-debug')();
 
-const indexURL = `file://${__dirname}/build/html/index.html`
-const loadingURL = `file://${__dirname}/build/html/loading.html`
+const indexURL = `file://${__dirname}/build/html/index.html`;
+const loadingURL = `file://${__dirname}/build/html/loading.html`;
 
 let mainWindow;
 

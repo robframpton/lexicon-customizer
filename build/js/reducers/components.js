@@ -16,4 +16,4 @@ var actionHandlers = {
 	}
 };
 
-exports.default = (0, _redux_util.createReducer)((0, _immutable.Map)(), actionHandlers);
+exports.default = (0, _redux_util.createReducer)((0, _immutable.List)(), actionHandlers);

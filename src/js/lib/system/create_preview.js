@@ -16,7 +16,7 @@ export default function createPreview(group, component, baseLexiconTheme, cb) {
 	const previewFilePath = path.join(process.cwd(), 'lexicon/build/' + group + '-preview.html');
 
 	ejs.renderFile(path.join(__dirname, '..', 'templates', 'preview.ejs'), {
-		componentPreviewPath: path.join(process.cwd(), 'lexicon/markup', group, component + '.html'),
+		componentPreviewPath: path.join(process.cwd(), 'lexicon/markup/lexicon', component + '.html'),
 		lexiconCSSPath: cssPath,
 		scripts: [
 			path.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'),

@@ -32,10 +32,17 @@
 	margin-right: 20px;
 
 	.btn {
+		-webkit-app-region: no-drag;
 		border-radius: 0;
 		border-width: 0 0 4px;
 		height: 100%;
-		-webkit-app-region: no-drag;
+		outline: none;
+
+		&:active {
+			border-color: #1F282F;
+			border-width: 4px 0 0;
+			outline: none;
+		}
 	}
 }
 
@@ -55,5 +62,5 @@ div.container {
 .lexicon-customizer-content {
 	height: 100vh;
 	overflow: hidden;
-	padding-top: 40px;
+	padding-top: 50px;
 }

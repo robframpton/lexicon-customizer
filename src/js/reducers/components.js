@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {List} from 'immutable';
 
 import {createReducer} from '../lib/redux_util';
 
@@ -8,4 +8,4 @@ const actionHandlers = {
 	}
 };
 
-export default createReducer(Map(), actionHandlers);
+export default createReducer(List(), actionHandlers);

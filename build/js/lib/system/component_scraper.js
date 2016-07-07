@@ -16,6 +16,7 @@ exports._getLexiconBaseComponents = _getLexiconBaseComponents;
 exports._mapBootstrapVariablesFile = _mapBootstrapVariablesFile;
 exports._mapVariablesFromComponentArray = _mapVariablesFromComponentArray;
 exports._mapVariablesFromString = _mapVariablesFromString;
+exports._mergeVariables = _mergeVariables;
 
 var _lodash = require('lodash');
 
@@ -50,26 +51,26 @@ var PATH_LEXICON_BASE_VARIABLES_FILE = _path2.default.join(PATH_LEXICON, 'src/sc
 var REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
 function initVariables(baseTheme) {
-	var lexiconVariables = void 0;
-
-	if (baseTheme === 'atlasTheme') {
-		lexiconVariables = mapAtlasVariables();
-	} else {
-		lexiconVariables = mapLexiconVariables();
-	}
-
 	var bootstrapVariables = mapBootstrapVariables();
 
-	var customVariables = mapCustomVariables();
+	var lexiconVariables = mapLexiconVariables();
 
-	var variables = bootstrapVariables.merge(lexiconVariables);
+	var variables = _mergeVariables(bootstrapVariables, lexiconVariables);
+
+	if (baseTheme === 'atlasTheme') {
+		var atlasVariables = mapAtlasVariables();
+
+		variables = _mergeVariables(variables, atlasVariables);
+	}
 
 	var sourceVariables = variables;
 
-	customVariables.forEach(function (variable, key) {
-		var sourceVariable = variables.get(key);
+	mapCustomVariables().forEach(function (variable, key) {
+		if (sourceVariables.has(key)) {
+			var sourceVariable = variables.get(key);
 
-		variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
+			variables = variables.set(key, sourceVariable.set('value', variable.get('value')));
+		}
 	});
 
 	return {
@@ -79,11 +80,7 @@ function initVariables(baseTheme) {
 };
 
 function mapAtlasVariables() {
-	var lexiconBaseVariables = mapLexiconVariables();
-
-	var atlasVariables = _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
-
-	return lexiconBaseVariables.merge(atlasVariables);
+	return _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
 };
 
 function mapBootstrapVariables() {
@@ -157,7 +154,9 @@ function _mapBootstrapVariablesFile() {
 		var name = item.match(REGEX_BOOTSTRAP_COMPONENT_NAME);
 
 		if (name && name.length) {
-			orderedMap = orderedMap.merge(_mapVariablesFromString(item, 'bootstrap', name[1]));
+			var componentName = _lodash2.default.kebabCase(name[1]);
+
+			orderedMap = orderedMap.merge(_mapVariablesFromString(item, 'bootstrap', componentName));
 		}
 	});
 
@@ -193,4 +192,18 @@ function _mapVariablesFromString(fileContents, group, component) {
 	});
 
 	return orderedMap;
+};
+
+function _mergeVariables(variables, targetVariables) {
+	targetVariables.forEach(function (tragetVariable, key) {
+		if (variables.has(key)) {
+			var modifiedVariable = variables.get(key).set('value', tragetVariable.get('value'));
+
+			variables = variables.set(key, modifiedVariable);
+		} else {
+			variables = variables.set(key, tragetVariable);
+		}
+	});
+
+	return variables;
 };

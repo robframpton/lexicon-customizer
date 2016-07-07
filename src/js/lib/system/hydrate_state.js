@@ -16,6 +16,8 @@ module.exports = function() {
 
 	const components = varUtil.getComponentsFromVariablesMap(variables);
 
+	console.log(components);
+
 	const filePaths = immutable.Map({
 		customVariables: path.join(process.cwd(), 'lexicon', '_custom_variables.scss')
 	});

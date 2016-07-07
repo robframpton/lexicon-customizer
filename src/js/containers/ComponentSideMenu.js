@@ -7,21 +7,8 @@ import {setGroup} from '../actions/group';
 import {setSelectedComponent} from '../actions/selectedComponent';
 
 const mapStateToProps = (state, ownProps) => {
-	let components = state.get('components');
-
 	return {
-		groups: [
-			{
-				id: 'lexicon',
-				items: components.get('lexicon'),
-				title: 'Lexicon'
-			},
-			{
-				id: 'bootstrap',
-				items: components.get('bootstrap'),
-				title: 'Bootstrap'
-			}
-		],
+		components: state.get('components'),
 		selectedItem: state.selectedComponent
 	};
 };
@@ -31,14 +18,13 @@ const mapDispatchtoProps = (dispatch, ownProps) => {
 		onClick: event => {
 			let currentTarget = event.currentTarget;
 
-			let groupId = currentTarget.getAttribute('data-group-id');
 			let selectedComponent = currentTarget.getAttribute('data-name');
 
 			dispatch({
 				loading: true,
 				type: 'SET_PREVIEW_LOADING'
 			});
-			dispatch(setGroup(groupId));
+
 			dispatch(setSelectedComponent(selectedComponent));
 			dispatch(renderPreview(selectedComponent));
 		}

@@ -10,28 +10,68 @@ import {setVariable} from '../actions/variables';
 class VariablesEditor extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			collapsedGroups: []
+		};
 	}
 
 	render() {
+		const {selectedComponent, variables} = this.props;
+
+		let componentVariables = varUtil.filterVariablesByComponent(variables, selectedComponent);
+
 		return (
 			<div className="variables-editor">
 				<h3>Variables</h3>
 
 				<form>
-					{this.renderInputs()}
+					{this.renderGroup(componentVariables, 'lexicon', 'Lexicon')}
+
+					{this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap')}
 				</form>
 			</div>
 		);
 	}
 
-	renderInputs() {
-		let {group, selectedComponent, variables} = this.props;
-		let handleChange = this.handleChange.bind(this);
-		let isColor = this._isColor.bind(this);
+	renderGroup(componentVariables, group, title) {
+		let groupContent = '';
 
-		let componentVariables = varUtil.getComponentVariablesMap(variables, group, selectedComponent);
+		const groupVariables = varUtil.filterVariablesByGroup(componentVariables, group);
 
-		return componentVariables.toArray().map(variable => {
+		if (!groupVariables.isEmpty()) {
+			let className = 'variables-editor-section';
+			let {collapsedGroups} = this.state;
+
+			if (collapsedGroups.includes(group)) {
+				className += ' collapsed';
+			}
+
+			groupContent = (
+				<div className={className} data-group={group}>
+					<h4
+						className="variables-editor-section-header"
+						onClick={this._handleHeaderClick.bind(this, group)}
+					>
+						{title}
+					</h4>
+
+					<div className="variables-editor-section-variables">
+						{this.renderInputs(groupVariables)}
+					</div>
+				</div>
+			);
+		}
+
+		return groupContent;
+	}
+
+	renderInputs(groupVariables) {
+		const handleChange = this._handleChange.bind(this);
+		const isColor = this._isColor.bind(this);
+		const {variables} = this.props;
+
+		return groupVariables.toArray().map(variable => {
 			let name = variable.get('name');
 			let value = variable.get('value');
 
@@ -49,10 +89,27 @@ class VariablesEditor extends Component {
 		});
 	}
 
-	handleChange(name, value) {
+	_handleChange(name, value) {
 		let {dispatch, group, selectedComponent} = this.props;
 
 		dispatch(setVariable(group, selectedComponent, name, value));
+	}
+
+	_handleHeaderClick(group) {
+		let {collapsedGroups} = this.state;
+
+		let groupIndex = collapsedGroups.indexOf(group);
+
+		if (groupIndex > -1) {
+			collapsedGroups.splice(groupIndex, 1);
+		}
+		else {
+			collapsedGroups.push(group);
+		}
+
+		this.setState({
+			collapsedGroups
+		});
 	}
 
 	_isColor(variableName) {
@@ -70,13 +127,11 @@ class VariablesEditor extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-	let group = state.get('group');
 	let sassError = state.get('sassError');
 	let selectedComponent = state.get('selectedComponent');
 	let variables = state.get('variables');
 
 	return {
-		group,
 		sassError,
 		selectedComponent,
 		variables
