@@ -1,6 +1,8 @@
-$font-awesome-path: "../src/fonts/alloy-font-awesome/font";
+$font-awesome-path: "../../lexicon/src/fonts/alloy-font-awesome/font";
 
 @import "custom_variables";
+
+@import "./lexicon/src/fonts/alloy-font-awesome/scss/font-awesome";
 
 @import "./lexicon/src/scss/lexicon-base/main";
 
