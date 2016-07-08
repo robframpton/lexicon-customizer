@@ -1,1 +1,11 @@
-<div>No preview available.</div>
+<section>
+	<div class="lexicon-customizer-color-preview">
+		<% ['gray-darker', 'gray-dark', 'gray', 'gray-light', 'gray-lighter', 'brand-primary', 'brand-success', 'brand-info', 'brand-warning', 'brand-danger'].forEach(function(color) { %>
+			<div class="lexicon-customizer-color-swatch <%= color %>">
+				<h4>$<%= color %></h4>
+
+				<div class="swatch"></div>
+			</div>
+		<% }); %>
+	</div>
+</section>

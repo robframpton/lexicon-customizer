@@ -4,6 +4,38 @@
 	padding: 20px;
 }
 
+@mixin color-swatch($name, $color) {
+	.#{$name} {
+		color: $color;
+
+		.swatch {
+			background-color: $color;
+		}
+	}
+}
+
+.lexicon-customizer-color-preview {
+	@include color-swatch("brand-danger", $brand-danger);
+	@include color-swatch("brand-info", $brand-info);
+	@include color-swatch("brand-primary", $brand-primary);
+	@include color-swatch("brand-success", $brand-success);
+	@include color-swatch("brand-warning", $brand-warning);
+	@include color-swatch("gray", $gray);
+	@include color-swatch("gray-base", $gray-base);
+	@include color-swatch("gray-dark", $gray-dark);
+	@include color-swatch("gray-darker", $gray-darker);
+	@include color-swatch("gray-light", $gray-light);
+	@include color-swatch("gray-lighter", $gray-lighter);
+
+	.lexicon-customizer-color-swatch {
+		.swatch {
+			display: inline-block;
+			height: 30px;
+			width: 100px;
+		}
+	}
+}
+
 .lexicon-customizer-example {
 	margin-bottom: 10px;
 	position: relative;
