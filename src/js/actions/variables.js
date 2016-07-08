@@ -1,5 +1,6 @@
 import * as componentScraper from '../lib/system/component_scraper';
 import * as sassUtil from '../lib/system/sass_util';
+import * as varUtil from '../lib/var_util';
 import {buildLexicon, createVariablesFile} from './index';
 
 export function importVariables(filePath) {
@@ -15,9 +16,19 @@ export function overwriteVariables(variables) {
 	}
 };
 
+export function resetComponentVariables() {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const sourceComponentVariables = varUtil.filterVariablesByComponent(state.get('sourceVariables'), state.get('selectedComponent'));
+
+		dispatch(setVariables(sourceComponentVariables));
+	};
+};
+
 export function resetVariables() {
 	return function(dispatch, getState) {
-		var state = getState();
+		const state = getState();
 
 		dispatch(overwriteVariables(state.get('sourceVariables')));
 
