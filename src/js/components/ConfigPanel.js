@@ -6,6 +6,7 @@ import ExportButton from '../containers/action_buttons/ExportButton';
 import ImportButton from '../containers/action_buttons/ImportButton';
 import OpenDevToolsButton from '../components/OpenDevToolsButton';
 import ResetButton from '../containers/action_buttons/ResetButton';
+import ResetComponentButton from '../containers/action_buttons/ResetComponentButton';
 import ThemeDropper from '../containers/ThemeDropper';
 import ThemeRadio from '../containers/ThemeRadio';
 
@@ -19,11 +20,13 @@ class ConfigPanel extends Component {
 
 		return (
 			<div className={className}>
-				<ConfigPanelGroup label="General">
+				<ConfigPanelGroup label="Variables">
 					<ThemeRadio label="Lexicon Base" value="lexiconBase" />
 					<ThemeRadio label="Atlas Theme" value="atlasTheme" />
 
-					<ResetButton label="Reset Variables" />
+					<ResetButton label="Reset All Variables" />
+
+					<ResetComponentButton label="Reset Component Variables" />
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Preview Frame">
