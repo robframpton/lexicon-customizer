@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.importVariables = importVariables;
 exports.overwriteVariables = overwriteVariables;
+exports.resetComponentVariables = resetComponentVariables;
 exports.resetVariables = resetVariables;
 exports.setVariable = setVariable;
 exports.setVariables = setVariables;
@@ -16,6 +17,10 @@ var componentScraper = _interopRequireWildcard(_component_scraper);
 var _sass_util = require('../lib/system/sass_util');
 
 var sassUtil = _interopRequireWildcard(_sass_util);
+
+var _var_util = require('../lib/var_util');
+
+var varUtil = _interopRequireWildcard(_var_util);
 
 var _index = require('./index');
 
@@ -31,6 +36,16 @@ function overwriteVariables(variables) {
 	return {
 		type: 'OVERRIDE_VARIABLES',
 		variables: variables
+	};
+};
+
+function resetComponentVariables() {
+	return function (dispatch, getState) {
+		var state = getState();
+
+		var sourceComponentVariables = varUtil.filterVariablesByComponent(state.get('sourceVariables'), state.get('selectedComponent'));
+
+		dispatch(setVariables(sourceComponentVariables));
 	};
 };
 

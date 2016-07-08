@@ -16,6 +16,7 @@ exports._getLexiconBaseComponents = _getLexiconBaseComponents;
 exports._mapBootstrapVariablesFile = _mapBootstrapVariablesFile;
 exports._mapVariablesFromComponentArray = _mapVariablesFromComponentArray;
 exports._mapVariablesFromString = _mapVariablesFromString;
+exports._getReducedComponentName = _getReducedComponentName;
 exports._mergeVariables = _mergeVariables;
 
 var _lodash = require('lodash');
@@ -33,6 +34,11 @@ var _path2 = _interopRequireDefault(_path);
 var _immutable = require('immutable');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var COMPONENT_REDUCER_MAP = {
+	tooltip: 'tooltips',
+	type: 'typography'
+};
 
 var PATH_LEXICON = _path2.default.join(process.cwd(), 'lexicon');
 
@@ -184,7 +190,7 @@ function _mapVariablesFromString(fileContents, group, component) {
 		value = _lodash2.default.trim(value.replace('!default', ''));
 
 		orderedMap = orderedMap.set(variable, (0, _immutable.Map)({
-			component: component,
+			component: _getReducedComponentName(component),
 			group: group,
 			name: variable,
 			value: value
@@ -192,6 +198,10 @@ function _mapVariablesFromString(fileContents, group, component) {
 	});
 
 	return orderedMap;
+};
+
+function _getReducedComponentName(component) {
+	return COMPONENT_REDUCER_MAP[component] || component;
 };
 
 function _mergeVariables(variables, targetVariables) {

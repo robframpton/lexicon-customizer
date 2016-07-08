@@ -34,6 +34,10 @@ var _ResetButton = require('../containers/action_buttons/ResetButton');
 
 var _ResetButton2 = _interopRequireDefault(_ResetButton);
 
+var _ResetComponentButton = require('../containers/action_buttons/ResetComponentButton');
+
+var _ResetComponentButton2 = _interopRequireDefault(_ResetComponentButton);
+
 var _ThemeDropper = require('../containers/ThemeDropper');
 
 var _ThemeDropper2 = _interopRequireDefault(_ThemeDropper);
@@ -73,10 +77,11 @@ var ConfigPanel = function (_Component) {
 				{ className: className },
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,
-					{ label: 'General' },
+					{ label: 'Variables' },
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Lexicon Base', value: 'lexiconBase' }),
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Atlas Theme', value: 'atlasTheme' }),
-					_react2.default.createElement(_ResetButton2.default, { label: 'Reset Variables' })
+					_react2.default.createElement(_ResetButton2.default, { label: 'Reset All Variables' }),
+					_react2.default.createElement(_ResetComponentButton2.default, { label: 'Reset Component Variables' })
 				),
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,
