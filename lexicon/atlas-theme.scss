@@ -1,17 +1,7 @@
 $font-awesome-path: "../src/fonts/alloy-font-awesome/font";
 
-@import "./lexicon/src/scss/bootstrap/variables";
-
-@import "./lexicon/src/scss/lexicon-base/variables";
-@import "./lexicon/src/scss/lexicon-base/mixins";
-
-@import "./lexicon/src/scss/atlas-theme/variables";
-@import "./lexicon/src/scss/atlas-theme/mixins";
-
 @import "custom_variables";
 
-@import "./lexicon/src/scss/lexicon-base/main";
-
-@import "./lexicon/src/scss/atlas-theme/atlas";
+@import "./lexicon/src/scss/atlas-theme/main";
 
 @import "customizer_common";
