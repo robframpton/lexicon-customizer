@@ -8,6 +8,8 @@ import path from 'path';
 
 const PATH_LEXICON = path.join(process.cwd(), 'lexicon');
 
+const PATH_LEXICON_IMAGES = path.join(PATH_LEXICON, 'src/images');
+
 export default function createPreview(group, component, baseLexiconTheme, cb) {
 	baseLexiconTheme = _.kebabCase(baseLexiconTheme);
 	component = _.snakeCase(component);
@@ -16,7 +18,8 @@ export default function createPreview(group, component, baseLexiconTheme, cb) {
 	const previewFilePath = path.join(process.cwd(), 'lexicon/build/' + group + '-preview.html');
 
 	ejs.renderFile(path.join(__dirname, '..', 'templates', 'preview.ejs'), {
-		componentPreviewPath: path.join(process.cwd(), 'lexicon/markup/lexicon', component + '.html'),
+		componentPreviewPath: path.join(process.cwd(), 'lexicon/markup/lexicon', component + '.ejs'),
+		imagesPath: PATH_LEXICON_IMAGES,
 		lexiconCSSPath: cssPath,
 		scripts: [
 			path.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'),

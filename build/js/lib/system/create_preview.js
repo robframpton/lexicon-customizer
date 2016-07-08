@@ -29,6 +29,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var PATH_LEXICON = _path2.default.join(process.cwd(), 'lexicon');
 
+var PATH_LEXICON_IMAGES = _path2.default.join(PATH_LEXICON, 'src/images');
+
 function createPreview(group, component, baseLexiconTheme, cb) {
 	baseLexiconTheme = _lodash2.default.kebabCase(baseLexiconTheme);
 	component = _lodash2.default.snakeCase(component);
@@ -37,7 +39,8 @@ function createPreview(group, component, baseLexiconTheme, cb) {
 	var previewFilePath = _path2.default.join(process.cwd(), 'lexicon/build/' + group + '-preview.html');
 
 	_ejs2.default.renderFile(_path2.default.join(__dirname, '..', 'templates', 'preview.ejs'), {
-		componentPreviewPath: _path2.default.join(process.cwd(), 'lexicon/markup/lexicon', component + '.html'),
+		componentPreviewPath: _path2.default.join(process.cwd(), 'lexicon/markup/lexicon', component + '.ejs'),
+		imagesPath: PATH_LEXICON_IMAGES,
 		lexiconCSSPath: cssPath,
 		scripts: [_path2.default.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, 'src/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, 'src/js/svg4everybody.js')]
 	}, function (err, result) {
