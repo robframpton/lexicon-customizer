@@ -14,7 +14,7 @@
 	}
 }
 
-.lexicon-customizer-color-preview {
+.lexicon-preview-colors {
 	@include color-swatch("brand-danger", $brand-danger);
 	@include color-swatch("brand-info", $brand-info);
 	@include color-swatch("brand-primary", $brand-primary);
@@ -27,12 +27,26 @@
 	@include color-swatch("gray-light", $gray-light);
 	@include color-swatch("gray-lighter", $gray-lighter);
 
-	.lexicon-customizer-color-swatch {
+	.lexicon-preview-color-swatch {
 		.swatch {
 			display: inline-block;
 			height: 30px;
 			width: 100px;
 		}
+	}
+}
+
+.lexicon-preview-modals {
+	.modal-dialog {
+		position: static;
+	}
+}
+
+.lexicon-preview-popovers {
+	.popover {
+		display: inline-block;
+		margin: 20px;
+		position: relative;
 	}
 }
 
