@@ -13,10 +13,10 @@ exports.mapVariablesFromFile = mapVariablesFromFile;
 exports._getAtlasThemeComponents = _getAtlasThemeComponents;
 exports._getComponentArrayFromVariablesFile = _getComponentArrayFromVariablesFile;
 exports._getLexiconBaseComponents = _getLexiconBaseComponents;
+exports._getReducedComponentName = _getReducedComponentName;
 exports._mapBootstrapVariablesFile = _mapBootstrapVariablesFile;
 exports._mapVariablesFromComponentArray = _mapVariablesFromComponentArray;
 exports._mapVariablesFromString = _mapVariablesFromString;
-exports._getReducedComponentName = _getReducedComponentName;
 exports._mergeVariables = _mergeVariables;
 
 var _lodash = require('lodash');
@@ -143,6 +143,10 @@ function _getLexiconBaseComponents() {
 	return _getComponentArrayFromVariablesFile(PATH_LEXICON_BASE_VARIABLES_FILE);
 };
 
+function _getReducedComponentName(component) {
+	return COMPONENT_REDUCER_MAP[component] || component;
+};
+
 function _mapBootstrapVariablesFile() {
 	var fileContents = _fs2.default.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
 		encoding: 'utf8'
@@ -198,10 +202,6 @@ function _mapVariablesFromString(fileContents, group, component) {
 	});
 
 	return orderedMap;
-};
-
-function _getReducedComponentName(component) {
-	return COMPONENT_REDUCER_MAP[component] || component;
 };
 
 function _mergeVariables(variables, targetVariables) {

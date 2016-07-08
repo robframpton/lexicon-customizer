@@ -113,6 +113,10 @@ export function _getLexiconBaseComponents() {
 	return _getComponentArrayFromVariablesFile(PATH_LEXICON_BASE_VARIABLES_FILE);
 };
 
+export function _getReducedComponentName(component) {
+	return COMPONENT_REDUCER_MAP[component] || component;
+};
+
 export function _mapBootstrapVariablesFile() {
 	let fileContents = fs.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
 		encoding: 'utf8'
@@ -168,10 +172,6 @@ export function _mapVariablesFromString(fileContents, group, component) {
 	});
 
 	return orderedMap;
-};
-
-export function _getReducedComponentName(component) {
-	return COMPONENT_REDUCER_MAP[component] || component;
 };
 
 export function _mergeVariables(variables, targetVariables) {
