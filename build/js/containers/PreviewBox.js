@@ -14,6 +14,8 @@ var _reactRedux = require('react-redux');
 
 var _index = require('../actions/index');
 
+var _previewLoading = require('../actions/previewLoading');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40,6 +42,16 @@ var PreviewBox = function (_Component) {
 
 
 			dispatch((0, _index.renderPreview)(selectedComponent));
+		}
+	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate() {
+			var webview = this.refs.webview;
+
+
+			if (webview && !this._webviewLoadListener) {
+				this._webviewLoadListener = webview.addEventListener('did-stop-loading', this._handleWebviewDidStopLoading.bind(this));
+			}
 		}
 	}, {
 		key: 'componentWillReceiveProps',
@@ -95,6 +107,14 @@ var PreviewBox = function (_Component) {
 		key: 'renderWebview',
 		value: function renderWebview() {
 			return _react2.default.createElement('webview', { autosize: 'on', id: 'webview', maxWidth: '100%', ref: 'webview', src: this.props.preview.htmlPath });
+		}
+	}, {
+		key: '_handleWebviewDidStopLoading',
+		value: function _handleWebviewDidStopLoading() {
+			var dispatch = this.props.dispatch;
+
+
+			dispatch((0, _previewLoading.setPreviewLoading)(false));
 		}
 	}]);
 

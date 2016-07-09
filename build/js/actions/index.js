@@ -79,11 +79,6 @@ function renderPreview(component) {
 				preview: preview,
 				type: 'CREATE_PREVIEW'
 			});
-
-			dispatch({
-				loading: false,
-				type: 'SET_PREVIEW_LOADING'
-			});
 		});
 	};
 };

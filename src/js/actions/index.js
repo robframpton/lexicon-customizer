@@ -50,11 +50,6 @@ export function renderPreview(component) {
 				preview,
 				type: 'CREATE_PREVIEW'
 			});
-
-			dispatch({
-				loading: false,
-				type: 'SET_PREVIEW_LOADING'
-			});
 		});
 	};
 };

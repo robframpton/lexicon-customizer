@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import SideMenu from '../components/SideMenu';
 import {renderPreview} from '../actions/index';
 import {setGroup} from '../actions/group';
+import {setPreviewLoading} from '../actions/previewLoading';
 import {setSelectedComponent} from '../actions/selectedComponent';
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,11 +21,7 @@ const mapDispatchtoProps = (dispatch, ownProps) => {
 
 			let selectedComponent = currentTarget.getAttribute('data-name');
 
-			dispatch({
-				loading: true,
-				type: 'SET_PREVIEW_LOADING'
-			});
-
+			dispatch(setPreviewLoading(true));
 			dispatch(setSelectedComponent(selectedComponent));
 			dispatch(renderPreview(selectedComponent));
 		}

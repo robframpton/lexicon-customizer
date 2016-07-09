@@ -2,12 +2,21 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {renderPreview} from '../actions/index';
+import {setPreviewLoading} from '../actions/previewLoading';
 
 class PreviewBox extends Component {
 	componentDidMount() {
 		const {dispatch, selectedComponent} = this.props;
 
 		dispatch(renderPreview(selectedComponent));
+	}
+
+	componentDidUpdate() {
+		const {webview} = this.refs;
+
+		if (webview && !this._webviewLoadListener) {
+			this._webviewLoadListener = webview.addEventListener('did-stop-loading', this._handleWebviewDidStopLoading.bind(this));
+		}
 	}
 
 	componentWillReceiveProps({preview}) {
@@ -63,6 +72,12 @@ class PreviewBox extends Component {
 		return (
 			<webview autosize="on" id="webview" maxWidth="100%" ref="webview" src={this.props.preview.htmlPath}></webview>
 		);
+	}
+
+	_handleWebviewDidStopLoading() {
+		const {dispatch} = this.props;
+
+		dispatch(setPreviewLoading(false));
 	}
 };
 
