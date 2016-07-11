@@ -24,6 +24,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var COMPONENT_BLACKLIST = ['iconography'];
+
 module.exports = function () {
 	var userConfig = new _user_config2.default();
 
@@ -35,9 +37,9 @@ module.exports = function () {
 	var variables = _componentScraper$ini.variables;
 
 
-	var components = varUtil.getComponentsFromVariablesMap(variables);
-
-	console.log(components);
+	var components = varUtil.getComponentsFromVariablesMap(variables).filter(function (component) {
+		return !COMPONENT_BLACKLIST.includes(component);
+	});
 
 	var filePaths = _immutable2.default.Map({
 		customVariables: _path2.default.join(process.cwd(), 'lexicon', '_custom_variables.scss')
