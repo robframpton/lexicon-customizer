@@ -13,9 +13,11 @@ const pathBuild = 'build';
 
 gulp.task('build', ['build:css', 'build:html', 'build:images', 'build:js', 'build:js:resources']);
 
-gulp.task('build:lexicon-src', () => {
-	return gulp.src('node_modules/lexicon/src/**/*')
-		.pipe(gulp.dest('lexicon/src'));
+gulp.task('build:lexicon', () => {
+	return gulp.src(['node_modules/lexicon-ux/build/**/*', 'node_modules/lexicon-ux/src/**/*'], {
+		base: 'node_modules/lexicon-ux'
+	})
+		.pipe(gulp.dest('lexicon'));
 });
 
 gulp.task('build:css', () => {

@@ -8,7 +8,7 @@ import path from 'path';
 
 const PATH_LEXICON = path.join(process.cwd(), 'lexicon');
 
-const PATH_LEXICON_IMAGES = path.join(PATH_LEXICON, 'src/images');
+const PATH_LEXICON_IMAGES = path.join(PATH_LEXICON, 'build/images');
 
 export default function createPreview(group, component, baseLexiconTheme, cb) {
 	baseLexiconTheme = _.kebabCase(baseLexiconTheme);
@@ -23,8 +23,8 @@ export default function createPreview(group, component, baseLexiconTheme, cb) {
 		lexiconCSSPath: cssPath,
 		scripts: [
 			path.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'),
-			path.join(PATH_LEXICON, 'src/js/bootstrap.js'),
-			path.join(PATH_LEXICON, 'src/js/svg4everybody.js')
+			path.join(PATH_LEXICON, 'build/js/bootstrap.js'),
+			path.join(PATH_LEXICON, 'build/js/svg4everybody.js')
 		]
 	}, function(err, result) {
 		if (err) {
