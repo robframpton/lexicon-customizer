@@ -29,7 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var PATH_LEXICON = _path2.default.join(process.cwd(), 'lexicon');
 
-var PATH_LEXICON_IMAGES = _path2.default.join(PATH_LEXICON, 'src/images');
+var PATH_LEXICON_IMAGES = _path2.default.join(PATH_LEXICON, 'build/images');
 
 function createPreview(group, component, baseLexiconTheme, cb) {
 	baseLexiconTheme = _lodash2.default.kebabCase(baseLexiconTheme);
@@ -40,9 +40,10 @@ function createPreview(group, component, baseLexiconTheme, cb) {
 
 	_ejs2.default.renderFile(_path2.default.join(__dirname, '..', 'templates', 'preview.ejs'), {
 		componentPreviewPath: _path2.default.join(process.cwd(), 'lexicon/markup/lexicon', component + '.ejs'),
+		iconSpritePath: _path2.default.join(PATH_LEXICON_IMAGES, 'icons', 'icons.svg'),
 		imagesPath: PATH_LEXICON_IMAGES,
 		lexiconCSSPath: cssPath,
-		scripts: [_path2.default.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, 'src/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, 'src/js/svg4everybody.js')]
+		scripts: [_path2.default.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, 'build/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, 'build/js/svg4everybody.js')]
 	}, function (err, result) {
 		if (err) {
 			throw err;

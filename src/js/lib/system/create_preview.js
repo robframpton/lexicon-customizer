@@ -19,6 +19,7 @@ export default function createPreview(group, component, baseLexiconTheme, cb) {
 
 	ejs.renderFile(path.join(__dirname, '..', 'templates', 'preview.ejs'), {
 		componentPreviewPath: path.join(process.cwd(), 'lexicon/markup/lexicon', component + '.ejs'),
+		iconSpritePath: path.join(PATH_LEXICON_IMAGES, 'icons', 'icons.svg'),
 		imagesPath: PATH_LEXICON_IMAGES,
 		lexiconCSSPath: cssPath,
 		scripts: [
