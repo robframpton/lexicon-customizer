@@ -18,6 +18,8 @@ var _immutable = require('immutable');
 
 var _reactRedux = require('react-redux');
 
+var _electron = require('electron');
+
 var _LexiconCustomizer = require('../js/containers/LexiconCustomizer');
 
 var _LexiconCustomizer2 = _interopRequireDefault(_LexiconCustomizer);
@@ -30,11 +32,18 @@ var _hydrate_state = require('../js/lib/system/hydrate_state');
 
 var _hydrate_state2 = _interopRequireDefault(_hydrate_state);
 
+var _preview_popout = require('../js/lib/preview_popout');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BrowserWindow = _electron.remote.BrowserWindow;
+
 
 var initalState = (0, _immutable.Map)((0, _hydrate_state2.default)());
 
 var store = (0, _redux.createStore)(_index2.default, initalState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+(0, _preview_popout.handlePreviewPopout)(store);
 
 var render = function render() {
 	_reactDom2.default.render(_react2.default.createElement(

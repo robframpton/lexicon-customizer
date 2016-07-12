@@ -1,0 +1,112 @@
+/* Variables */
+/* General */
+body, html {
+  padding: 0;
+  margin: 0; }
+
+body {
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif; }
+
+a {
+  color: #5BBFDC;
+  transition: color 300ms; }
+  a:active, a:focus, a:hover {
+    color: #258eac;
+    text-decoration: none; }
+
+/* Preview box */
+.preview-box {
+  width: 50%; }
+  .preview-box webview {
+    height: 100%; }
+
+.preview-box-dev-tools-btn {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  border: 2px solid;
+  bottom: 0;
+  margin: 10px 30px 10px;
+  padding: 2px 4px;
+  position: absolute;
+  right: 0; }
+  .preview-box-dev-tools-btn:hover {
+    text-decoration: none; }
+
+.preview-box-loading-mask {
+  align-items: center;
+  background-color: #FFF;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+/* Spinner */
+.spinner {
+  font-size: 10px;
+  height: 80px;
+  margin: 40px auto;
+  text-align: center;
+  width: 80px; }
+
+.spinner > div {
+  background-color: #5BBFDC;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  height: 100%;
+  margin: 0 1px;
+  width: 10px;
+  -webkit-animation: sk-stretchdelay 600ms infinite ease-in-out;
+  animation: sk-stretchdelay 600ms infinite ease-in-out; }
+
+.spinner.inverted > div {
+  background-color: #EFEFEF; }
+
+.spinner .rect2 {
+  -webkit-animation-delay: -500ms;
+  animation-delay: -500ms; }
+
+.spinner .rect3 {
+  -webkit-animation-delay: -400ms;
+  animation-delay: -400ms; }
+
+.spinner .rect4 {
+  -webkit-animation-delay: -300ms;
+  animation-delay: -300ms; }
+
+.spinner .rect5 {
+  -webkit-animation-delay: -200ms;
+  animation-delay: -200ms; }
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4); }
+  20% {
+    -webkit-transform: scaleY(1); } }
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4); }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1); } }
+
+::-webkit-scrollbar {
+  width: 8px; }
+
+::-webkit-scrollbar-track {
+  margin: 4px; }
+
+::-webkit-scrollbar-thumb {
+  background-color: #D0D0D0;
+  border-radius: 10px; }
+
+.preview-box {
+  position: relative;
+  width: 100%; }
+
+#webview {
+  height: 100vh; }

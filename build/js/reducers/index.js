@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _reduxImmutable = require('redux-immutable');
+
 var _baseLexiconTheme = require('./baseLexiconTheme');
 
 var _baseLexiconTheme2 = _interopRequireDefault(_baseLexiconTheme);
@@ -28,9 +30,9 @@ var _preview = require('./preview');
 
 var _preview2 = _interopRequireDefault(_preview);
 
-var _previewLoading = require('./previewLoading');
+var _previewPopout = require('./previewPopout');
 
-var _previewLoading2 = _interopRequireDefault(_previewLoading);
+var _previewPopout2 = _interopRequireDefault(_previewPopout);
 
 var _sassError = require('./sassError');
 
@@ -48,8 +50,6 @@ var _theme = require('./theme');
 
 var _theme2 = _interopRequireDefault(_theme);
 
-var _reduxImmutable = require('redux-immutable');
-
 var _variables = require('./variables');
 
 var _variables2 = _interopRequireDefault(_variables);
@@ -63,7 +63,7 @@ var lexiconCustomizerReducer = (0, _reduxImmutable.combineReducers)({
 	filePaths: _filePaths2.default,
 	group: _group2.default,
 	preview: _preview2.default,
-	previewLoading: _previewLoading2.default,
+	previewPopout: _previewPopout2.default,
 	sassError: _sassError2.default,
 	selectedComponent: _selectedComponent2.default,
 	sourceVariables: _sourceVariables2.default,

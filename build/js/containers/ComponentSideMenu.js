@@ -18,8 +18,6 @@ var _index = require('../actions/index');
 
 var _group = require('../actions/group');
 
-var _previewLoading = require('../actions/previewLoading');
-
 var _selectedComponent = require('../actions/selectedComponent');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -38,7 +36,6 @@ var mapDispatchtoProps = function mapDispatchtoProps(dispatch, ownProps) {
 
 			var selectedComponent = currentTarget.getAttribute('data-name');
 
-			dispatch((0, _previewLoading.setPreviewLoading)(true));
 			dispatch((0, _selectedComponent.setSelectedComponent)(selectedComponent));
 			dispatch((0, _index.renderPreview)(selectedComponent));
 		}

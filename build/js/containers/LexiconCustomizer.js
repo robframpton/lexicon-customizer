@@ -24,13 +24,15 @@ var _Header = require('../components/Header');
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _PreviewBox = require('../containers/PreviewBox');
+var _LexiconPreview = require('../containers/LexiconPreview');
 
-var _PreviewBox2 = _interopRequireDefault(_PreviewBox);
+var _LexiconPreview2 = _interopRequireDefault(_LexiconPreview);
 
 var _VariablesEditor = require('../containers/VariablesEditor');
 
 var _VariablesEditor2 = _interopRequireDefault(_VariablesEditor);
+
+var _index = require('../actions/index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55,18 +57,42 @@ var LexiconCustomizer = function (_Component) {
 	}
 
 	_createClass(LexiconCustomizer, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _props = this.props;
+			var dispatch = _props.dispatch;
+			var selectedComponent = _props.selectedComponent;
+
+
+			dispatch((0, _index.renderPreview)(selectedComponent));
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var errors = [];
 
-			if (this.props.sassError) {
-				errors.push(this.props.sassError);
+			var _props2 = this.props;
+			var previewPopout = _props2.previewPopout;
+			var sassError = _props2.sassError;
+
+
+			if (sassError) {
+				errors.push(sassError);
+			}
+
+			var className = 'lexicon-customizer';
+			var lexiconPreview = '';
+
+			if (previewPopout) {
+				className += ' has-popout-preview';
+			} else {
+				lexiconPreview = _react2.default.createElement(_LexiconPreview2.default, null);
 			}
 
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'lexicon-customizer',
+					className: className,
 					'data-group': this.props.group
 				},
 				_react2.default.createElement(_Header2.default, null),
@@ -75,7 +101,7 @@ var LexiconCustomizer = function (_Component) {
 					'div',
 					{ className: 'lexicon-customizer-content' },
 					_react2.default.createElement(_ComponentSideMenu2.default, { header: 'Components' }),
-					_react2.default.createElement(_PreviewBox2.default, null),
+					lexiconPreview,
 					_react2.default.createElement(_VariablesEditor2.default, null)
 				)
 			);
@@ -89,12 +115,22 @@ var LexiconCustomizer = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
 	var group = state.get('group');
+	var previewPopout = state.get('previewPopout');
 	var sassError = state.get('sassError');
+	var selectedComponent = state.get('selectedComponent');
 
 	return {
 		group: group,
-		sassError: sassError
+		previewPopout: previewPopout,
+		sassError: sassError,
+		selectedComponent: selectedComponent
 	};
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(LexiconCustomizer);
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	return {
+		dispatch: dispatch
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LexiconCustomizer);

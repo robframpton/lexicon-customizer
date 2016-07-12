@@ -236,6 +236,9 @@ div.container {
 .side-menu {
   width: 20%; }
 
+.has-popout-preview .side-menu {
+  width: 30%; }
+
 .side-menu-list {
   list-style: none;
   padding: 0; }
@@ -276,9 +279,6 @@ div.container {
   width: 10px;
   -webkit-animation: sk-stretchdelay 600ms infinite ease-in-out;
   animation: sk-stretchdelay 600ms infinite ease-in-out; }
-
-.lexicon-customizer[data-group="bootstrap"] .spinner > div {
-  background-color: #9E79D7; }
 
 .spinner.inverted > div {
   background-color: #EFEFEF; }
@@ -328,6 +328,9 @@ div.container {
 .variables-editor {
   width: 30%; }
 
+.has-popout-preview .variables-editor {
+  width: 70%; }
+
 .variables-editor input, .variables-editor input:focus {
   border-radius: 0;
   border-width: 0 0 4px;
@@ -341,14 +344,24 @@ div.container {
   border: 4px solid #F7F7F7;
   margin-top: 20px;
   padding: 10px; }
-  .variables-editor-section .variables-editor-section-header {
-    cursor: pointer; }
   .variables-editor-section[data-group="bootstrap"] .variables-editor-section-header {
     color: #9E79D7; }
+    .variables-editor-section[data-group="bootstrap"] .variables-editor-section-header:hover {
+      background-color: #9E79D7; }
   .variables-editor-section[data-group="bootstrap"] input:focus {
     border-color: #9E79D7; }
   .variables-editor-section[data-group="lexicon"] .variables-editor-section-header {
     color: #5BBFDC; }
+    .variables-editor-section[data-group="lexicon"] .variables-editor-section-header:hover {
+      background-color: #5BBFDC; }
+  .variables-editor-section .variables-editor-section-header {
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 300ms, color 300ms; }
+    .variables-editor-section .variables-editor-section-header:hover {
+      color: #FFF; }
+  .variables-editor-section .variables-editor-section-variables {
+    margin-top: 10px; }
   .variables-editor-section.collapsed .variables-editor-section-variables {
     display: none; }
 

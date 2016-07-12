@@ -46,6 +46,10 @@ var _ThemeRadio = require('../containers/ThemeRadio');
 
 var _ThemeRadio2 = _interopRequireDefault(_ThemeRadio);
 
+var _PopoutPreviewButton = require('../containers/action_buttons/PopoutPreviewButton');
+
+var _PopoutPreviewButton2 = _interopRequireDefault(_PopoutPreviewButton);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -86,7 +90,8 @@ var ConfigPanel = function (_Component) {
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,
 					{ label: 'Preview Frame' },
-					_react2.default.createElement(_OpenDevToolsButton2.default, null)
+					_react2.default.createElement(_OpenDevToolsButton2.default, null),
+					_react2.default.createElement(_PopoutPreviewButton2.default, { label: 'Popout Preview Panel' })
 				),
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,
