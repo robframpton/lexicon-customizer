@@ -32,7 +32,9 @@ var _hydrate_state = require('../js/lib/system/hydrate_state');
 
 var _hydrate_state2 = _interopRequireDefault(_hydrate_state);
 
-var _preview_popout = require('../js/lib/preview_popout');
+var _preview_popout = require('../js/subscribers/preview_popout');
+
+var _preview_popout2 = _interopRequireDefault(_preview_popout);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43,7 +45,7 @@ var initalState = (0, _immutable.Map)((0, _hydrate_state2.default)());
 
 var store = (0, _redux.createStore)(_index2.default, initalState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
-(0, _preview_popout.handlePreviewPopout)(store);
+(0, _preview_popout2.default)(store);
 
 var render = function render() {
 	_reactDom2.default.render(_react2.default.createElement(
