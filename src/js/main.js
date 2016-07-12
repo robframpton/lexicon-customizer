@@ -14,7 +14,7 @@ import LexiconCustomizer from '../js/containers/LexiconCustomizer';
 import lexiconCustomizerReducer from '../js/reducers/index';
 
 import hydrateState from '../js/lib/system/hydrate_state';
-import {handlePreviewPopout} from '../js/lib/preview_popout';
+import previewPopoutSubscriber from '../js/subscribers/preview_popout';
 
 const initalState = Map(hydrateState());
 
@@ -24,7 +24,7 @@ const store = createStore(
 	applyMiddleware(thunk)
 );
 
-handlePreviewPopout(store);
+previewPopoutSubscriber(store);
 
 const render = () => {
 	ReactDOM.render(

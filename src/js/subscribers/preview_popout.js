@@ -5,9 +5,9 @@ const {BrowserWindow} = remote;
 
 const EVENT_PREVIEW_DATA = 'preview-data';
 
-let currentPreviewData;
+export default function previewPopoutSubscriber(store) {
+	let currentPreviewData;
 
-export function handlePreviewPopout(store) {
 	ipcRenderer.on('request-preview-data', () => {
 		const state = store.getState();
 
