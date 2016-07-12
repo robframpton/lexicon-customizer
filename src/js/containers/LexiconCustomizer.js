@@ -4,8 +4,9 @@ import {connect} from 'react-redux';
 import ComponentSideMenu from '../containers/ComponentSideMenu';
 import ErrorPopup from '../components/ErrorPopup';
 import Header from '../components/Header';
-import PreviewBox from '../containers/PreviewBox';
+import LexiconPreview from '../containers/LexiconPreview';
 import VariablesEditor from '../containers/VariablesEditor';
+import {renderPreview} from '../actions/index';
 
 class LexiconCustomizer extends Component {
 	constructor(props) {
@@ -16,16 +17,36 @@ class LexiconCustomizer extends Component {
 		};
 	}
 
+	componentDidMount() {
+		const {dispatch, selectedComponent} = this.props;
+
+		dispatch(renderPreview(selectedComponent));
+	}
+
 	render() {
 		let errors = [];
 
-		if (this.props.sassError) {
-			errors.push(this.props.sassError);
+		const {previewPopout, sassError} = this.props;
+
+		if (sassError) {
+			errors.push(sassError);
+		}
+
+		let className = 'lexicon-customizer';
+		let lexiconPreview = '';
+
+		if (previewPopout) {
+			className += ' has-popout-preview';
+		}
+		else {
+			lexiconPreview = (
+				<LexiconPreview />
+			);
 		}
 
 		return (
 			<div
-				className="lexicon-customizer"
+				className={className}
 				data-group={this.props.group}
 			>
 				<Header />
@@ -35,7 +56,7 @@ class LexiconCustomizer extends Component {
 				<div className="lexicon-customizer-content">
 					<ComponentSideMenu header="Components" />
 
-					<PreviewBox />
+					{lexiconPreview}
 
 					<VariablesEditor />
 				</div>
@@ -45,13 +66,23 @@ class LexiconCustomizer extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-	let group = state.get('group');
-	let sassError = state.get('sassError');
+	const group = state.get('group');
+	const previewPopout = state.get('previewPopout');
+	const sassError = state.get('sassError');
+	const selectedComponent = state.get('selectedComponent');
 
 	return {
 		group,
-		sassError
+		previewPopout,
+		sassError,
+		selectedComponent
 	};
 };
 
-export default connect(mapStateToProps)(LexiconCustomizer);
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		dispatch
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LexiconCustomizer);

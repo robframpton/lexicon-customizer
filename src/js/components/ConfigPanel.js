@@ -10,6 +10,8 @@ import ResetComponentButton from '../containers/action_buttons/ResetComponentBut
 import ThemeDropper from '../containers/ThemeDropper';
 import ThemeRadio from '../containers/ThemeRadio';
 
+import PopoutPreviewButton from '../containers/action_buttons/PopoutPreviewButton';
+
 class ConfigPanel extends Component {
 	render() {
 		var className = 'lexicon-customizer-config-panel';
@@ -31,6 +33,8 @@ class ConfigPanel extends Component {
 
 				<ConfigPanelGroup label="Preview Frame">
 					<OpenDevToolsButton />
+
+					<PopoutPreviewButton label="Popout Preview Panel" />
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Theme">

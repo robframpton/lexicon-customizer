@@ -4,6 +4,10 @@
 	width: 30%;
 }
 
+.has-popout-preview .variables-editor {
+	width: 70%;
+}
+
 .variables-editor input {
 	&, &:focus {
 		border-radius: 0;
@@ -22,13 +26,13 @@
 	margin-top: 20px;
 	padding: 10px;
 
-	.variables-editor-section-header {
-		cursor: pointer;
-	}
-
 	&[data-group="bootstrap"] {
 		.variables-editor-section-header {
 			color: $brand-secondary;
+
+			&:hover {
+				background-color: $brand-secondary;
+			}
 		}
 
 		input:focus {
@@ -39,7 +43,25 @@
 	&[data-group="lexicon"] {
 		.variables-editor-section-header {
 			color: $brand-primary;
+
+			&:hover {
+				background-color: $brand-primary;
+			}
 		}
+	}
+
+	.variables-editor-section-header {
+		cursor: pointer;
+		padding: 10px;
+		transition: background-color 300ms, color 300ms;
+
+		&:hover {
+			color: #FFF;
+		}
+	}
+
+	.variables-editor-section-variables {
+		margin-top: 10px;
 	}
 
 	&.collapsed .variables-editor-section-variables {

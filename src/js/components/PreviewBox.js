@@ -1,27 +1,30 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 import {renderPreview} from '../actions/index';
-import {setPreviewLoading} from '../actions/previewLoading';
 
 class PreviewBox extends Component {
-	componentDidMount() {
-		const {dispatch, selectedComponent} = this.props;
+	constructor(props) {
+		super(props);
 
-		dispatch(renderPreview(selectedComponent));
+		let state = {};
+
+		if (!props.htmlPath) {
+			state.previewLoading = true;
+		}
+
+		this.state = state;
 	}
 
 	componentDidUpdate() {
 		const {webview} = this.refs;
 
 		if (webview && !this._webviewLoadListener) {
-			this._webviewLoadListener = webview.addEventListener('did-stop-loading', this._handleWebviewDidStopLoading.bind(this));
+			this._webviewLoadListener = webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
 		}
 	}
 
-	componentWillReceiveProps({preview}) {
-		const {cssPath} = preview;
-
+	componentWillReceiveProps({cssPath, htmlPath}) {
 		let scriptString = `
 			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
 			var lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute('href');
@@ -34,13 +37,31 @@ class PreviewBox extends Component {
 		if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
 			this.refs.webview.executeJavaScript(scriptString);
 		}
+
+		if (htmlPath !== this.props.htmlPath) {
+			this.setState({
+				previewLoading: true
+			});
+		}
+	}
+
+	handleDidStopLoading() {
+		const {didStopLoading} = this.props;
+
+		this.setState({
+			previewLoading: false
+		});
+
+		if (didStopLoading) {
+			didStopLoading();
+		}
 	}
 
 	render() {
-		const htmlPath = this.props.preview.htmlPath;
+		const {htmlPath} = this.props;
+		const {previewLoading} = this.state;
 
-		const previewLoadingMask = this.props.previewLoading ? this.renderPreviewLoadingMask() : '';
-
+		const previewLoadingMask = previewLoading ? this.renderPreviewLoadingMask() : '';
 		const webview = htmlPath ? this.renderWebview() : '';
 
 		return (
@@ -70,33 +91,21 @@ class PreviewBox extends Component {
 
 	renderWebview() {
 		return (
-			<webview autosize="on" id="webview" maxWidth="100%" ref="webview" src={this.props.preview.htmlPath}></webview>
+			<webview
+				autosize="on"
+				id="webview"
+				maxWidth="100%"
+				ref="webview"
+				src={this.props.htmlPath}
+			></webview>
 		);
 	}
-
-	_handleWebviewDidStopLoading() {
-		const {dispatch} = this.props;
-
-		dispatch(setPreviewLoading(false));
-	}
 };
 
-const mapStateToProps = (state, ownProps) => {
-	let preview = state.get('preview');
-	let previewLoading = state.get('previewLoading');
-	let selectedComponent = state.get('selectedComponent');
-
-	return {
-		preview,
-		previewLoading,
-		selectedComponent
-	};
+PreviewBox.propTypes = {
+	cssPath: PropTypes.string,
+	didStopLoading: PropTypes.func,
+	htmlPath:  PropTypes.string
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		dispatch
-	}
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PreviewBox);
+export default PreviewBox;
