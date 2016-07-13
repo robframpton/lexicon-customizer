@@ -10,6 +10,8 @@ import ResetComponentButton from '../containers/action_buttons/ResetComponentBut
 import ThemeDropper from '../containers/ThemeDropper';
 import ThemeRadio from '../containers/ThemeRadio';
 
+import Icon from '../components/Icon';
+
 import PopoutPreviewButton from '../containers/action_buttons/PopoutPreviewButton';
 
 class ConfigPanel extends Component {
@@ -26,27 +28,41 @@ class ConfigPanel extends Component {
 					<ThemeRadio label="Lexicon Base" value="lexiconBase" />
 					<ThemeRadio label="Atlas Theme" value="atlasTheme" />
 
-					<ResetButton label="Reset All Variables" />
+					<ResetButton>
+						Reset All
+					</ResetButton>
 
-					<ResetComponentButton label="Reset Component Variables" />
+					<ResetComponentButton>
+						Reset Component
+					</ResetComponentButton>
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Preview Frame">
-					<OpenDevToolsButton />
+					<OpenDevToolsButton>
+						Inspect Preview
+					</OpenDevToolsButton>
 
-					<PopoutPreviewButton label="Popout Preview Panel" />
+					<PopoutPreviewButton>
+						Popout Preview
+					</PopoutPreviewButton>
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Theme">
 					<ThemeDropper />
 
-					<ClearThemeButton label="Clear Theme" />
+					<ClearThemeButton>
+						Clear Theme
+					</ClearThemeButton>
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Import/Export">
-					<ExportButton label="Export Variables" />
+					<ExportButton>
+						Export Variables
+					</ExportButton>
 
-					<ImportButton label="Import Variables" />
+					<ImportButton>
+						Import Variables
+					</ImportButton>
 				</ConfigPanelGroup>
 			</div>
 		)

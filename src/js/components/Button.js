@@ -1,14 +1,31 @@
 import React, {PropTypes} from 'react';
 
-const Button = ({href, label, onClick, ...other}) => {
+import Icon from '../components/Icon';
+
+const Button = ({children, href, icon, onClick, ...other}) => {
+	let className = 'btn btn-default';
+
+	if (icon) {
+		className += ' btn-icon';
+
+		icon = (
+			<Icon icon={icon} />
+		);
+	}
+	else {
+		icon = '';
+	}
+
 	if (href) {
 		return (
 			<a
 				{...other}
-				className="btn btn-default"
+				className={className}
 				href={href}
 			>
-				{label}
+				{icon}
+
+				{children}
 			</a>
 		);
 	}
@@ -16,10 +33,12 @@ const Button = ({href, label, onClick, ...other}) => {
 		return (
 			<button
 				{...other}
-				className="btn btn-default"
+				className={className}
 				onClick={onClick}
 			>
-				{label}
+				{icon}
+
+				{children}
 			</button>
 		);
 	}
@@ -27,7 +46,6 @@ const Button = ({href, label, onClick, ...other}) => {
 
 Button.propTypes = {
 	href: PropTypes.string,
-	label:  PropTypes.string.isRequired,
 	onClick: PropTypes.func
 };
 

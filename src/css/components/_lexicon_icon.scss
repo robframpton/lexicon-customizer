@@ -1,0 +1,14 @@
+/* Config panel */
+
+$icon-size: 16px;
+
+.lexicon-icon {
+	display: inline-block;
+	height: $icon-size;
+	line-height: $icon-size;
+	margin: 0 6px;
+	text-align: center;
+	transform: translateZ(0);
+	vertical-align: text-bottom;
+	width: $icon-size;
+}

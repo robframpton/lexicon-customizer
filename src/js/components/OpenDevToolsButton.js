@@ -6,7 +6,6 @@ import Button from '../components/Button';
 let OpenDevToolsButton = (props) => {
 	return (
 		<Button
-			label="Open DevTools"
 			onClick={e => {
 				let webview = document.getElementById('webview');
 
@@ -14,6 +13,8 @@ let OpenDevToolsButton = (props) => {
 					webview.openDevTools();
 				}
 			}}
+
+			{...props}
 		/>
 	);
 }
