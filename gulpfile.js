@@ -7,6 +7,7 @@ const gulp = require('gulp');
 const path = require('path');
 const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
+const replace = require('gulp-replace');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 
@@ -22,6 +23,8 @@ gulp.task('build', (cb) => {
 		'build:images',
 		'build:js',
 		'build:js:resources',
+		'build:lexicon',
+		'build:normalize-lexicon',
 		cb
 	);
 });
@@ -35,6 +38,12 @@ gulp.task('build:lexicon', () => {
 		base: 'node_modules/lexicon-ux'
 	})
 		.pipe(gulp.dest('lexicon'));
+});
+
+gulp.task('build:normalize-lexicon', () => {
+	return gulp.src('lexicon/src/scss/lexicon-base/main.scss')
+		.pipe(replace('@import "mixins";', '@import "mixins";\n@import "variables";'))
+		.pipe(gulp.dest('lexicon/src/scss/lexicon-base'));
 });
 
 gulp.task('build:css', () => {

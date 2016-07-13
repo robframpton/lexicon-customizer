@@ -61,6 +61,7 @@
     "gulp-ejs": "^2.0.0",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
     "gulp-watch": "^4.3.5",
     "run-sequence": "^1.2.2",
     "xo": "^0.12.0"
