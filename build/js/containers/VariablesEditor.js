@@ -66,26 +66,37 @@ var VariablesEditor = function (_Component) {
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
+			var colorVariableName = _props.colorVariableName;
 			var selectedComponent = _props.selectedComponent;
 			var variables = _props.variables;
 
 
 			var componentVariables = varUtil.filterVariablesByComponent(variables, selectedComponent);
 
+			var className = 'variables-editor';
+
+			if (colorVariableName) {
+				className += ' has-color-picker-panel';
+			}
+
 			return _react2.default.createElement(
 				'div',
-				{ className: 'variables-editor' },
+				{ className: className },
 				_react2.default.createElement(
-					'h3',
-					null,
-					'Variables'
-				),
-				_react2.default.createElement(
-					'form',
-					null,
-					this.renderGroup(componentVariables, 'lexicon', 'Lexicon'),
-					this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap'),
-					this.renderColorPickerPanel()
+					'div',
+					{ className: 'variables-editor-inner' },
+					_react2.default.createElement(
+						'h3',
+						null,
+						'Variables'
+					),
+					_react2.default.createElement(
+						'form',
+						null,
+						this.renderGroup(componentVariables, 'lexicon', 'Lexicon'),
+						this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap'),
+						this.renderColorPickerPanel()
+					)
 				)
 			);
 		}

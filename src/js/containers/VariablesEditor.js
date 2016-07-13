@@ -20,21 +20,29 @@ class VariablesEditor extends Component {
 	}
 
 	render() {
-		const {selectedComponent, variables} = this.props;
+		const {colorVariableName, selectedComponent, variables} = this.props;
 
 		let componentVariables = varUtil.filterVariablesByComponent(variables, selectedComponent);
 
+		let className = 'variables-editor';
+
+		if (colorVariableName) {
+			className += ' has-color-picker-panel';
+		}
+
 		return (
-			<div className="variables-editor">
-				<h3>Variables</h3>
+			<div className={className}>
+				<div className="variables-editor-inner">
+					<h3>Variables</h3>
 
-				<form>
-					{this.renderGroup(componentVariables, 'lexicon', 'Lexicon')}
+					<form>
+						{this.renderGroup(componentVariables, 'lexicon', 'Lexicon')}
 
-					{this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap')}
+						{this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap')}
 
-					{this.renderColorPickerPanel()}
-				</form>
+						{this.renderColorPickerPanel()}
+					</form>
+				</div>
 			</div>
 		);
 	}

@@ -55,7 +55,6 @@
 
 .side-menu, .variables-editor {
 	height: 100%;
-	padding: 12px;
 }
 
 .preview-box {
@@ -67,11 +66,13 @@
 }
 
 .side-menu {
+	padding: 12px;
 	width: 215px;
 }
 
 .variables-editor {
 	float: right;
+	overflow: hidden;
 	width: 320px;
 }
 

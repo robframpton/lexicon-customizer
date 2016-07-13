@@ -1,5 +1,11 @@
 /* Variables editor */
 
+.variables-editor-inner {
+	height: 100%;
+	overflow: scroll;
+	padding: 12px;
+}
+
 .variables-editor input {
 	&, &:focus {
 		border-radius: 0;
@@ -76,6 +82,7 @@
 
 	label {
 		color: #555;
+		font-weight: 500;
 	}
 
 	.input-auto-complete-menu {
@@ -105,4 +112,47 @@
 
 .color-input {
 	padding-right: 30px;
+}
+
+.color-picker-panel {
+	border-radius: 4px 4px 0 0;
+	border: 4px solid #F7F7F7;
+	border-width: 4px 4px 0;
+	bottom: 0;
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), -8px -8px 10px #FFF, 8px -8px 10px #FFF;
+	left: 12px;
+	position: absolute;
+	right: 20px;
+
+	.color-picker-panel-header {
+		margin: 8px 28px 0;
+
+		.color-picker-panel-name, .color-picker-panel-close {
+			color: #555;
+		}
+
+		.color-picker-panel-name {
+			font-weight: 500;
+		}
+
+		.color-picker-panel-close {
+			float: right;
+
+			svg {
+				fill: #999;
+			}
+		}
+	}
+
+	.color-picker-panel-body {
+		margin: 10px 28px 0px;
+
+		> div > div > div {
+			box-shadow: none !important;
+		}
+	}
+}
+
+.variables-editor.has-color-picker-panel {
+	padding-bottom: 270px;
 }
