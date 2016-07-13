@@ -90,9 +90,9 @@ class VariablesEditor extends Component {
 	}
 
 	_handleChange(name, value) {
-		let {dispatch, group, selectedComponent} = this.props;
+		const {dispatch} = this.props;
 
-		dispatch(setVariable(group, selectedComponent, name, value));
+		dispatch(setVariable(name, value));
 	}
 
 	_handleHeaderClick(group) {

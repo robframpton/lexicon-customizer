@@ -39,11 +39,9 @@ export function resetVariables() {
 	};
 };
 
-export function setVariable(group, component, name, value) {
+export function setVariable(name, value) {
 	return (dispatch, getState) => {
 		dispatch({
-			component,
-			group,
 			name,
 			type: 'SET_VARIABLE',
 			value
