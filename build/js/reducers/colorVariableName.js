@@ -14,4 +14,4 @@ var actionHandlers = {
 	}
 };
 
-exports.default = (0, _redux_util.createReducer)('$alert-default-bg', actionHandlers);
+exports.default = (0, _redux_util.createReducer)(null, actionHandlers);

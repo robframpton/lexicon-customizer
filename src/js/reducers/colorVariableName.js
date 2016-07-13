@@ -6,4 +6,4 @@ const actionHandlers = {
 	}
 };
 
-export default createReducer('$alert-default-bg', actionHandlers);
+export default createReducer(null, actionHandlers);
