@@ -14,10 +14,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ColorPicker = require('./ColorPicker');
-
-var _ColorPicker2 = _interopRequireDefault(_ColorPicker);
-
 var _color = require('../lib/color');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -39,7 +35,6 @@ var VariableInput = function (_Component) {
 		_this.state = {
 			autoCompleteActive: false,
 			autoCompleteIndex: 0,
-			colorPickerVisible: false,
 			focused: false
 		};
 		return _this;
@@ -153,16 +148,6 @@ var VariableInput = function (_Component) {
 			});
 		}
 	}, {
-		key: 'handleColorPickerChange',
-		value: function handleColorPickerChange(value) {
-			var _props3 = this.props;
-			var onChange = _props3.onChange;
-			var name = _props3.name;
-
-
-			onChange(name, value);
-		}
-	}, {
 		key: 'handleInputBlur',
 		value: function handleInputBlur(event) {
 			this.setState({
@@ -172,9 +157,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleInputChange',
 		value: function handleInputChange(event) {
-			var _props4 = this.props;
-			var onChange = _props4.onChange;
-			var name = _props4.name;
+			var _props3 = this.props;
+			var onChange = _props3.onChange;
+			var name = _props3.name;
 
 
 			onChange(name, event.currentTarget.value);
@@ -207,9 +192,9 @@ var VariableInput = function (_Component) {
 			if (key == 'Enter') {
 				var value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
 
-				var _props5 = this.props;
-				var name = _props5.name;
-				var onChange = _props5.onChange;
+				var _props4 = this.props;
+				var name = _props4.name;
+				var onChange = _props4.onChange;
 
 
 				this.setState({
@@ -230,10 +215,6 @@ var VariableInput = function (_Component) {
 					});
 				}
 			}
-
-			this.setState({
-				colorPickerVisible: false
-			});
 		}
 	}, {
 		key: '_isAutoCompleteActive',

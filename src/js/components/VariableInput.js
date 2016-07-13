@@ -1,7 +1,6 @@
 import enhanceWithClickOutside from 'react-click-outside';
 import React, {Component, PropTypes} from 'react';
 
-import ColorPicker from './ColorPicker';
 import {resolveColorValue} from '../lib/color';
 
 class VariableInput extends Component {
@@ -11,7 +10,6 @@ class VariableInput extends Component {
 		this.state = {
 			autoCompleteActive: false,
 			autoCompleteIndex: 0,
-			colorPickerVisible: false,
 			focused: false
 		};
 	}
@@ -106,12 +104,6 @@ class VariableInput extends Component {
 		});
 	}
 
-	handleColorPickerChange(value) {
-		const {onChange, name} = this.props;
-
-		onChange(name, value);
-	}
-
 	handleInputBlur(event) {
 		this.setState({
 			focused: false
@@ -168,10 +160,6 @@ class VariableInput extends Component {
 				});
 			}
 		}
-
-		this.setState({
-			colorPickerVisible: false
-		});
 	}
 
 	_isAutoCompleteActive() {
