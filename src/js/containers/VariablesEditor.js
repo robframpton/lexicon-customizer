@@ -3,8 +3,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import * as varUtil from '../lib/var_util';
+import ColorPickerPanel from '../components/ColorPickerPanel';
+import LexiconColorPickerPanel from '../containers/LexiconColorPickerPanel';
 import VariableInput from '../components/VariableInput';
 import {createVariablesFile} from '../actions/index';
+import {setColorVariableName} from '../actions/colorVariableName';
 import {setVariable} from '../actions/variables';
 
 class VariablesEditor extends Component {
@@ -29,8 +32,22 @@ class VariablesEditor extends Component {
 					{this.renderGroup(componentVariables, 'lexicon', 'Lexicon')}
 
 					{this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap')}
+
+					{this.renderColorPickerPanel()}
 				</form>
 			</div>
+		);
+	}
+
+	renderColorPickerPanel() {
+		const {colorVariableName} = this.props;
+
+		if (!colorVariableName) {
+			return '';
+		}
+
+		return (
+			<LexiconColorPickerPanel />
 		);
 	}
 
@@ -68,6 +85,7 @@ class VariablesEditor extends Component {
 
 	renderInputs(groupVariables) {
 		const handleChange = this._handleChange.bind(this);
+		const handleColorPickerTriggerClick = this._handleColorPickerTriggerClick.bind(this);
 		const isColor = this._isColor.bind(this);
 		const {variables} = this.props;
 
@@ -82,6 +100,7 @@ class VariablesEditor extends Component {
 					label={name}
 					name={name}
 					onChange={handleChange}
+					onColorPickerTriggerClick={handleColorPickerTriggerClick}
 					value={value}
 					variables={variables}
 				/>
@@ -93,6 +112,12 @@ class VariablesEditor extends Component {
 		const {dispatch} = this.props;
 
 		dispatch(setVariable(name, value));
+	}
+
+	_handleColorPickerTriggerClick(name) {
+		const {dispatch} = this.props;
+
+		dispatch(setColorVariableName(name));
 	}
 
 	_handleHeaderClick(group) {
@@ -129,11 +154,13 @@ class VariablesEditor extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-	let sassError = state.get('sassError');
-	let selectedComponent = state.get('selectedComponent');
-	let variables = state.get('variables');
+	const colorVariableName = state.get('colorVariableName');
+	const sassError = state.get('sassError');
+	const selectedComponent = state.get('selectedComponent');
+	const variables = state.get('variables');
 
 	return {
+		colorVariableName,
 		sassError,
 		selectedComponent,
 		variables

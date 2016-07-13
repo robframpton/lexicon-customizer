@@ -21,7 +21,7 @@ class VariableInput extends Component {
 		let {autoCompleteActive, focused} = this.state;
 
 		let autoComplete = '';
-		let colorPicker = '';
+		let colorPickerTrigger = '';
 
 		let className = 'form-control';
 
@@ -38,8 +38,12 @@ class VariableInput extends Component {
 
 			let resolvedValue = resolveColorValue(name, value, variables);
 
-			colorPicker = (
-				<ColorPicker onChange={this.handleColorPickerChange.bind(this)} value={resolvedValue} />
+			colorPickerTrigger = (
+				<div className="color-picker-trigger" onClick={this.props.onColorPickerTriggerClick.bind(null, name)}>
+					<div className="color-picker-trigger-preview" style={this._getTriggerStyle(value)}></div>
+
+					<div className="color-picker-trigger-checkerboard"></div>
+				</div>
 			);
 		}
 
@@ -61,7 +65,7 @@ class VariableInput extends Component {
 
 				{autoComplete}
 
-				{colorPicker}
+				{colorPickerTrigger}
 			</div>
 		);
 	}
@@ -79,9 +83,9 @@ class VariableInput extends Component {
 	}
 
 	handleAutoCompleteClick(event) {
-		let value = event.target.getAttribute('data-value');
+		const value = event.target.getAttribute('data-value');
 
-		let {name, onChange} = this.props;
+		const {name, onChange} = this.props;
 
 		this.setState({
 			autoCompleteIndex: 0
@@ -103,7 +107,7 @@ class VariableInput extends Component {
 	}
 
 	handleColorPickerChange(value) {
-		let {onChange, name} = this.props;
+		const {onChange, name} = this.props;
 
 		onChange(name, value);
 	}
@@ -180,6 +184,20 @@ class VariableInput extends Component {
 		return this.refs.autoCompleteMenu.children;
 	}
 
+	_getTriggerStyle(resolvedValue) {
+		let triggerStyle = {
+			backgroundColor: resolvedValue
+		};
+
+		resolvedValue = resolvedValue.toLowerCase();
+
+		if (resolvedValue == '#fff' || resolvedValue == '#ffffff') {
+			triggerStyle.border = '1px solid #EEE';
+		}
+
+		return triggerStyle;
+	}
+
 	_renderAutoComplete(name, value, variables) {
 		if (variables.has(value)) {
 			return '';
@@ -231,6 +249,7 @@ VariableInput.propTypes = {
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
+	onColorPickerTriggerClick: PropTypes.func.isRequired,
 	value: PropTypes.string.isRequired
 };
 
