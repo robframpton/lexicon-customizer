@@ -1,13 +1,5 @@
 /* Variables editor */
 
-.variables-editor {
-	width: 30%;
-}
-
-.has-popout-preview .variables-editor {
-	width: 70%;
-}
-
 .variables-editor input {
 	&, &:focus {
 		border-radius: 0;

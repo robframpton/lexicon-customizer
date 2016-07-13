@@ -46,12 +46,43 @@
 	}
 }
 
-.side-menu, .preview-box, .variables-editor {
+.preview-box, .side-menu, .variables-editor {
 	display: inline-block;
-	height: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
 	position: relative;
+}
+
+.side-menu, .variables-editor {
+	height: 100%;
+	padding: 12px;
+}
+
+.preview-box {
+	bottom: 0;
+	left: 215px;
+	position: absolute;
+	right: 320px;
+	top: 50px;
+}
+
+.side-menu {
+	width: 215px;
+}
+
+.variables-editor {
+	float: right;
+	width: 320px;
+}
+
+.has-popout-preview {
+	.side-menu {
+		width: 30%;
+	}
+
+	.variables-editor {
+		width: 70%;
+	}
 }
 
 div.container {
