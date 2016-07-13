@@ -1,6 +1,7 @@
 'use strict';
 
 const babel = require('gulp-babel');
+const del = require('del');
 const ejs = require('gulp-ejs');
 const gulp = require('gulp');
 const path = require('path');
@@ -9,9 +10,25 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 
+const runSequence = require('run-sequence').use(gulp);
+
 const pathBuild = 'build';
 
-gulp.task('build', ['build:css', 'build:html', 'build:images', 'build:js', 'build:js:resources']);
+gulp.task('build', (cb) => {
+	runSequence(
+		'build:clean',
+		'build:css',
+		'build:html',
+		'build:images',
+		'build:js',
+		'build:js:resources',
+		cb
+	);
+});
+
+gulp.task('build:clean', () => {
+	return del([path.join(pathBuild, '**', '*')]);
+});
 
 gulp.task('build:lexicon', () => {
 	return gulp.src(['node_modules/lexicon-ux/build/**/*', 'node_modules/lexicon-ux/src/**/*'], {
