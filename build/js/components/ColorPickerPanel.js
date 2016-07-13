@@ -10,13 +10,13 @@ var _reactColor = require('react-color');
 
 var _reactColor2 = _interopRequireDefault(_reactColor);
 
-var _reactClickOutside = require('react-click-outside');
-
-var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Icon = require('../components/Icon');
+
+var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29,43 +29,42 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var VariableInput = function (_Component) {
 	_inherits(VariableInput, _Component);
 
-	function VariableInput(props) {
+	function VariableInput() {
 		_classCallCheck(this, VariableInput);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VariableInput).call(this, props));
-
-		_this.state = {
-			showOverlay: false
-		};
-		return _this;
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(VariableInput).apply(this, arguments));
 	}
 
 	_createClass(VariableInput, [{
 		key: 'render',
 		value: function render() {
-			var value = this.props.value;
+			var _props = this.props;
+			var name = _props.name;
+			var value = _props.value;
 
-
-			var colorPickerOverlay = '';
-
-			if (this.state.showOverlay) {
-				colorPickerOverlay = _react2.default.createElement(
-					'div',
-					{ className: 'color-picker-overlay', ref: 'colorPickerOverlay' },
-					_react2.default.createElement(_reactColor2.default, { color: value, onChange: this.handleChange.bind(this), type: 'chrome' })
-				);
-			}
 
 			return _react2.default.createElement(
 				'div',
-				{ className: 'color-picker' },
+				{ className: 'color-picker-panel' },
 				_react2.default.createElement(
 					'div',
-					{ className: 'color-picker-trigger', onClick: this.handleTriggerClick.bind(this) },
-					_react2.default.createElement('div', { className: 'color-picker-trigger-preview', style: this._getTriggerStyle(value) }),
-					_react2.default.createElement('div', { className: 'color-picker-trigger-checkerboard' })
+					{ className: 'color-picker-panel-header' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'color-picker-panel-name' },
+						name
+					),
+					_react2.default.createElement(
+						'a',
+						{ className: 'color-picker-panel-close', href: 'javascript:;', onClick: this.props.onClose },
+						_react2.default.createElement(_Icon2.default, { icon: 'times' })
+					)
 				),
-				colorPickerOverlay
+				_react2.default.createElement(
+					'div',
+					{ className: 'color-picker-panel-body' },
+					_react2.default.createElement(_reactColor2.default, { color: value, onChange: this.handleChange.bind(this), type: 'chrome' })
+				)
 			);
 		}
 	}, {
@@ -86,36 +85,7 @@ var VariableInput = function (_Component) {
 				value = '#' + color.hex.toUpperCase();
 			}
 
-			this.props.onChange(value);
-		}
-	}, {
-		key: 'handleClickOutside',
-		value: function handleClickOutside() {
-			this.setState({
-				showOverlay: false
-			});
-		}
-	}, {
-		key: 'handleTriggerClick',
-		value: function handleTriggerClick(event) {
-			this.setState({
-				showOverlay: !this.state.showOverlay
-			});
-		}
-	}, {
-		key: '_getTriggerStyle',
-		value: function _getTriggerStyle(resolvedValue) {
-			var triggerStyle = {
-				backgroundColor: resolvedValue
-			};
-
-			resolvedValue = resolvedValue.toLowerCase();
-
-			if (resolvedValue == '#fff' || resolvedValue == '#ffffff') {
-				triggerStyle.border = '1px solid #EEE';
-			}
-
-			return triggerStyle;
+			this.props.onChange(value, this.props.name);
 		}
 	}]);
 
@@ -123,8 +93,10 @@ var VariableInput = function (_Component) {
 }(_react.Component);
 
 VariableInput.propTypes = {
+	name: _react.PropTypes.string.isRequired,
 	onChange: _react.PropTypes.func.isRequired,
+	onClose: _react.PropTypes.func.isRequired,
 	value: _react.PropTypes.string.isRequired
 };
 
-exports.default = (0, _reactClickOutside2.default)(VariableInput);
+exports.default = VariableInput;

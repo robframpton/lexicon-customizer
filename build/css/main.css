@@ -73,9 +73,24 @@ a {
   .lexicon-customizer-config-panel.open {
     right: 0; }
   .lexicon-customizer-config-panel .btn {
+    color: #555;
     height: auto;
     margin-top: 10px;
+    position: relative;
     width: 100%; }
+    .lexicon-customizer-config-panel .btn .lexicon-icon-wrapper {
+      background-color: #CCC;
+      bottom: 0;
+      left: 0;
+      line-height: initial;
+      position: absolute;
+      top: 0;
+      width: 30px; }
+      .lexicon-customizer-config-panel .btn .lexicon-icon-wrapper svg {
+        fill: #555;
+        height: 30px; }
+  .lexicon-customizer-config-panel .btn-icon {
+    padding-left: 30px; }
   .lexicon-customizer-config-panel .radio {
     text-align: left; }
 
@@ -172,12 +187,35 @@ a {
       border-width: 4px 0 0;
       outline: none; }
 
-.side-menu, .preview-box, .variables-editor {
+.preview-box, .side-menu, .variables-editor {
   display: inline-block;
-  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   position: relative; }
+
+.side-menu, .variables-editor {
+  height: 100%;
+  padding: 12px; }
+
+.preview-box {
+  bottom: 0;
+  left: 215px;
+  position: absolute;
+  right: 320px;
+  top: 50px; }
+
+.side-menu {
+  width: 215px; }
+
+.variables-editor {
+  float: right;
+  width: 320px; }
+
+.has-popout-preview .side-menu {
+  width: 30%; }
+
+.has-popout-preview .variables-editor {
+  width: 70%; }
 
 div.container {
   padding: 0;
@@ -187,6 +225,17 @@ div.container {
   height: 100vh;
   overflow: hidden;
   padding-top: 50px; }
+
+/* Config panel */
+.lexicon-icon {
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
+  margin: 0 6px;
+  text-align: center;
+  transform: translateZ(0);
+  vertical-align: text-bottom;
+  width: 16px; }
 
 /* Menu icon */
 .menu-icon {
@@ -201,10 +250,8 @@ div.container {
   width: 6px; }
 
 /* Preview box */
-.preview-box {
-  width: 50%; }
-  .preview-box webview {
-    height: 100%; }
+.preview-box webview {
+  height: 100%; }
 
 .preview-box-dev-tools-btn {
   background-color: rgba(255, 255, 255, 0.7);
@@ -230,12 +277,6 @@ div.container {
   top: 0; }
 
 /* Side menu */
-.side-menu, .variables-editor {
-  padding: 20px; }
-
-.side-menu {
-  width: 20%; }
-
 .has-popout-preview .side-menu {
   width: 30%; }
 
@@ -325,12 +366,6 @@ div.container {
 
 /* Variables */
 /* Variables editor */
-.variables-editor {
-  width: 30%; }
-
-.has-popout-preview .variables-editor {
-  width: 70%; }
-
 .variables-editor input, .variables-editor input:focus {
   border-radius: 0;
   border-width: 0 0 4px;

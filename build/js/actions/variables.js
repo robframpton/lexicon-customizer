@@ -61,11 +61,9 @@ function resetVariables() {
 	};
 };
 
-function setVariable(group, component, name, value) {
+function setVariable(name, value) {
 	return function (dispatch, getState) {
 		dispatch({
-			component: component,
-			group: group,
 			name: name,
 			type: 'SET_VARIABLE',
 			value: value

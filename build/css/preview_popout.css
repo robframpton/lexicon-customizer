@@ -15,10 +15,8 @@ a {
     text-decoration: none; }
 
 /* Preview box */
-.preview-box {
-  width: 50%; }
-  .preview-box webview {
-    height: 100%; }
+.preview-box webview {
+  height: 100%; }
 
 .preview-box-dev-tools-btn {
   background-color: rgba(255, 255, 255, 0.7);

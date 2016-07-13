@@ -20,11 +20,21 @@ var _var_util = require('../lib/var_util');
 
 var varUtil = _interopRequireWildcard(_var_util);
 
+var _ColorPickerPanel = require('../components/ColorPickerPanel');
+
+var _ColorPickerPanel2 = _interopRequireDefault(_ColorPickerPanel);
+
+var _LexiconColorPickerPanel = require('../containers/LexiconColorPickerPanel');
+
+var _LexiconColorPickerPanel2 = _interopRequireDefault(_LexiconColorPickerPanel);
+
 var _VariableInput = require('../components/VariableInput');
 
 var _VariableInput2 = _interopRequireDefault(_VariableInput);
 
 var _index = require('../actions/index');
+
+var _colorVariableName = require('../actions/colorVariableName');
 
 var _variables = require('../actions/variables');
 
@@ -74,9 +84,22 @@ var VariablesEditor = function (_Component) {
 					'form',
 					null,
 					this.renderGroup(componentVariables, 'lexicon', 'Lexicon'),
-					this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap')
+					this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap'),
+					this.renderColorPickerPanel()
 				)
 			);
+		}
+	}, {
+		key: 'renderColorPickerPanel',
+		value: function renderColorPickerPanel() {
+			var colorVariableName = this.props.colorVariableName;
+
+
+			if (!colorVariableName) {
+				return '';
+			}
+
+			return _react2.default.createElement(_LexiconColorPickerPanel2.default, null);
 		}
 	}, {
 		key: 'renderGroup',
@@ -119,6 +142,7 @@ var VariablesEditor = function (_Component) {
 		key: 'renderInputs',
 		value: function renderInputs(groupVariables) {
 			var handleChange = this._handleChange.bind(this);
+			var handleColorPickerTriggerClick = this._handleColorPickerTriggerClick.bind(this);
 			var isColor = this._isColor.bind(this);
 			var variables = this.props.variables;
 
@@ -133,6 +157,7 @@ var VariablesEditor = function (_Component) {
 					label: name,
 					name: name,
 					onChange: handleChange,
+					onColorPickerTriggerClick: handleColorPickerTriggerClick,
 					value: value,
 					variables: variables
 				});
@@ -141,13 +166,18 @@ var VariablesEditor = function (_Component) {
 	}, {
 		key: '_handleChange',
 		value: function _handleChange(name, value) {
-			var _props2 = this.props;
-			var dispatch = _props2.dispatch;
-			var group = _props2.group;
-			var selectedComponent = _props2.selectedComponent;
+			var dispatch = this.props.dispatch;
 
 
-			dispatch((0, _variables.setVariable)(group, selectedComponent, name, value));
+			dispatch((0, _variables.setVariable)(name, value));
+		}
+	}, {
+		key: '_handleColorPickerTriggerClick',
+		value: function _handleColorPickerTriggerClick(name) {
+			var dispatch = this.props.dispatch;
+
+
+			dispatch((0, _colorVariableName.setColorVariableName)(name));
 		}
 	}, {
 		key: '_handleHeaderClick',
@@ -186,11 +216,13 @@ var VariablesEditor = function (_Component) {
 ;
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+	var colorVariableName = state.get('colorVariableName');
 	var sassError = state.get('sassError');
 	var selectedComponent = state.get('selectedComponent');
 	var variables = state.get('variables');
 
 	return {
+		colorVariableName: colorVariableName,
 		sassError: sassError,
 		selectedComponent: selectedComponent,
 		variables: variables

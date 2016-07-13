@@ -60,7 +60,7 @@ var VariableInput = function (_Component) {
 
 
 			var autoComplete = '';
-			var colorPicker = '';
+			var colorPickerTrigger = '';
 
 			var className = 'form-control';
 
@@ -77,7 +77,12 @@ var VariableInput = function (_Component) {
 
 				var resolvedValue = (0, _color.resolveColorValue)(name, value, variables);
 
-				colorPicker = _react2.default.createElement(_ColorPicker2.default, { onChange: this.handleColorPickerChange.bind(this), value: resolvedValue });
+				colorPickerTrigger = _react2.default.createElement(
+					'div',
+					{ className: 'color-picker-trigger', onClick: this.props.onColorPickerTriggerClick.bind(null, name) },
+					_react2.default.createElement('div', { className: 'color-picker-trigger-preview', style: this._getTriggerStyle(value) }),
+					_react2.default.createElement('div', { className: 'color-picker-trigger-checkerboard' })
+				);
 			}
 
 			return _react2.default.createElement(
@@ -100,7 +105,7 @@ var VariableInput = function (_Component) {
 					value: value
 				}),
 				autoComplete,
-				colorPicker
+				colorPickerTrigger
 			);
 		}
 	}, {
@@ -244,6 +249,21 @@ var VariableInput = function (_Component) {
 			return this.refs.autoCompleteMenu.children;
 		}
 	}, {
+		key: '_getTriggerStyle',
+		value: function _getTriggerStyle(resolvedValue) {
+			var triggerStyle = {
+				backgroundColor: resolvedValue
+			};
+
+			resolvedValue = resolvedValue.toLowerCase();
+
+			if (resolvedValue == '#fff' || resolvedValue == '#ffffff') {
+				triggerStyle.border = '1px solid #EEE';
+			}
+
+			return triggerStyle;
+		}
+	}, {
 		key: '_renderAutoComplete',
 		value: function _renderAutoComplete(name, value, variables) {
 			var _this2 = this;
@@ -301,6 +321,7 @@ VariableInput.propTypes = {
 	label: _react.PropTypes.string.isRequired,
 	name: _react.PropTypes.string.isRequired,
 	onChange: _react.PropTypes.func.isRequired,
+	onColorPickerTriggerClick: _react.PropTypes.func.isRequired,
 	value: _react.PropTypes.string.isRequired
 };
 

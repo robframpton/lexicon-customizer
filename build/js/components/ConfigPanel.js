@@ -46,6 +46,10 @@ var _ThemeRadio = require('../containers/ThemeRadio');
 
 var _ThemeRadio2 = _interopRequireDefault(_ThemeRadio);
 
+var _Icon = require('../components/Icon');
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
 var _PopoutPreviewButton = require('../containers/action_buttons/PopoutPreviewButton');
 
 var _PopoutPreviewButton2 = _interopRequireDefault(_PopoutPreviewButton);
@@ -84,26 +88,54 @@ var ConfigPanel = function (_Component) {
 					{ label: 'Variables' },
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Lexicon Base', value: 'lexiconBase' }),
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Atlas Theme', value: 'atlasTheme' }),
-					_react2.default.createElement(_ResetButton2.default, { label: 'Reset All Variables' }),
-					_react2.default.createElement(_ResetComponentButton2.default, { label: 'Reset Component Variables' })
+					_react2.default.createElement(
+						_ResetButton2.default,
+						null,
+						'Reset All'
+					),
+					_react2.default.createElement(
+						_ResetComponentButton2.default,
+						null,
+						'Reset Component'
+					)
 				),
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,
 					{ label: 'Preview Frame' },
-					_react2.default.createElement(_OpenDevToolsButton2.default, null),
-					_react2.default.createElement(_PopoutPreviewButton2.default, { label: 'Popout Preview Panel' })
+					_react2.default.createElement(
+						_OpenDevToolsButton2.default,
+						null,
+						'Inspect Preview'
+					),
+					_react2.default.createElement(
+						_PopoutPreviewButton2.default,
+						null,
+						'Popout Preview'
+					)
 				),
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,
 					{ label: 'Theme' },
 					_react2.default.createElement(_ThemeDropper2.default, null),
-					_react2.default.createElement(_ClearThemeButton2.default, { label: 'Clear Theme' })
+					_react2.default.createElement(
+						_ClearThemeButton2.default,
+						null,
+						'Clear Theme'
+					)
 				),
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,
 					{ label: 'Import/Export' },
-					_react2.default.createElement(_ExportButton2.default, { label: 'Export Variables' }),
-					_react2.default.createElement(_ImportButton2.default, { label: 'Import Variables' })
+					_react2.default.createElement(
+						_ExportButton2.default,
+						null,
+						'Export Variables'
+					),
+					_react2.default.createElement(
+						_ImportButton2.default,
+						null,
+						'Import Variables'
+					)
 				)
 			);
 		}

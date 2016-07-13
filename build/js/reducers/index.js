@@ -14,6 +14,10 @@ var _bootstrapComponents = require('./bootstrapComponents');
 
 var _bootstrapComponents2 = _interopRequireDefault(_bootstrapComponents);
 
+var _colorVariableName = require('./colorVariableName');
+
+var _colorVariableName2 = _interopRequireDefault(_colorVariableName);
+
 var _components = require('./components');
 
 var _components2 = _interopRequireDefault(_components);
@@ -59,6 +63,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var lexiconCustomizerReducer = (0, _reduxImmutable.combineReducers)({
 	baseLexiconTheme: _baseLexiconTheme2.default,
 	bootstrapComponents: _bootstrapComponents2.default,
+	colorVariableName: _colorVariableName2.default,
 	components: _components2.default,
 	filePaths: _filePaths2.default,
 	group: _group2.default,
