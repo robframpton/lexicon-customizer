@@ -27,7 +27,11 @@ var _path2 = _interopRequireDefault(_path);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PATH_LEXICON = _path2.default.join(process.cwd(), 'lexicon');
+var CWD = process.cwd();
+
+var PATH_IMAGES = _path2.default.join(CWD, 'build/images');
+
+var PATH_LEXICON = _path2.default.join(CWD, 'lexicon');
 
 var PATH_LEXICON_IMAGES = _path2.default.join(PATH_LEXICON, 'build/images');
 
@@ -35,15 +39,16 @@ function createPreview(group, component, baseLexiconTheme, cb) {
 	baseLexiconTheme = _lodash2.default.kebabCase(baseLexiconTheme);
 	component = _lodash2.default.snakeCase(component);
 
-	var cssPath = _path2.default.join(process.cwd(), 'lexicon/build/' + baseLexiconTheme + '.css') + '?t=' + Date.now();
-	var previewFilePath = _path2.default.join(process.cwd(), 'lexicon/build/' + group + '-preview.html');
+	var cssPath = _path2.default.join(CWD, 'lexicon/build/' + baseLexiconTheme + '.css') + '?t=' + Date.now();
+	var previewFilePath = _path2.default.join(CWD, 'lexicon/build/' + group + '-preview.html');
 
 	_ejs2.default.renderFile(_path2.default.join(__dirname, '..', 'templates', 'preview.ejs'), {
-		componentPreviewPath: _path2.default.join(process.cwd(), 'lexicon/markup/lexicon', component + '.ejs'),
+		componentPreviewPath: _path2.default.join(CWD, 'lexicon/markup/lexicon', component + '.ejs'),
 		iconSpritePath: _path2.default.join(PATH_LEXICON_IMAGES, 'icons', 'icons.svg'),
-		imagesPath: PATH_LEXICON_IMAGES,
+		imagesPath: PATH_IMAGES,
 		lexiconCSSPath: cssPath,
-		scripts: [_path2.default.join(process.cwd(), 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, 'build/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, 'build/js/svg4everybody.js')]
+		lexiconImagesPath: PATH_LEXICON_IMAGES,
+		scripts: [_path2.default.join(CWD, 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, 'build/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, 'build/js/svg4everybody.js')]
 	}, function (err, result) {
 		if (err) {
 			throw err;
