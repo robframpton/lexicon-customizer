@@ -7,8 +7,8 @@ import ColorPickerPanel from '../components/ColorPickerPanel';
 import LexiconColorPickerPanel from '../containers/LexiconColorPickerPanel';
 import VariableInput from '../components/VariableInput';
 import {createVariablesFile} from '../actions/index';
-import {setColorVariableName} from '../actions/colorVariableName';
 import {resetVariable, setVariable} from '../actions/variables';
+import {setColorVariableName} from '../actions/colorVariableName';
 
 class VariablesEditor extends Component {
 	constructor(props) {

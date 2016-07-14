@@ -38,8 +38,8 @@ class VariableInput extends Component {
 			let resolvedValue = resolveColorValue(name, value, variables);
 
 			colorPickerTrigger = (
-				<div className="color-picker-trigger" onClick={this.props.onColorPickerTriggerClick.bind(null, name)}>
-					<div className="color-picker-trigger-preview" style={this._getTriggerStyle(value)}></div>
+				<div className="color-picker-trigger" onClick={this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue)}>
+					<div className="color-picker-trigger-preview" style={this._getTriggerStyle(resolvedValue)}></div>
 
 					<div className="color-picker-trigger-checkerboard"></div>
 				</div>
