@@ -18,3 +18,15 @@ a {
 		text-decoration: none;
 	}
 }
+
+input.form-control {
+	&, &:focus {
+		border-radius: 0;
+		border-width: 0 0 4px;
+		box-shadow: none;
+	}
+
+	&:focus {
+		border-color: $brand-primary;
+	}
+}

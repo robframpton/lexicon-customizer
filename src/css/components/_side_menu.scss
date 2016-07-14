@@ -6,6 +6,24 @@
 	}
 }
 
+.side-menu-filter {
+	position: relative;
+
+	input {
+		padding-right: 24px;
+	}
+
+	.lexicon-icon-wrapper {
+		bottom: 8px;
+		position: absolute;
+		right: 0;
+
+		svg {
+			fill: #555;
+		}
+	}
+}
+
 .side-menu-list {
 	list-style: none;
 	padding: 0;

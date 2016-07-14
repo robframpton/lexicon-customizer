@@ -1,21 +1,32 @@
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
 
+import Icon from '../components/Icon';
+
 class SideMenu extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			filterText: ''
+		};
+	}
+
 	render() {
 		const getDisplayName = this._getDisplayName;
-		const onClick = this.props.onClick;
 
-		const {components, selectedItem} = this.props;
+		const {onClick, selectedItem} = this.props;
 
-		let componentsArray = components.toArray().sort();
+		const componentArray = this._getComponentArray();
 
 		return (
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
+				{this.renderFilter()}
+
 				<ul className="side-menu-list">
-					{componentsArray.map((item, index) => {
+					{componentArray.map((item, index) => {
 						let className = 'side-menu-list-item';
 
 						if (item === selectedItem) {
@@ -40,6 +51,39 @@ class SideMenu extends Component {
 				</ul>
 			</div>
 		);
+	}
+
+	renderFilter() {
+		return (
+			<div className="form-group side-menu-filter">
+				<input className="form-control side-menu-filter-input" onChange={this.handleFilterInputChange.bind(this)} value={this.state.filterText} />
+
+				<Icon icon="search" />
+			</div>
+		);
+	}
+
+	handleFilterInputChange(event) {
+		const {value} = event.currentTarget;
+
+		this.setState({
+			filterText: value
+		});
+	}
+
+	_getComponentArray() {
+		const {components} = this.props;
+		const {filterText} = this.state;
+
+		let componentsArray = components.toArray().sort();
+
+		if (filterText) {
+			componentsArray = componentsArray.filter(component => {
+				return component.toLowerCase().indexOf(filterText.toLowerCase()) > -1;
+			});
+		}
+
+		return componentsArray;
 	}
 
 	_getDisplayName(name) {
