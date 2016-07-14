@@ -15,12 +15,23 @@ a {
     text-decoration: none; }
 
 input.form-control, input.form-control:focus {
+  border-color: #E4E4E4;
   border-radius: 0;
   border-width: 0 0 4px;
   box-shadow: none; }
 
 input.form-control:focus {
   border-color: #5BBFDC; }
+
+::-webkit-scrollbar {
+  width: 8px; }
+
+::-webkit-scrollbar-track {
+  margin: 4px; }
+
+::-webkit-scrollbar-thumb {
+  background-color: #E4E4E4;
+  border-radius: 10px; }
 
 /* Preview box */
 .preview-box webview {
@@ -99,16 +110,6 @@ input.form-control:focus {
   20% {
     transform: scaleY(1);
     -webkit-transform: scaleY(1); } }
-
-::-webkit-scrollbar {
-  width: 8px; }
-
-::-webkit-scrollbar-track {
-  margin: 4px; }
-
-::-webkit-scrollbar-thumb {
-  background-color: #D0D0D0;
-  border-radius: 10px; }
 
 .preview-box {
   position: relative;
