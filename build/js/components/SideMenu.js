@@ -14,6 +14,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _FilterInput = require('../components/FilterInput');
+
+var _FilterInput2 = _interopRequireDefault(_FilterInput);
+
 var _Icon = require('../components/Icon');
 
 var _Icon2 = _interopRequireDefault(_Icon);
@@ -60,7 +64,7 @@ var SideMenu = function (_Component) {
 					null,
 					this.props.header
 				),
-				this.renderFilter(),
+				_react2.default.createElement(_FilterInput2.default, { onChange: this.handleFilterInputChange.bind(this), value: this.state.filterText }),
 				_react2.default.createElement(
 					'ul',
 					{ className: 'side-menu-list' },
@@ -92,21 +96,8 @@ var SideMenu = function (_Component) {
 			);
 		}
 	}, {
-		key: 'renderFilter',
-		value: function renderFilter() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'form-group side-menu-filter' },
-				_react2.default.createElement('input', { className: 'form-control side-menu-filter-input', onChange: this.handleFilterInputChange.bind(this), value: this.state.filterText }),
-				_react2.default.createElement(_Icon2.default, { icon: 'search' })
-			);
-		}
-	}, {
 		key: 'handleFilterInputChange',
-		value: function handleFilterInputChange(event) {
-			var value = event.currentTarget.value;
-
-
+		value: function handleFilterInputChange(value) {
 			this.setState({
 				filterText: value
 			});
