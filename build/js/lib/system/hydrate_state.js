@@ -50,6 +50,7 @@ module.exports = function () {
 		components: components,
 		filePaths: filePaths,
 		sourceVariables: sourceVariables,
+		selectedComponent: persistedConfig.selectedComponent,
 		theme: persistedConfig.theme,
 		variables: variables
 	};
