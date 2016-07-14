@@ -9,31 +9,11 @@ const app = electron.app;
 require('electron-debug')();
 
 const indexURL = `file://${__dirname}/build/html/index.html`;
-const loadingURL = `file://${__dirname}/build/html/loading.html`;
 
 let mainWindow;
 
 function onClosed() {
 	mainWindow = null;
-}
-
-let building = false;
-
-try {
-	require('node-sass');
-}
-catch (err) {
-	building = true;
-
-	const npm = require('npm');
-
-	npm.load({
-		loaded: false
-	}, function(err) {
-		npm.commands.rebuild(['node-sass'], function(err) {
-			mainWindow.loadURL(indexURL);
-		});
-	});
 }
 
 function createMainWindow(url) {
@@ -58,10 +38,10 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
 	if (!mainWindow) {
-		mainWindow = createMainWindow(building ? loadingURL : indexURL);
+		mainWindow = createMainWindow(indexURL);
 	}
 });
 
 app.on('ready', () => {
-	mainWindow = createMainWindow(building ? loadingURL : indexURL);
+	mainWindow = createMainWindow(indexURL);
 });

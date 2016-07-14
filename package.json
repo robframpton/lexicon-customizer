@@ -33,7 +33,6 @@
     "immutable": "^3.8.1",
     "lexicon-ux": "https://github.com/liferay/lexicon.git",
     "lodash": "^4.2.0",
-    "npm": "^3.10.3",
     "react": "^0.14.6",
     "react-addons-css-transition-group": "^15.1.0",
     "react-click-outside": "^2.1.0",
