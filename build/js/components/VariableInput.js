@@ -14,6 +14,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Icon = require('../components/Icon');
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
 var _color = require('../lib/color');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -74,8 +78,8 @@ var VariableInput = function (_Component) {
 
 				colorPickerTrigger = _react2.default.createElement(
 					'div',
-					{ className: 'color-picker-trigger', onClick: this.props.onColorPickerTriggerClick.bind(null, name) },
-					_react2.default.createElement('div', { className: 'color-picker-trigger-preview', style: this._getTriggerStyle(value) }),
+					{ className: 'color-picker-trigger', onClick: this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue) },
+					_react2.default.createElement('div', { className: 'color-picker-trigger-preview', style: this._getTriggerStyle(resolvedValue) }),
 					_react2.default.createElement('div', { className: 'color-picker-trigger-checkerboard' })
 				);
 			}
@@ -83,6 +87,7 @@ var VariableInput = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				{ className: 'form-group variable-input' },
+				this.renderToolbar(),
 				_react2.default.createElement(
 					'label',
 					{ htmlFor: name },
@@ -104,6 +109,35 @@ var VariableInput = function (_Component) {
 			);
 		}
 	}, {
+		key: 'renderToolbar',
+		value: function renderToolbar() {
+			var instance = this;
+
+			var _props2 = this.props;
+			var name = _props2.name;
+			var toolbar = _props2.toolbar;
+			var value = _props2.value;
+
+
+			var toolbarContent = '';
+
+			if (toolbar && toolbar.length) {
+				toolbarContent = toolbar.map(function (button, index) {
+					var action = button.action;
+					var icon = button.icon;
+
+
+					return _react2.default.createElement(
+						'a',
+						{ className: 'variable-input-action', href: 'javascript:;', key: 'action' + index, onClick: action.bind(null, name, value) },
+						_react2.default.createElement(_Icon2.default, { icon: icon })
+					);
+				});
+			}
+
+			return toolbarContent;
+		}
+	}, {
 		key: 'componentDidUpdate',
 		value: function componentDidUpdate(event) {
 			var autoCompleteActive = this.state.autoCompleteActive;
@@ -122,9 +156,9 @@ var VariableInput = function (_Component) {
 		value: function handleAutoCompleteClick(event) {
 			var value = event.target.getAttribute('data-value');
 
-			var _props2 = this.props;
-			var name = _props2.name;
-			var onChange = _props2.onChange;
+			var _props3 = this.props;
+			var name = _props3.name;
+			var onChange = _props3.onChange;
 
 
 			this.setState({
@@ -157,9 +191,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleInputChange',
 		value: function handleInputChange(event) {
-			var _props3 = this.props;
-			var onChange = _props3.onChange;
-			var name = _props3.name;
+			var _props4 = this.props;
+			var onChange = _props4.onChange;
+			var name = _props4.name;
 
 
 			onChange(name, event.currentTarget.value);
@@ -192,9 +226,9 @@ var VariableInput = function (_Component) {
 			if (key == 'Enter') {
 				var value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
 
-				var _props4 = this.props;
-				var name = _props4.name;
-				var onChange = _props4.onChange;
+				var _props5 = this.props;
+				var name = _props5.name;
+				var onChange = _props5.onChange;
 
 
 				this.setState({

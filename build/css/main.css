@@ -417,7 +417,15 @@ div.container {
   position: relative; }
   .variable-input label {
     color: #555;
-    font-weight: 500; }
+    font-weight: 500;
+    margin-right: 22px; }
+  .variable-input .variable-input-action {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    transition: opacity 300ms; }
+    .variable-input .variable-input-action svg {
+      fill: #555; }
   .variable-input .input-auto-complete-menu {
     background-color: #FFF;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -434,6 +442,8 @@ div.container {
         background-color: #EFEFEF; }
       .variable-input .input-auto-complete-menu .auto-complete-item:hover {
         background: #EFEFEF; }
+  .variable-input:hover .variable-input-action {
+    opacity: 1; }
 
 .color-input {
   padding-right: 30px; }
@@ -446,7 +456,8 @@ div.container {
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), -8px -8px 10px #FFF, 8px -8px 10px #FFF;
   left: 12px;
   position: absolute;
-  right: 20px; }
+  right: 20px;
+  z-index: 1; }
   .color-picker-panel .color-picker-panel-header {
     margin: 8px 28px 0; }
     .color-picker-panel .color-picker-panel-header .color-picker-panel-name, .color-picker-panel .color-picker-panel-header .color-picker-panel-close {

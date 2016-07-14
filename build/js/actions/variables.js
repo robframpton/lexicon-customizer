@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.importVariables = importVariables;
 exports.overwriteVariables = overwriteVariables;
 exports.resetComponentVariables = resetComponentVariables;
+exports.resetVariable = resetVariable;
 exports.resetVariables = resetVariables;
 exports.setVariable = setVariable;
 exports.setVariables = setVariables;
@@ -46,6 +47,16 @@ function resetComponentVariables() {
 		var sourceComponentVariables = varUtil.filterVariablesByComponent(state.get('sourceVariables'), state.get('selectedComponent'));
 
 		dispatch(setVariables(sourceComponentVariables));
+	};
+};
+
+function resetVariable(name) {
+	return function (dispatch, getState) {
+		var state = getState();
+
+		var sourceVariables = state.get('sourceVariables');
+
+		dispatch(setVariable(name, sourceVariables.get(name).get('value')));
 	};
 };
 

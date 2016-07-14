@@ -34,9 +34,9 @@ var _VariableInput2 = _interopRequireDefault(_VariableInput);
 
 var _index = require('../actions/index');
 
-var _colorVariableName = require('../actions/colorVariableName');
-
 var _variables = require('../actions/variables');
+
+var _colorVariableName = require('../actions/colorVariableName');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -158,6 +158,11 @@ var VariablesEditor = function (_Component) {
 			var variables = this.props.variables;
 
 
+			var toolbar = [{
+				action: this._handleResetVariable.bind(this),
+				icon: 'reload'
+			}];
+
 			return groupVariables.toArray().map(function (variable) {
 				var name = variable.get('name');
 				var value = variable.get('value');
@@ -169,6 +174,7 @@ var VariablesEditor = function (_Component) {
 					name: name,
 					onChange: handleChange,
 					onColorPickerTriggerClick: handleColorPickerTriggerClick,
+					toolbar: toolbar,
 					value: value,
 					variables: variables
 				});
@@ -207,6 +213,16 @@ var VariablesEditor = function (_Component) {
 			this.setState({
 				collapsedGroups: collapsedGroups
 			});
+		}
+	}, {
+		key: '_handleResetVariable',
+		value: function _handleResetVariable(name) {
+			var dispatch = this.props.dispatch;
+
+
+			if (confirm('Are you sure you want to reset ' + name + ' to it\'s default value?')) {
+				dispatch((0, _variables.resetVariable)(name));
+			}
 		}
 	}, {
 		key: '_isColor',

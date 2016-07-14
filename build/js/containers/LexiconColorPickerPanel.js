@@ -14,6 +14,8 @@ var _ColorPickerPanel = require('../components/ColorPickerPanel');
 
 var _ColorPickerPanel2 = _interopRequireDefault(_ColorPickerPanel);
 
+var _color = require('../lib/color');
+
 var _colorVariableName = require('../actions/colorVariableName');
 
 var _variables = require('../actions/variables');
@@ -21,17 +23,19 @@ var _variables = require('../actions/variables');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-	var colorVariableName = state.get('colorVariableName');
+	var name = state.get('colorVariableName');
 	var variables = state.get('variables');
 
 	var value = void 0;
 
-	if (variables.has(colorVariableName)) {
-		value = variables.get(colorVariableName).get('value');
+	if (variables.has(name)) {
+		value = variables.get(name).get('value');
+
+		value = (0, _color.resolveColorValue)(name, value, variables);
 	}
 
 	return {
-		name: colorVariableName,
+		name: name,
 		value: value,
 		variables: variables
 	};
