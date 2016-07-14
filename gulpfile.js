@@ -59,7 +59,7 @@ gulp.task('build:html', () => {
 });
 
 gulp.task('build:images', () => {
-	return gulp.src('src/images/*')
+	return gulp.src('src/images/**/*')
 		.pipe(gulp.dest(path.join(pathBuild, 'images')));
 });
 
