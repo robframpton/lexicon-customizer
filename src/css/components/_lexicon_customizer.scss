@@ -48,8 +48,6 @@
 
 .preview-box, .side-menu, .variables-editor {
 	display: inline-block;
-	overflow-x: hidden;
-	overflow-y: auto;
 	position: relative;
 }
 
@@ -66,6 +64,7 @@
 }
 
 .side-menu {
+	overflow-y: scroll;
 	padding: 12px;
 	width: 215px;
 }

@@ -21,6 +21,7 @@ a {
 
 input.form-control {
 	&, &:focus {
+		border-color: $brand-gray;
 		border-radius: 0;
 		border-width: 0 0 4px;
 		box-shadow: none;
@@ -29,4 +30,17 @@ input.form-control {
 	&:focus {
 		border-color: $brand-primary;
 	}
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: $brand-gray;
+	border-radius: 10px;
 }
