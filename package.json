@@ -11,7 +11,7 @@
     "url": "github.com/Robert-Frampton"
   },
   "private": true,
-  "electronVersion": "0.36.0",
+  "electronVersion": "1.2.5",
   "scripts": {
     "test": "xo",
     "start": "electron .",
@@ -53,7 +53,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.11.0",
     "del": "^2.2.1",
-    "electron-packager": "^7.2.0",
+    "electron-packager": "^7.3.0",
     "electron-prebuilt": "^1.2.5",
     "electron-rebuild": "^1.1.5",
     "gulp": "^3.9.0",
