@@ -14,6 +14,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Icon = require('../components/Icon');
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,24 +29,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var SideMenu = function (_Component) {
 	_inherits(SideMenu, _Component);
 
-	function SideMenu() {
+	function SideMenu(props) {
 		_classCallCheck(this, SideMenu);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(SideMenu).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SideMenu).call(this, props));
+
+		_this.state = {
+			filterText: ''
+		};
+		return _this;
 	}
 
 	_createClass(SideMenu, [{
 		key: 'render',
 		value: function render() {
 			var getDisplayName = this._getDisplayName;
-			var onClick = this.props.onClick;
 
 			var _props = this.props;
-			var components = _props.components;
+			var onClick = _props.onClick;
 			var selectedItem = _props.selectedItem;
 
 
-			var componentsArray = components.toArray().sort();
+			var componentArray = this._getComponentArray();
 
 			return _react2.default.createElement(
 				'div',
@@ -52,10 +60,11 @@ var SideMenu = function (_Component) {
 					null,
 					this.props.header
 				),
+				this.renderFilter(),
 				_react2.default.createElement(
 					'ul',
 					{ className: 'side-menu-list' },
-					componentsArray.map(function (item, index) {
+					componentArray.map(function (item, index) {
 						var className = 'side-menu-list-item';
 
 						if (item === selectedItem) {
@@ -81,6 +90,43 @@ var SideMenu = function (_Component) {
 					})
 				)
 			);
+		}
+	}, {
+		key: 'renderFilter',
+		value: function renderFilter() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'form-group side-menu-filter' },
+				_react2.default.createElement('input', { className: 'form-control side-menu-filter-input', onChange: this.handleFilterInputChange.bind(this), value: this.state.filterText }),
+				_react2.default.createElement(_Icon2.default, { icon: 'search' })
+			);
+		}
+	}, {
+		key: 'handleFilterInputChange',
+		value: function handleFilterInputChange(event) {
+			var value = event.currentTarget.value;
+
+
+			this.setState({
+				filterText: value
+			});
+		}
+	}, {
+		key: '_getComponentArray',
+		value: function _getComponentArray() {
+			var components = this.props.components;
+			var filterText = this.state.filterText;
+
+
+			var componentsArray = components.toArray().sort();
+
+			if (filterText) {
+				componentsArray = componentsArray.filter(function (component) {
+					return component.toLowerCase().indexOf(filterText.toLowerCase()) > -1;
+				});
+			}
+
+			return componentsArray;
 		}
 	}, {
 		key: '_getDisplayName',

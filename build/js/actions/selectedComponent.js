@@ -9,15 +9,21 @@ var _user_config = require('../lib/system/user_config');
 
 var _user_config2 = _interopRequireDefault(_user_config);
 
+var _colorVariableName = require('../actions/colorVariableName');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var userConfig = new _user_config2.default();
 
 function setSelectedComponent(component) {
-	userConfig.setConfig('selectedComponent', component);
+	return function (dispatch, getState) {
+		userConfig.setConfig('selectedComponent', component);
 
-	return {
-		component: component,
-		type: 'SET_SELECTED_COMPONENT'
+		dispatch((0, _colorVariableName.setColorVariableName)(null));
+
+		dispatch({
+			component: component,
+			type: 'SET_SELECTED_COMPONENT'
+		});
 	};
 };

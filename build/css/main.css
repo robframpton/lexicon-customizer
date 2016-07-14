@@ -14,6 +14,14 @@ a {
     color: #258eac;
     text-decoration: none; }
 
+input.form-control, input.form-control:focus {
+  border-radius: 0;
+  border-width: 0 0 4px;
+  box-shadow: none; }
+
+input.form-control:focus {
+  border-color: #5BBFDC; }
+
 /* Color picker */
 .color-picker-trigger {
   background: #EEE;
@@ -282,16 +290,28 @@ div.container {
 .has-popout-preview .side-menu {
   width: 30%; }
 
+.side-menu-filter {
+  position: relative; }
+  .side-menu-filter input {
+    padding-right: 24px; }
+  .side-menu-filter .lexicon-icon-wrapper {
+    bottom: 8px;
+    position: absolute;
+    right: 0; }
+    .side-menu-filter .lexicon-icon-wrapper svg {
+      fill: #555; }
+
 .side-menu-list {
   list-style: none;
   padding: 0; }
 
 .side-menu-list-item {
+  border-radius: 2px;
+  margin: 4px 0;
   padding: 2px 8px;
   transition: background-color 400ms, box-shadow 400ms; }
   .side-menu-list-item.selected {
-    background-color: #5BBFDC;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); }
+    background-color: #5BBFDC; }
   .side-menu-list-item.selected a {
     color: #FFF; }
 
@@ -372,14 +392,6 @@ div.container {
   height: 100%;
   overflow: scroll;
   padding: 12px; }
-
-.variables-editor input, .variables-editor input:focus {
-  border-radius: 0;
-  border-width: 0 0 4px;
-  box-shadow: none; }
-
-.variables-editor input:focus {
-  border-color: #5BBFDC; }
 
 .variables-editor-section {
   border-radius: 4px;

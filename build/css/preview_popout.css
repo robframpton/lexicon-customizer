@@ -14,6 +14,14 @@ a {
     color: #258eac;
     text-decoration: none; }
 
+input.form-control, input.form-control:focus {
+  border-radius: 0;
+  border-width: 0 0 4px;
+  box-shadow: none; }
+
+input.form-control:focus {
+  border-color: #5BBFDC; }
+
 /* Preview box */
 .preview-box webview {
   height: 100%; }
