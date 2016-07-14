@@ -1,12 +1,17 @@
 import UserConfig from '../lib/system/user_config';
+import {setColorVariableName} from '../actions/colorVariableName';
 
 const userConfig = new UserConfig();
 
 export function setSelectedComponent(component) {
-	userConfig.setConfig('selectedComponent', component);
+	return (dispatch, getState) => {
+		userConfig.setConfig('selectedComponent', component);
 
-	return {
-		component,
-		type: 'SET_SELECTED_COMPONENT'
+		dispatch(setColorVariableName(null));
+
+		dispatch({
+			component,
+			type: 'SET_SELECTED_COMPONENT'
+		});
 	};
 };
