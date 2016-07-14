@@ -26,6 +26,16 @@ export function resetComponentVariables() {
 	};
 };
 
+export function resetVariable(name) {
+	return function(dispatch, getState) {
+		const state = getState();
+
+		const sourceVariables = state.get('sourceVariables');
+
+		dispatch(setVariable(name, sourceVariables.get(name).get('value')));
+	};
+};
+
 export function resetVariables() {
 	return function(dispatch, getState) {
 		const state = getState();

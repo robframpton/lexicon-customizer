@@ -8,7 +8,7 @@ import LexiconColorPickerPanel from '../containers/LexiconColorPickerPanel';
 import VariableInput from '../components/VariableInput';
 import {createVariablesFile} from '../actions/index';
 import {setColorVariableName} from '../actions/colorVariableName';
-import {setVariable} from '../actions/variables';
+import {resetVariable, setVariable} from '../actions/variables';
 
 class VariablesEditor extends Component {
 	constructor(props) {
@@ -97,6 +97,13 @@ class VariablesEditor extends Component {
 		const isColor = this._isColor.bind(this);
 		const {variables} = this.props;
 
+		const toolbar = [
+			{
+				action: this._handleResetVariable.bind(this),
+				icon: 'reload'
+			}
+		];
+
 		return groupVariables.toArray().map(variable => {
 			let name = variable.get('name');
 			let value = variable.get('value');
@@ -109,6 +116,7 @@ class VariablesEditor extends Component {
 					name={name}
 					onChange={handleChange}
 					onColorPickerTriggerClick={handleColorPickerTriggerClick}
+					toolbar={toolbar}
 					value={value}
 					variables={variables}
 				/>
@@ -143,6 +151,14 @@ class VariablesEditor extends Component {
 		this.setState({
 			collapsedGroups
 		});
+	}
+
+	_handleResetVariable(name) {
+		const {dispatch} = this.props;
+
+		if (confirm(`Are you sure you want to reset ${name} to it's default value?`)) {
+			dispatch(resetVariable(name));
+		}
 	}
 
 	_isColor(variableName) {

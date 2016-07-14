@@ -1,6 +1,7 @@
 import enhanceWithClickOutside from 'react-click-outside';
 import React, {Component, PropTypes} from 'react';
 
+import Icon from '../components/Icon';
 import {resolveColorValue} from '../lib/color';
 
 class VariableInput extends Component {
@@ -47,6 +48,8 @@ class VariableInput extends Component {
 
 		return (
 			<div className="form-group variable-input">
+				{this.renderToolbar()}
+
 				<label htmlFor={name}>{name}</label>
 
 				<input
@@ -66,6 +69,28 @@ class VariableInput extends Component {
 				{colorPickerTrigger}
 			</div>
 		);
+	}
+
+	renderToolbar() {
+		const instance = this;
+
+		const {name, toolbar, value} = this.props;
+
+		let toolbarContent = '';
+
+		if (toolbar && toolbar.length) {
+			toolbarContent = toolbar.map((button, index) => {
+				const {action, icon} = button;
+
+				return (
+					<a className="variable-input-action" href="javascript:;" key={`action${index}`} onClick={action.bind(null, name, value)}>
+						<Icon icon={icon} />
+					</a>
+				);
+			});
+		}
+
+		return toolbarContent;
 	}
 
 	componentDidUpdate(event) {
