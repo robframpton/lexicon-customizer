@@ -1,6 +1,7 @@
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
 
+import FilterInput from '../components/FilterInput';
 import Icon from '../components/Icon';
 
 class SideMenu extends Component {
@@ -23,7 +24,7 @@ class SideMenu extends Component {
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
-				{this.renderFilter()}
+				<FilterInput onChange={this.handleFilterInputChange.bind(this)} value={this.state.filterText} />
 
 				<ul className="side-menu-list">
 					{componentArray.map((item, index) => {
@@ -53,19 +54,7 @@ class SideMenu extends Component {
 		);
 	}
 
-	renderFilter() {
-		return (
-			<div className="form-group side-menu-filter">
-				<input className="form-control side-menu-filter-input" onChange={this.handleFilterInputChange.bind(this)} value={this.state.filterText} />
-
-				<Icon icon="search" />
-			</div>
-		);
-	}
-
-	handleFilterInputChange(event) {
-		const {value} = event.currentTarget;
-
+	handleFilterInputChange(value) {
 		this.setState({
 			filterText: value
 		});
