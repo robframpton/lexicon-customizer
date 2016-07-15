@@ -56,11 +56,7 @@ var PreviewBox = function (_Component) {
 			var cssPath = _ref.cssPath;
 			var htmlPath = _ref.htmlPath;
 
-			var scriptString = '\n\t\t\tvar lexiconStylesheetLink = document.getElementById(\'lexiconStylesheetLink\');\n\t\t\tvar lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute(\'href\');\n\n\t\t\tif (lexiconStylesheetLinkHREF != \'' + cssPath + '\') {\n\t\t\t\tlexiconStylesheetLink.setAttribute(\'href\', \'' + cssPath + '\')\n\t\t\t};\n\t\t';
-
-			if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
-				this.refs.webview.executeJavaScript(scriptString);
-			}
+			this._setWebviewCssPath(cssPath);
 
 			if (htmlPath !== this.props.htmlPath) {
 				this.setState({
@@ -71,8 +67,12 @@ var PreviewBox = function (_Component) {
 	}, {
 		key: 'handleDidStopLoading',
 		value: function handleDidStopLoading() {
-			var didStopLoading = this.props.didStopLoading;
+			var _props = this.props;
+			var cssPath = _props.cssPath;
+			var didStopLoading = _props.didStopLoading;
 
+
+			this._setWebviewCssPath(cssPath);
 
 			this.setState({
 				previewLoading: false
@@ -130,6 +130,15 @@ var PreviewBox = function (_Component) {
 				ref: 'webview',
 				src: this.props.htmlPath
 			});
+		}
+	}, {
+		key: '_setWebviewCssPath',
+		value: function _setWebviewCssPath(cssPath) {
+			var scriptString = '\n\t\t\tvar lexiconStylesheetLink = document.getElementById(\'lexiconStylesheetLink\');\n\t\t\tvar lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute(\'href\');\n\n\t\t\tif (lexiconStylesheetLinkHREF != \'' + cssPath + '\') {\n\t\t\t\tlexiconStylesheetLink.setAttribute(\'href\', \'' + cssPath + '\')\n\t\t\t};\n\t\t';
+
+			if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
+				this.refs.webview.executeJavaScript(scriptString);
+			}
 		}
 	}]);
 

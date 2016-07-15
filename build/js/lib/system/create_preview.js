@@ -9,18 +9,6 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _ejs = require('ejs');
-
-var _ejs2 = _interopRequireDefault(_ejs);
-
-var _fs = require('fs');
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _fsPromise = require('fs-promise');
-
-var _fsPromise2 = _interopRequireDefault(_fsPromise);
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -31,38 +19,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var CWD = _electron.remote.app.getAppPath();
 
-var PATH_IMAGES = _path2.default.join(CWD, 'build/images');
+var PATH_LEXICON_MARKUP = _path2.default.join(CWD, 'build/html/components');
 
-var PATH_LEXICON = _path2.default.join(CWD, 'lexicon');
-
-var PATH_LEXICON_IMAGES = _path2.default.join(PATH_LEXICON, 'build/images');
-
-function createPreview(group, component, baseLexiconTheme, cb) {
+function createPreview(component, baseLexiconTheme) {
 	baseLexiconTheme = _lodash2.default.kebabCase(baseLexiconTheme);
 	component = _lodash2.default.snakeCase(component);
 
+	var htmlPath = _path2.default.join(PATH_LEXICON_MARKUP, component + '.html');
+
+	// TODO: we need to write all css files outside of the electron archive, use os module to create dir for all file writing
 	var cssPath = _path2.default.join(CWD, 'lexicon/build/' + baseLexiconTheme + '.css') + '?t=' + Date.now();
-	var previewFilePath = _path2.default.join(CWD, 'lexicon/build/' + group + '-preview.html');
 
-	_ejs2.default.renderFile(_path2.default.join(__dirname, '..', 'templates', 'preview.ejs'), {
-		componentPreviewPath: _path2.default.join(CWD, 'lexicon/markup/lexicon', component + '.ejs'),
-		iconSpritePath: _path2.default.join(PATH_LEXICON_IMAGES, 'icons', 'icons.svg'),
-		imagesPath: PATH_IMAGES,
-		lexiconCSSPath: cssPath,
-		lexiconImagesPath: PATH_LEXICON_IMAGES,
-		scripts: [_path2.default.join(CWD, 'bower_components/jquery/dist/jquery.js'), _path2.default.join(PATH_LEXICON, 'build/js/bootstrap.js'), _path2.default.join(PATH_LEXICON, 'build/js/svg4everybody.js')]
-	}, function (err, result) {
-		if (err) {
-			throw err;
-		}
-
-		_fs2.default.writeFileSync(previewFilePath, result);
-
-		var htmlPath = previewFilePath + '?component=' + component;
-
-		cb({
-			cssPath: cssPath,
-			htmlPath: htmlPath
-		});
-	});
+	return {
+		cssPath: cssPath,
+		htmlPath: htmlPath
+	};
 };

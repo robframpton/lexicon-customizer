@@ -25,18 +25,7 @@ class PreviewBox extends Component {
 	}
 
 	componentWillReceiveProps({cssPath, htmlPath}) {
-		let scriptString = `
-			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
-			var lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute('href');
-
-			if (lexiconStylesheetLinkHREF != '${cssPath}') {
-				lexiconStylesheetLink.setAttribute('href', '${cssPath}')
-			};
-		`;
-
-		if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
-			this.refs.webview.executeJavaScript(scriptString);
-		}
+		this._setWebviewCssPath(cssPath);
 
 		if (htmlPath !== this.props.htmlPath) {
 			this.setState({
@@ -46,7 +35,9 @@ class PreviewBox extends Component {
 	}
 
 	handleDidStopLoading() {
-		const {didStopLoading} = this.props;
+		const {cssPath, didStopLoading} = this.props;
+
+		this._setWebviewCssPath(cssPath);
 
 		this.setState({
 			previewLoading: false
@@ -99,6 +90,21 @@ class PreviewBox extends Component {
 				src={this.props.htmlPath}
 			></webview>
 		);
+	}
+
+	_setWebviewCssPath(cssPath) {
+		let scriptString = `
+			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
+			var lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute('href');
+
+			if (lexiconStylesheetLinkHREF != '${cssPath}') {
+				lexiconStylesheetLink.setAttribute('href', '${cssPath}')
+			};
+		`;
+
+		if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
+			this.refs.webview.executeJavaScript(scriptString);
+		}
 	}
 };
 

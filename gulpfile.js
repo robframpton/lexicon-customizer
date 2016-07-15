@@ -15,11 +15,18 @@ const runSequence = require('run-sequence').use(gulp);
 
 const pathBuild = 'build';
 
+const PATH_IMAGES = path.join(__dirname, 'build/images');
+
+const PATH_LEXICON = path.join(__dirname, 'lexicon');
+
+const PATH_LEXICON_IMAGES = path.join(PATH_LEXICON, 'build/images');
+
 gulp.task('build', (cb) => {
 	runSequence(
 		'build:clean',
 		'build:css',
 		'build:html',
+		'build:ejs',
 		'build:images',
 		'build:js',
 		'build:js:resources',
@@ -54,7 +61,7 @@ gulp.task('build:css', () => {
 });
 
 gulp.task('build:html', () => {
-	return gulp.src('src/html/*.html')
+	return gulp.src('src/html/**/*.html')
 		.pipe(gulp.dest(path.join(pathBuild, 'html')));
 });
 
@@ -68,6 +75,28 @@ gulp.task('build:js', () => {
 		.pipe(plumber())
 		.pipe(babel())
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
+});
+
+gulp.task('build:ejs', () => {
+	const relativeRootPath = '../../../';
+
+	const pathLexicon = './lexicon';
+
+	gulp.src('src/html/templates/components/*.ejs')
+		.pipe(ejs({
+			iconSpritePath: relativeRootPath + 'lexicon/build/images/icons/icons.svg',
+			imagesPath: '../../images',
+			lexiconImagesPath: relativeRootPath + 'lexicon/build/images',
+			scripts: [
+				relativeRootPath + 'bower_components/jquery/dist/jquery.js',
+				relativeRootPath + 'lexicon/build/js/bootstrap.js',
+				relativeRootPath + 'lexicon/build/js/svg4everybody.js'
+			]
+		}))
+		.pipe(rename({
+			extname: '.html'
+		}))
+		.pipe(gulp.dest(path.join(pathBuild, 'html/components')));
 });
 
 gulp.task('build:js:resources', () => {

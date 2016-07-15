@@ -74,11 +74,11 @@ function renderPreview(component) {
 	return function (dispatch, getState) {
 		var state = getState();
 
-		(0, _create_preview2.default)(state.get('group'), component, state.get('baseLexiconTheme'), function (preview) {
-			dispatch({
-				preview: preview,
-				type: 'CREATE_PREVIEW'
-			});
+		var preview = (0, _create_preview2.default)(component, state.get('baseLexiconTheme'));
+
+		dispatch({
+			preview: preview,
+			type: 'CREATE_PREVIEW'
 		});
 	};
 };

@@ -45,11 +45,11 @@ export function renderPreview(component) {
 	return function(dispatch, getState) {
 		var state = getState();
 
-		createPreview(state.get('group'), component, state.get('baseLexiconTheme'), function(preview) {
-			dispatch({
-				preview,
-				type: 'CREATE_PREVIEW'
-			});
+		const preview = createPreview(component, state.get('baseLexiconTheme'));
+
+		dispatch({
+			preview,
+			type: 'CREATE_PREVIEW'
 		});
 	};
 };

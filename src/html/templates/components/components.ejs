@@ -1,0 +1,25 @@
+<%- include("../partials/header.ejs") %>
+	<section class="row">
+		<% [
+			'alerts',
+			'badges',
+			'breadcrumbs',
+			'buttons',
+			'dropdowns',
+			'jumbotron',
+			'labels',
+			'list_group',
+			'navbar',
+			'navs',
+			'pagination',
+			'panels',
+			'progress_bars',
+			'thumbnails',
+			'wells'
+		].forEach(function(component) {  %>
+			<div class="col-md-12">
+				<%- include('./' + component) %>
+			</div>
+		<% }); %>
+	</section>
+<%- include("../partials/footer.ejs") %>
