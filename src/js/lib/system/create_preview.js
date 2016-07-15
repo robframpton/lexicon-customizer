@@ -5,8 +5,9 @@ import ejs from 'ejs';
 import fs from 'fs';
 import fsp from 'fs-promise';
 import path from 'path';
+import {remote} from 'electron';
 
-const CWD = process.cwd();
+const CWD = remote.app.getAppPath();
 
 const PATH_IMAGES = path.join(CWD, 'build/images');
 

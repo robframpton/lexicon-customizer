@@ -36,6 +36,8 @@ var _nodeSass = require('node-sass');
 
 var _nodeSass2 = _interopRequireDefault(_nodeSass);
 
+var _electron = require('electron');
+
 var _component_scraper = require('./component_scraper');
 
 var componentScraper = _interopRequireWildcard(_component_scraper);
@@ -48,7 +50,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CWD = process.cwd();
+var CWD = _electron.remote.app.getAppPath();
 
 var PATH_BOWER_INCLUDES = _path2.default.join(CWD, 'bower_components/bourbon/app/assets/stylesheets');
 

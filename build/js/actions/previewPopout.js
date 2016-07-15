@@ -9,10 +9,11 @@ exports.setPreviewPopout = setPreviewPopout;
 
 var _electron = require('electron');
 
+var app = _electron.remote.app;
 var BrowserWindow = _electron.remote.BrowserWindow;
 
 
-var previewPopoutURL = 'file://' + process.cwd() + '/build/html/preview_popout.html';
+var previewPopoutURL = 'file://' + app.getAppPath() + '/build/html/preview_popout.html';
 
 function createPreviewPopout() {
 	return function (dispatch, getState) {

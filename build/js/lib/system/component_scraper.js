@@ -31,6 +31,8 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _electron = require('electron');
+
 var _immutable = require('immutable');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -40,7 +42,7 @@ var COMPONENT_REDUCER_MAP = {
 	type: 'typography'
 };
 
-var PATH_LEXICON = _path2.default.join(process.cwd(), 'lexicon');
+var PATH_LEXICON = _path2.default.join(_electron.remote.app.getAppPath(), 'lexicon');
 
 var PATH_ATLAS_THEME_VARIABLES = _path2.default.join(PATH_LEXICON, 'src/scss/atlas-theme/variables');
 

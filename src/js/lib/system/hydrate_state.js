@@ -2,12 +2,15 @@
 
 import immutable from 'immutable';
 import path from 'path';
+import {remote} from 'electron';
 
 import * as componentScraper from './component_scraper';
 import * as varUtil from '../var_util';
 import UserConfig from './user_config';
 
 const COMPONENT_BLACKLIST = ['iconography'];
+
+const CWD = remote.app.getAppPath();
 
 module.exports = function() {
 	const userConfig = new UserConfig();
@@ -21,7 +24,7 @@ module.exports = function() {
 	});
 
 	const filePaths = immutable.Map({
-		customVariables: path.join(process.cwd(), 'lexicon', '_custom_variables.scss')
+		customVariables: path.join(CWD, 'lexicon', '_custom_variables.scss')
 	});
 
 	const initialState = {

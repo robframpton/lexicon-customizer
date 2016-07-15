@@ -25,9 +25,11 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _electron = require('electron');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CWD = process.cwd();
+var CWD = _electron.remote.app.getAppPath();
 
 var PATH_IMAGES = _path2.default.join(CWD, 'build/images');
 

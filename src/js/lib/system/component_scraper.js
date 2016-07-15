@@ -3,6 +3,7 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
+import {remote} from 'electron';
 import {List, Map, OrderedMap} from 'immutable';
 
 const COMPONENT_REDUCER_MAP = {
@@ -10,7 +11,7 @@ const COMPONENT_REDUCER_MAP = {
 	type: 'typography'
 };
 
-const PATH_LEXICON = path.join(process.cwd(), 'lexicon');
+const PATH_LEXICON = path.join(remote.app.getAppPath(), 'lexicon');
 
 const PATH_ATLAS_THEME_VARIABLES = path.join(PATH_LEXICON, 'src/scss/atlas-theme/variables');
 

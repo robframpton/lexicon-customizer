@@ -1,8 +1,8 @@
 import {remote} from 'electron';
 
-const {BrowserWindow} = remote;
+const {app, BrowserWindow} = remote;
 
-const previewPopoutURL = `file://${process.cwd()}/build/html/preview_popout.html`;
+const previewPopoutURL = `file://${app.getAppPath()}/build/html/preview_popout.html`;
 
 export function createPreviewPopout() {
 	return (dispatch, getState) => {

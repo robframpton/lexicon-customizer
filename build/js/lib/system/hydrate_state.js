@@ -8,6 +8,8 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _electron = require('electron');
+
 var _component_scraper = require('./component_scraper');
 
 var componentScraper = _interopRequireWildcard(_component_scraper);
@@ -26,6 +28,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var COMPONENT_BLACKLIST = ['iconography'];
 
+var CWD = _electron.remote.app.getAppPath();
+
 module.exports = function () {
 	var userConfig = new _user_config2.default();
 
@@ -42,7 +46,7 @@ module.exports = function () {
 	});
 
 	var filePaths = _immutable2.default.Map({
-		customVariables: _path2.default.join(process.cwd(), 'lexicon', '_custom_variables.scss')
+		customVariables: _path2.default.join(CWD, 'lexicon', '_custom_variables.scss')
 	});
 
 	var initialState = {
