@@ -5,7 +5,6 @@ import {remote} from 'electron';
 import * as componentScraper from '../lib/system/component_scraper';
 import * as sassUtil from '../lib/system/sass_util';
 import * as varUtil from '../lib/var_util';
-import createPreview from '../lib/system/create_preview';
 import UserConfig from '../lib/system/user_config';
 import {isTheme} from '../lib/system/theme';
 

@@ -29,10 +29,6 @@ var _var_util = require('../lib/var_util');
 
 var varUtil = _interopRequireWildcard(_var_util);
 
-var _create_preview = require('../lib/system/create_preview');
-
-var _create_preview2 = _interopRequireDefault(_create_preview);
-
 var _user_config = require('../lib/system/user_config');
 
 var _user_config2 = _interopRequireDefault(_user_config);
