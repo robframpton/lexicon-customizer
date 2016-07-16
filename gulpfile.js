@@ -15,12 +15,6 @@ const runSequence = require('run-sequence').use(gulp);
 
 const pathBuild = 'build';
 
-const PATH_IMAGES = path.join(__dirname, 'build/images');
-
-const PATH_LEXICON = path.join(__dirname, 'lexicon');
-
-const PATH_LEXICON_IMAGES = path.join(PATH_LEXICON, 'build/images');
-
 gulp.task('build', (cb) => {
 	runSequence(
 		'build:clean',
@@ -30,27 +24,13 @@ gulp.task('build', (cb) => {
 		'build:images',
 		'build:js',
 		'build:js:resources',
-		'build:lexicon',
-		'build:normalize-lexicon',
+		'build:ejs',
 		cb
 	);
 });
 
 gulp.task('build:clean', () => {
 	return del([path.join(pathBuild, '**', '*')]);
-});
-
-gulp.task('build:lexicon', () => {
-	return gulp.src(['node_modules/lexicon-ux/build/**/*', 'node_modules/lexicon-ux/src/**/*'], {
-		base: 'node_modules/lexicon-ux'
-	})
-		.pipe(gulp.dest('lexicon'));
-});
-
-gulp.task('build:normalize-lexicon', () => {
-	return gulp.src('lexicon/src/scss/lexicon-base/main.scss')
-		.pipe(replace('@import "mixins";', '@import "mixins";\n@import "variables";'))
-		.pipe(gulp.dest('lexicon/src/scss/lexicon-base'));
 });
 
 gulp.task('build:css', () => {
