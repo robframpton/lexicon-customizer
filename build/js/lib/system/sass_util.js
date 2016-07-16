@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.sass = exports._writeThemeFileTask = exports.renderLexiconBase = undefined;
 exports.clearCustomVariablesFile = clearCustomVariablesFile;
 exports.clearModifiedVariablesFromTheme = clearModifiedVariablesFromTheme;
-exports.render = render;
 exports.renderLexiconBaseTask = renderLexiconBaseTask;
 exports.writeCustomVariablesFile = writeCustomVariablesFile;
 exports._clearModifiedVariablesFromFile = _clearModifiedVariablesFromFile;
@@ -70,34 +69,27 @@ function clearModifiedVariablesFromTheme(variables, themePath) {
 	_clearModifiedVariablesFromFile(variables, _getThemeVariablesFileAbsolutePath(themePath));
 };
 
-function render(options, filePath, cb) {
-	options = _lodash2.default.defaults({
-		file: filePath,
-		includePaths: [PATH_BOWER_INCLUDES, PATH_LEXICON_SCSS]
-	}, options);
-
-	_nodeSass2.default.render(options, cb);
-};
-
 var renderLexiconBase = exports.renderLexiconBase = _lodash2.default.debounce(renderLexiconBaseTask, 300);
 
-function renderLexiconBaseTask(options, cb) {
-	if (!cb) {
-		cb = options;
-		options = {};
-	}
+function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
+	var customDir = lexiconDirs.customDir;
+	var srcDir = lexiconDirs.srcDir;
 
-	var baseLexiconTheme = _lodash2.default.kebabCase(options.baseLexiconTheme || 'lexiconBase');
 
-	options = _lodash2.default.omit(options, 'baseLexiconTheme');
+	baseLexiconTheme = _lodash2.default.kebabCase(baseLexiconTheme);
 
-	render(options, _path2.default.join(CWD, 'lexicon', baseLexiconTheme + '.scss'), function (err, result) {
+	_path2.default.join(customDir, baseLexiconTheme + '.scss');
+
+	_nodeSass2.default.render({
+		file: _path2.default.join(customDir, baseLexiconTheme + '.scss'),
+		includePaths: [_path2.default.join(srcDir, 'scss'), PATH_BOWER_INCLUDES]
+	}, function (err, result) {
 		var filePath = void 0;
 
 		if (!err) {
 			var cssString = result.css.toString();
 
-			filePath = _path2.default.join(CWD, 'lexicon/build', baseLexiconTheme + '.css');
+			filePath = _path2.default.join(customDir, baseLexiconTheme + '.css');
 
 			_fs2.default.writeFileSync(filePath, cssString);
 		}

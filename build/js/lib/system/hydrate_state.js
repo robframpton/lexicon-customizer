@@ -30,12 +30,16 @@ var COMPONENT_BLACKLIST = ['iconography'];
 
 var CWD = _electron.remote.app.getAppPath();
 
+var WIN = _electron.remote.getCurrentWindow();
+
 module.exports = function () {
 	var userConfig = new _user_config2.default();
 
 	var persistedConfig = userConfig.getConfig();
 
-	var _componentScraper$ini = componentScraper.initVariables(persistedConfig.baseLexiconTheme);
+	var lexiconDirs = WIN.lexicon.dirs;
+
+	var _componentScraper$ini = componentScraper.initVariables(persistedConfig.baseLexiconTheme, lexiconDirs);
 
 	var sourceVariables = _componentScraper$ini.sourceVariables;
 	var variables = _componentScraper$ini.variables;
@@ -53,8 +57,9 @@ module.exports = function () {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
 		filePaths: filePaths,
-		sourceVariables: sourceVariables,
+		lexiconDirs: lexiconDirs,
 		selectedComponent: persistedConfig.selectedComponent,
+		sourceVariables: sourceVariables,
 		theme: persistedConfig.theme,
 		variables: variables
 	};

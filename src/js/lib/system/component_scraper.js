@@ -3,7 +3,6 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
-import {remote} from 'electron';
 import {List, Map, OrderedMap} from 'immutable';
 
 const COMPONENT_REDUCER_MAP = {
@@ -11,38 +10,26 @@ const COMPONENT_REDUCER_MAP = {
 	type: 'typography'
 };
 
-const PATH_LEXICON = path.join(remote.app.getAppPath(), 'lexicon');
-
-const PATH_ATLAS_THEME_VARIABLES = path.join(PATH_LEXICON, 'src/scss/atlas-theme/variables');
-
-const PATH_ATLAS_THEME_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/atlas-theme/_variables.scss');
-
-const PATH_BOOTSTRAP_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/bootstrap/_variables.scss');
-
-const PATH_CUSTOM_VARIABLES_FILE = path.join(PATH_LEXICON, '_custom_variables.scss');
-
-const PATH_LEXICON_BASE_VARIABLES = path.join(PATH_LEXICON, 'src/scss/lexicon-base/variables');
-
-const PATH_LEXICON_BASE_VARIABLES_FILE = path.join(PATH_LEXICON, 'src/scss/lexicon-base/_variables.scss');
-
 const REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
-export function initVariables(baseTheme) {
-	const bootstrapVariables = mapBootstrapVariables();
+export function initVariables(baseTheme, lexiconDirs) {
+	const {customDir, srcDir} = lexiconDirs;
 
-	const lexiconVariables = mapLexiconVariables();
+	const bootstrapVariables = mapBootstrapVariables(srcDir);
+
+	const lexiconVariables = mapLexiconVariables(srcDir);
 
 	let variables = _mergeVariables(bootstrapVariables, lexiconVariables);
 
 	if (baseTheme === 'atlasTheme') {
-		const atlasVariables = mapAtlasVariables();
+		const atlasVariables = mapAtlasVariables(srcDir);
 
 		variables = _mergeVariables(variables, atlasVariables);
 	}
 
 	const sourceVariables = variables;
 
-	mapCustomVariables().forEach((variable, key) => {
+	mapCustomVariables(customDir).forEach((variable, key) => {
 		if (sourceVariables.has(key)) {
 			let sourceVariable = variables.get(key);
 
@@ -56,24 +43,24 @@ export function initVariables(baseTheme) {
 	};
 };
 
-export function mapAtlasVariables() {
-	return _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
+export function mapAtlasVariables(srcDir) {
+	return _mapVariablesFromComponentArray(_getAtlasThemeComponents(srcDir), path.join(srcDir, 'scss/atlas-theme/variables'), 'lexicon');
 };
 
-export function mapBootstrapVariables() {
-	return _mapBootstrapVariablesFile();
+export function mapBootstrapVariables(srcDir) {
+	return _mapBootstrapVariablesFile(srcDir);
 };
 
-export function mapCustomVariables() {
-	return mapVariablesFromFile(PATH_CUSTOM_VARIABLES_FILE, 'custom', '');
+export function mapCustomVariables(customDir) {
+	return mapVariablesFromFile(path.join(customDir, '_custom_variables.scss'), 'custom', '');
 };
 
 export function mapThemeVariables(themePath) {
 	return mapVariablesFromFile(path.join(themePath, 'src/css/_aui_variables.scss'), 'theme', '');
 };
 
-export function mapLexiconVariables() {
-	return _mapVariablesFromComponentArray(_getLexiconBaseComponents(), PATH_LEXICON_BASE_VARIABLES, 'lexicon');
+export function mapLexiconVariables(srcDir) {
+	return _mapVariablesFromComponentArray(_getLexiconBaseComponents(srcDir), path.join(srcDir, 'scss/lexicon-base/variables'), 'lexicon');
 };
 
 export function mapVariablesFromFile(filePath, group, component) {
@@ -88,8 +75,8 @@ export function mapVariablesFromFile(filePath, group, component) {
 	return _mapVariablesFromString(fileContents, group, component);
 };
 
-export function _getAtlasThemeComponents() {
-	return _getComponentArrayFromVariablesFile(PATH_ATLAS_THEME_VARIABLES_FILE);
+export function _getAtlasThemeComponents(srcDir) {
+	return _getComponentArrayFromVariablesFile(path.join(srcDir, 'scss/atlas-theme/_variables.scss'));
 };
 
 export function _getComponentArrayFromVariablesFile(filePath) {
@@ -110,16 +97,16 @@ export function _getComponentArrayFromVariablesFile(filePath) {
 	}, []);
 };
 
-export function _getLexiconBaseComponents() {
-	return _getComponentArrayFromVariablesFile(PATH_LEXICON_BASE_VARIABLES_FILE);
+export function _getLexiconBaseComponents(srcDir) {
+	return _getComponentArrayFromVariablesFile(path.join(srcDir, 'scss/lexicon-base/_variables.scss'));
 };
 
 export function _getReducedComponentName(component) {
 	return COMPONENT_REDUCER_MAP[component] || component;
 };
 
-export function _mapBootstrapVariablesFile() {
-	let fileContents = fs.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
+export function _mapBootstrapVariablesFile(srcDir) {
+	let fileContents = fs.readFileSync(path.join(srcDir, 'scss/bootstrap/_variables.scss'), {
 		encoding: 'utf8'
 	});
 

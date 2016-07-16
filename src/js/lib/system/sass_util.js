@@ -30,34 +30,25 @@ export function clearModifiedVariablesFromTheme(variables, themePath) {
 	_clearModifiedVariablesFromFile(variables, _getThemeVariablesFileAbsolutePath(themePath));
 };
 
-export function render(options, filePath, cb) {
-	options = _.defaults({
-		file: filePath,
-		includePaths: [PATH_BOWER_INCLUDES, PATH_LEXICON_SCSS]
-	}, options);
-
-	sass.render(options, cb);
-};
-
 export const renderLexiconBase = _.debounce(renderLexiconBaseTask, 300);
 
-export function renderLexiconBaseTask(options, cb) {
-	if (!cb) {
-		cb = options;
-		options = {};
-	}
+export function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
+	const {customDir, srcDir} = lexiconDirs;
 
-	let baseLexiconTheme = _.kebabCase(options.baseLexiconTheme || 'lexiconBase');
+	baseLexiconTheme = _.kebabCase(baseLexiconTheme);
 
-	options = _.omit(options, 'baseLexiconTheme');
+	path.join(customDir, baseLexiconTheme + '.scss')
 
-	render(options, path.join(CWD, 'lexicon', baseLexiconTheme + '.scss'), function(err, result) {
+	sass.render({
+		file: path.join(customDir, baseLexiconTheme + '.scss'),
+		includePaths: [path.join(srcDir, 'scss'), PATH_BOWER_INCLUDES]
+	}, function(err, result) {
 		let filePath;
 
 		if (!err) {
 			let cssString = result.css.toString();
 
-			filePath = path.join(CWD, 'lexicon/build', baseLexiconTheme + '.css');
+			filePath = path.join(customDir, baseLexiconTheme + '.css');
 
 			fs.writeFileSync(filePath, cssString);
 		}

@@ -12,12 +12,16 @@ const COMPONENT_BLACKLIST = ['iconography'];
 
 const CWD = remote.app.getAppPath();
 
+const WIN = remote.getCurrentWindow();
+
 module.exports = function() {
 	const userConfig = new UserConfig();
 
 	const persistedConfig = userConfig.getConfig();
 
-	const {sourceVariables, variables} = componentScraper.initVariables(persistedConfig.baseLexiconTheme);
+	const lexiconDirs = WIN.lexicon.dirs;
+
+	const {sourceVariables, variables} = componentScraper.initVariables(persistedConfig.baseLexiconTheme, lexiconDirs);
 
 	const components = varUtil.getComponentsFromVariablesMap(variables).filter((component) => {
 		return !COMPONENT_BLACKLIST.includes(component);
@@ -31,8 +35,9 @@ module.exports = function() {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
 		filePaths: filePaths,
-		sourceVariables: sourceVariables,
+		lexiconDirs: lexiconDirs,
 		selectedComponent: persistedConfig.selectedComponent,
+		sourceVariables: sourceVariables,
 		theme: persistedConfig.theme,
 		variables: variables
 	};

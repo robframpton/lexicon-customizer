@@ -9,6 +9,8 @@ const userConfig = new UserConfig();
 
 export function setBaseLexiconTheme(value) {
 	return function(dispatch, getState) {
+		const lexiconDirs = getState().get('lexiconDirs');
+
 		dispatch({
 			type: 'SET_BASE_LEXICON_THEME',
 			value
@@ -16,7 +18,7 @@ export function setBaseLexiconTheme(value) {
 
 		userConfig.setConfig('baseLexiconTheme', value);
 
-		const {sourceVariables, variables} = componentScraper.initVariables(value);
+		const {sourceVariables, variables} = componentScraper.initVariables(value, lexiconDirs);
 
 		dispatch(overwriteSourceVariables(sourceVariables));
 		dispatch(overwriteVariables(variables));

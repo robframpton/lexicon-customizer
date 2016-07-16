@@ -6,6 +6,8 @@ import colorVariableName from './colorVariableName';
 import components from './components';
 import filePaths from './filePaths';
 import group from './group';
+import lexiconDirs from './lexiconDirs';
+import lexiconVersion from './lexiconVersion';
 import preview from './preview';
 import previewPopout from './previewPopout';
 import sassError from './sassError';
@@ -21,6 +23,8 @@ const lexiconCustomizerReducer = combineReducers({
 	components,
 	filePaths,
 	group,
+	lexiconDirs,
+	lexiconVersion,
 	preview,
 	previewPopout,
 	sassError,

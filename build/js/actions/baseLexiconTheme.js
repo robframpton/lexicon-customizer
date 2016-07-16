@@ -27,6 +27,8 @@ var userConfig = new _user_config2.default();
 
 function setBaseLexiconTheme(value) {
 	return function (dispatch, getState) {
+		var lexiconDirs = getState().get('lexiconDirs');
+
 		dispatch({
 			type: 'SET_BASE_LEXICON_THEME',
 			value: value
@@ -34,7 +36,7 @@ function setBaseLexiconTheme(value) {
 
 		userConfig.setConfig('baseLexiconTheme', value);
 
-		var _componentScraper$ini = componentScraper.initVariables(value);
+		var _componentScraper$ini = componentScraper.initVariables(value, lexiconDirs);
 
 		var sourceVariables = _componentScraper$ini.sourceVariables;
 		var variables = _componentScraper$ini.variables;

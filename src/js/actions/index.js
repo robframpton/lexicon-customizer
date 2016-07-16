@@ -1,3 +1,7 @@
+import _ from 'lodash';
+import path from 'path';
+import {remote} from 'electron';
+
 import * as componentScraper from '../lib/system/component_scraper';
 import * as sassUtil from '../lib/system/sass_util';
 import * as varUtil from '../lib/var_util';
@@ -9,6 +13,8 @@ import {overwriteSourceVariables} from './sourceVariables';
 import {overwriteVariables} from './variables';
 import {showSassError} from './sassError';
 
+const APP_PATH = remote.app.getAppPath();
+
 const userConfig = new UserConfig();
 
 export function buildLexicon() {
@@ -16,10 +22,9 @@ export function buildLexicon() {
 		const state = getState();
 
 		const baseLexiconTheme = _.kebabCase(state.get('baseLexiconTheme'));
+		const lexiconDirs = state.get('lexiconDirs');
 
-		sassUtil.renderLexiconBase({
-			baseLexiconTheme
-		}, function(err, filePath) {
+		sassUtil.renderLexiconBase(baseLexiconTheme, lexiconDirs, (err, filePath) => {
 			if (err) {
 				dispatch(showSassError(err));
 			}
@@ -45,29 +50,20 @@ export function renderPreview(component) {
 	return function(dispatch, getState) {
 		var state = getState();
 
-		const preview = createPreview(component, state.get('baseLexiconTheme'));
+		const baseLexiconTheme = _.kebabCase(state.get('baseLexiconTheme'));
+		const {customDir} = state.get('lexiconDirs');
+
+		const htmlPath = path.join(APP_PATH, 'build/html/components', _.snakeCase(component) + '.html');
+		const cssPath = path.join(customDir, baseLexiconTheme + '.css?t=' + Date.now());
+
+		const preview = {
+			cssPath,
+			htmlPath
+		};
 
 		dispatch({
 			preview,
 			type: 'CREATE_PREVIEW'
 		});
-	};
-};
-
-export function setBaseLexiconTheme(value) {
-	return function(dispatch, getState) {
-		dispatch({
-			type: 'SET_BASE_LEXICON_THEME',
-			value
-		});
-
-		userConfig.setConfig('baseLexiconTheme', value);
-
-		const {sourceVariables, variables} = componentScraper.initVariables(value);
-
-		dispatch(overwriteSourceVariables(sourceVariables));
-		dispatch(overwriteVariables(variables));
-
-		dispatch(buildLexicon());
 	};
 };

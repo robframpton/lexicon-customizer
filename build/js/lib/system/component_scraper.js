@@ -31,8 +31,6 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _electron = require('electron');
-
 var _immutable = require('immutable');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42,38 +40,28 @@ var COMPONENT_REDUCER_MAP = {
 	type: 'typography'
 };
 
-var PATH_LEXICON = _path2.default.join(_electron.remote.app.getAppPath(), 'lexicon');
-
-var PATH_ATLAS_THEME_VARIABLES = _path2.default.join(PATH_LEXICON, 'src/scss/atlas-theme/variables');
-
-var PATH_ATLAS_THEME_VARIABLES_FILE = _path2.default.join(PATH_LEXICON, 'src/scss/atlas-theme/_variables.scss');
-
-var PATH_BOOTSTRAP_VARIABLES_FILE = _path2.default.join(PATH_LEXICON, 'src/scss/bootstrap/_variables.scss');
-
-var PATH_CUSTOM_VARIABLES_FILE = _path2.default.join(PATH_LEXICON, '_custom_variables.scss');
-
-var PATH_LEXICON_BASE_VARIABLES = _path2.default.join(PATH_LEXICON, 'src/scss/lexicon-base/variables');
-
-var PATH_LEXICON_BASE_VARIABLES_FILE = _path2.default.join(PATH_LEXICON, 'src/scss/lexicon-base/_variables.scss');
-
 var REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
-function initVariables(baseTheme) {
-	var bootstrapVariables = mapBootstrapVariables();
+function initVariables(baseTheme, lexiconDirs) {
+	var customDir = lexiconDirs.customDir;
+	var srcDir = lexiconDirs.srcDir;
 
-	var lexiconVariables = mapLexiconVariables();
+
+	var bootstrapVariables = mapBootstrapVariables(srcDir);
+
+	var lexiconVariables = mapLexiconVariables(srcDir);
 
 	var variables = _mergeVariables(bootstrapVariables, lexiconVariables);
 
 	if (baseTheme === 'atlasTheme') {
-		var atlasVariables = mapAtlasVariables();
+		var atlasVariables = mapAtlasVariables(srcDir);
 
 		variables = _mergeVariables(variables, atlasVariables);
 	}
 
 	var sourceVariables = variables;
 
-	mapCustomVariables().forEach(function (variable, key) {
+	mapCustomVariables(customDir).forEach(function (variable, key) {
 		if (sourceVariables.has(key)) {
 			var sourceVariable = variables.get(key);
 
@@ -87,24 +75,24 @@ function initVariables(baseTheme) {
 	};
 };
 
-function mapAtlasVariables() {
-	return _mapVariablesFromComponentArray(_getAtlasThemeComponents(), PATH_ATLAS_THEME_VARIABLES, 'lexicon');
+function mapAtlasVariables(srcDir) {
+	return _mapVariablesFromComponentArray(_getAtlasThemeComponents(srcDir), _path2.default.join(srcDir, 'scss/atlas-theme/variables'), 'lexicon');
 };
 
-function mapBootstrapVariables() {
-	return _mapBootstrapVariablesFile();
+function mapBootstrapVariables(srcDir) {
+	return _mapBootstrapVariablesFile(srcDir);
 };
 
-function mapCustomVariables() {
-	return mapVariablesFromFile(PATH_CUSTOM_VARIABLES_FILE, 'custom', '');
+function mapCustomVariables(customDir) {
+	return mapVariablesFromFile(_path2.default.join(customDir, '_custom_variables.scss'), 'custom', '');
 };
 
 function mapThemeVariables(themePath) {
 	return mapVariablesFromFile(_path2.default.join(themePath, 'src/css/_aui_variables.scss'), 'theme', '');
 };
 
-function mapLexiconVariables() {
-	return _mapVariablesFromComponentArray(_getLexiconBaseComponents(), PATH_LEXICON_BASE_VARIABLES, 'lexicon');
+function mapLexiconVariables(srcDir) {
+	return _mapVariablesFromComponentArray(_getLexiconBaseComponents(srcDir), _path2.default.join(srcDir, 'scss/lexicon-base/variables'), 'lexicon');
 };
 
 function mapVariablesFromFile(filePath, group, component) {
@@ -119,8 +107,8 @@ function mapVariablesFromFile(filePath, group, component) {
 	return _mapVariablesFromString(fileContents, group, component);
 };
 
-function _getAtlasThemeComponents() {
-	return _getComponentArrayFromVariablesFile(PATH_ATLAS_THEME_VARIABLES_FILE);
+function _getAtlasThemeComponents(srcDir) {
+	return _getComponentArrayFromVariablesFile(_path2.default.join(srcDir, 'scss/atlas-theme/_variables.scss'));
 };
 
 function _getComponentArrayFromVariablesFile(filePath) {
@@ -141,16 +129,16 @@ function _getComponentArrayFromVariablesFile(filePath) {
 	}, []);
 };
 
-function _getLexiconBaseComponents() {
-	return _getComponentArrayFromVariablesFile(PATH_LEXICON_BASE_VARIABLES_FILE);
+function _getLexiconBaseComponents(srcDir) {
+	return _getComponentArrayFromVariablesFile(_path2.default.join(srcDir, 'scss/lexicon-base/_variables.scss'));
 };
 
 function _getReducedComponentName(component) {
 	return COMPONENT_REDUCER_MAP[component] || component;
 };
 
-function _mapBootstrapVariablesFile() {
-	var fileContents = _fs2.default.readFileSync(PATH_BOOTSTRAP_VARIABLES_FILE, {
+function _mapBootstrapVariablesFile(srcDir) {
+	var fileContents = _fs2.default.readFileSync(_path2.default.join(srcDir, 'scss/bootstrap/_variables.scss'), {
 		encoding: 'utf8'
 	});
 

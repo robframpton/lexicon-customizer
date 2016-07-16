@@ -30,6 +30,14 @@ var _group = require('./group');
 
 var _group2 = _interopRequireDefault(_group);
 
+var _lexiconDirs = require('./lexiconDirs');
+
+var _lexiconDirs2 = _interopRequireDefault(_lexiconDirs);
+
+var _lexiconVersion = require('./lexiconVersion');
+
+var _lexiconVersion2 = _interopRequireDefault(_lexiconVersion);
+
 var _preview = require('./preview');
 
 var _preview2 = _interopRequireDefault(_preview);
@@ -67,6 +75,8 @@ var lexiconCustomizerReducer = (0, _reduxImmutable.combineReducers)({
 	components: _components2.default,
 	filePaths: _filePaths2.default,
 	group: _group2.default,
+	lexiconDirs: _lexiconDirs2.default,
+	lexiconVersion: _lexiconVersion2.default,
 	preview: _preview2.default,
 	previewPopout: _previewPopout2.default,
 	sassError: _sassError2.default,
