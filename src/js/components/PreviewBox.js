@@ -27,6 +27,8 @@ class PreviewBox extends Component {
 	}
 
 	componentWillReceiveProps({cssPath, htmlPath}) {
+		this._setWebviewCssPath(cssPath);
+
 		if (htmlPath !== this.props.htmlPath) {
 			this.setState({
 				previewLoading: true

@@ -58,6 +58,8 @@ var PreviewBox = function (_Component) {
 			var cssPath = _ref.cssPath;
 			var htmlPath = _ref.htmlPath;
 
+			this._setWebviewCssPath(cssPath);
+
 			if (htmlPath !== this.props.htmlPath) {
 				this.setState({
 					previewLoading: true
