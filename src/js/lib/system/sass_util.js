@@ -57,14 +57,14 @@ export function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 	});
 };
 
-export function writeCustomVariablesFile(variables, sourceVariables, themePath) {
+export function writeCustomVariablesFile(variables, sourceVariables, dir, themePath) {
 	let variablesString = _getModifiedVariablesString(variables, sourceVariables);
 
 	if (themePath) {
 		_writeThemeFileTask(variables, variablesString, themePath);
 	}
 
-	return fsp.writeFile(path.join(CWD, 'lexicon/_custom_variables.scss'), variablesString);
+	return fsp.writeFile(path.join(dir, '_custom_variables.scss'), variablesString);
 };
 
 export function _clearModifiedVariablesFromFile(variables, filePath) {

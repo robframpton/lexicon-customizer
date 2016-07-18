@@ -70,7 +70,12 @@ function createVariablesFile() {
 	return function (dispatch, getState) {
 		var state = getState();
 
-		sassUtil.writeCustomVariablesFile(state.get('variables'), state.get('sourceVariables'), state.get('theme')).then(function () {
+		var _state$get = state.get('lexiconDirs');
+
+		var customDir = _state$get.customDir;
+
+
+		sassUtil.writeCustomVariablesFile(state.get('variables'), state.get('sourceVariables'), customDir, state.get('theme')).then(function () {
 			dispatch(buildLexicon());
 		});
 	};
@@ -82,9 +87,9 @@ function renderPreview(component) {
 
 		var baseLexiconTheme = _lodash2.default.kebabCase(state.get('baseLexiconTheme'));
 
-		var _state$get = state.get('lexiconDirs');
+		var _state$get2 = state.get('lexiconDirs');
 
-		var customDir = _state$get.customDir;
+		var customDir = _state$get2.customDir;
 
 
 		var htmlPath = _path2.default.join(APP_PATH, 'build/html/components', _lodash2.default.snakeCase(component) + '.html');

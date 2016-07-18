@@ -98,14 +98,14 @@ function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 	});
 };
 
-function writeCustomVariablesFile(variables, sourceVariables, themePath) {
+function writeCustomVariablesFile(variables, sourceVariables, dir, themePath) {
 	var variablesString = _getModifiedVariablesString(variables, sourceVariables);
 
 	if (themePath) {
 		_writeThemeFileTask(variables, variablesString, themePath);
 	}
 
-	return _fsPromise2.default.writeFile(_path2.default.join(CWD, 'lexicon/_custom_variables.scss'), variablesString);
+	return _fsPromise2.default.writeFile(_path2.default.join(dir, '_custom_variables.scss'), variablesString);
 };
 
 function _clearModifiedVariablesFromFile(variables, filePath) {
