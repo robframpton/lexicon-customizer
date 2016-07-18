@@ -16,6 +16,10 @@ var _ComponentSideMenu = require('../containers/ComponentSideMenu');
 
 var _ComponentSideMenu2 = _interopRequireDefault(_ComponentSideMenu);
 
+var _DevTools = require('../containers/DevTools');
+
+var _DevTools2 = _interopRequireDefault(_DevTools);
+
 var _ErrorPopup = require('../components/ErrorPopup');
 
 var _ErrorPopup2 = _interopRequireDefault(_ErrorPopup);
@@ -103,7 +107,8 @@ var LexiconCustomizer = function (_Component) {
 					_react2.default.createElement(_ComponentSideMenu2.default, { header: 'Components' }),
 					lexiconPreview,
 					_react2.default.createElement(_VariablesEditor2.default, null)
-				)
+				),
+				_react2.default.createElement(_DevTools2.default, null)
 			);
 		}
 	}]);

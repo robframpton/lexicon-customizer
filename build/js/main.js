@@ -20,6 +20,10 @@ var _reactRedux = require('react-redux');
 
 var _electron = require('electron');
 
+var _DevTools = require('../js/containers/DevTools');
+
+var _DevTools2 = _interopRequireDefault(_DevTools);
+
 var _LexiconCustomizer = require('../js/containers/LexiconCustomizer');
 
 var _LexiconCustomizer2 = _interopRequireDefault(_LexiconCustomizer);
@@ -43,7 +47,15 @@ var BrowserWindow = _electron.remote.BrowserWindow;
 
 var initalState = (0, _immutable.Map)((0, _hydrate_state2.default)());
 
-var store = (0, _redux.createStore)(_index2.default, initalState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+var enhancerArgs = [(0, _redux.applyMiddleware)(_reduxThunk2.default)];
+
+if (process.env.NODE_ENV !== 'production') {
+	enhancerArgs.push(_DevTools2.default.instrument());
+}
+
+var enhancer = _redux.compose.apply(null, enhancerArgs);
+
+var store = (0, _redux.createStore)(_index2.default, initalState, enhancer);
 
 (0, _preview_popout2.default)(store);
 

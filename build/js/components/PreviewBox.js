@@ -47,7 +47,9 @@ var PreviewBox = function (_Component) {
 
 
 			if (webview && !this._webviewLoadListener) {
-				this._webviewLoadListener = webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
+				webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
+
+				this._webviewLoadListener = true;
 			}
 		}
 	}, {
@@ -55,8 +57,6 @@ var PreviewBox = function (_Component) {
 		value: function componentWillReceiveProps(_ref) {
 			var cssPath = _ref.cssPath;
 			var htmlPath = _ref.htmlPath;
-
-			this._setWebviewCssPath(cssPath);
 
 			if (htmlPath !== this.props.htmlPath) {
 				this.setState({
