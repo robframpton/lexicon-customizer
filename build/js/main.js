@@ -20,17 +20,13 @@ var _reactRedux = require('react-redux');
 
 var _electron = require('electron');
 
-var _DevTools = require('../js/containers/DevTools');
-
-var _DevTools2 = _interopRequireDefault(_DevTools);
-
-var _LexiconCustomizer = require('../js/containers/LexiconCustomizer');
-
-var _LexiconCustomizer2 = _interopRequireDefault(_LexiconCustomizer);
-
 var _index = require('../js/reducers/index');
 
 var _index2 = _interopRequireDefault(_index);
+
+var _Root = require('../js/containers/Root');
+
+var _Root2 = _interopRequireDefault(_Root);
 
 var _hydrate_state = require('../js/lib/system/hydrate_state');
 
@@ -49,8 +45,10 @@ var initalState = (0, _immutable.Map)((0, _hydrate_state2.default)());
 
 var enhancerArgs = [(0, _redux.applyMiddleware)(_reduxThunk2.default)];
 
-if (process.env.NODE_ENV !== 'production') {
-	enhancerArgs.push(_DevTools2.default.instrument());
+if (process.env.NODE_ENV === 'development') {
+	var DevTools = require('../js/containers/DevTools');
+
+	enhancerArgs.push(DevTools.default.instrument());
 }
 
 var enhancer = _redux.compose.apply(null, enhancerArgs);
@@ -63,7 +61,7 @@ var render = function render() {
 	_reactDom2.default.render(_react2.default.createElement(
 		_reactRedux.Provider,
 		{ store: store },
-		_react2.default.createElement(_LexiconCustomizer2.default, null)
+		_react2.default.createElement(_Root2.default, null)
 	), document.getElementById('main'));
 };
 

@@ -10,9 +10,8 @@ import {remote} from 'electron';
 
 const {BrowserWindow} = remote;
 
-import DevTools from '../js/containers/DevTools';
-import LexiconCustomizer from '../js/containers/LexiconCustomizer';
 import lexiconCustomizerReducer from '../js/reducers/index';
+import Root from '../js/containers/Root';
 
 import hydrateState from '../js/lib/system/hydrate_state';
 import previewPopoutSubscriber from '../js/subscribers/preview_popout';
@@ -21,8 +20,10 @@ const initalState = Map(hydrateState());
 
 let enhancerArgs = [applyMiddleware(thunk)];
 
-if (process.env.NODE_ENV !== 'production') {
-	enhancerArgs.push(DevTools.instrument());
+if (process.env.NODE_ENV === 'development') {
+	const DevTools = require('../js/containers/DevTools');
+
+	enhancerArgs.push(DevTools.default.instrument());
 }
 
 const enhancer = compose.apply(null, enhancerArgs);
@@ -38,7 +39,7 @@ previewPopoutSubscriber(store);
 const render = () => {
 	ReactDOM.render(
 		<Provider store={store}>
-			<LexiconCustomizer />
+			<Root />
 		</Provider>,
 		document.getElementById('main')
 	);

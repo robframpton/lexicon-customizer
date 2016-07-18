@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import ComponentSideMenu from '../containers/ComponentSideMenu';
-import DevTools from '../containers/DevTools';
 import ErrorPopup from '../components/ErrorPopup';
 import Header from '../components/Header';
 import LexiconPreview from '../containers/LexiconPreview';
@@ -61,8 +60,6 @@ class LexiconCustomizer extends Component {
 
 					<VariablesEditor />
 				</div>
-
-				<DevTools />
 			</div>
 		)
 	}
