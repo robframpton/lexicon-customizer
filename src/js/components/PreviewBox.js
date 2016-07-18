@@ -20,13 +20,13 @@ class PreviewBox extends Component {
 		const {webview} = this.refs;
 
 		if (webview && !this._webviewLoadListener) {
-			this._webviewLoadListener = webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
+			webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
+
+			this._webviewLoadListener = true;
 		}
 	}
 
 	componentWillReceiveProps({cssPath, htmlPath}) {
-		this._setWebviewCssPath(cssPath);
-
 		if (htmlPath !== this.props.htmlPath) {
 			this.setState({
 				previewLoading: true
