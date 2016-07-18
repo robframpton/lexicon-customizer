@@ -5,6 +5,7 @@ body, html {
   margin: 0; }
 
 body {
+  color: #555;
   font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif; }
 
 a {
@@ -84,7 +85,6 @@ input.form-control:focus {
   .lexicon-customizer-config-panel.open {
     right: 0; }
   .lexicon-customizer-config-panel .btn {
-    color: #555;
     height: auto;
     margin-top: 10px;
     position: relative;
@@ -420,7 +420,6 @@ div.container {
 .variable-input {
   position: relative; }
   .variable-input label {
-    color: #555;
     font-weight: 500;
     margin-right: 22px; }
   .variable-input .variable-input-action {
@@ -465,8 +464,6 @@ div.container {
   z-index: 1; }
   .color-picker-panel .color-picker-panel-header {
     margin: 8px 28px 0; }
-    .color-picker-panel .color-picker-panel-header .color-picker-panel-name, .color-picker-panel .color-picker-panel-header .color-picker-panel-close {
-      color: #555; }
     .color-picker-panel .color-picker-panel-header .color-picker-panel-name {
       font-weight: 500; }
     .color-picker-panel .color-picker-panel-header .color-picker-panel-close {

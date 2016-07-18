@@ -69,7 +69,6 @@
 	position: relative;
 
 	label {
-		color: #555;
 		font-weight: 500;
 		margin-right: 22px;
 	}
@@ -132,10 +131,6 @@
 
 	.color-picker-panel-header {
 		margin: 8px 28px 0;
-
-		.color-picker-panel-name, .color-picker-panel-close {
-			color: #555;
-		}
 
 		.color-picker-panel-name {
 			font-weight: 500;
