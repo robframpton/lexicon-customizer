@@ -60,17 +60,17 @@ gulp.task('build:js', () => {
 gulp.task('build:ejs', () => {
 	const relativeRootPath = '../../../';
 
-	const pathLexicon = './lexicon';
+	const lexiconPath = relativeRootPath + 'node_modules/lexicon-ux/build/';
 
 	gulp.src('src/html/templates/components/*.ejs')
 		.pipe(ejs({
-			iconSpritePath: relativeRootPath + 'lexicon/build/images/icons/icons.svg',
+			iconSpritePath: lexiconPath + 'images/icons/icons.svg',
 			imagesPath: '../../images',
-			lexiconImagesPath: relativeRootPath + 'lexicon/build/images',
+			lexiconImagesPath: lexiconPath + 'images',
 			scripts: [
 				relativeRootPath + 'bower_components/jquery/dist/jquery.js',
-				relativeRootPath + 'lexicon/build/js/bootstrap.js',
-				relativeRootPath + 'lexicon/build/js/svg4everybody.js'
+				lexiconPath + 'js/bootstrap.js',
+				lexiconPath + 'js/svg4everybody.js'
 			]
 		}))
 		.pipe(rename({

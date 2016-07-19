@@ -7,7 +7,7 @@ class Icon extends Component {
 		return (
 			<span className="lexicon-icon-wrapper" {...other}>
 				<svg className="lexicon-icon">
-					<use xlinkHref={`../../lexicon/build/images/icons/icons.svg#${icon}`} />
+					<use xlinkHref={`../../node_modules/lexicon-ux/build/images/icons/icons.svg#${icon}`} />
 				</svg>
 			</span>
 		);

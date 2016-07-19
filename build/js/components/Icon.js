@@ -45,7 +45,7 @@ var Icon = function (_Component) {
 				_react2.default.createElement(
 					"svg",
 					{ className: "lexicon-icon" },
-					_react2.default.createElement("use", { xlinkHref: "../../lexicon/build/images/icons/icons.svg#" + icon })
+					_react2.default.createElement("use", { xlinkHref: "../../node_modules/lexicon-ux/build/images/icons/icons.svg#" + icon })
 				)
 			);
 		}
