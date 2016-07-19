@@ -2,41 +2,60 @@
 
 const _ = require('lodash');
 const electron = require('electron');
+const lexicon = require('lexicon-ux');
 const path = require('path');
-
-const app = electron.app;
-
-const lexiconUtil = require('./lexicon_util');
-
-const lexiconDirs = lexiconUtil.copy(app.getPath('userData'));
 
 require('electron-debug')();
 
+const app = electron.app;
+
+const USER_DATA_PATH = app.getPath('userData');
+
+const lexiconPkg = require(path.join(lexicon.srcDir, '..', 'package.json'));
+const lexiconUtil = require('./lexicon_util');
+
+const lexiconVersion = lexiconPkg.version;
+
 const indexURL = `file://${__dirname}/build/html/index.html`;
 
+let appReady = false;
+let lexiconDirs;
 let mainWindow;
+
+lexiconUtil.downloadSassDependencies(lexiconVersion, USER_DATA_PATH, function(err, result) {
+	if (err) {
+		throw err;
+	}
+
+	lexiconDirs = result.lexicon;
+
+	lexiconDirs.bourbonIncludePaths = result.bourbon.includePaths;
+
+	createMainWindow(indexURL);
+});
 
 function onClosed() {
 	mainWindow = null;
 }
 
 function createMainWindow(url) {
-	const win = new electron.BrowserWindow({
-		//frame: false,
-		height: 800,
-		titleBarStyle: 'hidden-inset',
-		width: 1400
-	});
+	if (!mainWindow && appReady && lexiconDirs) {
+		const win = new electron.BrowserWindow({
+			height: 800,
+			titleBarStyle: 'hidden-inset',
+			width: 1400
+		});
 
-	win.loadURL(url);
+		win.loadURL(url);
 
-	win.lexicon = {
-		dirs: lexiconDirs
-	};
+		win.lexicon = {
+			dirs: lexiconDirs
+		};
 
-	win.on('closed', onClosed);
+		win.on('closed', onClosed);
 
-	return win;
+		mainWindow = win;
+	}
 }
 
 app.on('window-all-closed', () => {
@@ -46,11 +65,11 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-	if (!mainWindow) {
-		mainWindow = createMainWindow(indexURL);
-	}
+	createMainWindow(indexURL);
 });
 
 app.on('ready', () => {
-	mainWindow = createMainWindow(indexURL);
+	appReady = true;
+
+	createMainWindow(indexURL);
 });

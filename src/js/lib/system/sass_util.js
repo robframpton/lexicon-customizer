@@ -12,11 +12,7 @@ import * as varUtil from '../var_util';
 
 const CWD = remote.app.getAppPath();
 
-const PATH_BOWER_INCLUDES = path.join(CWD, 'bower_components/bourbon/app/assets/stylesheets');
-
 const PATH_CUSTOM_VARIABLES = path.join(CWD, 'lexicon/_custom_variables.scss');
-
-const PATH_LEXICON_SCSS = path.join(CWD, 'lexicon/src/scss');
 
 export function clearCustomVariablesFile(variables, themePath) {
 	if (themePath) {
@@ -33,15 +29,22 @@ export function clearModifiedVariablesFromTheme(variables, themePath) {
 export const renderLexiconBase = _.debounce(renderLexiconBaseTask, 300);
 
 export function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
-	const {customDir, srcDir} = lexiconDirs;
+	const {
+		bourbonIncludePaths,
+		customDir,
+		includePaths,
+		srcDir
+	} = lexiconDirs;
 
 	baseLexiconTheme = _.kebabCase(baseLexiconTheme);
 
 	path.join(customDir, baseLexiconTheme + '.scss')
 
+	console.log(includePaths.concat(bourbonIncludePaths));
+
 	sass.render({
 		file: path.join(customDir, baseLexiconTheme + '.scss'),
-		includePaths: [path.join(srcDir, 'scss'), PATH_BOWER_INCLUDES]
+		includePaths: includePaths.concat(bourbonIncludePaths)
 	}, function(err, result) {
 		let filePath;
 

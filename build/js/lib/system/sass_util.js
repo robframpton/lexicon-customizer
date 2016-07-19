@@ -51,11 +51,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var CWD = _electron.remote.app.getAppPath();
 
-var PATH_BOWER_INCLUDES = _path2.default.join(CWD, 'bower_components/bourbon/app/assets/stylesheets');
-
 var PATH_CUSTOM_VARIABLES = _path2.default.join(CWD, 'lexicon/_custom_variables.scss');
-
-var PATH_LEXICON_SCSS = _path2.default.join(CWD, 'lexicon/src/scss');
 
 function clearCustomVariablesFile(variables, themePath) {
 	if (themePath) {
@@ -72,7 +68,9 @@ function clearModifiedVariablesFromTheme(variables, themePath) {
 var renderLexiconBase = exports.renderLexiconBase = _lodash2.default.debounce(renderLexiconBaseTask, 300);
 
 function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
+	var bourbonIncludePaths = lexiconDirs.bourbonIncludePaths;
 	var customDir = lexiconDirs.customDir;
+	var includePaths = lexiconDirs.includePaths;
 	var srcDir = lexiconDirs.srcDir;
 
 
@@ -80,9 +78,11 @@ function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 
 	_path2.default.join(customDir, baseLexiconTheme + '.scss');
 
+	console.log(includePaths.concat(bourbonIncludePaths));
+
 	_nodeSass2.default.render({
 		file: _path2.default.join(customDir, baseLexiconTheme + '.scss'),
-		includePaths: [_path2.default.join(srcDir, 'scss'), PATH_BOWER_INCLUDES]
+		includePaths: includePaths.concat(bourbonIncludePaths)
 	}, function (err, result) {
 		var filePath = void 0;
 

@@ -1,42 +1,92 @@
 'use strict';
 
+const async = require('async');
 const fs = require('fs-extra');
-const lexicon = require('lexicon-ux');
 const path = require('path');
+const tarball = require('tarball-extract');
 
-const lexiconPkg = require(path.join(lexicon.srcDir, '..', 'package.json'));
+function downloadLexicon(version, dest, cb) {
+	const fileName = 'lexicon-ux-' + version + '.tgz';
 
-const lexiconVersion = lexiconPkg.version;
+	const downloadName = path.join(dest, fileName);
+	const tarballURL = 'https://registry.npmjs.org/lexicon-ux/-/' + fileName;
 
-function copy(dest) {
-	const buildDir = path.join(__dirname, 'lexicon', 'build');
-	const srcDir = path.join(dest, 'lexicon', lexiconVersion, 'src');
+	_downloadTarball(tarballURL, downloadName, path.join(dest, 'lexicon', version), function(err, result) {
+		const lexiconPath = resolveLexiconPath(version, dest);
 
-	const customDir = path.join(dest, 'lexicon', lexiconVersion, 'custom');
+		let pkg = require(lexiconPath);
 
-	fs.copySync(path.join(__dirname, 'lexicon/custom'), customDir);
-	fs.copySync(lexicon.buildDir, buildDir);
-	fs.copySync(lexicon.srcDir, srcDir);
+		_fixLexiconBaseMain(pkg.srcDir);
 
-	fixLexiconBaseMain(srcDir);
+		const customDir = path.join(lexiconPath, 'custom');
 
-	return {
-		buildDir: buildDir,
-		customDir: customDir,
-		srcDir: srcDir
-	};
+		fs.copySync(path.join(__dirname, 'lexicon/custom'), customDir);
+
+		pkg.customDir = customDir;
+
+		cb(err, pkg);
+	});
 };
 
-function fixLexiconBaseMain(srcDir) {
+exports.downloadLexicon = downloadLexicon;
+
+function downloadSassDependencies(version, dest, cb) {
+	async.parallel({
+		bourbon: function(cb) {
+			_downloadBourbon(dest, cb);
+		},
+		lexicon: function(cb) {
+			downloadLexicon(version, dest, cb);
+		}
+	}, cb);
+};
+
+exports.downloadSassDependencies = downloadSassDependencies;
+
+function resolveLexiconPath(version, dest) {
+	return path.join(dest, 'lexicon', version, 'package');
+};
+
+exports.resolveLexiconPath = resolveLexiconPath;
+
+function _downloadBourbon(dest, cb) {
+	const fileName = 'bourbon-4.2.7.tgz';
+
+	const downloadName = path.join(dest, fileName);
+	const tarballURL = 'https://registry.npmjs.org/bourbon/-/' + fileName;
+
+	_downloadTarball(tarballURL, downloadName, path.join(dest, 'bourbon'), function(err, result) {
+		const pkg = require(path.join(result.destination, 'package'));
+
+		result.includePaths = pkg.includePaths;
+
+		cb(err, result);
+	});
+};
+
+function _fixLexiconBaseMain(srcDir) {
 	const filePath = path.join(srcDir, 'scss/lexicon-base/main.scss');
 
 	let fileContent = fs.readFileSync(filePath, {
 		encoding: 'utf8'
 	});
 
+	if (/variables/.test(fileContent)) {
+		return;
+	}
+
 	fileContent = fileContent.replace('@import "mixins";', '@import "variables";\n@import "mixins";');
 
 	fs.writeFileSync(filePath, fileContent);
 };
 
-module.exports.copy = copy;
+function _downloadTarball(url, fileDestination, extractionDestination, cb) {
+	try {
+		const pkg = require(path.join(extractionDestination, 'package'));
+
+		cb(null, pkg);
+	}
+	catch (err) {
+		tarball.extractTarballDownload(url, fileDestination, extractionDestination, {}, cb);
+	}
+}
