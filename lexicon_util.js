@@ -11,22 +11,26 @@ function downloadLexicon(version, dest, cb) {
 	const downloadName = path.join(dest, fileName);
 	const tarballURL = 'https://registry.npmjs.org/lexicon-ux/-/' + fileName;
 
-	_downloadTarball(tarballURL, downloadName, path.join(dest, 'lexicon', version), function(err, result) {
+	_downloadTarball(tarballURL, downloadName, path.join(dest, 'lexicon', version), function(err, pkg) {
 		const lexiconPath = resolveLexiconPath(version, dest);
-
-		let pkg = require(lexiconPath);
 
 		_fixLexiconBaseMain(pkg.srcDir);
 
 		const customDir = path.join(lexiconPath, 'custom');
 
-		fs.copySync(path.join(__dirname, 'lexicon/custom'), customDir);
+		try {
+			fs.copySync(path.join(__dirname, 'lexicon/custom'), customDir, {
+				clobber: true
+			});
+		}
+		catch (err) {
+		}
 
 		pkg.customDir = customDir;
 
 		cb(err, pkg);
 	});
-};
+}
 
 exports.downloadLexicon = downloadLexicon;
 
@@ -39,13 +43,13 @@ function downloadSassDependencies(version, dest, cb) {
 			downloadLexicon(version, dest, cb);
 		}
 	}, cb);
-};
+}
 
 exports.downloadSassDependencies = downloadSassDependencies;
 
 function resolveLexiconPath(version, dest) {
 	return path.join(dest, 'lexicon', version, 'package');
-};
+}
 
 exports.resolveLexiconPath = resolveLexiconPath;
 
@@ -55,14 +59,25 @@ function _downloadBourbon(dest, cb) {
 	const downloadName = path.join(dest, fileName);
 	const tarballURL = 'https://registry.npmjs.org/bourbon/-/' + fileName;
 
-	_downloadTarball(tarballURL, downloadName, path.join(dest, 'bourbon'), function(err, result) {
-		const pkg = require(path.join(result.destination, 'package'));
+	_downloadTarball(tarballURL, downloadName, path.join(dest, 'bourbon'), cb);
+}
 
-		result.includePaths = pkg.includePaths;
+function _downloadTarball(url, fileDestination, extractionDestination, cb) {
+	const pkgPath = path.join(extractionDestination, 'package');
 
-		cb(err, result);
-	});
-};
+	try {
+		const pkg = require(pkgPath);
+
+		cb(null, pkg);
+	}
+	catch (err) {
+		tarball.extractTarballDownload(url, fileDestination, extractionDestination, {}, function(err, result) {
+			const pkg = require(pkgPath);
+
+			cb(err, pkg);
+		});
+	}
+}
 
 function _fixLexiconBaseMain(srcDir) {
 	const filePath = path.join(srcDir, 'scss/lexicon-base/main.scss');
@@ -78,15 +93,4 @@ function _fixLexiconBaseMain(srcDir) {
 	fileContent = fileContent.replace('@import "mixins";', '@import "variables";\n@import "mixins";');
 
 	fs.writeFileSync(filePath, fileContent);
-};
-
-function _downloadTarball(url, fileDestination, extractionDestination, cb) {
-	try {
-		const pkg = require(path.join(extractionDestination, 'package'));
-
-		cb(null, pkg);
-	}
-	catch (err) {
-		tarball.extractTarballDownload(url, fileDestination, extractionDestination, {}, cb);
-	}
 }
