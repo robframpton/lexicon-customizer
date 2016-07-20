@@ -2,6 +2,7 @@
 
 const babel = require('gulp-babel');
 const del = require('del');
+const download = require('gulp-download');
 const ejs = require('gulp-ejs');
 const gulp = require('gulp');
 const path = require('path');
@@ -25,6 +26,7 @@ gulp.task('build', (cb) => {
 		'build:js',
 		'build:js:resources',
 		'build:ejs',
+		'cache-tarballs',
 		cb
 	);
 });
@@ -82,6 +84,18 @@ gulp.task('build:ejs', () => {
 gulp.task('build:js:resources', () => {
 	return gulp.src('src/js/**/*.!(js)')
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
+});
+
+gulp.task('cache-tarballs', () => {
+	const lexiconPkg = require(path.join(require.resolve('lexicon-ux'), '..', 'package.json'));
+
+	const resources = [
+		'https://registry.npmjs.org/bourbon/-/bourbon-4.2.7.tgz',
+		'https://registry.npmjs.org/lexicon-ux/-/lexicon-ux-' + lexiconPkg.version + '.tgz'
+	];
+
+	return download(resources)
+		.pipe(gulp.dest('tarballs'));
 });
 
 gulp.task('watch', () => {

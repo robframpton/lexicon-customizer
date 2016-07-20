@@ -71,11 +71,33 @@ function _downloadTarball(url, fileDestination, extractionDestination, cb) {
 		cb(null, pkg);
 	}
 	catch (err) {
-		tarball.extractTarballDownload(url, fileDestination, extractionDestination, {}, function(err, result) {
-			const pkg = require(pkgPath);
+		async.waterfall([
+			function(cb) {
+				const fileName = path.basename(fileDestination);
 
-			cb(err, pkg);
-		});
+				tarball.extractTarball(path.join('./tarballs', fileName), extractionDestination, function(err) {
+					let pkg;
+
+					if (!err) {
+						pkg = require(pkgPath);
+					}
+
+					cb(null, pkg);
+				});
+			},
+			function(pkg, cb) {
+				if (pkg) {
+					cb(null, pkg);
+				}
+				else {
+					tarball.extractTarballDownload(url, fileDestination, extractionDestination, {}, function(err, result) {
+						const pkg = require(pkgPath);
+
+						cb(err, pkg);
+					});
+				}
+			}
+		], cb);
 	}
 }
 

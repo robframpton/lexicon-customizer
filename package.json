@@ -60,6 +60,7 @@
     "electron-prebuilt": "^1.2.5",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
+    "gulp-download": "0.0.1",
     "gulp-ejs": "^2.0.0",
     "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
