@@ -4,11 +4,13 @@
 
 **Note: lexicon-customizer is in development and is not ready for use.**
 
-### Dev
+### Install
 
 ```
 $ npm install
+
 $ bower install
+
 $ gulp build
 ```
 
@@ -17,14 +19,21 @@ $ gulp build
 ```
 $ npm start
 ```
+Or with `redux-devtools`.
 
-### Build
+```
+$ npm run dev
+```
+
+### Build an `electron` release
 
 ```
 $ npm run build
 ```
 
 Builds the app for OS X, Linux, and Windows, using [electron-packager](https://github.com/maxogden/electron-packager).
+
+> Note: due to the use of native modules (such as node-sass), releases must be built in their native environment.
 
 ## License
 
