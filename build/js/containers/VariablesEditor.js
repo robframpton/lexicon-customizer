@@ -191,8 +191,14 @@ var VariablesEditor = function (_Component) {
 	}, {
 		key: '_handleColorPickerTriggerClick',
 		value: function _handleColorPickerTriggerClick(name) {
-			var dispatch = this.props.dispatch;
+			var _props2 = this.props;
+			var colorVariableName = _props2.colorVariableName;
+			var dispatch = _props2.dispatch;
 
+
+			if (colorVariableName === name) {
+				name = null;
+			}
 
 			dispatch((0, _colorVariableName.setColorVariableName)(name));
 		}

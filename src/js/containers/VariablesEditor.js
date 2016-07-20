@@ -131,7 +131,11 @@ class VariablesEditor extends Component {
 	}
 
 	_handleColorPickerTriggerClick(name) {
-		const {dispatch} = this.props;
+		const {colorVariableName, dispatch} = this.props;
+
+		if (colorVariableName === name) {
+			name = null;
+		}
 
 		dispatch(setColorVariableName(name));
 	}
