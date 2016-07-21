@@ -15,8 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "babel": "*",
-    "bourbon": "~4.2.6",
     "bootstrap": "~3.3.6"
   }
 }
