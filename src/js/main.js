@@ -12,6 +12,7 @@ const {BrowserWindow} = remote;
 
 import lexiconCustomizerReducer from '../js/reducers/index';
 import Root from '../js/containers/Root';
+import {buildLexicon} from '../js/actions/index';
 
 import hydrateState from '../js/lib/system/hydrate_state';
 import previewPopoutSubscriber from '../js/subscribers/preview_popout';
@@ -35,6 +36,8 @@ const store = createStore(
 );
 
 previewPopoutSubscriber(store);
+
+store.dispatch(buildLexicon());
 
 const render = () => {
 	ReactDOM.render(

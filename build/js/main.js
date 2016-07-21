@@ -28,6 +28,8 @@ var _Root = require('../js/containers/Root');
 
 var _Root2 = _interopRequireDefault(_Root);
 
+var _index3 = require('../js/actions/index');
+
 var _hydrate_state = require('../js/lib/system/hydrate_state');
 
 var _hydrate_state2 = _interopRequireDefault(_hydrate_state);
@@ -56,6 +58,8 @@ var enhancer = _redux.compose.apply(null, enhancerArgs);
 var store = (0, _redux.createStore)(_index2.default, initalState, enhancer);
 
 (0, _preview_popout2.default)(store);
+
+store.dispatch((0, _index3.buildLexicon)());
 
 var render = function render() {
 	_reactDom2.default.render(_react2.default.createElement(
