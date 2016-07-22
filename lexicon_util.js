@@ -75,7 +75,7 @@ function _downloadTarball(url, fileDestination, extractionDestination, cb) {
 			function(cb) {
 				const fileName = path.basename(fileDestination);
 
-				tarball.extractTarball(path.join('./tarballs', fileName), extractionDestination, function(err) {
+				tarball.extractTarball(path.join(__dirname, 'tarballs', fileName), extractionDestination, function(err) {
 					let pkg;
 
 					if (!err) {
