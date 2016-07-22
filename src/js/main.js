@@ -10,12 +10,12 @@ import {remote} from 'electron';
 
 const {BrowserWindow} = remote;
 
+import hydrateState from '../js/lib/system/hydrate_state';
+import initMenu from '../js/lib/init_menu';
 import lexiconCustomizerReducer from '../js/reducers/index';
+import previewPopoutSubscriber from '../js/subscribers/preview_popout';
 import Root from '../js/containers/Root';
 import {buildLexicon} from '../js/actions/index';
-
-import hydrateState from '../js/lib/system/hydrate_state';
-import previewPopoutSubscriber from '../js/subscribers/preview_popout';
 
 const initalState = Map(hydrateState());
 
@@ -36,6 +36,8 @@ const store = createStore(
 );
 
 previewPopoutSubscriber(store);
+
+initMenu(store);
 
 store.dispatch(buildLexicon());
 

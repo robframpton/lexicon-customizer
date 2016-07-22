@@ -20,23 +20,27 @@ var _reactRedux = require('react-redux');
 
 var _electron = require('electron');
 
+var _hydrate_state = require('../js/lib/system/hydrate_state');
+
+var _hydrate_state2 = _interopRequireDefault(_hydrate_state);
+
+var _init_menu = require('../js/lib/init_menu');
+
+var _init_menu2 = _interopRequireDefault(_init_menu);
+
 var _index = require('../js/reducers/index');
 
 var _index2 = _interopRequireDefault(_index);
+
+var _preview_popout = require('../js/subscribers/preview_popout');
+
+var _preview_popout2 = _interopRequireDefault(_preview_popout);
 
 var _Root = require('../js/containers/Root');
 
 var _Root2 = _interopRequireDefault(_Root);
 
 var _index3 = require('../js/actions/index');
-
-var _hydrate_state = require('../js/lib/system/hydrate_state');
-
-var _hydrate_state2 = _interopRequireDefault(_hydrate_state);
-
-var _preview_popout = require('../js/subscribers/preview_popout');
-
-var _preview_popout2 = _interopRequireDefault(_preview_popout);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58,6 +62,8 @@ var enhancer = _redux.compose.apply(null, enhancerArgs);
 var store = (0, _redux.createStore)(_index2.default, initalState, enhancer);
 
 (0, _preview_popout2.default)(store);
+
+(0, _init_menu2.default)(store);
 
 store.dispatch((0, _index3.buildLexicon)());
 
