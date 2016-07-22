@@ -66,7 +66,7 @@ function resetVariables() {
 
 		dispatch(overwriteVariables(state.get('sourceVariables')));
 
-		sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('theme')).then(function () {
+		sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('lexiconDirs').customDir, state.get('theme')).then(function () {
 			dispatch((0, _index.buildLexicon)());
 		});
 	};

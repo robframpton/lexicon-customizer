@@ -12,14 +12,12 @@ import * as varUtil from '../var_util';
 
 const CWD = remote.app.getAppPath();
 
-const PATH_CUSTOM_VARIABLES = path.join(CWD, 'lexicon/_custom_variables.scss');
-
-export function clearCustomVariablesFile(variables, themePath) {
+export function clearCustomVariablesFile(variables, customDir, themePath) {
 	if (themePath) {
 		clearModifiedVariablesFromTheme(variables, themePath);
 	}
 
-	return fsp.writeFile(PATH_CUSTOM_VARIABLES, '');
+	return fsp.writeFile(path.join(customDir, '_custom_variables.scss'), '');
 };
 
 export function clearModifiedVariablesFromTheme(variables, themePath) {

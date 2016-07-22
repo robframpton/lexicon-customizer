@@ -51,14 +51,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var CWD = _electron.remote.app.getAppPath();
 
-var PATH_CUSTOM_VARIABLES = _path2.default.join(CWD, 'lexicon/_custom_variables.scss');
-
-function clearCustomVariablesFile(variables, themePath) {
+function clearCustomVariablesFile(variables, customDir, themePath) {
 	if (themePath) {
 		clearModifiedVariablesFromTheme(variables, themePath);
 	}
 
-	return _fsPromise2.default.writeFile(PATH_CUSTOM_VARIABLES, '');
+	return _fsPromise2.default.writeFile(_path2.default.join(customDir, '_custom_variables.scss'), '');
 };
 
 function clearModifiedVariablesFromTheme(variables, themePath) {
