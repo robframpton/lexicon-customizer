@@ -28,7 +28,7 @@ export function createPreviewPopout() {
 
 export function destroyPreviewPopout() {
 	return function(dispatch, getState) {
-		const {previewPopout} = getState();
+		const previewPopout = getState().get('previewPopout');
 
 		if (previewPopout) {
 			previewPopout.destroy();
@@ -42,5 +42,18 @@ export function setPreviewPopout(previewPopout) {
 	return {
 		previewPopout,
 		type: 'SET_PREVIEW_POPOUT'
+	}
+};
+
+export function togglePreviewPopout() {
+	return function(dispatch, getState) {
+		const previewPopout = getState().get('previewPopout');
+
+		if (previewPopout) {
+			dispatch(destroyPreviewPopout());
+		}
+		else {
+			dispatch(createPreviewPopout());
+		}
 	}
 };

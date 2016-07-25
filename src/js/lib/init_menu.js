@@ -2,8 +2,9 @@
 
 import {remote} from 'electron';
 
-import {createPreviewPopout} from '../actions/previewPopout';
 import {resetComponentVariables, resetVariables} from '../actions/variables';
+import {toggleDevTools} from '../actions/preview';
+import {togglePreviewPopout} from '../actions/previewPopout';
 
 const {Menu, MenuItem} = remote;
 
@@ -117,19 +118,15 @@ function initMenu(store) {
 		label: 'Preview',
 		submenu: [
 			{
-				label: 'Toggle Developer Tool',
+				label: 'Toggle Developer Tools',
 				click() {
-					let webview = document.getElementById('webview');
-
-					if (webview) {
-						webview.openDevTools();
-					}
+					store.dispatch(toggleDevTools());
 				}
 			},
 			{
-				label: 'Popout Preview',
+				label: 'Toggle Popout Preview',
 				click() {
-					store.dispatch(createPreviewPopout());
+					store.dispatch(togglePreviewPopout());
 				}
 			}
 		]

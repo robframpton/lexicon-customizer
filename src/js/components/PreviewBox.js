@@ -16,6 +16,20 @@ class PreviewBox extends Component {
 		this.state = state;
 	}
 
+	componentDidMount() {
+		const {devToolsOpen} = this.props;
+
+		const toggleDevTools = this.toggleDevTools.bind(this);
+
+		setTimeout(() => {
+			const {webview} = this.refs;
+
+			webview.addEventListener('dom-ready', () => {
+				toggleDevTools(devToolsOpen);
+			});
+		}, 100)
+	}
+
 	componentDidUpdate() {
 		const {webview} = this.refs;
 
@@ -26,13 +40,17 @@ class PreviewBox extends Component {
 		}
 	}
 
-	componentWillReceiveProps({cssPath, htmlPath}) {
+	componentWillReceiveProps({cssPath, htmlPath, devToolsOpen}) {
 		this._setWebviewCssPath(cssPath);
 
 		if (htmlPath !== this.props.htmlPath) {
 			this.setState({
 				previewLoading: true
 			});
+		}
+
+		if (devToolsOpen !== this.props.devToolsOpen) {
+			this.toggleDevTools(devToolsOpen);
 		}
 	}
 
@@ -94,6 +112,19 @@ class PreviewBox extends Component {
 		);
 	}
 
+	toggleDevTools(show) {
+		const {webview} = this.refs;
+
+		if (webview) {
+			if (show) {
+				webview.openDevTools();
+			}
+			else {
+				webview.closeDevTools();
+			}
+		}
+	}
+
 	_setWebviewCssPath(cssPath) {
 		let scriptString = `
 			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
@@ -113,7 +144,8 @@ class PreviewBox extends Component {
 PreviewBox.propTypes = {
 	cssPath: PropTypes.string,
 	didStopLoading: PropTypes.func,
-	htmlPath:  PropTypes.string
+	htmlPath:  PropTypes.string,
+	devToolsOpen: PropTypes.bool
 };
 
 export default PreviewBox;

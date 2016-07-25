@@ -41,6 +41,25 @@ var PreviewBox = function (_Component) {
 	}
 
 	_createClass(PreviewBox, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			var devToolsOpen = this.props.devToolsOpen;
+
+
+			var toggleDevTools = this.toggleDevTools.bind(this);
+
+			setTimeout(function () {
+				var webview = _this2.refs.webview;
+
+
+				webview.addEventListener('dom-ready', function () {
+					toggleDevTools(devToolsOpen);
+				});
+			}, 100);
+		}
+	}, {
 		key: 'componentDidUpdate',
 		value: function componentDidUpdate() {
 			var webview = this.refs.webview;
@@ -57,6 +76,7 @@ var PreviewBox = function (_Component) {
 		value: function componentWillReceiveProps(_ref) {
 			var cssPath = _ref.cssPath;
 			var htmlPath = _ref.htmlPath;
+			var devToolsOpen = _ref.devToolsOpen;
 
 			this._setWebviewCssPath(cssPath);
 
@@ -64,6 +84,10 @@ var PreviewBox = function (_Component) {
 				this.setState({
 					previewLoading: true
 				});
+			}
+
+			if (devToolsOpen !== this.props.devToolsOpen) {
+				this.toggleDevTools(devToolsOpen);
 			}
 		}
 	}, {
@@ -134,6 +158,20 @@ var PreviewBox = function (_Component) {
 			});
 		}
 	}, {
+		key: 'toggleDevTools',
+		value: function toggleDevTools(show) {
+			var webview = this.refs.webview;
+
+
+			if (webview) {
+				if (show) {
+					webview.openDevTools();
+				} else {
+					webview.closeDevTools();
+				}
+			}
+		}
+	}, {
 		key: '_setWebviewCssPath',
 		value: function _setWebviewCssPath(cssPath) {
 			var scriptString = '\n\t\t\tvar lexiconStylesheetLink = document.getElementById(\'lexiconStylesheetLink\');\n\t\t\tvar lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute(\'href\');\n\n\t\t\tif (lexiconStylesheetLinkHREF != \'' + cssPath + '\') {\n\t\t\t\tlexiconStylesheetLink.setAttribute(\'href\', \'' + cssPath + '\')\n\t\t\t};\n\t\t';
@@ -152,7 +190,8 @@ var PreviewBox = function (_Component) {
 PreviewBox.propTypes = {
 	cssPath: _react.PropTypes.string,
 	didStopLoading: _react.PropTypes.func,
-	htmlPath: _react.PropTypes.string
+	htmlPath: _react.PropTypes.string,
+	devToolsOpen: _react.PropTypes.bool
 };
 
 exports.default = PreviewBox;

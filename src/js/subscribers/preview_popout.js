@@ -34,10 +34,11 @@ export default function previewPopoutSubscriber(store) {
 };
 
 export function getPreviewDataFromState(state) {
-	const {cssPath, htmlPath} = state.get('preview');
+	const {cssPath, htmlPath, devToolsOpen} = state.get('preview');
 
 	return {
 		cssPath,
+		devToolsOpen,
 		htmlPath
 	};
 };

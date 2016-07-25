@@ -64,7 +64,7 @@ export function renderPreview(component) {
 
 		dispatch({
 			preview,
-			type: 'CREATE_PREVIEW'
+			type: 'SET_PREVIEW'
 		});
 	};
 };

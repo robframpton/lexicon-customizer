@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _electron = require('electron');
 
-var _previewPopout = require('../actions/previewPopout');
-
 var _variables = require('../actions/variables');
+
+var _preview = require('../actions/preview');
+
+var _previewPopout = require('../actions/previewPopout');
 
 var Menu = _electron.remote.Menu;
 var MenuItem = _electron.remote.MenuItem;
@@ -102,18 +104,14 @@ function initMenu(store) {
 	var previewTemplate = {
 		label: 'Preview',
 		submenu: [{
-			label: 'Toggle Developer Tool',
+			label: 'Toggle Developer Tools',
 			click: function click() {
-				var webview = document.getElementById('webview');
-
-				if (webview) {
-					webview.openDevTools();
-				}
+				store.dispatch((0, _preview.toggleDevTools)());
 			}
 		}, {
-			label: 'Popout Preview',
+			label: 'Toggle Popout Preview',
 			click: function click() {
-				store.dispatch((0, _previewPopout.createPreviewPopout)());
+				store.dispatch((0, _previewPopout.togglePreviewPopout)());
 			}
 		}]
 	};

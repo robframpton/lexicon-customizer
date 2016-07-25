@@ -52,10 +52,12 @@ function getPreviewDataFromState(state) {
 
 	var cssPath = _state$get.cssPath;
 	var htmlPath = _state$get.htmlPath;
+	var devToolsOpen = _state$get.devToolsOpen;
 
 
 	return {
 		cssPath: cssPath,
+		devToolsOpen: devToolsOpen,
 		htmlPath: htmlPath
 	};
 };

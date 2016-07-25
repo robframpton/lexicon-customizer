@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.createPreviewPopout = createPreviewPopout;
 exports.destroyPreviewPopout = destroyPreviewPopout;
 exports.setPreviewPopout = setPreviewPopout;
+exports.togglePreviewPopout = togglePreviewPopout;
 
 var _electron = require('electron');
 
@@ -39,10 +40,7 @@ function createPreviewPopout() {
 
 function destroyPreviewPopout() {
 	return function (dispatch, getState) {
-		var _getState = getState();
-
-		var previewPopout = _getState.previewPopout;
-
+		var previewPopout = getState().get('previewPopout');
 
 		if (previewPopout) {
 			previewPopout.destroy();
@@ -56,5 +54,17 @@ function setPreviewPopout(previewPopout) {
 	return {
 		previewPopout: previewPopout,
 		type: 'SET_PREVIEW_POPOUT'
+	};
+};
+
+function togglePreviewPopout() {
+	return function (dispatch, getState) {
+		var previewPopout = getState().get('previewPopout');
+
+		if (previewPopout) {
+			dispatch(destroyPreviewPopout());
+		} else {
+			dispatch(createPreviewPopout());
+		}
 	};
 };

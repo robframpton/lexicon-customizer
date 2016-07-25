@@ -4,11 +4,12 @@ import {connect} from 'react-redux';
 import PreviewBox from '../components/PreviewBox';
 
 const mapStateToProps = (state, ownProps) => {
-	const {cssPath, htmlPath} = state.get('preview');
+	const {cssPath, htmlPath, devToolsOpen} = state.get('preview');
 
 	return {
 		cssPath,
-		htmlPath
+		htmlPath,
+		devToolsOpen
 	};
 };
 

@@ -102,7 +102,7 @@ function renderPreview(component) {
 
 		dispatch({
 			preview: preview,
-			type: 'CREATE_PREVIEW'
+			type: 'SET_PREVIEW'
 		});
 	};
 };
