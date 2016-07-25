@@ -14,6 +14,8 @@ var _PreviewBox = require('../components/PreviewBox');
 
 var _PreviewBox2 = _interopRequireDefault(_PreviewBox);
 
+var _preview = require('../actions/preview');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
@@ -31,4 +33,12 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 	};
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(_PreviewBox2.default);
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	return {
+		devToolsClosed: function devToolsClosed() {
+			dispatch((0, _preview.toggleDevTools)(false));
+		}
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_PreviewBox2.default);

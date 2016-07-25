@@ -14,6 +14,8 @@ class PreviewBox extends Component {
 		}
 
 		this.state = state;
+
+		this.selfClose = false;
 	}
 
 	componentDidMount() {
@@ -33,10 +35,11 @@ class PreviewBox extends Component {
 	componentDidUpdate() {
 		const {webview} = this.refs;
 
-		if (webview && !this._webviewLoadListener) {
+		if (webview && !this._hasListeners) {
+			webview.addEventListener('devtools-closed', this.handleDevToolsClosed.bind(this));
 			webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
 
-			this._webviewLoadListener = true;
+			this._hasListeners = true;
 		}
 	}
 
@@ -51,6 +54,17 @@ class PreviewBox extends Component {
 
 		if (devToolsOpen !== this.props.devToolsOpen) {
 			this.toggleDevTools(devToolsOpen);
+		}
+	}
+
+	handleDevToolsClosed(event) {
+		const {devToolsClosed} = this.props;
+
+		if (devToolsClosed && !this.selfClose) {
+			devToolsClosed();
+		}
+		else {
+			this.selfClose = false;
 		}
 	}
 
@@ -120,6 +134,8 @@ class PreviewBox extends Component {
 				webview.openDevTools();
 			}
 			else {
+				this.selfClose = true;
+
 				webview.closeDevTools();
 			}
 		}

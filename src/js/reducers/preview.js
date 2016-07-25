@@ -5,10 +5,18 @@ const actionHandlers = {
 		return preview;
 	},
 
+	SET_PREVIEW_PATHS: (state, {preview}) => {
+		return Object.assign({}, state, preview);
+	},
+
 	TOGGLE_DEV_TOOLS: (state) => {
-		const {devToolsOpen} = state;
+		const {devToolsOpen, force} = state;
 
 		state.devToolsOpen = !devToolsOpen;
+
+		if (force !== undefined) {
+			state.devToolsOpen = force;
+		}
 
 		return Object.assign({}, state);
 	}

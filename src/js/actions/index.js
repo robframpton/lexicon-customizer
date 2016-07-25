@@ -7,9 +7,9 @@ import * as sassUtil from '../lib/system/sass_util';
 import * as varUtil from '../lib/var_util';
 import UserConfig from '../lib/system/user_config';
 import {isTheme} from '../lib/system/theme';
-
 import {overwriteSourceVariables} from './sourceVariables';
 import {overwriteVariables} from './variables';
+import {setPreviewPaths} from './preview';
 import {showSassError} from './sassError';
 
 const APP_PATH = remote.app.getAppPath();
@@ -57,14 +57,6 @@ export function renderPreview(component) {
 		const htmlPath = path.join(APP_PATH, 'build/html/components', _.snakeCase(component) + '.html');
 		const cssPath = path.join(customDir, baseLexiconTheme + '.css?t=' + Date.now());
 
-		const preview = {
-			cssPath,
-			htmlPath
-		};
-
-		dispatch({
-			preview,
-			type: 'SET_PREVIEW'
-		});
+		dispatch(setPreviewPaths(cssPath, htmlPath));
 	};
 };

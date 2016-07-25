@@ -76,8 +76,6 @@ function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 
 	_path2.default.join(customDir, baseLexiconTheme + '.scss');
 
-	console.log(includePaths.concat(bourbonIncludePaths));
-
 	_nodeSass2.default.render({
 		file: _path2.default.join(customDir, baseLexiconTheme + '.scss'),
 		includePaths: includePaths.concat(bourbonIncludePaths)

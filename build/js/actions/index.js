@@ -39,6 +39,8 @@ var _sourceVariables = require('./sourceVariables');
 
 var _variables = require('./variables');
 
+var _preview = require('./preview');
+
 var _sassError = require('./sassError');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -95,14 +97,6 @@ function renderPreview(component) {
 		var htmlPath = _path2.default.join(APP_PATH, 'build/html/components', _lodash2.default.snakeCase(component) + '.html');
 		var cssPath = _path2.default.join(customDir, baseLexiconTheme + '.css?t=' + Date.now());
 
-		var preview = {
-			cssPath: cssPath,
-			htmlPath: htmlPath
-		};
-
-		dispatch({
-			preview: preview,
-			type: 'SET_PREVIEW'
-		});
+		dispatch((0, _preview.setPreviewPaths)(cssPath, htmlPath));
 	};
 };

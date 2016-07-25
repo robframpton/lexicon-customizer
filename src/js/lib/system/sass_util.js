@@ -38,8 +38,6 @@ export function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 
 	path.join(customDir, baseLexiconTheme + '.scss')
 
-	console.log(includePaths.concat(bourbonIncludePaths));
-
 	sass.render({
 		file: path.join(customDir, baseLexiconTheme + '.scss'),
 		includePaths: includePaths.concat(bourbonIncludePaths)

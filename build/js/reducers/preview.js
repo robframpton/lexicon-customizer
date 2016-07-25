@@ -13,11 +13,22 @@ var actionHandlers = {
 		return preview;
 	},
 
+	SET_PREVIEW_PATHS: function SET_PREVIEW_PATHS(state, _ref2) {
+		var preview = _ref2.preview;
+
+		return Object.assign({}, state, preview);
+	},
+
 	TOGGLE_DEV_TOOLS: function TOGGLE_DEV_TOOLS(state) {
 		var devToolsOpen = state.devToolsOpen;
+		var force = state.force;
 
 
 		state.devToolsOpen = !devToolsOpen;
+
+		if (force !== undefined) {
+			state.devToolsOpen = force;
+		}
 
 		return Object.assign({}, state);
 	}

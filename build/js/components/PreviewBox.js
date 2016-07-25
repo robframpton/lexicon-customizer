@@ -37,6 +37,8 @@ var PreviewBox = function (_Component) {
 		}
 
 		_this.state = state;
+
+		_this.selfClose = false;
 		return _this;
 	}
 
@@ -65,10 +67,11 @@ var PreviewBox = function (_Component) {
 			var webview = this.refs.webview;
 
 
-			if (webview && !this._webviewLoadListener) {
+			if (webview && !this._hasListeners) {
+				webview.addEventListener('devtools-closed', this.handleDevToolsClosed.bind(this));
 				webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
 
-				this._webviewLoadListener = true;
+				this._hasListeners = true;
 			}
 		}
 	}, {
@@ -88,6 +91,18 @@ var PreviewBox = function (_Component) {
 
 			if (devToolsOpen !== this.props.devToolsOpen) {
 				this.toggleDevTools(devToolsOpen);
+			}
+		}
+	}, {
+		key: 'handleDevToolsClosed',
+		value: function handleDevToolsClosed(event) {
+			var devToolsClosed = this.props.devToolsClosed;
+
+
+			if (devToolsClosed && !this.selfClose) {
+				devToolsClosed();
+			} else {
+				this.selfClose = false;
 			}
 		}
 	}, {
@@ -167,6 +182,8 @@ var PreviewBox = function (_Component) {
 				if (show) {
 					webview.openDevTools();
 				} else {
+					this.selfClose = true;
+
 					webview.closeDevTools();
 				}
 			}
