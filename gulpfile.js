@@ -66,13 +66,10 @@ gulp.task('build:ejs', () => {
 
 	gulp.src('src/html/templates/components/*.ejs')
 		.pipe(ejs({
-			iconSpritePath: lexiconPath + 'images/icons/icons.svg',
-			imagesPath: '../../images',
-			lexiconImagesPath: lexiconPath + 'images',
 			scripts: [
-				relativeRootPath + 'bower_components/jquery/dist/jquery.js',
-				lexiconPath + 'js/bootstrap.js',
-				lexiconPath + 'js/svg4everybody.js'
+				'${appPath}/bower_components/jquery/dist/jquery.js',
+				'${lexiconPath}/js/bootstrap.js',
+				'${lexiconPath}/js/svg4everybody.js'
 			]
 		}))
 		.pipe(rename({

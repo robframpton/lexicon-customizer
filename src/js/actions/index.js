@@ -2,19 +2,12 @@ import _ from 'lodash';
 import path from 'path';
 import {remote} from 'electron';
 
-import * as componentScraper from '../lib/system/component_scraper';
 import * as sassUtil from '../lib/system/sass_util';
-import * as varUtil from '../lib/var_util';
-import UserConfig from '../lib/system/user_config';
-import {isTheme} from '../lib/system/theme';
-import {overwriteSourceVariables} from './sourceVariables';
-import {overwriteVariables} from './variables';
+import createPreview from '../lib/system/create_preview';
 import {setPreviewPaths} from './preview';
 import {showSassError} from './sassError';
 
 const APP_PATH = remote.app.getAppPath();
-
-const userConfig = new UserConfig();
 
 export function buildLexicon() {
 	return function(dispatch, getState) {
@@ -54,8 +47,9 @@ export function renderPreview(component) {
 		const baseLexiconTheme = _.kebabCase(state.get('baseLexiconTheme'));
 		const {customDir} = state.get('lexiconDirs');
 
-		const htmlPath = path.join(APP_PATH, 'build/html/components', _.snakeCase(component) + '.html');
 		const cssPath = path.join(customDir, baseLexiconTheme + '.css?t=' + Date.now());
+
+		const htmlPath = createPreview(_.snakeCase(component), cssPath);
 
 		dispatch(setPreviewPaths(cssPath, htmlPath));
 	};
