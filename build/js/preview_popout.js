@@ -1,5 +1,7 @@
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _electron = require('electron');
@@ -46,11 +48,20 @@ var LexiconPopoutPreview = function (_Component) {
 			_electron.ipcRenderer.on('preview-data', this.handlePreviewData.bind(this));
 
 			parentWindow.send('request-preview-data');
+
+			this.parentWindow = parentWindow;
 		}
 	}, {
 		key: 'render',
 		value: function render() {
-			return _react2.default.createElement(_PreviewBox2.default, this.state);
+			return _react2.default.createElement(_PreviewBox2.default, _extends({
+				devToolsClosed: this.handleDevToolsClosed.bind(this)
+			}, this.state));
+		}
+	}, {
+		key: 'handleDevToolsClosed',
+		value: function handleDevToolsClosed(event) {
+			this.parentWindow.send('devtools-open', false);
 		}
 	}, {
 		key: 'handlePreviewData',

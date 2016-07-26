@@ -47,8 +47,7 @@ var PreviewBox = function (_Component) {
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			var devToolsOpen = this.props.devToolsOpen;
-
+			var instance = this;
 
 			var toggleDevTools = this.toggleDevTools.bind(this);
 
@@ -57,9 +56,12 @@ var PreviewBox = function (_Component) {
 
 
 				webview.addEventListener('dom-ready', function () {
+					var devToolsOpen = instance.props.devToolsOpen;
+
+
 					toggleDevTools(devToolsOpen);
 				});
-			}, 100);
+			}, 0);
 		}
 	}, {
 		key: 'componentDidUpdate',
@@ -69,6 +71,7 @@ var PreviewBox = function (_Component) {
 
 			if (webview && !this._hasListeners) {
 				webview.addEventListener('devtools-closed', this.handleDevToolsClosed.bind(this));
+				webview.addEventListener('devtools-opened', this.handleDevToolsOpened.bind(this));
 				webview.addEventListener('did-stop-loading', this.handleDidStopLoading.bind(this));
 
 				this._hasListeners = true;
@@ -101,9 +104,14 @@ var PreviewBox = function (_Component) {
 
 			if (devToolsClosed && !this.selfClose) {
 				devToolsClosed();
-			} else {
-				this.selfClose = false;
 			}
+
+			this.selfClose = false;
+		}
+	}, {
+		key: 'handleDevToolsOpened',
+		value: function handleDevToolsOpened() {
+			this.selfClose = false;
 		}
 	}, {
 		key: 'handleDidStopLoading',

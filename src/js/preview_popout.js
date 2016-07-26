@@ -21,12 +21,21 @@ class LexiconPopoutPreview extends Component {
 		ipcRenderer.on('preview-data', this.handlePreviewData.bind(this));
 
 		parentWindow.send('request-preview-data');
+
+		this.parentWindow = parentWindow;
 	}
 
 	render() {
 		return (
-			<PreviewBox {...this.state} />
+			<PreviewBox
+				devToolsClosed={this.handleDevToolsClosed.bind(this)}
+				{...this.state}
+			/>
 		);
+	}
+
+	handleDevToolsClosed(event) {
+		this.parentWindow.send('devtools-open', false);
 	}
 
 	handlePreviewData(event, data) {

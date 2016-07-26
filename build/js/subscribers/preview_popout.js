@@ -12,6 +12,8 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 var _electron = require('electron');
 
+var _preview = require('../actions/preview');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var BrowserWindow = _electron.remote.BrowserWindow;
@@ -21,6 +23,10 @@ var EVENT_PREVIEW_DATA = 'preview-data';
 
 function previewPopoutSubscriber(store) {
 	var currentPreviewData = void 0;
+
+	_electron.ipcRenderer.on('devtools-open', function (event, open) {
+		store.dispatch((0, _preview.toggleDevTools)(open));
+	});
 
 	_electron.ipcRenderer.on('request-preview-data', function () {
 		var state = store.getState();

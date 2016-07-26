@@ -1,12 +1,18 @@
 import _ from 'lodash';
 import {remote, ipcRenderer} from 'electron';
 
+import {toggleDevTools} from '../actions/preview';
+
 const {BrowserWindow} = remote;
 
 const EVENT_PREVIEW_DATA = 'preview-data';
 
 export default function previewPopoutSubscriber(store) {
 	let currentPreviewData;
+
+	ipcRenderer.on('devtools-open', (event, open) => {
+		store.dispatch(toggleDevTools(open));
+	});
 
 	ipcRenderer.on('request-preview-data', () => {
 		const state = store.getState();
