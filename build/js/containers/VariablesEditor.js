@@ -24,6 +24,10 @@ var _ColorPickerPanel = require('../components/ColorPickerPanel');
 
 var _ColorPickerPanel2 = _interopRequireDefault(_ColorPickerPanel);
 
+var _FilterInput = require('../components/FilterInput');
+
+var _FilterInput2 = _interopRequireDefault(_FilterInput);
+
 var _LexiconColorPickerPanel = require('../containers/LexiconColorPickerPanel');
 
 var _LexiconColorPickerPanel2 = _interopRequireDefault(_LexiconColorPickerPanel);
@@ -31,6 +35,10 @@ var _LexiconColorPickerPanel2 = _interopRequireDefault(_LexiconColorPickerPanel)
 var _VariableInput = require('../components/VariableInput');
 
 var _VariableInput2 = _interopRequireDefault(_VariableInput);
+
+var _VariablesGroup = require('../components/VariablesGroup');
+
+var _VariablesGroup2 = _interopRequireDefault(_VariablesGroup);
 
 var _index = require('../actions/index');
 
@@ -57,7 +65,8 @@ var VariablesEditor = function (_Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VariablesEditor).call(this, props));
 
 		_this.state = {
-			collapsedGroups: []
+			collapsed: false,
+			filterText: ''
 		};
 		return _this;
 	}
@@ -93,8 +102,7 @@ var VariablesEditor = function (_Component) {
 					_react2.default.createElement(
 						'form',
 						null,
-						this.renderGroup(componentVariables, 'lexicon', 'Lexicon'),
-						this.renderGroup(componentVariables, 'bootstrap', 'Bootstrap'),
+						this.renderGroups(),
 						this.renderColorPickerPanel()
 					)
 				)
@@ -103,97 +111,65 @@ var VariablesEditor = function (_Component) {
 	}, {
 		key: 'renderColorPickerPanel',
 		value: function renderColorPickerPanel() {
-			var colorVariableName = this.props.colorVariableName;
+			var colorPickerPanel = '';
 
-
-			if (!colorVariableName) {
-				return '';
+			if (this.props.colorVariableName) {
+				colorPickerPanel = _react2.default.createElement(_LexiconColorPickerPanel2.default, null);
 			}
 
-			return _react2.default.createElement(_LexiconColorPickerPanel2.default, null);
+			return colorPickerPanel;
 		}
 	}, {
-		key: 'renderGroup',
-		value: function renderGroup(componentVariables, group, title) {
-			var groupContent = '';
-
-			var groupVariables = varUtil.filterVariablesByGroup(componentVariables, group);
-
-			if (!groupVariables.isEmpty()) {
-				var className = 'variables-editor-section';
-				var collapsedGroups = this.state.collapsedGroups;
+		key: 'renderGroups',
+		value: function renderGroups() {
+			var _props2 = this.props;
+			var selectedComponent = _props2.selectedComponent;
+			var variables = _props2.variables;
 
 
-				if (collapsedGroups.includes(group)) {
-					className += ' collapsed';
+			var handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
+			var handleVariableChange = this.handleVariableChange.bind(this);
+			var handleVariableReset = this.handleVariableReset.bind(this);
+
+			var componentVariables = varUtil.filterVariablesByComponent(variables, selectedComponent);
+
+			var groups = ['lexicon', 'bootstrap'];
+
+			return groups.map(function (group) {
+				var variablesGroup = '';
+
+				var groupVariables = varUtil.filterVariablesByGroup(componentVariables, group);
+
+				if (!groupVariables.isEmpty()) {
+					variablesGroup = _react2.default.createElement(_VariablesGroup2.default, {
+						group: group,
+						groupVariables: groupVariables,
+						header: _lodash2.default.capitalize(group),
+						key: group,
+						onColorPickerTriggerClick: handleColorPickerTriggerClick,
+						onVariableChange: handleVariableChange,
+						onVariableReset: handleVariableReset,
+						variables: variables
+					});
 				}
 
-				groupContent = _react2.default.createElement(
-					'div',
-					{ className: className, 'data-group': group },
-					_react2.default.createElement(
-						'h4',
-						{
-							className: 'variables-editor-section-header',
-							onClick: this._handleHeaderClick.bind(this, group)
-						},
-						title
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'variables-editor-section-variables' },
-						this.renderInputs(groupVariables)
-					)
-				);
-			}
-
-			return groupContent;
-		}
-	}, {
-		key: 'renderInputs',
-		value: function renderInputs(groupVariables) {
-			var handleChange = this._handleChange.bind(this);
-			var handleColorPickerTriggerClick = this._handleColorPickerTriggerClick.bind(this);
-			var isColor = this._isColor.bind(this);
-			var variables = this.props.variables;
-
-
-			var toolbar = [{
-				action: this._handleResetVariable.bind(this),
-				icon: 'reload'
-			}];
-
-			return groupVariables.toArray().map(function (variable) {
-				var name = variable.get('name');
-				var value = variable.get('value');
-
-				return _react2.default.createElement(_VariableInput2.default, {
-					color: isColor(name),
-					key: name,
-					label: name,
-					name: name,
-					onChange: handleChange,
-					onColorPickerTriggerClick: handleColorPickerTriggerClick,
-					toolbar: toolbar,
-					value: value,
-					variables: variables
-				});
+				return variablesGroup;
 			});
 		}
 	}, {
-		key: '_handleChange',
-		value: function _handleChange(name, value) {
+		key: 'handleVariableChange',
+		value: function handleVariableChange(name, value) {
 			var dispatch = this.props.dispatch;
 
 
 			dispatch((0, _variables.setVariable)(name, value));
 		}
 	}, {
-		key: '_handleColorPickerTriggerClick',
-		value: function _handleColorPickerTriggerClick(name) {
-			var _props2 = this.props;
-			var colorVariableName = _props2.colorVariableName;
-			var dispatch = _props2.dispatch;
+		key: 'handleColorPickerTriggerClick',
+		value: function handleColorPickerTriggerClick(name) {
+			var _props3 = this.props;
+			var colorVariableName = _props3.colorVariableName;
+			var dispatch = _props3.dispatch;
 
 
 			if (colorVariableName === name) {
@@ -203,43 +179,14 @@ var VariablesEditor = function (_Component) {
 			dispatch((0, _colorVariableName.setColorVariableName)(name));
 		}
 	}, {
-		key: '_handleHeaderClick',
-		value: function _handleHeaderClick(group) {
-			var collapsedGroups = this.state.collapsedGroups;
-
-
-			var groupIndex = collapsedGroups.indexOf(group);
-
-			if (groupIndex > -1) {
-				collapsedGroups.splice(groupIndex, 1);
-			} else {
-				collapsedGroups.push(group);
-			}
-
-			this.setState({
-				collapsedGroups: collapsedGroups
-			});
-		}
-	}, {
-		key: '_handleResetVariable',
-		value: function _handleResetVariable(name) {
+		key: 'handleVariableReset',
+		value: function handleVariableReset(name) {
 			var dispatch = this.props.dispatch;
 
 
 			if (confirm('Are you sure you want to reset ' + name + ' to it\'s default value?')) {
 				dispatch((0, _variables.resetVariable)(name));
 			}
-		}
-	}, {
-		key: '_isColor',
-		value: function _isColor(variableName) {
-			var color = false;
-
-			if (variableName.indexOf('-bg') > -1 || variableName.indexOf('brand') > -1 || variableName.indexOf('color') > -1 || variableName.indexOf('gray') > -1 || _lodash2.default.endsWith(variableName, '-border') || _lodash2.default.endsWith(variableName, '-text')) {
-				color = true;
-			}
-
-			return color;
 		}
 	}]);
 
@@ -249,16 +196,11 @@ var VariablesEditor = function (_Component) {
 ;
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-	var colorVariableName = state.get('colorVariableName');
-	var sassError = state.get('sassError');
-	var selectedComponent = state.get('selectedComponent');
-	var variables = state.get('variables');
-
 	return {
-		colorVariableName: colorVariableName,
-		sassError: sassError,
-		selectedComponent: selectedComponent,
-		variables: variables
+		colorVariableName: state.get('colorVariableName'),
+		sassError: state.get('sassError'),
+		selectedComponent: state.get('selectedComponent'),
+		variables: state.get('variables')
 	};
 };
 

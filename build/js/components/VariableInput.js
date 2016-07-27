@@ -71,7 +71,7 @@ var VariableInput = function (_Component) {
 				autoComplete = this._renderAutoComplete(name, value, variables);
 			}
 
-			if (this.props.color) {
+			if (this._isColor(name)) {
 				className += ' color-input';
 
 				var resolvedValue = (0, _color.resolveColorValue)(name, value, variables);
@@ -106,6 +106,55 @@ var VariableInput = function (_Component) {
 				}),
 				autoComplete,
 				colorPickerTrigger
+			);
+		}
+	}, {
+		key: 'renderAutoComplete',
+		value: function renderAutoComplete(name, value, variables) {
+			var _this2 = this;
+
+			if (variables.has(value)) {
+				return '';
+			}
+
+			variables = variables.takeUntil(function (value, key) {
+				return key === name;
+			});
+
+			var autoCompleteIndex = this.state.autoCompleteIndex;
+			var reducedIndex = 0;
+
+			var items = variables.toArray().reduce(function (result, item) {
+				var itemName = item.get('name');
+
+				if (itemName.indexOf(value) == 0) {
+					result.push(_react2.default.createElement(
+						'div',
+						{
+							className: 'auto-complete-item',
+							'data-selected': autoCompleteIndex == reducedIndex,
+							'data-value': itemName,
+							key: itemName,
+							onClick: _this2.handleAutoCompleteClick.bind(_this2)
+						},
+						itemName
+					));
+
+					reducedIndex++;
+				}
+
+				return result;
+			}, []);
+
+			return _react2.default.createElement(
+				'div',
+				{
+					className: 'input-auto-complete-menu',
+					onMouseEnter: this.handleAutoCompleteMouseEnter.bind(this),
+					onMouseLeave: this.handleAutoCompleteMouseLeave.bind(this),
+					ref: 'autoCompleteMenu'
+				},
+				items
 			);
 		}
 	}, {
@@ -279,53 +328,15 @@ var VariableInput = function (_Component) {
 			return triggerStyle;
 		}
 	}, {
-		key: '_renderAutoComplete',
-		value: function _renderAutoComplete(name, value, variables) {
-			var _this2 = this;
+		key: '_isColor',
+		value: function _isColor(variableName) {
+			var color = false;
 
-			if (variables.has(value)) {
-				return '';
+			if (variableName.indexOf('-bg') > -1 || variableName.indexOf('brand') > -1 || variableName.indexOf('color') > -1 || variableName.indexOf('gray') > -1 || _.endsWith(variableName, '-border') || _.endsWith(variableName, '-text')) {
+				color = true;
 			}
 
-			variables = variables.takeUntil(function (value, key) {
-				return key === name;
-			});
-
-			var autoCompleteIndex = this.state.autoCompleteIndex;
-			var reducedIndex = 0;
-
-			var items = variables.toArray().reduce(function (result, item) {
-				var itemName = item.get('name');
-
-				if (itemName.indexOf(value) == 0) {
-					result.push(_react2.default.createElement(
-						'div',
-						{
-							className: 'auto-complete-item',
-							'data-selected': autoCompleteIndex == reducedIndex,
-							'data-value': itemName,
-							key: itemName,
-							onClick: _this2.handleAutoCompleteClick.bind(_this2)
-						},
-						itemName
-					));
-
-					reducedIndex++;
-				}
-
-				return result;
-			}, []);
-
-			return _react2.default.createElement(
-				'div',
-				{
-					className: 'input-auto-complete-menu',
-					onMouseEnter: this.handleAutoCompleteMouseEnter.bind(this),
-					onMouseLeave: this.handleAutoCompleteMouseLeave.bind(this),
-					ref: 'autoCompleteMenu'
-				},
-				items
-			);
+			return color;
 		}
 	}]);
 

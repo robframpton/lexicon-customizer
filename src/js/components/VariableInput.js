@@ -32,7 +32,7 @@ class VariableInput extends Component {
 			autoComplete = this._renderAutoComplete(name, value, variables);
 		}
 
-		if (this.props.color) {
+		if (this._isColor(name)) {
 			className += ' color-input';
 
 			let resolvedValue = resolveColorValue(name, value, variables);
@@ -67,6 +67,52 @@ class VariableInput extends Component {
 				{autoComplete}
 
 				{colorPickerTrigger}
+			</div>
+		);
+	}
+
+	renderAutoComplete(name, value, variables) {
+		if (variables.has(value)) {
+			return '';
+		}
+
+		variables = variables.takeUntil((value, key) => {
+			return key === name;
+		});
+
+		let autoCompleteIndex = this.state.autoCompleteIndex;
+		let reducedIndex = 0;
+
+		let items = variables.toArray().reduce((result, item) => {
+			const itemName = item.get('name');
+
+			if (itemName.indexOf(value) == 0) {
+				result.push(
+					<div
+						className="auto-complete-item"
+						data-selected={autoCompleteIndex == reducedIndex}
+						data-value={itemName}
+						key={itemName}
+						onClick={this.handleAutoCompleteClick.bind(this)}
+					>
+						{itemName}
+					</div>
+				);
+
+				reducedIndex++;
+			}
+
+			return result;
+		}, []);
+
+		return (
+			<div
+				className="input-auto-complete-menu"
+				onMouseEnter={this.handleAutoCompleteMouseEnter.bind(this)}
+				onMouseLeave={this.handleAutoCompleteMouseLeave.bind(this)}
+				ref="autoCompleteMenu"
+			>
+				{items}
 			</div>
 		);
 	}
@@ -211,50 +257,19 @@ class VariableInput extends Component {
 		return triggerStyle;
 	}
 
-	_renderAutoComplete(name, value, variables) {
-		if (variables.has(value)) {
-			return '';
+	_isColor(variableName) {
+		var color = false;
+
+		if (variableName.indexOf('-bg') > -1 ||
+			variableName.indexOf('brand') > -1 ||
+			variableName.indexOf('color') > -1 ||
+			variableName.indexOf('gray') > -1 ||
+			_.endsWith(variableName, '-border') ||
+			_.endsWith(variableName, '-text')) {
+			color = true;
 		}
 
-		variables = variables.takeUntil((value, key) => {
-			return key === name;
-		});
-
-		let autoCompleteIndex = this.state.autoCompleteIndex;
-		let reducedIndex = 0;
-
-		let items = variables.toArray().reduce((result, item) => {
-			const itemName = item.get('name');
-
-			if (itemName.indexOf(value) == 0) {
-				result.push(
-					<div
-						className="auto-complete-item"
-						data-selected={autoCompleteIndex == reducedIndex}
-						data-value={itemName}
-						key={itemName}
-						onClick={this.handleAutoCompleteClick.bind(this)}
-					>
-						{itemName}
-					</div>
-				);
-
-				reducedIndex++;
-			}
-
-			return result;
-		}, []);
-
-		return (
-			<div
-				className="input-auto-complete-menu"
-				onMouseEnter={this.handleAutoCompleteMouseEnter.bind(this)}
-				onMouseLeave={this.handleAutoCompleteMouseLeave.bind(this)}
-				ref="autoCompleteMenu"
-			>
-				{items}
-			</div>
-		);
+		return color;
 	}
 }
 
