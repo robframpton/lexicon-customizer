@@ -4,7 +4,7 @@ import Icon from '../components/Icon';
 
 class FilterInput extends Component {
 	render() {
-		const {value} = this.props;
+		const {onChange, value, ...others} = this.props;
 
 		const icon = value ? 'times' : 'search';
 
@@ -15,6 +15,7 @@ class FilterInput extends Component {
 					onChange={this.handleFilterInputChange.bind(this)}
 					ref="filterInput"
 					value={value}
+					{...others}
 				/>
 
 				<a href="javascript:;" onClick={this.handleFilterIconClick.bind(this)}><Icon icon={icon} /></a>
@@ -34,10 +35,7 @@ class FilterInput extends Component {
 	}
 
 	handleFilterInputChange(event) {
-		const {onChange} = this.props;
-		const {value} = event.currentTarget;
-
-		onChange(value);
+		this.props.onChange(event.currentTarget.value);
 	}
 };
 
