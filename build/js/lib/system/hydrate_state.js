@@ -28,7 +28,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var COMPONENT_BLACKLIST = ['iconography'];
 
-var CWD = _electron.remote.app.getAppPath();
+var APP_PATH = _electron.remote.app.getAppPath();
 
 var WIN = _electron.remote.getCurrentWindow();
 
@@ -50,7 +50,7 @@ module.exports = function () {
 	});
 
 	var filePaths = _immutable2.default.Map({
-		customVariables: _path2.default.join(CWD, 'lexicon', '_custom_variables.scss')
+		customVariables: _path2.default.join(APP_PATH, 'lexicon', '_custom_variables.scss')
 	});
 
 	var initialState = {

@@ -49,8 +49,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var CWD = _electron.remote.app.getAppPath();
-
 function clearCustomVariablesFile(variables, customDir, themePath) {
 	if (themePath) {
 		clearModifiedVariablesFromTheme(variables, themePath);

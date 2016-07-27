@@ -10,7 +10,7 @@ import UserConfig from './user_config';
 
 const COMPONENT_BLACKLIST = ['iconography'];
 
-const CWD = remote.app.getAppPath();
+const APP_PATH = remote.app.getAppPath();
 
 const WIN = remote.getCurrentWindow();
 
@@ -28,7 +28,7 @@ module.exports = function() {
 	});
 
 	const filePaths = immutable.Map({
-		customVariables: path.join(CWD, 'lexicon', '_custom_variables.scss')
+		customVariables: path.join(APP_PATH, 'lexicon', '_custom_variables.scss')
 	});
 
 	const initialState = {

@@ -10,8 +10,6 @@ import {remote} from 'electron';
 import * as componentScraper from './component_scraper';
 import * as varUtil from '../var_util';
 
-const CWD = remote.app.getAppPath();
-
 export function clearCustomVariablesFile(variables, customDir, themePath) {
 	if (themePath) {
 		clearModifiedVariablesFromTheme(variables, themePath);
