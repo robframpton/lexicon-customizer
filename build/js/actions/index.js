@@ -71,8 +71,6 @@ function renderPreview(component) {
 	return function (dispatch, getState) {
 		var state = getState();
 
-		console.log('THIS IS HAPPENING!');
-
 		var baseLexiconTheme = _lodash2.default.kebabCase(state.get('baseLexiconTheme'));
 
 		var _state$get2 = state.get('lexiconDirs');
