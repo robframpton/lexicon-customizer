@@ -54,7 +54,7 @@ var SideMenu = function (_Component) {
 			var selectedItem = _props.selectedItem;
 
 
-			var componentArray = this._getComponentArray();
+			var componentArray = this.filterComponentsArray();
 
 			return _react2.default.createElement(
 				'div',
@@ -64,7 +64,11 @@ var SideMenu = function (_Component) {
 					null,
 					this.props.header
 				),
-				_react2.default.createElement(_FilterInput2.default, { onChange: this.handleFilterInputChange.bind(this), value: this.state.filterText }),
+				_react2.default.createElement(_FilterInput2.default, {
+					onChange: this.handleFilterInputChange.bind(this),
+					value: this.state.filterText,
+					placeholder: 'Filter components...'
+				}),
 				_react2.default.createElement(
 					'ul',
 					{ className: 'side-menu-list' },
@@ -96,15 +100,8 @@ var SideMenu = function (_Component) {
 			);
 		}
 	}, {
-		key: 'handleFilterInputChange',
-		value: function handleFilterInputChange(value) {
-			this.setState({
-				filterText: value
-			});
-		}
-	}, {
-		key: '_getComponentArray',
-		value: function _getComponentArray() {
+		key: 'filterComponentsArray',
+		value: function filterComponentsArray() {
 			var components = this.props.components;
 			var filterText = this.state.filterText;
 
@@ -118,6 +115,13 @@ var SideMenu = function (_Component) {
 			}
 
 			return componentsArray;
+		}
+	}, {
+		key: 'handleFilterInputChange',
+		value: function handleFilterInputChange(value) {
+			this.setState({
+				filterText: value
+			});
 		}
 	}, {
 		key: '_getDisplayName',

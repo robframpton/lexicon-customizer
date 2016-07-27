@@ -18,13 +18,17 @@ class SideMenu extends Component {
 
 		const {onClick, selectedItem} = this.props;
 
-		const componentArray = this._getComponentArray();
+		const componentArray = this.filterComponentsArray();
 
 		return (
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
-				<FilterInput onChange={this.handleFilterInputChange.bind(this)} value={this.state.filterText} />
+				<FilterInput
+					onChange={this.handleFilterInputChange.bind(this)}
+					value={this.state.filterText}
+					placeholder="Filter components..."
+				/>
 
 				<ul className="side-menu-list">
 					{componentArray.map((item, index) => {
@@ -54,13 +58,7 @@ class SideMenu extends Component {
 		);
 	}
 
-	handleFilterInputChange(value) {
-		this.setState({
-			filterText: value
-		});
-	}
-
-	_getComponentArray() {
+	filterComponentsArray() {
 		const {components} = this.props;
 		const {filterText} = this.state;
 
@@ -73,6 +71,12 @@ class SideMenu extends Component {
 		}
 
 		return componentsArray;
+	}
+
+	handleFilterInputChange(value) {
+		this.setState({
+			filterText: value
+		});
 	}
 
 	_getDisplayName(name) {
