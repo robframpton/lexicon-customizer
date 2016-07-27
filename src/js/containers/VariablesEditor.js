@@ -112,11 +112,7 @@ class VariablesEditor extends Component {
 	}
 
 	handleVariableReset(name) {
-		const {dispatch} = this.props;
-
-		if (confirm(`Are you sure you want to reset ${name} to it's default value?`)) {
-			dispatch(resetVariable(name));
-		}
+		this.props.dispatch(resetVariable(name));
 	}
 };
 

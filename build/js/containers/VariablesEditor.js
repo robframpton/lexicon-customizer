@@ -181,12 +181,7 @@ var VariablesEditor = function (_Component) {
 	}, {
 		key: 'handleVariableReset',
 		value: function handleVariableReset(name) {
-			var dispatch = this.props.dispatch;
-
-
-			if (confirm('Are you sure you want to reset ' + name + ' to it\'s default value?')) {
-				dispatch((0, _variables.resetVariable)(name));
-			}
+			this.props.dispatch((0, _variables.resetVariable)(name));
 		}
 	}]);
 

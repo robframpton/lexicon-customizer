@@ -17,9 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	return {
 		onClick: function onClick(e) {
-			if (confirm('Are you sure you want to reset? This will erase custom variables from your theme\'s _aui_variables.scss file.')) {
-				dispatch((0, _variables.resetComponentVariables)());
-			}
+			dispatch((0, _variables.resetComponentVariables)());
 		}
 	};
 };

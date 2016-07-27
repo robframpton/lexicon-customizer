@@ -18,34 +18,40 @@ export function overwriteVariables(variables) {
 
 export function resetComponentVariables() {
 	return function(dispatch, getState) {
-		const state = getState();
+		if (confirm('Are you sure you want to reset the current component variables? This will erase custom variables from your theme\'s _aui_variables.scss file.')) {
+			const state = getState();
 
-		const sourceComponentVariables = varUtil.filterVariablesByComponent(state.get('sourceVariables'), state.get('selectedComponent'));
+			const sourceComponentVariables = varUtil.filterVariablesByComponent(state.get('sourceVariables'), state.get('selectedComponent'));
 
-		dispatch(setVariables(sourceComponentVariables));
+			dispatch(setVariables(sourceComponentVariables));
+		}
 	};
 };
 
 export function resetVariable(name) {
 	return function(dispatch, getState) {
-		const state = getState();
+		if (confirm(`Are you sure you want to reset ${name} to it's default value?`)) {
+			const state = getState();
 
-		const sourceVariables = state.get('sourceVariables');
+			const sourceVariables = state.get('sourceVariables');
 
-		dispatch(setVariable(name, sourceVariables.get(name).get('value')));
+			dispatch(setVariable(name, sourceVariables.get(name).get('value')));
+		}
 	};
 };
 
 export function resetVariables() {
 	return function(dispatch, getState) {
-		const state = getState();
+		if (confirm('Are you sure you want to reset all variables? This will also erase custom variables from your theme\'s _aui_variables.scss file.')) {
+			const state = getState();
 
-		dispatch(overwriteVariables(state.get('sourceVariables')));
+			dispatch(overwriteVariables(state.get('sourceVariables')));
 
-		sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('lexiconDirs').customDir, state.get('theme'))
-			.then(function() {
-				dispatch(buildLexicon());
-			});
+			sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('lexiconDirs').customDir, state.get('theme'))
+				.then(function() {
+					dispatch(buildLexicon());
+				});
+		}
 	};
 };
 

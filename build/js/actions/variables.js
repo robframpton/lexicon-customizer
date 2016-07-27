@@ -42,33 +42,39 @@ function overwriteVariables(variables) {
 
 function resetComponentVariables() {
 	return function (dispatch, getState) {
-		var state = getState();
+		if (confirm('Are you sure you want to reset the current component variables? This will erase custom variables from your theme\'s _aui_variables.scss file.')) {
+			var state = getState();
 
-		var sourceComponentVariables = varUtil.filterVariablesByComponent(state.get('sourceVariables'), state.get('selectedComponent'));
+			var sourceComponentVariables = varUtil.filterVariablesByComponent(state.get('sourceVariables'), state.get('selectedComponent'));
 
-		dispatch(setVariables(sourceComponentVariables));
+			dispatch(setVariables(sourceComponentVariables));
+		}
 	};
 };
 
 function resetVariable(name) {
 	return function (dispatch, getState) {
-		var state = getState();
+		if (confirm('Are you sure you want to reset ' + name + ' to it\'s default value?')) {
+			var state = getState();
 
-		var sourceVariables = state.get('sourceVariables');
+			var sourceVariables = state.get('sourceVariables');
 
-		dispatch(setVariable(name, sourceVariables.get(name).get('value')));
+			dispatch(setVariable(name, sourceVariables.get(name).get('value')));
+		}
 	};
 };
 
 function resetVariables() {
 	return function (dispatch, getState) {
-		var state = getState();
+		if (confirm('Are you sure you want to reset all variables? This will also erase custom variables from your theme\'s _aui_variables.scss file.')) {
+			var state = getState();
 
-		dispatch(overwriteVariables(state.get('sourceVariables')));
+			dispatch(overwriteVariables(state.get('sourceVariables')));
 
-		sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('lexiconDirs').customDir, state.get('theme')).then(function () {
-			dispatch((0, _index.buildLexicon)());
-		});
+			sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('lexiconDirs').customDir, state.get('theme')).then(function () {
+				dispatch((0, _index.buildLexicon)());
+			});
+		}
 	};
 };
 
