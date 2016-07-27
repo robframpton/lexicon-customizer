@@ -66,23 +66,12 @@ class LexiconCustomizer extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-	const group = state.get('group');
-	const previewPopout = state.get('previewPopout');
-	const sassError = state.get('sassError');
-	const selectedComponent = state.get('selectedComponent');
-
 	return {
-		group,
-		previewPopout,
-		sassError,
-		selectedComponent
+		group: state.get('group'),
+		previewPopout: state.get('previewPopout'),
+		sassError: state.get('sassError'),
+		selectedComponent: state.get('selectedComponent')
 	};
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		dispatch
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LexiconCustomizer);
+export default connect(mapStateToProps)(LexiconCustomizer);

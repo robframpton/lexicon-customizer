@@ -114,23 +114,12 @@ var LexiconCustomizer = function (_Component) {
 ;
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-	var group = state.get('group');
-	var previewPopout = state.get('previewPopout');
-	var sassError = state.get('sassError');
-	var selectedComponent = state.get('selectedComponent');
-
 	return {
-		group: group,
-		previewPopout: previewPopout,
-		sassError: sassError,
-		selectedComponent: selectedComponent
+		group: state.get('group'),
+		previewPopout: state.get('previewPopout'),
+		sassError: state.get('sassError'),
+		selectedComponent: state.get('selectedComponent')
 	};
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	return {
-		dispatch: dispatch
-	};
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LexiconCustomizer);
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(LexiconCustomizer);

@@ -18,17 +18,17 @@ var _theme = require('../../actions/theme');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+	return {
+		disabled: !state.get('theme')
+	};
+};
+
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	return {
 		onClick: function onClick(e) {
 			dispatch((0, _theme.setTheme)(''));
 		}
-	};
-};
-
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-	return {
-		disabled: !state.get('theme')
 	};
 };
 

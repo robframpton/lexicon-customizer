@@ -12,18 +12,6 @@ var _reactRedux = require('react-redux');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-	var themeName = state.get('theme');
-
-	if (themeName) {
-		themeName = themeName.replace(/.*\/(.*)/, '$1');
-	}
-
-	return {
-		themeName: themeName
-	};
-};
-
 var ThemeLabel = function ThemeLabel(_ref) {
 	var themeName = _ref.themeName;
 
@@ -34,6 +22,18 @@ var ThemeLabel = function ThemeLabel(_ref) {
 		{ className: 'theme-label' },
 		themeLabel
 	);
+};
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+	var themeName = state.get('theme');
+
+	if (themeName) {
+		themeName = themeName.replace(/.*\/(.*)/, '$1');
+	}
+
+	return {
+		themeName: themeName
+	};
 };
 
 ThemeLabel = (0, _reactRedux.connect)(mapStateToProps)(ThemeLabel);

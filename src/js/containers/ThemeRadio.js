@@ -18,9 +18,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	}
 };
 
-const ThemeRadio = connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Radio);
+const ThemeRadio = connect(mapStateToProps, mapDispatchToProps)(Radio);
 
 export default ThemeRadio;

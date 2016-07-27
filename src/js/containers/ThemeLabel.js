@@ -1,6 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+let ThemeLabel = ({themeName}) => {
+	let themeLabel = themeName || 'No theme selected';
+
+	return (
+		<span className="theme-label">{themeLabel}</span>
+	);
+};
+
 const mapStateToProps = (state, ownProps) => {
 	let themeName = state.get('theme');
 
@@ -13,16 +21,6 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-let ThemeLabel = ({themeName}) => {
-	let themeLabel = themeName || 'No theme selected';
-
-	return (
-		<span className="theme-label">{themeLabel}</span>
-	);
-};
-
-ThemeLabel = connect(
-	mapStateToProps
-)(ThemeLabel);
+ThemeLabel = connect(mapStateToProps)(ThemeLabel);
 
 export default ThemeLabel;

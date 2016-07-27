@@ -16,9 +16,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchtoProps = (dispatch, ownProps) => {
 	return {
 		onClick: event => {
-			let currentTarget = event.currentTarget;
+			const currentTarget = event.currentTarget;
 
-			let selectedComponent = currentTarget.getAttribute('data-name');
+			const selectedComponent = currentTarget.getAttribute('data-name');
 
 			dispatch(setSelectedComponent(selectedComponent));
 			dispatch(renderPreview(selectedComponent));
@@ -26,9 +26,6 @@ const mapDispatchtoProps = (dispatch, ownProps) => {
 	};
 };
 
-const ComponentSideMenu = connect(
-	mapStateToProps,
-	mapDispatchtoProps
-)(SideMenu);
+const ComponentSideMenu = connect(mapStateToProps, mapDispatchtoProps)(SideMenu);
 
 export default ComponentSideMenu;
