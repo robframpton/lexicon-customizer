@@ -12,20 +12,14 @@ var _Button = require('../../components/Button');
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _variables = require('../../actions/variables');
+var _import_export = require('../../lib/system/import_export');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	return {
 		onClick: function onClick(e) {
-			_electron.remote.dialog.showOpenDialog({
-				properties: ['openFile']
-			}, function (filePaths) {
-				if (filePaths && filePaths.length) {
-					dispatch((0, _variables.importVariables)(filePaths[0]));
-				}
-			});
+			(0, _import_export.importVariables)(dispatch);
 		}
 	};
 };

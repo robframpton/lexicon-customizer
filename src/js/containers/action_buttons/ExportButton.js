@@ -1,11 +1,14 @@
+import path from 'path';
 import {connect} from 'react-redux';
 
 import Button from '../../components/Button';
+import {exportVariables} from '../../lib/system/import_export';
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		download: '_variables.scss',
-		href: state.get('filePaths').get('customVariables')
+		onClick: () => {
+			exportVariables(state.get('lexiconDirs').customDir);
+		}
 	}
 };
 

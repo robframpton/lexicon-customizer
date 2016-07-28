@@ -1,5 +1,6 @@
 'use strict';
 
+import {exportVariables, importVariables} from '../system/import_export';
 import {resetComponentVariables, resetVariables} from '../../actions/variables';
 
 function getVariablesMenu(store) {
@@ -9,13 +10,15 @@ function getVariablesMenu(store) {
 			{
 				label: 'Import',
 				click() {
-					console.log('CLICK');
+					importVariables(store.dispatch);
 				}
 			},
 			{
 				label: 'Export',
 				click() {
-					console.log('CLICK');
+					const state = store.getState();
+
+					exportVariables(state.get('lexiconDirs').customDir);
 				}
 			},
 			{

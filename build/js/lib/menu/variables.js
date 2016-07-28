@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _import_export = require('../system/import_export');
+
 var _variables = require('../../actions/variables');
 
 function getVariablesMenu(store) {
@@ -12,12 +14,14 @@ function getVariablesMenu(store) {
 		submenu: [{
 			label: 'Import',
 			click: function click() {
-				console.log('CLICK');
+				(0, _import_export.importVariables)(store.dispatch);
 			}
 		}, {
 			label: 'Export',
 			click: function click() {
-				console.log('CLICK');
+				var state = store.getState();
+
+				(0, _import_export.exportVariables)(state.get('lexiconDirs').customDir);
 			}
 		}, {
 			type: 'separator'
