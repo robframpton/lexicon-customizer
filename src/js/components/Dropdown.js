@@ -1,3 +1,4 @@
+import enhanceWithClickOutside from 'react-click-outside';
 import React, {Component, PropTypes} from 'react';
 
 import Icon from '../components/Icon';
@@ -58,14 +59,22 @@ class Dropdown extends Component {
 		);
 	}
 
+	close() {
+		this.setState({
+			open: false
+		});
+	}
+
+	handleClickOutside() {
+		this.close();
+	}
+
 	handleOptionClick(option) {
 		const {action} = option;
 
 		const {handleOptionClick} = this.props;
 
-		this.setState({
-			open: false
-		});
+		this.close();
 
 		if (action) {
 			action(option);
@@ -87,4 +96,4 @@ Dropdown.propTypes = {
 	options: PropTypes.array.isRequired
 };
 
-export default Dropdown;
+export default enhanceWithClickOutside(Dropdown);

@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _reactClickOutside = require('react-click-outside');
+
+var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -94,15 +98,25 @@ var Dropdown = function (_Component) {
 			);
 		}
 	}, {
+		key: 'close',
+		value: function close() {
+			this.setState({
+				open: false
+			});
+		}
+	}, {
+		key: 'handleClickOutside',
+		value: function handleClickOutside() {
+			this.close();
+		}
+	}, {
 		key: 'handleOptionClick',
 		value: function handleOptionClick(option) {
 			var action = option.action;
 			var handleOptionClick = this.props.handleOptionClick;
 
 
-			this.setState({
-				open: false
-			});
+			this.close();
 
 			if (action) {
 				action(option);
@@ -127,4 +141,4 @@ Dropdown.propTypes = {
 	options: _react.PropTypes.array.isRequired
 };
 
-exports.default = Dropdown;
+exports.default = (0, _reactClickOutside2.default)(Dropdown);
