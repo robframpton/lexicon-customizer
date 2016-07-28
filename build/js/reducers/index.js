@@ -22,10 +22,6 @@ var _components = require('./components');
 
 var _components2 = _interopRequireDefault(_components);
 
-var _filePaths = require('./filePaths');
-
-var _filePaths2 = _interopRequireDefault(_filePaths);
-
 var _group = require('./group');
 
 var _group2 = _interopRequireDefault(_group);
@@ -73,7 +69,6 @@ var lexiconCustomizerReducer = (0, _reduxImmutable.combineReducers)({
 	bootstrapComponents: _bootstrapComponents2.default,
 	colorVariableName: _colorVariableName2.default,
 	components: _components2.default,
-	filePaths: _filePaths2.default,
 	group: _group2.default,
 	lexiconDirs: _lexiconDirs2.default,
 	lexiconVersion: _lexiconVersion2.default,

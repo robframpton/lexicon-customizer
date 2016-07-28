@@ -4,7 +4,6 @@ import baseLexiconTheme from './baseLexiconTheme';
 import bootstrapComponents from './bootstrapComponents';
 import colorVariableName from './colorVariableName';
 import components from './components';
-import filePaths from './filePaths';
 import group from './group';
 import lexiconDirs from './lexiconDirs';
 import lexiconVersion from './lexiconVersion';
@@ -21,7 +20,6 @@ const lexiconCustomizerReducer = combineReducers({
 	bootstrapComponents,
 	colorVariableName,
 	components,
-	filePaths,
 	group,
 	lexiconDirs,
 	lexiconVersion,

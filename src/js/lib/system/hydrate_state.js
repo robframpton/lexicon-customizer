@@ -27,14 +27,9 @@ module.exports = function() {
 		return !COMPONENT_BLACKLIST.includes(component);
 	});
 
-	const filePaths = immutable.Map({
-		customVariables: path.join(APP_PATH, 'lexicon', '_custom_variables.scss')
-	});
-
 	const initialState = {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
-		filePaths: filePaths,
 		lexiconDirs: lexiconDirs,
 		selectedComponent: persistedConfig.selectedComponent,
 		sourceVariables: sourceVariables,
