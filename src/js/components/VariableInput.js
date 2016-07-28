@@ -1,8 +1,13 @@
+import Dropdown from 'react-dropdown'
 import enhanceWithClickOutside from 'react-click-outside';
 import React, {Component, PropTypes} from 'react';
 
 import Icon from '../components/Icon';
 import {resolveColorValue} from '../lib/color';
+
+const numberRegex = /^([0-9]+)$/;
+
+const unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)/;
 
 class VariableInput extends Component {
 	constructor(props) {
@@ -20,7 +25,7 @@ class VariableInput extends Component {
 		let {autoCompleteActive, focused} = this.state;
 
 		let autoComplete = '';
-		let colorPickerTrigger = '';
+		let inputPlugin = '';
 
 		let className = 'form-control';
 
@@ -35,15 +40,10 @@ class VariableInput extends Component {
 		if (this._isColor(name)) {
 			className += ' color-input';
 
-			let resolvedValue = resolveColorValue(name, value, variables);
-
-			colorPickerTrigger = (
-				<div className="color-picker-trigger" onClick={this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue)}>
-					<div className="color-picker-trigger-preview" style={this._getTriggerStyle(resolvedValue)}></div>
-
-					<div className="color-picker-trigger-checkerboard"></div>
-				</div>
-			);
+			inputPlugin = this.renderColorPickerTrigger(name, value, variables);
+		}
+		else if (this._isRange(value)) {
+			inputPlugin = this.renderRangePicker(name, value);
 		}
 
 		return (
@@ -66,7 +66,7 @@ class VariableInput extends Component {
 
 				{autoComplete}
 
-				{colorPickerTrigger}
+				{inputPlugin}
 			</div>
 		);
 	}
@@ -113,6 +113,40 @@ class VariableInput extends Component {
 				ref="autoCompleteMenu"
 			>
 				{items}
+			</div>
+		);
+	}
+
+	renderColorPickerTrigger(name, value, variables) {
+		const resolvedValue = resolveColorValue(name, value, variables);
+
+		return (
+			<div className="color-picker-trigger" onClick={this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue)}>
+				<div className="color-picker-trigger-preview" style={this._getTriggerStyle(resolvedValue)}></div>
+
+				<div className="color-picker-trigger-checkerboard"></div>
+			</div>
+		);
+	}
+
+	renderRangePicker() {
+		return (
+			<div className="range-picker">
+				<a
+					className="range-picker-up"
+					href="javascript:;"
+					onClick={this.handleRangePickerClick.bind(this, true)}
+				>
+					<Icon icon="angle-up" />
+				</a>
+
+				<a
+					className="range-picker-down"
+					href="javascript:;"
+					onClick={this.handleRangePickerClick.bind(this, false)}
+				>
+					<Icon icon="angle-down" />
+				</a>
 			</div>
 		);
 	}
@@ -233,6 +267,50 @@ class VariableInput extends Component {
 		}
 	}
 
+	handleRangePickerClick(up) {
+		const {name, onChange, value} = this.props;
+
+		let numberMatch = value.match(numberRegex);
+		let unitMatch = value.match(unitRegex);
+
+		if (unitMatch) {
+			let [input, negative, amount, unit] = unitMatch;
+
+			amount = _.toNumber(amount);
+
+			if (negative) {
+				up = !up;
+			}
+
+			if (up) {
+				amount++;
+			}
+			else {
+				amount--;
+			}
+
+			if (amount == 0) {
+				negative = false;
+			}
+
+			input = `${negative ? '-' : ''}${amount}${unit}`;
+
+			onChange(name, input);
+		}
+		else if (numberMatch) {
+			let amount = _.toNumber(numberMatch[1]);
+
+			if (up) {
+				amount++;
+			}
+			else {
+				amount--;
+			}
+
+			onChange(name, amount.toString());
+		}
+	}
+
 	_isAutoCompleteActive() {
 		let {autoCompleteMenu} = this.refs;
 
@@ -257,19 +335,23 @@ class VariableInput extends Component {
 		return triggerStyle;
 	}
 
-	_isColor(variableName) {
+	_isColor(name) {
 		var color = false;
 
-		if (variableName.indexOf('-bg') > -1 ||
-			variableName.indexOf('brand') > -1 ||
-			variableName.indexOf('color') > -1 ||
-			variableName.indexOf('gray') > -1 ||
-			_.endsWith(variableName, '-border') ||
-			_.endsWith(variableName, '-text')) {
+		if (name.indexOf('-bg') > -1 ||
+			name.indexOf('brand') > -1 ||
+			name.indexOf('color') > -1 ||
+			name.indexOf('gray') > -1 ||
+			_.endsWith(name, '-border') ||
+			_.endsWith(name, '-text')) {
 			color = true;
 		}
 
 		return color;
+	}
+
+	_isRange(value) {
+		return unitRegex.test(value) || numberRegex.test(value);
 	}
 }
 

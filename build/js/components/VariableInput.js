@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactDropdown = require('react-dropdown');
+
+var _reactDropdown2 = _interopRequireDefault(_reactDropdown);
 
 var _reactClickOutside = require('react-click-outside');
 
@@ -27,6 +33,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var numberRegex = /^([0-9]+)$/;
+
+var unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)/;
 
 var VariableInput = function (_Component) {
 	_inherits(VariableInput, _Component);
@@ -59,7 +69,7 @@ var VariableInput = function (_Component) {
 
 
 			var autoComplete = '';
-			var colorPickerTrigger = '';
+			var inputPlugin = '';
 
 			var className = 'form-control';
 
@@ -74,14 +84,9 @@ var VariableInput = function (_Component) {
 			if (this._isColor(name)) {
 				className += ' color-input';
 
-				var resolvedValue = (0, _color.resolveColorValue)(name, value, variables);
-
-				colorPickerTrigger = _react2.default.createElement(
-					'div',
-					{ className: 'color-picker-trigger', onClick: this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue) },
-					_react2.default.createElement('div', { className: 'color-picker-trigger-preview', style: this._getTriggerStyle(resolvedValue) }),
-					_react2.default.createElement('div', { className: 'color-picker-trigger-checkerboard' })
-				);
+				inputPlugin = this.renderColorPickerTrigger(name, value, variables);
+			} else if (this._isRange(value)) {
+				inputPlugin = this.renderRangePicker(name, value);
 			}
 
 			return _react2.default.createElement(
@@ -105,7 +110,7 @@ var VariableInput = function (_Component) {
 					value: value
 				}),
 				autoComplete,
-				colorPickerTrigger
+				inputPlugin
 			);
 		}
 	}, {
@@ -155,6 +160,44 @@ var VariableInput = function (_Component) {
 					ref: 'autoCompleteMenu'
 				},
 				items
+			);
+		}
+	}, {
+		key: 'renderColorPickerTrigger',
+		value: function renderColorPickerTrigger(name, value, variables) {
+			var resolvedValue = (0, _color.resolveColorValue)(name, value, variables);
+
+			return _react2.default.createElement(
+				'div',
+				{ className: 'color-picker-trigger', onClick: this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue) },
+				_react2.default.createElement('div', { className: 'color-picker-trigger-preview', style: this._getTriggerStyle(resolvedValue) }),
+				_react2.default.createElement('div', { className: 'color-picker-trigger-checkerboard' })
+			);
+		}
+	}, {
+		key: 'renderRangePicker',
+		value: function renderRangePicker() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'range-picker' },
+				_react2.default.createElement(
+					'a',
+					{
+						className: 'range-picker-up',
+						href: 'javascript:;',
+						onClick: this.handleRangePickerClick.bind(this, true)
+					},
+					_react2.default.createElement(_Icon2.default, { icon: 'angle-up' })
+				),
+				_react2.default.createElement(
+					'a',
+					{
+						className: 'range-picker-down',
+						href: 'javascript:;',
+						onClick: this.handleRangePickerClick.bind(this, false)
+					},
+					_react2.default.createElement(_Icon2.default, { icon: 'angle-down' })
+				)
 			);
 		}
 	}, {
@@ -300,6 +343,58 @@ var VariableInput = function (_Component) {
 			}
 		}
 	}, {
+		key: 'handleRangePickerClick',
+		value: function handleRangePickerClick(up) {
+			var _props6 = this.props;
+			var name = _props6.name;
+			var onChange = _props6.onChange;
+			var value = _props6.value;
+
+
+			var numberMatch = value.match(numberRegex);
+			var unitMatch = value.match(unitRegex);
+
+			if (unitMatch) {
+				var _unitMatch = _slicedToArray(unitMatch, 4);
+
+				var input = _unitMatch[0];
+				var negative = _unitMatch[1];
+				var amount = _unitMatch[2];
+				var unit = _unitMatch[3];
+
+
+				amount = _.toNumber(amount);
+
+				if (negative) {
+					up = !up;
+				}
+
+				if (up) {
+					amount++;
+				} else {
+					amount--;
+				}
+
+				if (amount == 0) {
+					negative = false;
+				}
+
+				input = '' + (negative ? '-' : '') + amount + unit;
+
+				onChange(name, input);
+			} else if (numberMatch) {
+				var _amount = _.toNumber(numberMatch[1]);
+
+				if (up) {
+					_amount++;
+				} else {
+					_amount--;
+				}
+
+				onChange(name, _amount.toString());
+			}
+		}
+	}, {
 		key: '_isAutoCompleteActive',
 		value: function _isAutoCompleteActive() {
 			var autoCompleteMenu = this.refs.autoCompleteMenu;
@@ -329,14 +424,19 @@ var VariableInput = function (_Component) {
 		}
 	}, {
 		key: '_isColor',
-		value: function _isColor(variableName) {
+		value: function _isColor(name) {
 			var color = false;
 
-			if (variableName.indexOf('-bg') > -1 || variableName.indexOf('brand') > -1 || variableName.indexOf('color') > -1 || variableName.indexOf('gray') > -1 || _.endsWith(variableName, '-border') || _.endsWith(variableName, '-text')) {
+			if (name.indexOf('-bg') > -1 || name.indexOf('brand') > -1 || name.indexOf('color') > -1 || name.indexOf('gray') > -1 || _.endsWith(name, '-border') || _.endsWith(name, '-text')) {
 				color = true;
 			}
 
 			return color;
+		}
+	}, {
+		key: '_isRange',
+		value: function _isRange(value) {
+			return unitRegex.test(value) || numberRegex.test(value);
 		}
 	}]);
 

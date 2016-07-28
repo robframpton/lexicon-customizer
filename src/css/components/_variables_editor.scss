@@ -157,3 +157,24 @@
 .variables-editor.has-color-picker-panel {
 	padding-bottom: 270px;
 }
+
+.variable-input input {
+	height: 38px;
+}
+
+.range-picker {
+	bottom: 4px;
+	height: 38px;
+	position: absolute;
+	right: 0;
+	width: 28px;
+
+	.range-picker-down, .range-picker-up {
+		display: inline-block;
+	}
+
+	svg {
+		fill: #555;
+		height: 14px;
+	}
+}
