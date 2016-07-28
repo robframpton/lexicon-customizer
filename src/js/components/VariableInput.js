@@ -1,7 +1,7 @@
-import Dropdown from 'react-dropdown'
 import enhanceWithClickOutside from 'react-click-outside';
 import React, {Component, PropTypes} from 'react';
 
+import Dropdown from '../components/Dropdown';
 import Icon from '../components/Icon';
 import {resolveColorValue} from '../lib/color';
 
@@ -48,7 +48,7 @@ class VariableInput extends Component {
 
 		return (
 			<div className="form-group variable-input">
-				{this.renderToolbar()}
+				{this.renderDropdown()}
 
 				<label htmlFor={name}>{name}</label>
 
@@ -151,26 +151,20 @@ class VariableInput extends Component {
 		);
 	}
 
-	renderToolbar() {
-		const instance = this;
+	renderDropdown() {
+		let {dropdownTemplate, name} = this.props;
 
-		const {name, toolbar, value} = this.props;
-
-		let toolbarContent = '';
-
-		if (toolbar && toolbar.length) {
-			toolbarContent = toolbar.map((button, index) => {
-				const {action, icon} = button;
-
-				return (
-					<a className="variable-input-action" href="javascript:;" key={`action${index}`} onClick={action.bind(null, name, value)}>
-						<Icon icon={icon} />
-					</a>
-				);
+		dropdownTemplate = _.map(dropdownTemplate, (item) => {
+			return _.assign({}, item, {
+				name
 			});
-		}
+		});
 
-		return toolbarContent;
+		return (
+			<Dropdown options={dropdownTemplate}>
+				<Icon icon="ellipsis-h" />
+			</Dropdown>
+		);
 	}
 
 	componentDidUpdate(event) {
@@ -356,6 +350,7 @@ class VariableInput extends Component {
 }
 
 VariableInput.propTypes = {
+	dropdownTemplate: PropTypes.array,
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,

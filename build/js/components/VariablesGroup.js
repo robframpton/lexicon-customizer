@@ -96,9 +96,8 @@ var VariablesGroup = function (_Component) {
 	}, {
 		key: 'renderInputs',
 		value: function renderInputs() {
-			var _this2 = this;
-
 			var _props2 = this.props;
+			var dropdownTemplate = _props2.dropdownTemplate;
 			var groupVariables = _props2.groupVariables;
 			var variables = _props2.variables;
 
@@ -112,12 +111,12 @@ var VariablesGroup = function (_Component) {
 				var name = variable.get('name');
 
 				return _react2.default.createElement(_VariableInput2.default, {
+					dropdownTemplate: dropdownTemplate,
 					key: name,
 					label: name,
 					name: name,
 					onChange: handleVariableChange,
 					onColorPickerTriggerClick: handleColorPickerTriggerClick,
-					toolbar: _this2.getToolbarTemplate(),
 					value: variable.get('value'),
 					variables: variables
 				});
@@ -141,14 +140,6 @@ var VariablesGroup = function (_Component) {
 			}
 
 			return variablesArray;
-		}
-	}, {
-		key: 'getToolbarTemplate',
-		value: function getToolbarTemplate() {
-			return [{
-				action: this.handleVariableReset.bind(this),
-				icon: 'reload'
-			}];
 		}
 	}, {
 		key: 'handleColorPickerTriggerClick',
@@ -187,12 +178,13 @@ var VariablesGroup = function (_Component) {
 ;
 
 VariablesGroup.propTypes = {
+	dropdownTemplate: _react.PropTypes.array,
 	group: _react.PropTypes.string.isRequired,
 	groupVariables: _reactImmutableProptypes2.default.orderedMap.isRequired,
 	header: _react.PropTypes.string.isRequired,
 	onColorPickerTriggerClick: _react.PropTypes.func.isRequired,
-	onVariableReset: _react.PropTypes.func.isRequired,
 	onVariableChange: _react.PropTypes.func.isRequired,
+	onVariableReset: _react.PropTypes.func.isRequired,
 	variables: _reactImmutableProptypes2.default.orderedMap.isRequired
 };
 

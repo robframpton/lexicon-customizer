@@ -8,10 +8,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactDropdown = require('react-dropdown');
-
-var _reactDropdown2 = _interopRequireDefault(_reactDropdown);
-
 var _reactClickOutside = require('react-click-outside');
 
 var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
@@ -19,6 +15,10 @@ var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Dropdown = require('../components/Dropdown');
+
+var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
 var _Icon = require('../components/Icon');
 
@@ -92,7 +92,7 @@ var VariableInput = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				{ className: 'form-group variable-input' },
-				this.renderToolbar(),
+				this.renderDropdown(),
 				_react2.default.createElement(
 					'label',
 					{ htmlFor: name },
@@ -201,33 +201,24 @@ var VariableInput = function (_Component) {
 			);
 		}
 	}, {
-		key: 'renderToolbar',
-		value: function renderToolbar() {
-			var instance = this;
-
+		key: 'renderDropdown',
+		value: function renderDropdown() {
 			var _props2 = this.props;
+			var dropdownTemplate = _props2.dropdownTemplate;
 			var name = _props2.name;
-			var toolbar = _props2.toolbar;
-			var value = _props2.value;
 
 
-			var toolbarContent = '';
-
-			if (toolbar && toolbar.length) {
-				toolbarContent = toolbar.map(function (button, index) {
-					var action = button.action;
-					var icon = button.icon;
-
-
-					return _react2.default.createElement(
-						'a',
-						{ className: 'variable-input-action', href: 'javascript:;', key: 'action' + index, onClick: action.bind(null, name, value) },
-						_react2.default.createElement(_Icon2.default, { icon: icon })
-					);
+			dropdownTemplate = _.map(dropdownTemplate, function (item) {
+				return _.assign({}, item, {
+					name: name
 				});
-			}
+			});
 
-			return toolbarContent;
+			return _react2.default.createElement(
+				_Dropdown2.default,
+				{ options: dropdownTemplate },
+				_react2.default.createElement(_Icon2.default, { icon: 'ellipsis-h' })
+			);
 		}
 	}, {
 		key: 'componentDidUpdate',
@@ -444,6 +435,7 @@ var VariableInput = function (_Component) {
 }(_react.Component);
 
 VariableInput.propTypes = {
+	dropdownTemplate: _react.PropTypes.array,
 	label: _react.PropTypes.string.isRequired,
 	name: _react.PropTypes.string.isRequired,
 	onChange: _react.PropTypes.func.isRequired,

@@ -50,7 +50,7 @@ class VariablesGroup extends Component {
 	}
 
 	renderInputs() {
-		const {groupVariables, variables} = this.props;
+		const {dropdownTemplate, groupVariables, variables} = this.props;
 
 		const handleVariableChange = this.handleVariableChange.bind(this);
 		const handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
@@ -62,12 +62,12 @@ class VariablesGroup extends Component {
 
 			return (
 				<VariableInput
+					dropdownTemplate={dropdownTemplate}
 					key={name}
 					label={name}
 					name={name}
 					onChange={handleVariableChange}
 					onColorPickerTriggerClick={handleColorPickerTriggerClick}
-					toolbar={this.getToolbarTemplate()}
 					value={variable.get('value')}
 					variables={variables}
 				/>
@@ -90,15 +90,6 @@ class VariablesGroup extends Component {
 		}
 
 		return variablesArray;
-	}
-
-	getToolbarTemplate() {
-		return [
-			{
-				action: this.handleVariableReset.bind(this),
-				icon: 'reload'
-			}
-		];
 	}
 
 	handleColorPickerTriggerClick(name) {
@@ -127,12 +118,13 @@ class VariablesGroup extends Component {
 };
 
 VariablesGroup.propTypes = {
+	dropdownTemplate: PropTypes.array,
 	group: PropTypes.string.isRequired,
 	groupVariables: ImmutablePropTypes.orderedMap.isRequired,
 	header: PropTypes.string.isRequired,
 	onColorPickerTriggerClick: PropTypes.func.isRequired,
-	onVariableReset: PropTypes.func.isRequired,
 	onVariableChange: PropTypes.func.isRequired,
+	onVariableReset: PropTypes.func.isRequired,
 	variables: ImmutablePropTypes.orderedMap.isRequired
 };
 

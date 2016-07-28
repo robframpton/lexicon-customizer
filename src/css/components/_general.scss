@@ -18,6 +18,17 @@ a {
 		color: darken($brand-primary, 20%);
 		text-decoration: none;
 	}
+
+	.lexicon-icon-wrapper svg {
+		fill: #555;
+		transition: fill 300ms;
+	}
+
+	&:hover {
+		.lexicon-icon-wrapper svg {
+			fill: $brand-primary;
+		}
+	}
 }
 
 input.form-control {

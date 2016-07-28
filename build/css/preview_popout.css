@@ -14,6 +14,11 @@ a {
   a:active, a:focus, a:hover {
     color: #258eac;
     text-decoration: none; }
+  a .lexicon-icon-wrapper svg {
+    fill: #555;
+    transition: fill 300ms; }
+  a:hover .lexicon-icon-wrapper svg {
+    fill: #5BBFDC; }
 
 input.form-control, input.form-control:focus {
   border-color: #E4E4E4;

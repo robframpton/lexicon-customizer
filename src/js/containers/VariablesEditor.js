@@ -79,6 +79,7 @@ class VariablesEditor extends Component {
 			if (!groupVariables.isEmpty()) {
 				variablesGroup = (
 					<VariablesGroup
+						dropdownTemplate={this.getDropdownTemplate()}
 						group={group}
 						groupVariables={groupVariables}
 						header={_.capitalize(group)}
@@ -93,6 +94,24 @@ class VariablesEditor extends Component {
 
 			return variablesGroup;
 		});
+	}
+
+	getDropdownTemplate() {
+		return [
+			{
+				action: this.handleVariableReset.bind(this),
+				icon: 'reload',
+				label: 'Reset',
+				value: 'reset'
+			},
+			{
+				action: () => {
+				},
+				icon: 'lock',
+				label: 'Lock',
+				value: 'lock'
+			}
+		];
 	}
 
 	handleVariableChange(name, value) {
@@ -111,7 +130,7 @@ class VariablesEditor extends Component {
 		dispatch(setColorVariableName(name));
 	}
 
-	handleVariableReset(name) {
+	handleVariableReset({name}) {
 		this.props.dispatch(resetVariable(name));
 	}
 };

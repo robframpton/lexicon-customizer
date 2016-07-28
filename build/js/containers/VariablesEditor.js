@@ -122,6 +122,8 @@ var VariablesEditor = function (_Component) {
 	}, {
 		key: 'renderGroups',
 		value: function renderGroups() {
+			var _this2 = this;
+
 			var _props2 = this.props;
 			var selectedComponent = _props2.selectedComponent;
 			var variables = _props2.variables;
@@ -142,6 +144,7 @@ var VariablesEditor = function (_Component) {
 
 				if (!groupVariables.isEmpty()) {
 					variablesGroup = _react2.default.createElement(_VariablesGroup2.default, {
+						dropdownTemplate: _this2.getDropdownTemplate(),
 						group: group,
 						groupVariables: groupVariables,
 						header: _lodash2.default.capitalize(group),
@@ -155,6 +158,21 @@ var VariablesEditor = function (_Component) {
 
 				return variablesGroup;
 			});
+		}
+	}, {
+		key: 'getDropdownTemplate',
+		value: function getDropdownTemplate() {
+			return [{
+				action: this.handleVariableReset.bind(this),
+				icon: 'reload',
+				label: 'Reset',
+				value: 'reset'
+			}, {
+				action: function action() {},
+				icon: 'lock',
+				label: 'Lock',
+				value: 'lock'
+			}];
 		}
 	}, {
 		key: 'handleVariableChange',
@@ -180,7 +198,9 @@ var VariablesEditor = function (_Component) {
 		}
 	}, {
 		key: 'handleVariableReset',
-		value: function handleVariableReset(name) {
+		value: function handleVariableReset(_ref) {
+			var name = _ref.name;
+
 			this.props.dispatch((0, _variables.resetVariable)(name));
 		}
 	}]);
