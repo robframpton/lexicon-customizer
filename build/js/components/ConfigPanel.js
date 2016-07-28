@@ -89,6 +89,16 @@ var ConfigPanel = function (_Component) {
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Lexicon Base', value: 'lexiconBase' }),
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Atlas Theme', value: 'atlasTheme' }),
 					_react2.default.createElement(
+						_ExportButton2.default,
+						null,
+						'Export Variables'
+					),
+					_react2.default.createElement(
+						_ImportButton2.default,
+						null,
+						'Import Variables'
+					),
+					_react2.default.createElement(
 						_ResetButton2.default,
 						null,
 						'Reset All'
@@ -121,20 +131,6 @@ var ConfigPanel = function (_Component) {
 						_ClearThemeButton2.default,
 						null,
 						'Clear Theme'
-					)
-				),
-				_react2.default.createElement(
-					_ConfigPanelGroup2.default,
-					{ label: 'Import/Export' },
-					_react2.default.createElement(
-						_ExportButton2.default,
-						null,
-						'Export Variables'
-					),
-					_react2.default.createElement(
-						_ImportButton2.default,
-						null,
-						'Import Variables'
 					)
 				)
 			);

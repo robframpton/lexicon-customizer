@@ -28,41 +28,25 @@ class ConfigPanel extends Component {
 					<ThemeRadio label="Lexicon Base" value="lexiconBase" />
 					<ThemeRadio label="Atlas Theme" value="atlasTheme" />
 
-					<ResetButton>
-						Reset All
-					</ResetButton>
+					<ExportButton>Export Variables</ExportButton>
 
-					<ResetComponentButton>
-						Reset Component
-					</ResetComponentButton>
+					<ImportButton>Import Variables</ImportButton>
+
+					<ResetButton>Reset All</ResetButton>
+
+					<ResetComponentButton>Reset Component</ResetComponentButton>
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Preview Frame">
-					<OpenDevToolsButton>
-						Inspect Preview
-					</OpenDevToolsButton>
+					<OpenDevToolsButton>Inspect Preview</OpenDevToolsButton>
 
-					<PopoutPreviewButton>
-						Popout Preview
-					</PopoutPreviewButton>
+					<PopoutPreviewButton>Popout Preview</PopoutPreviewButton>
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Theme">
 					<ThemeDropper />
 
-					<ClearThemeButton>
-						Clear Theme
-					</ClearThemeButton>
-				</ConfigPanelGroup>
-
-				<ConfigPanelGroup label="Import/Export">
-					<ExportButton>
-						Export Variables
-					</ExportButton>
-
-					<ImportButton>
-						Import Variables
-					</ImportButton>
+					<ClearThemeButton>Clear Theme</ClearThemeButton>
 				</ConfigPanelGroup>
 			</div>
 		)

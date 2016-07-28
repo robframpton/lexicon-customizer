@@ -80,7 +80,7 @@ input.form-control:focus {
   background-color: #1F282F;
   bottom: 0;
   box-shadow: 0 0 5px #333;
-  overflow: hidden;
+  overflow-y: auto;
   padding: 20px;
   position: fixed;
   right: -255px;

@@ -6,7 +6,7 @@ $config-panel-bg: #1F282F;
 	background-color: $config-panel-bg;
 	bottom: 0;
 	box-shadow: 0 0 5px #333;
-	overflow: hidden;
+	overflow-y: auto;
 	padding: 20px;
 	position: fixed;
 	right: -255px;
