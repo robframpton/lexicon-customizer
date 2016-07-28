@@ -36,7 +36,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var numberRegex = /^([0-9]+)$/;
 
-var unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)/;
+var unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)$/;
 
 var VariableInput = function (_Component) {
 	_inherits(VariableInput, _Component);

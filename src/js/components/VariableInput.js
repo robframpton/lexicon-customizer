@@ -7,7 +7,7 @@ import {resolveColorValue} from '../lib/color';
 
 const numberRegex = /^([0-9]+)$/;
 
-const unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)/;
+const unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)$/;
 
 class VariableInput extends Component {
 	constructor(props) {
