@@ -5,7 +5,7 @@ import Dropdown from '../components/Dropdown';
 import Icon from '../components/Icon';
 import {resolveColorValue} from '../lib/color';
 
-const numberRegex = /^([0-9]+)$/;
+const numberRegex = /^(-)?([0-9]+)$/;
 
 const unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)$/;
 
@@ -167,6 +167,33 @@ class VariableInput extends Component {
 		);
 	}
 
+	calculateNumericalChange(number, negative, up, unit) {
+		number = _.toNumber(number);
+
+		if (negative) {
+			up = !up;
+		}
+
+		if (up) {
+			number++;
+		}
+		else {
+			number--;
+		}
+
+		if (number == 0) {
+			negative = false;
+		}
+
+		let value = `${negative ? '-' : ''}${number}`;
+
+		if (unit) {
+			value += unit;
+		}
+
+		return value.toString();
+	}
+
 	componentDidUpdate(event) {
 		let {autoCompleteActive} = this.state;
 
@@ -268,40 +295,14 @@ class VariableInput extends Component {
 		let unitMatch = value.match(unitRegex);
 
 		if (unitMatch) {
-			let [input, negative, amount, unit] = unitMatch;
+			let [input, negative, number, unit] = unitMatch;
 
-			amount = _.toNumber(amount);
-
-			if (negative) {
-				up = !up;
-			}
-
-			if (up) {
-				amount++;
-			}
-			else {
-				amount--;
-			}
-
-			if (amount == 0) {
-				negative = false;
-			}
-
-			input = `${negative ? '-' : ''}${amount}${unit}`;
-
-			onChange(name, input);
+			onChange(name, this.calculateNumericalChange(number, negative, up, unit));
 		}
 		else if (numberMatch) {
-			let amount = _.toNumber(numberMatch[1]);
+			let [input, negative, number] = numberMatch;
 
-			if (up) {
-				amount++;
-			}
-			else {
-				amount--;
-			}
-
-			onChange(name, amount.toString());
+			onChange(name, this.calculateNumericalChange(number, negative, up));
 		}
 	}
 

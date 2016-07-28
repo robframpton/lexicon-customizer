@@ -34,7 +34,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var numberRegex = /^([0-9]+)$/;
+var numberRegex = /^(-)?([0-9]+)$/;
 
 var unitRegex = /^(-)?([0-9\.]+)(px|em|ex|%|in|cm|mm|pt|pc)$/;
 
@@ -221,6 +221,33 @@ var VariableInput = function (_Component) {
 			);
 		}
 	}, {
+		key: 'calculateNumericalChange',
+		value: function calculateNumericalChange(number, negative, up, unit) {
+			number = _.toNumber(number);
+
+			if (negative) {
+				up = !up;
+			}
+
+			if (up) {
+				number++;
+			} else {
+				number--;
+			}
+
+			if (number == 0) {
+				negative = false;
+			}
+
+			var value = '' + (negative ? '-' : '') + number;
+
+			if (unit) {
+				value += unit;
+			}
+
+			return value.toString();
+		}
+	}, {
 		key: 'componentDidUpdate',
 		value: function componentDidUpdate(event) {
 			var autoCompleteActive = this.state.autoCompleteActive;
@@ -350,39 +377,20 @@ var VariableInput = function (_Component) {
 
 				var input = _unitMatch[0];
 				var negative = _unitMatch[1];
-				var amount = _unitMatch[2];
+				var number = _unitMatch[2];
 				var unit = _unitMatch[3];
 
 
-				amount = _.toNumber(amount);
-
-				if (negative) {
-					up = !up;
-				}
-
-				if (up) {
-					amount++;
-				} else {
-					amount--;
-				}
-
-				if (amount == 0) {
-					negative = false;
-				}
-
-				input = '' + (negative ? '-' : '') + amount + unit;
-
-				onChange(name, input);
+				onChange(name, this.calculateNumericalChange(number, negative, up, unit));
 			} else if (numberMatch) {
-				var _amount = _.toNumber(numberMatch[1]);
+				var _numberMatch = _slicedToArray(numberMatch, 3);
 
-				if (up) {
-					_amount++;
-				} else {
-					_amount--;
-				}
+				var _input = _numberMatch[0];
+				var _negative = _numberMatch[1];
+				var _number = _numberMatch[2];
 
-				onChange(name, _amount.toString());
+
+				onChange(name, this.calculateNumericalChange(_number, _negative, up));
 			}
 		}
 	}, {
