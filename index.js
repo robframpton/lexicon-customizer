@@ -42,7 +42,7 @@ function createMainWindow(url) {
 	if (!mainWindow && appReady && lexiconDirs) {
 		const win = new electron.BrowserWindow({
 			height: 800,
-			titleBarStyle: 'hidden-inset',
+			titleBarStyle: 'hidden',
 			width: 1400
 		});
 
