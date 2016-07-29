@@ -39,10 +39,16 @@ class Dropdown extends Component {
 		return (
 			<div className={className}>
 				{options.map((option, index) => {
-					const {icon, label} = option;
+					const {disabled, icon, label} = option;
+
+					let optionClassName = 'dropdown-option';
+
+					if (disabled) {
+						optionClassName += ' disabled';
+					}
 
 					return (
-						<div className="dropdown-option">
+						<div className={optionClassName}>
 							<a
 								className="dropdown-option-link"
 								href="javascript:;"
@@ -70,7 +76,11 @@ class Dropdown extends Component {
 	}
 
 	handleOptionClick(option) {
-		const {action} = option;
+		const {action, disabled} = option;
+
+		if (disabled) {
+			return;
+		}
 
 		const {handleOptionClick} = this.props;
 

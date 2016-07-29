@@ -76,13 +76,20 @@ var Dropdown = function (_Component) {
 				'div',
 				{ className: className },
 				options.map(function (option, index) {
+					var disabled = option.disabled;
 					var icon = option.icon;
 					var label = option.label;
 
 
+					var optionClassName = 'dropdown-option';
+
+					if (disabled) {
+						optionClassName += ' disabled';
+					}
+
 					return _react2.default.createElement(
 						'div',
-						{ className: 'dropdown-option' },
+						{ className: optionClassName },
 						_react2.default.createElement(
 							'a',
 							{
@@ -113,6 +120,13 @@ var Dropdown = function (_Component) {
 		key: 'handleOptionClick',
 		value: function handleOptionClick(option) {
 			var action = option.action;
+			var disabled = option.disabled;
+
+
+			if (disabled) {
+				return;
+			}
+
 			var handleOptionClick = this.props.handleOptionClick;
 
 

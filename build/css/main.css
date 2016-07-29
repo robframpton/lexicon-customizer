@@ -156,6 +156,12 @@ input.form-control:focus {
     .dropdown .dropdown-option a:hover {
       background-color: #F7F7F7;
       color: #5BBFDC; }
+  .dropdown .dropdown-option.disabled a {
+    background-color: #FFF;
+    color: #CCC;
+    cursor: default; }
+    .dropdown .dropdown-option.disabled a .lexicon-icon {
+      fill: #CCC; }
 
 /* Error popup */
 .error-popup-wrapper {
