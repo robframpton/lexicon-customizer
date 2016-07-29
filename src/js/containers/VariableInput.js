@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import Dropdown from '../components/Dropdown';
 import Icon from '../components/Icon';
+import {getInheritableVariables} from '../lib/var_util';
 import {resetVariable, setVariable} from '../actions/variables';
 import {resolveColorValue} from '../lib/color';
 import {setColorVariableName} from '../actions/colorVariableName';
@@ -37,7 +38,15 @@ class VariableInput extends Component {
 	}
 
 	render() {
-		let {disabled, label, name, onChange, value, variables} = this.props;
+		let {
+			disabled,
+			label,
+			name,
+			onChange,
+			value,
+			variables
+		} = this.props;
+
 		let {autoCompleteActive, focused} = this.state;
 
 		let autoComplete = '';
@@ -95,18 +104,18 @@ class VariableInput extends Component {
 	}
 
 	renderAutoComplete(name, value, variables) {
-		if (variables.has(value)) {
+		const {sourceVariables} = this.props;
+
+		const inheritableVariables = getInheritableVariables(name, variables, sourceVariables);
+
+		if (inheritableVariables.has(value)) {
 			return '';
 		}
-
-		variables = variables.takeUntil((value, key) => {
-			return key === name;
-		});
 
 		let autoCompleteIndex = this.state.autoCompleteIndex;
 		let reducedIndex = 0;
 
-		let items = variables.toArray().reduce((result, item) => {
+		let items = inheritableVariables.toArray().reduce((result, item) => {
 			const itemName = item.get('name');
 
 			if (itemName.indexOf(value) == 0) {
@@ -405,6 +414,7 @@ VariableInput.propTypes = {
 	onColorPickerTriggerClick: PropTypes.func.isRequired,
 	onLock: PropTypes.func.isRequired,
 	onReset: PropTypes.func.isRequired,
+	sourceVariables: ImmutablePropTypes.orderedMap.isRequired,
 	value: PropTypes.string.isRequired,
 	variables: ImmutablePropTypes.orderedMap.isRequired
 };
@@ -412,6 +422,7 @@ VariableInput.propTypes = {
 const mapStateToProps = (state, ownProps) => {
 	return {
 		disabled: state.get('lockedVariables').has(ownProps.name),
+		sourceVariables: state.get('sourceVariables'),
 		variables: state.get('variables')
 	}
 };

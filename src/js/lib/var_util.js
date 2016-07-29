@@ -29,6 +29,16 @@ export function getComponentsFromVariablesMap(variablesMap) {
 	return components;
 };
 
+export function getInheritableVariables(variableName, variables, sourceVariables) {
+	let inheritableVariables = variables.takeUntil((variable, key) => {
+		return key === variableName;
+	});
+
+	inheritableVariables = getModifiedVariables(inheritableVariables, sourceVariables);
+
+	return inheritableVariables;
+};
+
 export function getModifiedVariables(variables, sourceVariables) {
 	return variables.filter((variable, key) => {
 		return variable.get('value') !== sourceVariables.get(key).get('value');

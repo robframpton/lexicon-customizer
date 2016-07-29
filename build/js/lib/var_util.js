@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.filterVariablesByComponent = filterVariablesByComponent;
 exports.filterVariablesByGroup = filterVariablesByGroup;
 exports.getComponentsFromVariablesMap = getComponentsFromVariablesMap;
+exports.getInheritableVariables = getInheritableVariables;
 exports.getModifiedVariables = getModifiedVariables;
 exports.removeLockedVariables = removeLockedVariables;
 
@@ -41,6 +42,16 @@ function getComponentsFromVariablesMap(variablesMap) {
 	});
 
 	return components;
+};
+
+function getInheritableVariables(variableName, variables, sourceVariables) {
+	var inheritableVariables = variables.takeUntil(function (variable, key) {
+		return key === variableName;
+	});
+
+	inheritableVariables = getModifiedVariables(inheritableVariables, sourceVariables);
+
+	return inheritableVariables;
 };
 
 function getModifiedVariables(variables, sourceVariables) {

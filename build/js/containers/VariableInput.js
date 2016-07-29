@@ -26,6 +26,8 @@ var _Icon = require('../components/Icon');
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
+var _var_util = require('../lib/var_util');
+
 var _variables = require('../actions/variables');
 
 var _color = require('../lib/color');
@@ -148,18 +150,19 @@ var VariableInput = function (_Component) {
 		value: function renderAutoComplete(name, value, variables) {
 			var _this2 = this;
 
-			if (variables.has(value)) {
+			var sourceVariables = this.props.sourceVariables;
+
+
+			var inheritableVariables = (0, _var_util.getInheritableVariables)(name, variables, sourceVariables);
+
+			if (inheritableVariables.has(value)) {
 				return '';
 			}
-
-			variables = variables.takeUntil(function (value, key) {
-				return key === name;
-			});
 
 			var autoCompleteIndex = this.state.autoCompleteIndex;
 			var reducedIndex = 0;
 
-			var items = variables.toArray().reduce(function (result, item) {
+			var items = inheritableVariables.toArray().reduce(function (result, item) {
 				var itemName = item.get('name');
 
 				if (itemName.indexOf(value) == 0) {
@@ -512,6 +515,7 @@ VariableInput.propTypes = {
 	onColorPickerTriggerClick: _react.PropTypes.func.isRequired,
 	onLock: _react.PropTypes.func.isRequired,
 	onReset: _react.PropTypes.func.isRequired,
+	sourceVariables: _reactImmutableProptypes2.default.orderedMap.isRequired,
 	value: _react.PropTypes.string.isRequired,
 	variables: _reactImmutableProptypes2.default.orderedMap.isRequired
 };
@@ -519,6 +523,7 @@ VariableInput.propTypes = {
 var mapStateToProps = function mapStateToProps(state, ownProps) {
 	return {
 		disabled: state.get('lockedVariables').has(ownProps.name),
+		sourceVariables: state.get('sourceVariables'),
 		variables: state.get('variables')
 	};
 };
