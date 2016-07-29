@@ -20,33 +20,13 @@ var _var_util = require('../lib/var_util');
 
 var varUtil = _interopRequireWildcard(_var_util);
 
-var _ColorPickerPanel = require('../components/ColorPickerPanel');
-
-var _ColorPickerPanel2 = _interopRequireDefault(_ColorPickerPanel);
-
-var _FilterInput = require('../components/FilterInput');
-
-var _FilterInput2 = _interopRequireDefault(_FilterInput);
-
 var _LexiconColorPickerPanel = require('../containers/LexiconColorPickerPanel');
 
 var _LexiconColorPickerPanel2 = _interopRequireDefault(_LexiconColorPickerPanel);
 
-var _VariableInput = require('../components/VariableInput');
-
-var _VariableInput2 = _interopRequireDefault(_VariableInput);
-
 var _VariablesGroup = require('../components/VariablesGroup');
 
 var _VariablesGroup2 = _interopRequireDefault(_VariablesGroup);
-
-var _index = require('../actions/index');
-
-var _variables = require('../actions/variables');
-
-var _colorVariableName = require('../actions/colorVariableName');
-
-var _lockedVariables = require('../actions/lockedVariables');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -124,17 +104,10 @@ var VariablesEditor = function (_Component) {
 	}, {
 		key: 'renderGroups',
 		value: function renderGroups() {
-			var _this2 = this;
-
 			var _props2 = this.props;
-			var lockedVariables = _props2.lockedVariables;
 			var selectedComponent = _props2.selectedComponent;
 			var variables = _props2.variables;
 
-
-			var handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
-			var handleVariableChange = this.handleVariableChange.bind(this);
-			var handleVariableReset = this.handleVariableReset.bind(this);
 
 			var componentVariables = varUtil.filterVariablesByComponent(variables, selectedComponent);
 
@@ -147,72 +120,15 @@ var VariablesEditor = function (_Component) {
 
 				if (!groupVariables.isEmpty()) {
 					variablesGroup = _react2.default.createElement(_VariablesGroup2.default, {
-						dropdownTemplate: _this2.getDropdownTemplate(),
 						group: group,
 						groupVariables: groupVariables,
 						header: _lodash2.default.capitalize(group),
-						key: group,
-						lockedVariables: lockedVariables,
-						onColorPickerTriggerClick: handleColorPickerTriggerClick,
-						onVariableChange: handleVariableChange,
-						onVariableReset: handleVariableReset,
-						variables: variables
+						key: group
 					});
 				}
 
 				return variablesGroup;
 			});
-		}
-	}, {
-		key: 'getDropdownTemplate',
-		value: function getDropdownTemplate() {
-			return [{
-				action: this.handleVariableReset.bind(this),
-				icon: 'reload',
-				label: 'Reset',
-				value: 'reset'
-			}, {
-				action: this.handleVariableLock.bind(this),
-				icon: 'lock',
-				label: 'Lock',
-				value: 'lock'
-			}];
-		}
-	}, {
-		key: 'handleColorPickerTriggerClick',
-		value: function handleColorPickerTriggerClick(name) {
-			var _props3 = this.props;
-			var colorVariableName = _props3.colorVariableName;
-			var dispatch = _props3.dispatch;
-
-
-			if (colorVariableName === name) {
-				name = null;
-			}
-
-			dispatch((0, _colorVariableName.setColorVariableName)(name));
-		}
-	}, {
-		key: 'handleVariableChange',
-		value: function handleVariableChange(name, value) {
-			var dispatch = this.props.dispatch;
-
-
-			dispatch((0, _variables.setVariable)(name, value));
-		}
-	}, {
-		key: 'handleVariableLock',
-		value: function handleVariableLock(_ref) {
-			var name = _ref.name;
-
-			this.props.dispatch((0, _lockedVariables.toggleLockedVariable)(name));
-		}
-	}, {
-		key: 'handleVariableReset',
-		value: function handleVariableReset(_ref2) {
-			var name = _ref2.name;
-
-			this.props.dispatch((0, _variables.resetVariable)(name));
 		}
 	}]);
 
@@ -224,8 +140,6 @@ var VariablesEditor = function (_Component) {
 var mapStateToProps = function mapStateToProps(state, ownProps) {
 	return {
 		colorVariableName: state.get('colorVariableName'),
-		lockedVariables: state.get('lockedVariables'),
-		sassError: state.get('sassError'),
 		selectedComponent: state.get('selectedComponent'),
 		variables: state.get('variables')
 	};

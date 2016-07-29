@@ -3,9 +3,8 @@
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
 
-import * as varUtil from '../lib/var_util';
 import FilterInput from '../components/FilterInput';
-import VariableInput from '../components/VariableInput';
+import VariableInput from '../containers/VariableInput';
 
 class VariablesGroup extends Component {
 	constructor(props) {
@@ -18,7 +17,7 @@ class VariablesGroup extends Component {
 	}
 
 	render() {
-		const {header, group, groupVariables, variables} = this.props;
+		const {header, group} = this.props;
 		const {collapsed, filterText} = this.state;
 
 		let className = 'variables-editor-section';
@@ -50,11 +49,6 @@ class VariablesGroup extends Component {
 	}
 
 	renderInputs() {
-		const {dropdownTemplate, groupVariables, lockedVariables, variables} = this.props;
-
-		const handleVariableChange = this.handleVariableChange.bind(this);
-		const handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
-
 		const variablesArray = this.filterVariablesArray();
 
 		return variablesArray.map(variable => {
@@ -62,15 +56,10 @@ class VariablesGroup extends Component {
 
 			return (
 				<VariableInput
-					disabled={lockedVariables && lockedVariables.has(name)}
-					dropdownTemplate={dropdownTemplate}
 					key={name}
 					label={name}
 					name={name}
-					onChange={handleVariableChange}
-					onColorPickerTriggerClick={handleColorPickerTriggerClick}
 					value={variable.get('value')}
-					variables={variables}
 				/>
 			);
 		});
@@ -78,9 +67,8 @@ class VariablesGroup extends Component {
 
 	filterVariablesArray() {
 		const {filterText} = this.state;
-		const {groupVariables} = this.props;
 
-		let variablesArray = groupVariables.toArray();
+		let variablesArray = this.props.groupVariables.toArray();
 
 		if (filterText) {
 			variablesArray = variablesArray.filter(variable => {
@@ -93,8 +81,10 @@ class VariablesGroup extends Component {
 		return variablesArray;
 	}
 
-	handleColorPickerTriggerClick(name) {
-		this.props.onColorPickerTriggerClick(name);
+	handleFilterInputChange(value) {
+		this.setState({
+			filterText: value
+		});
 	}
 
 	handleHeaderClick() {
@@ -102,32 +92,12 @@ class VariablesGroup extends Component {
 			collapsed: !this.state.collapsed
 		});
 	}
-
-	handleFilterInputChange(value) {
-		this.setState({
-			filterText: value
-		});
-	}
-
-	handleVariableChange(name, value) {
-		this.props.onVariableChange(name, value);
-	}
-
-	handleVariableReset(name) {
-		this.props.onVariableReset(name);
-	}
 };
 
 VariablesGroup.propTypes = {
-	dropdownTemplate: PropTypes.array,
 	group: PropTypes.string.isRequired,
 	groupVariables: ImmutablePropTypes.orderedMap.isRequired,
-	header: PropTypes.string.isRequired,
-	lockedVariables: ImmutablePropTypes.set,
-	onColorPickerTriggerClick: PropTypes.func.isRequired,
-	onVariableChange: PropTypes.func.isRequired,
-	onVariableReset: PropTypes.func.isRequired,
-	variables: ImmutablePropTypes.orderedMap.isRequired
+	header: PropTypes.string.isRequired
 };
 
 export default VariablesGroup;

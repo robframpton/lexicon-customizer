@@ -8,13 +8,15 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactClickOutside = require('react-click-outside');
+var _reactImmutableProptypes = require('react-immutable-proptypes');
 
-var _reactClickOutside2 = _interopRequireDefault(_reactClickOutside);
+var _reactImmutableProptypes2 = _interopRequireDefault(_reactImmutableProptypes);
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
 
 var _Dropdown = require('../components/Dropdown');
 
@@ -24,7 +26,13 @@ var _Icon = require('../components/Icon');
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
+var _variables = require('../actions/variables');
+
 var _color = require('../lib/color');
+
+var _colorVariableName = require('../actions/colorVariableName');
+
+var _lockedVariables = require('../actions/lockedVariables');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55,6 +63,20 @@ var VariableInput = function (_Component) {
 	}
 
 	_createClass(VariableInput, [{
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate(event) {
+			var autoCompleteActive = this.state.autoCompleteActive;
+
+
+			var active = this._isAutoCompleteActive();
+
+			if (autoCompleteActive != active) {
+				this.setState({
+					autoCompleteActive: active
+				});
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
@@ -211,20 +233,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'renderDropdown',
 		value: function renderDropdown() {
-			var _props2 = this.props;
-			var dropdownTemplate = _props2.dropdownTemplate;
-			var name = _props2.name;
-
-
-			dropdownTemplate = _.map(dropdownTemplate, function (item) {
-				return _.assign({}, item, {
-					name: name
-				});
-			});
-
 			return _react2.default.createElement(
 				_Dropdown2.default,
-				{ options: dropdownTemplate },
+				{ options: this.getDropdownTemplate() },
 				_react2.default.createElement(_Icon2.default, { icon: 'ellipsis-h' })
 			);
 		}
@@ -256,27 +267,30 @@ var VariableInput = function (_Component) {
 			return value.toString();
 		}
 	}, {
-		key: 'componentDidUpdate',
-		value: function componentDidUpdate(event) {
-			var autoCompleteActive = this.state.autoCompleteActive;
+		key: 'getDropdownTemplate',
+		value: function getDropdownTemplate() {
+			var disabled = this.props.disabled;
 
 
-			var active = this._isAutoCompleteActive();
-
-			if (autoCompleteActive != active) {
-				this.setState({
-					autoCompleteActive: active
-				});
-			}
+			return [{
+				action: this.handleReset.bind(this),
+				disabled: disabled,
+				icon: 'reload',
+				label: 'Reset'
+			}, {
+				action: this.handleLock.bind(this),
+				icon: disabled ? 'unlock' : 'lock',
+				label: disabled ? 'Unlock' : 'Lock'
+			}];
 		}
 	}, {
 		key: 'handleAutoCompleteClick',
 		value: function handleAutoCompleteClick(event) {
 			var value = event.target.getAttribute('data-value');
 
-			var _props3 = this.props;
-			var name = _props3.name;
-			var onChange = _props3.onChange;
+			var _props2 = this.props;
+			var name = _props2.name;
+			var onChange = _props2.onChange;
 
 
 			this.setState({
@@ -302,9 +316,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleColorPickerTriggerClick',
 		value: function handleColorPickerTriggerClick(name, resolvedValue) {
-			var _props4 = this.props;
-			var disabled = _props4.disabled;
-			var onColorPickerTriggerClick = _props4.onColorPickerTriggerClick;
+			var _props3 = this.props;
+			var disabled = _props3.disabled;
+			var onColorPickerTriggerClick = _props3.onColorPickerTriggerClick;
 
 
 			if (disabled) {
@@ -323,9 +337,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleInputChange',
 		value: function handleInputChange(event) {
-			var _props5 = this.props;
-			var onChange = _props5.onChange;
-			var name = _props5.name;
+			var _props4 = this.props;
+			var onChange = _props4.onChange;
+			var name = _props4.name;
 
 
 			onChange(name, event.currentTarget.value);
@@ -358,9 +372,9 @@ var VariableInput = function (_Component) {
 			if (key == 'Enter') {
 				var value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
 
-				var _props6 = this.props;
-				var name = _props6.name;
-				var onChange = _props6.onChange;
+				var _props5 = this.props;
+				var name = _props5.name;
+				var onChange = _props5.onChange;
 
 
 				this.setState({
@@ -381,6 +395,17 @@ var VariableInput = function (_Component) {
 					});
 				}
 			}
+		}
+	}, {
+		key: 'handleLock',
+		value: function handleLock() {
+			var _props6 = this.props;
+			var disabled = _props6.disabled;
+			var name = _props6.name;
+			var onLock = _props6.onLock;
+
+
+			onLock(name, disabled);
 		}
 	}, {
 		key: 'handleRangePickerClick',
@@ -419,6 +444,16 @@ var VariableInput = function (_Component) {
 
 				onChange(name, this.calculateNumericalChange(_number, _negative, up));
 			}
+		}
+	}, {
+		key: 'handleReset',
+		value: function handleReset() {
+			var _props8 = this.props;
+			var name = _props8.name;
+			var onReset = _props8.onReset;
+
+
+			onReset(name);
 		}
 	}, {
 		key: '_isAutoCompleteActive',
@@ -470,12 +505,39 @@ var VariableInput = function (_Component) {
 }(_react.Component);
 
 VariableInput.propTypes = {
-	dropdownTemplate: _react.PropTypes.array,
+	disabled: _react.PropTypes.bool,
 	label: _react.PropTypes.string.isRequired,
 	name: _react.PropTypes.string.isRequired,
 	onChange: _react.PropTypes.func.isRequired,
 	onColorPickerTriggerClick: _react.PropTypes.func.isRequired,
-	value: _react.PropTypes.string.isRequired
+	onLock: _react.PropTypes.func.isRequired,
+	onReset: _react.PropTypes.func.isRequired,
+	value: _react.PropTypes.string.isRequired,
+	variables: _reactImmutableProptypes2.default.orderedMap.isRequired
 };
 
-exports.default = (0, _reactClickOutside2.default)(VariableInput);
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+	return {
+		disabled: state.get('lockedVariables').has(ownProps.name),
+		variables: state.get('variables')
+	};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+	return {
+		onChange: function onChange(name, value) {
+			dispatch((0, _variables.setVariable)(name, value));
+		},
+		onColorPickerTriggerClick: function onColorPickerTriggerClick(name) {
+			dispatch((0, _colorVariableName.setColorVariableName)(name));
+		},
+		onLock: function onLock(name, locked) {
+			dispatch((0, _lockedVariables.toggleLockedVariable)(name));
+		},
+		onReset: function onReset(name) {
+			dispatch((0, _variables.resetVariable)(name));
+		}
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(VariableInput);

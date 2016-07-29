@@ -14,19 +14,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _var_util = require('../lib/var_util');
-
-var varUtil = _interopRequireWildcard(_var_util);
-
 var _FilterInput = require('../components/FilterInput');
 
 var _FilterInput2 = _interopRequireDefault(_FilterInput);
 
-var _VariableInput = require('../components/VariableInput');
+var _VariableInput = require('../containers/VariableInput');
 
 var _VariableInput2 = _interopRequireDefault(_VariableInput);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57,8 +51,6 @@ var VariablesGroup = function (_Component) {
 			var _props = this.props;
 			var header = _props.header;
 			var group = _props.group;
-			var groupVariables = _props.groupVariables;
-			var variables = _props.variables;
 			var _state = this.state;
 			var collapsed = _state.collapsed;
 			var filterText = _state.filterText;
@@ -96,31 +88,16 @@ var VariablesGroup = function (_Component) {
 	}, {
 		key: 'renderInputs',
 		value: function renderInputs() {
-			var _props2 = this.props;
-			var dropdownTemplate = _props2.dropdownTemplate;
-			var groupVariables = _props2.groupVariables;
-			var lockedVariables = _props2.lockedVariables;
-			var variables = _props2.variables;
-
-
-			var handleVariableChange = this.handleVariableChange.bind(this);
-			var handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
-
 			var variablesArray = this.filterVariablesArray();
 
 			return variablesArray.map(function (variable) {
 				var name = variable.get('name');
 
 				return _react2.default.createElement(_VariableInput2.default, {
-					disabled: lockedVariables && lockedVariables.has(name),
-					dropdownTemplate: dropdownTemplate,
 					key: name,
 					label: name,
 					name: name,
-					onChange: handleVariableChange,
-					onColorPickerTriggerClick: handleColorPickerTriggerClick,
-					value: variable.get('value'),
-					variables: variables
+					value: variable.get('value')
 				});
 			});
 		}
@@ -128,10 +105,9 @@ var VariablesGroup = function (_Component) {
 		key: 'filterVariablesArray',
 		value: function filterVariablesArray() {
 			var filterText = this.state.filterText;
-			var groupVariables = this.props.groupVariables;
 
 
-			var variablesArray = groupVariables.toArray();
+			var variablesArray = this.props.groupVariables.toArray();
 
 			if (filterText) {
 				variablesArray = variablesArray.filter(function (variable) {
@@ -144,18 +120,6 @@ var VariablesGroup = function (_Component) {
 			return variablesArray;
 		}
 	}, {
-		key: 'handleColorPickerTriggerClick',
-		value: function handleColorPickerTriggerClick(name) {
-			this.props.onColorPickerTriggerClick(name);
-		}
-	}, {
-		key: 'handleHeaderClick',
-		value: function handleHeaderClick() {
-			this.setState({
-				collapsed: !this.state.collapsed
-			});
-		}
-	}, {
 		key: 'handleFilterInputChange',
 		value: function handleFilterInputChange(value) {
 			this.setState({
@@ -163,14 +127,11 @@ var VariablesGroup = function (_Component) {
 			});
 		}
 	}, {
-		key: 'handleVariableChange',
-		value: function handleVariableChange(name, value) {
-			this.props.onVariableChange(name, value);
-		}
-	}, {
-		key: 'handleVariableReset',
-		value: function handleVariableReset(name) {
-			this.props.onVariableReset(name);
+		key: 'handleHeaderClick',
+		value: function handleHeaderClick() {
+			this.setState({
+				collapsed: !this.state.collapsed
+			});
 		}
 	}]);
 
@@ -180,15 +141,9 @@ var VariablesGroup = function (_Component) {
 ;
 
 VariablesGroup.propTypes = {
-	dropdownTemplate: _react.PropTypes.array,
 	group: _react.PropTypes.string.isRequired,
 	groupVariables: _reactImmutableProptypes2.default.orderedMap.isRequired,
-	header: _react.PropTypes.string.isRequired,
-	lockedVariables: _reactImmutableProptypes2.default.set,
-	onColorPickerTriggerClick: _react.PropTypes.func.isRequired,
-	onVariableChange: _react.PropTypes.func.isRequired,
-	onVariableReset: _react.PropTypes.func.isRequired,
-	variables: _reactImmutableProptypes2.default.orderedMap.isRequired
+	header: _react.PropTypes.string.isRequired
 };
 
 exports.default = VariablesGroup;

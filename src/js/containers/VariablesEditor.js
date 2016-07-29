@@ -3,15 +3,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import * as varUtil from '../lib/var_util';
-import ColorPickerPanel from '../components/ColorPickerPanel';
-import FilterInput from '../components/FilterInput';
 import LexiconColorPickerPanel from '../containers/LexiconColorPickerPanel';
-import VariableInput from '../components/VariableInput';
 import VariablesGroup from '../components/VariablesGroup';
-import {createVariablesFile} from '../actions/index';
-import {resetVariable, setVariable} from '../actions/variables';
-import {setColorVariableName} from '../actions/colorVariableName';
-import {toggleLockedVariable} from '../actions/lockedVariables';
 
 class VariablesEditor extends Component {
 	constructor(props) {
@@ -62,11 +55,7 @@ class VariablesEditor extends Component {
 	}
 
 	renderGroups() {
-		const {lockedVariables, selectedComponent, variables} = this.props;
-
-		const handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
-		const handleVariableChange = this.handleVariableChange.bind(this);
-		const handleVariableReset = this.handleVariableReset.bind(this);
+		const {selectedComponent, variables} = this.props;
 
 		const componentVariables = varUtil.filterVariablesByComponent(variables, selectedComponent);
 
@@ -80,16 +69,10 @@ class VariablesEditor extends Component {
 			if (!groupVariables.isEmpty()) {
 				variablesGroup = (
 					<VariablesGroup
-						dropdownTemplate={this.getDropdownTemplate()}
 						group={group}
 						groupVariables={groupVariables}
 						header={_.capitalize(group)}
 						key={group}
-						lockedVariables={lockedVariables}
-						onColorPickerTriggerClick={handleColorPickerTriggerClick}
-						onVariableChange={handleVariableChange}
-						onVariableReset={handleVariableReset}
-						variables={variables}
 					/>
 				);
 			}
@@ -97,54 +80,11 @@ class VariablesEditor extends Component {
 			return variablesGroup;
 		});
 	}
-
-	getDropdownTemplate() {
-		return [
-			{
-				action: this.handleVariableReset.bind(this),
-				icon: 'reload',
-				label: 'Reset',
-				value: 'reset'
-			},
-			{
-				action: this.handleVariableLock.bind(this),
-				icon: 'lock',
-				label: 'Lock',
-				value: 'lock'
-			}
-		];
-	}
-
-	handleColorPickerTriggerClick(name) {
-		const {colorVariableName, dispatch} = this.props;
-
-		if (colorVariableName === name) {
-			name = null;
-		}
-
-		dispatch(setColorVariableName(name));
-	}
-
-	handleVariableChange(name, value) {
-		const {dispatch} = this.props;
-
-		dispatch(setVariable(name, value));
-	}
-
-	handleVariableLock({name}) {
-		this.props.dispatch(toggleLockedVariable(name));
-	}
-
-	handleVariableReset({name}) {
-		this.props.dispatch(resetVariable(name));
-	}
 };
 
 const mapStateToProps = (state, ownProps) => {
 	return {
 		colorVariableName: state.get('colorVariableName'),
-		lockedVariables: state.get('lockedVariables'),
-		sassError: state.get('sassError'),
 		selectedComponent: state.get('selectedComponent'),
 		variables: state.get('variables')
 	};

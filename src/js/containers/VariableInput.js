@@ -1,9 +1,13 @@
-import enhanceWithClickOutside from 'react-click-outside';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 
 import Dropdown from '../components/Dropdown';
 import Icon from '../components/Icon';
+import {resetVariable, setVariable} from '../actions/variables';
 import {resolveColorValue} from '../lib/color';
+import {setColorVariableName} from '../actions/colorVariableName';
+import {toggleLockedVariable} from '../actions/lockedVariables';
 
 const numberRegex = /^(-)?([0-9]+)$/;
 
@@ -18,6 +22,18 @@ class VariableInput extends Component {
 			autoCompleteIndex: 0,
 			focused: false
 		};
+	}
+
+	componentDidUpdate(event) {
+		let {autoCompleteActive} = this.state;
+
+		let active = this._isAutoCompleteActive();
+
+		if (autoCompleteActive != active) {
+			this.setState({
+				autoCompleteActive: active
+			});
+		}
 	}
 
 	render() {
@@ -159,16 +175,8 @@ class VariableInput extends Component {
 	}
 
 	renderDropdown() {
-		let {dropdownTemplate, name} = this.props;
-
-		dropdownTemplate = _.map(dropdownTemplate, (item) => {
-			return _.assign({}, item, {
-				name
-			});
-		});
-
 		return (
-			<Dropdown options={dropdownTemplate}>
+			<Dropdown options={this.getDropdownTemplate()}>
 				<Icon icon="ellipsis-h" />
 			</Dropdown>
 		);
@@ -201,16 +209,22 @@ class VariableInput extends Component {
 		return value.toString();
 	}
 
-	componentDidUpdate(event) {
-		let {autoCompleteActive} = this.state;
+	getDropdownTemplate() {
+		const {disabled} = this.props;
 
-		let active = this._isAutoCompleteActive();
-
-		if (autoCompleteActive != active) {
-			this.setState({
-				autoCompleteActive: active
-			});
-		}
+		return [
+			{
+				action: this.handleReset.bind(this),
+				disabled: disabled,
+				icon: 'reload',
+				label: 'Reset'
+			},
+			{
+				action: this.handleLock.bind(this),
+				icon: disabled ? 'unlock' : 'lock',
+				label: disabled ? 'Unlock' : 'Lock'
+			}
+		];
 	}
 
 	handleAutoCompleteClick(event) {
@@ -305,6 +319,12 @@ class VariableInput extends Component {
 		}
 	}
 
+	handleLock() {
+		const {disabled, name, onLock} = this.props;
+
+		onLock(name, disabled);
+	}
+
 	handleRangePickerClick(up) {
 		const {disabled, name, onChange, value} = this.props;
 
@@ -325,6 +345,12 @@ class VariableInput extends Component {
 
 			onChange(name, this.calculateNumericalChange(number, negative, up));
 		}
+	}
+
+	handleReset() {
+		const {name, onReset} = this.props;
+
+		onReset(name);
 	}
 
 	_isAutoCompleteActive() {
@@ -372,12 +398,39 @@ class VariableInput extends Component {
 }
 
 VariableInput.propTypes = {
-	dropdownTemplate: PropTypes.array,
+	disabled: PropTypes.bool,
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 	onColorPickerTriggerClick: PropTypes.func.isRequired,
-	value: PropTypes.string.isRequired
+	onLock: PropTypes.func.isRequired,
+	onReset: PropTypes.func.isRequired,
+	value: PropTypes.string.isRequired,
+	variables: ImmutablePropTypes.orderedMap.isRequired
 };
 
-export default enhanceWithClickOutside(VariableInput);
+const mapStateToProps = (state, ownProps) => {
+	return {
+		disabled: state.get('lockedVariables').has(ownProps.name),
+		variables: state.get('variables')
+	}
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		onChange: (name, value) => {
+			dispatch(setVariable(name, value));
+		},
+		onColorPickerTriggerClick: (name) => {
+			dispatch(setColorVariableName(name));
+		},
+		onLock: (name, locked) => {
+			dispatch(toggleLockedVariable(name));
+		},
+		onReset: (name) => {
+			dispatch(resetVariable(name));
+		}
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VariableInput);

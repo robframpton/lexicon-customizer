@@ -5,8 +5,18 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.setColorVariableName = setColorVariableName;
 function setColorVariableName(name) {
-	return {
-		name: name,
-		type: 'SET_COLOR_VARIABLE_NAME'
+	return function (dispatch, getState) {
+		var state = getState();
+
+		var colorVariableName = state.get('colorVariableName');
+
+		if (name === colorVariableName) {
+			name = null;
+		}
+
+		dispatch({
+			name: name,
+			type: 'SET_COLOR_VARIABLE_NAME'
+		});
 	};
 };
