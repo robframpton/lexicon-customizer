@@ -10,9 +10,15 @@ export function importVariables(filePath) {
 };
 
 export function overwriteVariables(variables) {
-	return {
-		type: 'OVERRIDE_VARIABLES',
-		variables
+	return function(dispatch, getState) {
+		const state = getState();
+
+		variables = varUtil.removeLockedVariables(variables, state.get('lockedVariables'));
+
+		dispatch({
+			type: 'OVERRIDE_VARIABLES',
+			variables
+		});
 	}
 };
 
@@ -57,6 +63,14 @@ export function resetVariables() {
 
 export function setVariable(name, value) {
 	return (dispatch, getState) => {
+		const state = getState();
+
+		const lockedVariables = state.get('lockedVariables');
+
+		if (lockedVariables.has(name)) {
+			return;
+		}
+
 		dispatch({
 			name,
 			type: 'SET_VARIABLE',
@@ -69,6 +83,10 @@ export function setVariable(name, value) {
 
 export function setVariables(variables) {
 	return (dispatch, getState) => {
+		const state = getState();
+
+		variables = varUtil.removeLockedVariables(variables, state.get('lockedVariables'));
+
 		dispatch({
 			type: 'SET_VARIABLES',
 			variables

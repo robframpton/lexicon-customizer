@@ -11,6 +11,7 @@ import VariablesGroup from '../components/VariablesGroup';
 import {createVariablesFile} from '../actions/index';
 import {resetVariable, setVariable} from '../actions/variables';
 import {setColorVariableName} from '../actions/colorVariableName';
+import {toggleLockedVariable} from '../actions/lockedVariables';
 
 class VariablesEditor extends Component {
 	constructor(props) {
@@ -61,7 +62,7 @@ class VariablesEditor extends Component {
 	}
 
 	renderGroups() {
-		const {selectedComponent, variables} = this.props;
+		const {lockedVariables, selectedComponent, variables} = this.props;
 
 		const handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
 		const handleVariableChange = this.handleVariableChange.bind(this);
@@ -84,6 +85,7 @@ class VariablesEditor extends Component {
 						groupVariables={groupVariables}
 						header={_.capitalize(group)}
 						key={group}
+						lockedVariables={lockedVariables}
 						onColorPickerTriggerClick={handleColorPickerTriggerClick}
 						onVariableChange={handleVariableChange}
 						onVariableReset={handleVariableReset}
@@ -105,19 +107,12 @@ class VariablesEditor extends Component {
 				value: 'reset'
 			},
 			{
-				action: () => {
-				},
+				action: this.handleVariableLock.bind(this),
 				icon: 'lock',
 				label: 'Lock',
 				value: 'lock'
 			}
 		];
-	}
-
-	handleVariableChange(name, value) {
-		const {dispatch} = this.props;
-
-		dispatch(setVariable(name, value));
 	}
 
 	handleColorPickerTriggerClick(name) {
@@ -130,6 +125,16 @@ class VariablesEditor extends Component {
 		dispatch(setColorVariableName(name));
 	}
 
+	handleVariableChange(name, value) {
+		const {dispatch} = this.props;
+
+		dispatch(setVariable(name, value));
+	}
+
+	handleVariableLock({name}) {
+		this.props.dispatch(toggleLockedVariable(name));
+	}
+
 	handleVariableReset({name}) {
 		this.props.dispatch(resetVariable(name));
 	}
@@ -138,6 +143,7 @@ class VariablesEditor extends Component {
 const mapStateToProps = (state, ownProps) => {
 	return {
 		colorVariableName: state.get('colorVariableName'),
+		lockedVariables: state.get('lockedVariables'),
 		sassError: state.get('sassError'),
 		selectedComponent: state.get('selectedComponent'),
 		variables: state.get('variables')

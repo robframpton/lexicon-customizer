@@ -19,14 +19,6 @@ var actionHandlers = {
 		}
 	},
 
-	SET_GROUP_VARIABLES: function SET_GROUP_VARIABLES(state, action) {
-		return state;
-	},
-
-	SET_COMPONENT_VARIABLES: function SET_COMPONENT_VARIABLES(state, action) {
-		return state;
-	},
-
 	SET_VARIABLE: function SET_VARIABLE(state, action) {
 		var name = action.name;
 		var value = action.value;

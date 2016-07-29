@@ -99,6 +99,7 @@ var VariablesGroup = function (_Component) {
 			var _props2 = this.props;
 			var dropdownTemplate = _props2.dropdownTemplate;
 			var groupVariables = _props2.groupVariables;
+			var lockedVariables = _props2.lockedVariables;
 			var variables = _props2.variables;
 
 
@@ -111,6 +112,7 @@ var VariablesGroup = function (_Component) {
 				var name = variable.get('name');
 
 				return _react2.default.createElement(_VariableInput2.default, {
+					disabled: lockedVariables && lockedVariables.has(name),
 					dropdownTemplate: dropdownTemplate,
 					key: name,
 					label: name,
@@ -182,6 +184,7 @@ VariablesGroup.propTypes = {
 	group: _react.PropTypes.string.isRequired,
 	groupVariables: _reactImmutableProptypes2.default.orderedMap.isRequired,
 	header: _react.PropTypes.string.isRequired,
+	lockedVariables: _reactImmutableProptypes2.default.set,
 	onColorPickerTriggerClick: _react.PropTypes.func.isRequired,
 	onVariableChange: _react.PropTypes.func.isRequired,
 	onVariableReset: _react.PropTypes.func.isRequired,

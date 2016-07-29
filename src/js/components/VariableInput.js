@@ -21,21 +21,21 @@ class VariableInput extends Component {
 	}
 
 	render() {
-		let {label, name, onChange, value, variables} = this.props;
+		let {disabled, label, name, onChange, value, variables} = this.props;
 		let {autoCompleteActive, focused} = this.state;
 
 		let autoComplete = '';
 		let inputPlugin = '';
-
-		let className = 'form-control';
 
 		if (autoCompleteActive) {
 			focused = true;
 		}
 
 		if (focused && value && value.length > 1 && value[0] == '$') {
-			autoComplete = this._renderAutoComplete(name, value, variables);
+			autoComplete = this.renderAutoComplete(name, value, variables);
 		}
+
+		let className = 'form-control';
 
 		if (this._isColor(name)) {
 			className += ' color-input';
@@ -46,13 +46,20 @@ class VariableInput extends Component {
 			inputPlugin = this.renderRangePicker(name, value);
 		}
 
+		let wrapperClassName = 'form-group variable-input';
+
+		if (disabled) {
+			wrapperClassName += ' disabled';
+		}
+
 		return (
-			<div className="form-group variable-input">
+			<div className={wrapperClassName}>
 				{this.renderDropdown()}
 
 				<label htmlFor={name}>{name}</label>
 
 				<input
+					disabled={disabled}
 					className={className}
 					name={name}
 					onBlur={this.handleInputBlur.bind(this)}
@@ -121,7 +128,7 @@ class VariableInput extends Component {
 		const resolvedValue = resolveColorValue(name, value, variables);
 
 		return (
-			<div className="color-picker-trigger" onClick={this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue)}>
+			<div className="color-picker-trigger" onClick={this.handleColorPickerTriggerClick.bind(this, name, resolvedValue)}>
 				<div className="color-picker-trigger-preview" style={this._getTriggerStyle(resolvedValue)}></div>
 
 				<div className="color-picker-trigger-checkerboard"></div>
@@ -230,6 +237,16 @@ class VariableInput extends Component {
 		});
 	}
 
+	handleColorPickerTriggerClick(name, resolvedValue) {
+		const {disabled, onColorPickerTriggerClick} = this.props;
+
+		if (disabled) {
+			return;
+		}
+
+		onColorPickerTriggerClick(name, resolvedValue);
+	}
+
 	handleInputBlur(event) {
 		this.setState({
 			focused: false
@@ -289,7 +306,11 @@ class VariableInput extends Component {
 	}
 
 	handleRangePickerClick(up) {
-		const {name, onChange, value} = this.props;
+		const {disabled, name, onChange, value} = this.props;
+
+		if (disabled) {
+			return;
+		}
 
 		let numberMatch = value.match(numberRegex);
 		let unitMatch = value.match(unitRegex);

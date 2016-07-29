@@ -50,7 +50,7 @@ class VariablesGroup extends Component {
 	}
 
 	renderInputs() {
-		const {dropdownTemplate, groupVariables, variables} = this.props;
+		const {dropdownTemplate, groupVariables, lockedVariables, variables} = this.props;
 
 		const handleVariableChange = this.handleVariableChange.bind(this);
 		const handleColorPickerTriggerClick = this.handleColorPickerTriggerClick.bind(this);
@@ -62,6 +62,7 @@ class VariablesGroup extends Component {
 
 			return (
 				<VariableInput
+					disabled={lockedVariables && lockedVariables.has(name)}
 					dropdownTemplate={dropdownTemplate}
 					key={name}
 					label={name}
@@ -122,6 +123,7 @@ VariablesGroup.propTypes = {
 	group: PropTypes.string.isRequired,
 	groupVariables: ImmutablePropTypes.orderedMap.isRequired,
 	header: PropTypes.string.isRequired,
+	lockedVariables: ImmutablePropTypes.set,
 	onColorPickerTriggerClick: PropTypes.func.isRequired,
 	onVariableChange: PropTypes.func.isRequired,
 	onVariableReset: PropTypes.func.isRequired,

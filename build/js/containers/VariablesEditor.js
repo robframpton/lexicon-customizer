@@ -46,6 +46,8 @@ var _variables = require('../actions/variables');
 
 var _colorVariableName = require('../actions/colorVariableName');
 
+var _lockedVariables = require('../actions/lockedVariables');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -125,6 +127,7 @@ var VariablesEditor = function (_Component) {
 			var _this2 = this;
 
 			var _props2 = this.props;
+			var lockedVariables = _props2.lockedVariables;
 			var selectedComponent = _props2.selectedComponent;
 			var variables = _props2.variables;
 
@@ -149,6 +152,7 @@ var VariablesEditor = function (_Component) {
 						groupVariables: groupVariables,
 						header: _lodash2.default.capitalize(group),
 						key: group,
+						lockedVariables: lockedVariables,
 						onColorPickerTriggerClick: handleColorPickerTriggerClick,
 						onVariableChange: handleVariableChange,
 						onVariableReset: handleVariableReset,
@@ -168,19 +172,11 @@ var VariablesEditor = function (_Component) {
 				label: 'Reset',
 				value: 'reset'
 			}, {
-				action: function action() {},
+				action: this.handleVariableLock.bind(this),
 				icon: 'lock',
 				label: 'Lock',
 				value: 'lock'
 			}];
-		}
-	}, {
-		key: 'handleVariableChange',
-		value: function handleVariableChange(name, value) {
-			var dispatch = this.props.dispatch;
-
-
-			dispatch((0, _variables.setVariable)(name, value));
 		}
 	}, {
 		key: 'handleColorPickerTriggerClick',
@@ -197,9 +193,24 @@ var VariablesEditor = function (_Component) {
 			dispatch((0, _colorVariableName.setColorVariableName)(name));
 		}
 	}, {
-		key: 'handleVariableReset',
-		value: function handleVariableReset(_ref) {
+		key: 'handleVariableChange',
+		value: function handleVariableChange(name, value) {
+			var dispatch = this.props.dispatch;
+
+
+			dispatch((0, _variables.setVariable)(name, value));
+		}
+	}, {
+		key: 'handleVariableLock',
+		value: function handleVariableLock(_ref) {
 			var name = _ref.name;
+
+			this.props.dispatch((0, _lockedVariables.toggleLockedVariable)(name));
+		}
+	}, {
+		key: 'handleVariableReset',
+		value: function handleVariableReset(_ref2) {
+			var name = _ref2.name;
 
 			this.props.dispatch((0, _variables.resetVariable)(name));
 		}
@@ -213,6 +224,7 @@ var VariablesEditor = function (_Component) {
 var mapStateToProps = function mapStateToProps(state, ownProps) {
 	return {
 		colorVariableName: state.get('colorVariableName'),
+		lockedVariables: state.get('lockedVariables'),
 		sassError: state.get('sassError'),
 		selectedComponent: state.get('selectedComponent'),
 		variables: state.get('variables')

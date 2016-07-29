@@ -34,6 +34,10 @@ var _lexiconVersion = require('./lexiconVersion');
 
 var _lexiconVersion2 = _interopRequireDefault(_lexiconVersion);
 
+var _lockedVariables = require('./lockedVariables');
+
+var _lockedVariables2 = _interopRequireDefault(_lockedVariables);
+
 var _preview = require('./preview');
 
 var _preview2 = _interopRequireDefault(_preview);
@@ -72,6 +76,7 @@ var lexiconCustomizerReducer = (0, _reduxImmutable.combineReducers)({
 	group: _group2.default,
 	lexiconDirs: _lexiconDirs2.default,
 	lexiconVersion: _lexiconVersion2.default,
+	lockedVariables: _lockedVariables2.default,
 	preview: _preview2.default,
 	previewPopout: _previewPopout2.default,
 	sassError: _sassError2.default,

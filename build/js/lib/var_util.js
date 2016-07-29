@@ -7,6 +7,7 @@ exports.filterVariablesByComponent = filterVariablesByComponent;
 exports.filterVariablesByGroup = filterVariablesByGroup;
 exports.getComponentsFromVariablesMap = getComponentsFromVariablesMap;
 exports.getModifiedVariables = getModifiedVariables;
+exports.removeLockedVariables = removeLockedVariables;
 
 var _lodash = require('lodash');
 
@@ -45,5 +46,15 @@ function getComponentsFromVariablesMap(variablesMap) {
 function getModifiedVariables(variables, sourceVariables) {
 	return variables.filter(function (variable, key) {
 		return variable.get('value') !== sourceVariables.get(key).get('value');
+	});
+};
+
+function removeLockedVariables(variables, lockedVariables) {
+	if (!lockedVariables || lockedVariables.isEmpty()) {
+		return variables;
+	}
+
+	return variables.filter(function (variable, key) {
+		return !lockedVariables.has(key);
 	});
 };

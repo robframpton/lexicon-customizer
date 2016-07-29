@@ -34,3 +34,13 @@ export function getModifiedVariables(variables, sourceVariables) {
 		return variable.get('value') !== sourceVariables.get(key).get('value');
 	});
 };
+
+export function removeLockedVariables(variables, lockedVariables) {
+	if (!lockedVariables || lockedVariables.isEmpty()) {
+		return variables;
+	}
+
+	return variables.filter((variable, key) => {
+		return !lockedVariables.has(key);
+	});
+};

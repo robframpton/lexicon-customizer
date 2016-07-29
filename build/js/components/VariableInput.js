@@ -58,6 +58,7 @@ var VariableInput = function (_Component) {
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
+			var disabled = _props.disabled;
 			var label = _props.label;
 			var name = _props.name;
 			var onChange = _props.onChange;
@@ -71,15 +72,15 @@ var VariableInput = function (_Component) {
 			var autoComplete = '';
 			var inputPlugin = '';
 
-			var className = 'form-control';
-
 			if (autoCompleteActive) {
 				focused = true;
 			}
 
 			if (focused && value && value.length > 1 && value[0] == '$') {
-				autoComplete = this._renderAutoComplete(name, value, variables);
+				autoComplete = this.renderAutoComplete(name, value, variables);
 			}
+
+			var className = 'form-control';
 
 			if (this._isColor(name)) {
 				className += ' color-input';
@@ -89,9 +90,15 @@ var VariableInput = function (_Component) {
 				inputPlugin = this.renderRangePicker(name, value);
 			}
 
+			var wrapperClassName = 'form-group variable-input';
+
+			if (disabled) {
+				wrapperClassName += ' disabled';
+			}
+
 			return _react2.default.createElement(
 				'div',
-				{ className: 'form-group variable-input' },
+				{ className: wrapperClassName },
 				this.renderDropdown(),
 				_react2.default.createElement(
 					'label',
@@ -99,6 +106,7 @@ var VariableInput = function (_Component) {
 					name
 				),
 				_react2.default.createElement('input', {
+					disabled: disabled,
 					className: className,
 					name: name,
 					onBlur: this.handleInputBlur.bind(this),
@@ -169,7 +177,7 @@ var VariableInput = function (_Component) {
 
 			return _react2.default.createElement(
 				'div',
-				{ className: 'color-picker-trigger', onClick: this.props.onColorPickerTriggerClick.bind(null, name, resolvedValue) },
+				{ className: 'color-picker-trigger', onClick: this.handleColorPickerTriggerClick.bind(this, name, resolvedValue) },
 				_react2.default.createElement('div', { className: 'color-picker-trigger-preview', style: this._getTriggerStyle(resolvedValue) }),
 				_react2.default.createElement('div', { className: 'color-picker-trigger-checkerboard' })
 			);
@@ -292,6 +300,20 @@ var VariableInput = function (_Component) {
 			});
 		}
 	}, {
+		key: 'handleColorPickerTriggerClick',
+		value: function handleColorPickerTriggerClick(name, resolvedValue) {
+			var _props4 = this.props;
+			var disabled = _props4.disabled;
+			var onColorPickerTriggerClick = _props4.onColorPickerTriggerClick;
+
+
+			if (disabled) {
+				return;
+			}
+
+			onColorPickerTriggerClick(name, resolvedValue);
+		}
+	}, {
 		key: 'handleInputBlur',
 		value: function handleInputBlur(event) {
 			this.setState({
@@ -301,9 +323,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleInputChange',
 		value: function handleInputChange(event) {
-			var _props4 = this.props;
-			var onChange = _props4.onChange;
-			var name = _props4.name;
+			var _props5 = this.props;
+			var onChange = _props5.onChange;
+			var name = _props5.name;
 
 
 			onChange(name, event.currentTarget.value);
@@ -336,9 +358,9 @@ var VariableInput = function (_Component) {
 			if (key == 'Enter') {
 				var value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
 
-				var _props5 = this.props;
-				var name = _props5.name;
-				var onChange = _props5.onChange;
+				var _props6 = this.props;
+				var name = _props6.name;
+				var onChange = _props6.onChange;
 
 
 				this.setState({
@@ -363,11 +385,16 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleRangePickerClick',
 		value: function handleRangePickerClick(up) {
-			var _props6 = this.props;
-			var name = _props6.name;
-			var onChange = _props6.onChange;
-			var value = _props6.value;
+			var _props7 = this.props;
+			var disabled = _props7.disabled;
+			var name = _props7.name;
+			var onChange = _props7.onChange;
+			var value = _props7.value;
 
+
+			if (disabled) {
+				return;
+			}
 
 			var numberMatch = value.match(numberRegex);
 			var unitMatch = value.match(unitRegex);

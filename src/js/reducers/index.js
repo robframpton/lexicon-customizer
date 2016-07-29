@@ -7,6 +7,7 @@ import components from './components';
 import group from './group';
 import lexiconDirs from './lexiconDirs';
 import lexiconVersion from './lexiconVersion';
+import lockedVariables from './lockedVariables';
 import preview from './preview';
 import previewPopout from './previewPopout';
 import sassError from './sassError';
@@ -23,6 +24,7 @@ const lexiconCustomizerReducer = combineReducers({
 	group,
 	lexiconDirs,
 	lexiconVersion,
+	lockedVariables,
 	preview,
 	previewPopout,
 	sassError,

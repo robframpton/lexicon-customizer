@@ -12,14 +12,6 @@ const actionHandlers = {
 		}
 	},
 
-	SET_GROUP_VARIABLES: (state, action) => {
-		return state;
-	},
-
-	SET_COMPONENT_VARIABLES: (state, action) => {
-		return state;
-	},
-
 	SET_VARIABLE: (state, action) => {
 		let {name, value} = action;
 
