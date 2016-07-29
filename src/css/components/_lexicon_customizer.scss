@@ -5,6 +5,7 @@
 	box-shadow: 0 0 4px #222;
 	border-bottom: 4px solid $brand-primary;
 	color: #FFF;
+	cursor: default;
 	height: 50px;
 	left: 0;
 	padding: 8px 0 0 20px;
@@ -13,6 +14,7 @@
 	text-align: center;
 	top: 0;
 	transition: border-color 300ms;
+	user-select: none;
 	z-index: 3;
 	-webkit-app-region: drag;
 

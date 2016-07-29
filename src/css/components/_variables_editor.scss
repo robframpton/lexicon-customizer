@@ -74,6 +74,10 @@
 		margin-right: 22px;
 	}
 
+	input {
+		height: 34px;
+	}
+
 	.input-auto-complete-menu {
 		background-color: #FFF;
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -114,6 +118,16 @@
 
 	&:hover .dropdown .dropdown-trigger {
 		opacity: 1;
+	}
+
+	&.disabled {
+		.color-picker-trigger, .range-picker a {
+			cursor: not-allowed;
+		}
+
+		.range-picker .lexicon-icon {
+			fill: #555;
+		}
 	}
 }
 
@@ -158,19 +172,16 @@
 	padding-bottom: 270px;
 }
 
-.variable-input input {
-	height: 38px;
-}
-
 .range-picker {
 	bottom: 4px;
-	height: 34px;
+	height: 30px;
 	position: absolute;
 	right: 0;
 	width: 28px;
 
 	.range-picker-down, .range-picker-up {
 		display: inline-block;
+		height: 15px;
 		position: absolute;
 	}
 
@@ -183,6 +194,7 @@
 	}
 
 	svg {
+		float: left;
 		height: 14px;
 	}
 }

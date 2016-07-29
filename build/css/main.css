@@ -44,10 +44,10 @@ input.form-control:focus {
   background: #EEE;
   bottom: 4px;
   cursor: pointer;
-  height: 24px;
+  height: 30px;
   position: absolute;
   right: 0;
-  width: 24px; }
+  width: 30px; }
 
 .color-picker-trigger-checkerboard, .color-picker-trigger-preview {
   bottom: 0;
@@ -204,6 +204,7 @@ input.form-control:focus {
   box-shadow: 0 0 4px #222;
   border-bottom: 4px solid #5BBFDC;
   color: #FFF;
+  cursor: default;
   height: 50px;
   left: 0;
   padding: 8px 0 0 20px;
@@ -212,6 +213,7 @@ input.form-control:focus {
   text-align: center;
   top: 0;
   transition: border-color 300ms;
+  user-select: none;
   z-index: 3;
   -webkit-app-region: drag; }
   .lexicon-customizer-header .lexicon-customizer-header-title {
@@ -458,6 +460,8 @@ div.container {
   .variable-input label {
     font-weight: 500;
     margin-right: 22px; }
+  .variable-input input {
+    height: 34px; }
   .variable-input .input-auto-complete-menu {
     background-color: #FFF;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -484,6 +488,10 @@ div.container {
       opacity: 0; }
   .variable-input:hover .dropdown .dropdown-trigger {
     opacity: 1; }
+  .variable-input.disabled .color-picker-trigger, .variable-input.disabled .range-picker a {
+    cursor: not-allowed; }
+  .variable-input.disabled .range-picker .lexicon-icon {
+    fill: #555; }
 
 .color-input {
   padding-right: 30px; }
@@ -513,21 +521,20 @@ div.container {
 .variables-editor.has-color-picker-panel {
   padding-bottom: 270px; }
 
-.variable-input input {
-  height: 38px; }
-
 .range-picker {
   bottom: 4px;
-  height: 34px;
+  height: 30px;
   position: absolute;
   right: 0;
   width: 28px; }
   .range-picker .range-picker-down, .range-picker .range-picker-up {
     display: inline-block;
+    height: 15px;
     position: absolute; }
   .range-picker .range-picker-down {
     bottom: 0; }
   .range-picker .range-picker-up {
     top: 0; }
   .range-picker svg {
+    float: left;
     height: 14px; }
