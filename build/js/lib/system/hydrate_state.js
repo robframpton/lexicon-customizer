@@ -2,8 +2,6 @@
 
 var _immutable = require('immutable');
 
-var _immutable2 = _interopRequireDefault(_immutable);
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -53,6 +51,7 @@ module.exports = function () {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
 		lexiconDirs: lexiconDirs,
+		lockedVariables: (0, _immutable.Set)(persistedConfig.lockedVariables),
 		selectedComponent: persistedConfig.selectedComponent,
 		sourceVariables: sourceVariables,
 		theme: persistedConfig.theme,

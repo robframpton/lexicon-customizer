@@ -1,6 +1,6 @@
 'use strict';
 
-import immutable from 'immutable';
+import {Set} from 'immutable';
 import path from 'path';
 import {remote} from 'electron';
 
@@ -31,6 +31,7 @@ module.exports = function() {
 		baseLexiconTheme: persistedConfig.baseLexiconTheme || 'lexiconBase',
 		components: components,
 		lexiconDirs: lexiconDirs,
+		lockedVariables: Set(persistedConfig.lockedVariables),
 		selectedComponent: persistedConfig.selectedComponent,
 		sourceVariables: sourceVariables,
 		theme: persistedConfig.theme,

@@ -1,3 +1,7 @@
+import UserConfig from '../lib/system/user_config';
+
+const userConfig = new UserConfig();
+
 export function lockVariable(name) {
 	return {
 		name,
@@ -17,6 +21,8 @@ export function toggleLockedVariable(name) {
 		else {
 			dispatch(lockVariable(name));
 		}
+
+		userConfig.setConfig('lockedVariables', getState().get('lockedVariables').toArray());
 	};
 };
 
