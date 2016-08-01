@@ -20,7 +20,7 @@ class VariablesGroup extends Component {
 		const {header, group} = this.props;
 		const {collapsed, filterText} = this.state;
 
-		let className = 'variables-editor-section';
+		let className = 'card variables-editor-section';
 
 		if (collapsed) {
 			className += ' collapsed';

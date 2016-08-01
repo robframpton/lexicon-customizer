@@ -19,13 +19,20 @@ $config-panel-bg: #1F282F;
 	}
 
 	.btn {
+		-webkit-app-region: no-drag;
+		background-color: $brand-primary;
+		border-color: darken($brand-primary, 15%);
+		border-radius: 0;
+		border-width: 0 0 4px;
+		color: #FFF;
 		height: auto;
 		margin-top: 10px;
+		outline: none;
 		position: relative;
 		width: 100%;
 
 		.lexicon-icon-wrapper {
-			background-color: #CCC;
+			background-color: darken($brand-primary, 15%);
 			bottom: 0;
 			left: 0;
 			line-height: initial;
@@ -33,9 +40,26 @@ $config-panel-bg: #1F282F;
 			top: 0;
 			width: 30px;
 
-			svg {
+			.lexicon-icon {
+				fill: #FFF;
 				height: 30px;
 			}
+		}
+
+		&:active, &:hover {
+			background-color: darken($brand-primary, 15%);
+			border-color: darken($brand-primary, 20%);
+			color: #FFF;
+
+			.lexicon-icon-wrapper {
+				background-color: darken($brand-primary, 20%);
+			}
+		}
+
+		&:active {
+			border-width: 0;
+			margin-top: 14px;
+			outline: none;
 		}
 	}
 

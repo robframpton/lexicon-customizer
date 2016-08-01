@@ -56,7 +56,7 @@ var VariablesGroup = function (_Component) {
 			var filterText = _state.filterText;
 
 
-			var className = 'variables-editor-section';
+			var className = 'card variables-editor-section';
 
 			if (collapsed) {
 				className += ' collapsed';

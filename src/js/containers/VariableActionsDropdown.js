@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import Button from '../components/Button';
 import Dropdown from '../components/Dropdown';
+import Icon from '../components/Button';
 import {exportVariables, importVariables} from '../lib/system/import_export';
 import {resetComponentVariables, resetVariables} from '../actions/variables';
 import {unlockAllVariables} from '../actions/lockedVariables';
@@ -11,7 +12,9 @@ class VariableActionsDropdown extends Component {
 	render() {
 		return (
 			<Dropdown direction="bottom" options={this.getDropdownTemplate()}>
-				<Button>Variable Actions</Button>
+				<Button icon="ellipsis-h">
+					Variable Actions
+				</Button>
 			</Dropdown>
 		);
 	}

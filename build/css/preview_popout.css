@@ -29,15 +29,22 @@ input.form-control, input.form-control:focus {
 input.form-control:focus {
   border-color: #5BBFDC; }
 
+.card {
+  background-color: #FFF;
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+  padding: 10px; }
+
 ::-webkit-scrollbar {
   width: 8px; }
 
 ::-webkit-scrollbar-track {
-  margin: 4px; }
+  margin: 0; }
 
 ::-webkit-scrollbar-thumb {
   background-color: #E4E4E4;
-  border-radius: 10px; }
+  border-radius: 0; }
 
 /* Preview box */
 .preview-box webview {

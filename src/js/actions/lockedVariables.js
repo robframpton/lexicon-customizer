@@ -27,6 +27,8 @@ export function toggleLockedVariable(name) {
 };
 
 export function unlockAllVariables() {
+	userConfig.setConfig('lockedVariables', []);
+
 	return {
 		type: 'UNLOCK_ALL_VARIABLES'
 	}

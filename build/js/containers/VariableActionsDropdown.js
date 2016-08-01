@@ -51,7 +51,7 @@ var VariableActionsDropdown = function (_Component) {
 				{ direction: 'bottom', options: this.getDropdownTemplate() },
 				_react2.default.createElement(
 					_Button2.default,
-					null,
+					{ icon: 'ellipsis-h' },
 					'Variable Actions'
 				)
 			);

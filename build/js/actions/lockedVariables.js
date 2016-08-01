@@ -40,6 +40,8 @@ function toggleLockedVariable(name) {
 };
 
 function unlockAllVariables() {
+	userConfig.setConfig('lockedVariables', []);
+
 	return {
 		type: 'UNLOCK_ALL_VARIABLES'
 	};

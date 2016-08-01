@@ -29,15 +29,22 @@ input.form-control, input.form-control:focus {
 input.form-control:focus {
   border-color: #5BBFDC; }
 
+.card {
+  background-color: #FFF;
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+  padding: 10px; }
+
 ::-webkit-scrollbar {
   width: 8px; }
 
 ::-webkit-scrollbar-track {
-  margin: 4px; }
+  margin: 0; }
 
 ::-webkit-scrollbar-thumb {
   background-color: #E4E4E4;
-  border-radius: 10px; }
+  border-radius: 0; }
 
 /* Color picker */
 .color-picker-trigger {
@@ -65,9 +72,9 @@ input.form-control:focus {
   .color-picker-trigger-checkerboard:after, .color-picker-trigger-checkerboard:before {
     background-color: #DDD;
     content: '';
-    height: 12px;
+    height: 15px;
     position: absolute;
-    width: 12px; }
+    width: 15px; }
   .color-picker-trigger-checkerboard:after {
     left: 0;
     top: 0; }
@@ -90,20 +97,38 @@ input.form-control:focus {
   .lexicon-customizer-config-panel.open {
     right: 0; }
   .lexicon-customizer-config-panel .btn {
+    -webkit-app-region: no-drag;
+    background-color: #5BBFDC;
+    border-color: #299fc1;
+    border-radius: 0;
+    border-width: 0 0 4px;
+    color: #FFF;
     height: auto;
     margin-top: 10px;
+    outline: none;
     position: relative;
     width: 100%; }
     .lexicon-customizer-config-panel .btn .lexicon-icon-wrapper {
-      background-color: #CCC;
+      background-color: #299fc1;
       bottom: 0;
       left: 0;
       line-height: initial;
       position: absolute;
       top: 0;
       width: 30px; }
-      .lexicon-customizer-config-panel .btn .lexicon-icon-wrapper svg {
+      .lexicon-customizer-config-panel .btn .lexicon-icon-wrapper .lexicon-icon {
+        fill: #FFF;
         height: 30px; }
+    .lexicon-customizer-config-panel .btn:active, .lexicon-customizer-config-panel .btn:hover {
+      background-color: #299fc1;
+      border-color: #258eac;
+      color: #FFF; }
+      .lexicon-customizer-config-panel .btn:active .lexicon-icon-wrapper, .lexicon-customizer-config-panel .btn:hover .lexicon-icon-wrapper {
+        background-color: #258eac; }
+    .lexicon-customizer-config-panel .btn:active {
+      border-width: 0;
+      margin-top: 14px;
+      outline: none; }
   .lexicon-customizer-config-panel .btn-icon {
     padding-left: 30px; }
   .lexicon-customizer-config-panel .radio {
@@ -137,28 +162,28 @@ input.form-control:focus {
   z-index: 20; }
   .dropdown .dropdown-options {
     background-color: #FFF;
-    border-radius: 4px;
-    border: 4px solid #F7F7F7;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     display: inline-block;
     display: none;
-    margin-top: 4px;
     min-width: 160px;
     position: absolute;
     z-index: 2; }
     .dropdown .dropdown-options.open {
       display: inline-block; }
   .dropdown .dropdown-option a {
-    color: #555;
+    color: #5BBFDC;
     display: inline-block;
     padding: 10px;
-    transition: color 300ms;
+    transition: background-color 300ms, color 300ms;
     width: 100%; }
-    .dropdown .dropdown-option a .lexicon-icon-wrapper .lexicon-icon {
+    .dropdown .dropdown-option a .lexicon-icon {
+      fill: #5BBFDC;
       margin: 0 8px 0 0; }
     .dropdown .dropdown-option a:hover {
-      background-color: #F7F7F7;
-      color: #5BBFDC; }
+      background-color: #5BBFDC;
+      color: #FFF; }
+      .dropdown .dropdown-option a:hover .lexicon-icon {
+        fill: #FFF; }
   .dropdown .dropdown-option.disabled a {
     background-color: #FFF;
     color: #CCC;
@@ -242,37 +267,30 @@ input.form-control:focus {
 .lexicon-customizer-actions {
   float: right;
   margin-right: 20px; }
-  .lexicon-customizer-actions .btn {
-    -webkit-app-region: no-drag;
-    border-radius: 0;
-    border-width: 0 0 4px;
-    height: 100%;
-    outline: none; }
-    .lexicon-customizer-actions .btn:active {
-      border-color: #1F282F;
-      border-width: 4px 0 0;
-      outline: none; }
 
 .preview-box, .side-menu, .variables-editor {
   display: inline-block;
   position: relative; }
 
 .side-menu, .variables-editor {
+  background-color: #F7F7F7;
   height: 100%; }
 
 .preview-box {
   bottom: 0;
-  left: 215px;
+  left: 220px;
   position: absolute;
   right: 320px;
   top: 50px; }
 
 .side-menu {
+  border-right: 2px solid #E4E4E4;
   overflow-y: scroll;
   padding: 12px;
-  width: 215px; }
+  width: 220px; }
 
 .variables-editor {
+  border-left: 2px solid #E4E4E4;
   float: right;
   overflow: hidden;
   width: 320px; }
@@ -438,11 +456,7 @@ div.container {
   padding: 12px; }
 
 .variables-editor-section {
-  background-color: #FFF;
-  border-radius: 4px;
-  border: 4px solid #F7F7F7;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-  margin-top: 20px; }
+  padding: 0; }
   .variables-editor-section[data-group="bootstrap"] .variables-editor-section-header {
     color: #9E79D7; }
     .variables-editor-section[data-group="bootstrap"] .variables-editor-section-header:hover {
@@ -454,7 +468,6 @@ div.container {
     .variables-editor-section[data-group="lexicon"] .variables-editor-section-header:hover {
       background-color: #5BBFDC; }
   .variables-editor-section .variables-editor-section-header {
-    background-color: #F7F7F7;
     border-radius: 2px 2px 0 0;
     cursor: pointer;
     margin: 0;
@@ -509,16 +522,14 @@ div.container {
   padding-right: 30px; }
 
 .color-picker-panel {
-  background-color: #FFF;
-  border-radius: 4px 4px 0 0;
-  border: 4px solid #F7F7F7;
-  border-width: 4px 4px 0;
+  border-top: 2px solid #E4E4E4;
   bottom: 0;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2), -8px -8px 10px #FFF, 8px -8px 10px #FFF;
-  left: 12px;
+  left: 0;
   position: absolute;
-  right: 20px;
+  right: 0;
   z-index: 1; }
+  .color-picker-panel .color-picker-panel-inner {
+    margin: 12px 20px 12px 12px; }
   .color-picker-panel .color-picker-panel-header {
     margin: 8px 28px 0; }
     .color-picker-panel .color-picker-panel-header .color-picker-panel-name {
@@ -531,7 +542,7 @@ div.container {
       box-shadow: none !important; }
 
 .variables-editor.has-color-picker-panel {
-  padding-bottom: 270px; }
+  padding-bottom: 324px; }
 
 .range-picker {
   bottom: 4px;

@@ -44,15 +44,23 @@ input.form-control {
 	}
 }
 
+.card {
+	background-color: #FFF;
+	border-radius: 4px;
+	box-shadow: $basic-box-shadow;
+	margin-top: 20px;
+	padding: 10px;
+}
+
 ::-webkit-scrollbar {
 	width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-	margin: 4px;
+	margin: 0;
 }
 
 ::-webkit-scrollbar-thumb {
 	background-color: $brand-gray;
-	border-radius: 10px;
+	border-radius: 0;
 }

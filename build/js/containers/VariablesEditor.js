@@ -84,10 +84,10 @@ var VariablesEditor = function (_Component) {
 					_react2.default.createElement(
 						'form',
 						null,
-						this.renderGroups(),
-						this.renderColorPickerPanel()
+						this.renderGroups()
 					)
-				)
+				),
+				this.renderColorPickerPanel()
 			);
 		}
 	}, {

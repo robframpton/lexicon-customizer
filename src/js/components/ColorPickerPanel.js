@@ -9,16 +9,18 @@ class VariableInput extends Component {
 
 		return (
 			<div className="color-picker-panel">
-				<div className="color-picker-panel-header">
-					<span className="color-picker-panel-name">{name}</span>
+				<div className="card color-picker-panel-inner">
+					<div className="color-picker-panel-header">
+						<span className="color-picker-panel-name">{name}</span>
 
-					<a className="color-picker-panel-close" href="javascript:;" onClick={this.props.onClose}>
-						<Icon icon="times" />
-					</a>
-				</div>
+						<a className="color-picker-panel-close" href="javascript:;" onClick={this.props.onClose}>
+							<Icon icon="times" />
+						</a>
+					</div>
 
-				<div className="color-picker-panel-body">
-					<ColorPicker color={value} onChange={this.handleChange.bind(this)} type="chrome" />
+					<div className="color-picker-panel-body">
+						<ColorPicker color={value} onChange={this.handleChange.bind(this)} type="chrome" />
+					</div>
 				</div>
 			</div>
 		);

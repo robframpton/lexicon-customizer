@@ -34,10 +34,10 @@ class VariablesEditor extends Component {
 
 					<form>
 						{this.renderGroups()}
-
-						{this.renderColorPickerPanel()}
 					</form>
 				</div>
+
+				{this.renderColorPickerPanel()}
 			</div>
 		);
 	}

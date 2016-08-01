@@ -64,38 +64,42 @@ var SideMenu = function (_Component) {
 					null,
 					this.props.header
 				),
-				_react2.default.createElement(_FilterInput2.default, {
-					onChange: this.handleFilterInputChange.bind(this),
-					value: this.state.filterText,
-					placeholder: 'Filter components...'
-				}),
 				_react2.default.createElement(
-					'ul',
-					{ className: 'side-menu-list' },
-					componentArray.map(function (item, index) {
-						var className = 'side-menu-list-item';
+					'div',
+					{ className: 'card side-menu-inner' },
+					_react2.default.createElement(_FilterInput2.default, {
+						onChange: this.handleFilterInputChange.bind(this),
+						value: this.state.filterText,
+						placeholder: 'Filter components...'
+					}),
+					_react2.default.createElement(
+						'ul',
+						{ className: 'side-menu-list' },
+						componentArray.map(function (item, index) {
+							var className = 'side-menu-list-item';
 
-						if (item === selectedItem) {
-							className += ' selected';
-						}
+							if (item === selectedItem) {
+								className += ' selected';
+							}
 
-						return _react2.default.createElement(
-							'li',
-							{
-								className: className,
-								key: item
-							},
-							_react2.default.createElement(
-								'a',
+							return _react2.default.createElement(
+								'li',
 								{
-									'data-name': item,
-									href: 'javascript:;',
-									onClick: onClick
+									className: className,
+									key: item
 								},
-								getDisplayName(item)
-							)
-						);
-					})
+								_react2.default.createElement(
+									'a',
+									{
+										'data-name': item,
+										href: 'javascript:;',
+										onClick: onClick
+									},
+									getDisplayName(item)
+								)
+							);
+						})
+					)
 				)
 			);
 		}

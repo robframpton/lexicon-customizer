@@ -48,22 +48,26 @@ var VariableInput = function (_Component) {
 				{ className: 'color-picker-panel' },
 				_react2.default.createElement(
 					'div',
-					{ className: 'color-picker-panel-header' },
+					{ className: 'card color-picker-panel-inner' },
 					_react2.default.createElement(
-						'span',
-						{ className: 'color-picker-panel-name' },
-						name
+						'div',
+						{ className: 'color-picker-panel-header' },
+						_react2.default.createElement(
+							'span',
+							{ className: 'color-picker-panel-name' },
+							name
+						),
+						_react2.default.createElement(
+							'a',
+							{ className: 'color-picker-panel-close', href: 'javascript:;', onClick: this.props.onClose },
+							_react2.default.createElement(_Icon2.default, { icon: 'times' })
+						)
 					),
 					_react2.default.createElement(
-						'a',
-						{ className: 'color-picker-panel-close', href: 'javascript:;', onClick: this.props.onClose },
-						_react2.default.createElement(_Icon2.default, { icon: 'times' })
+						'div',
+						{ className: 'color-picker-panel-body' },
+						_react2.default.createElement(_reactColor2.default, { color: value, onChange: this.handleChange.bind(this), type: 'chrome' })
 					)
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'color-picker-panel-body' },
-					_react2.default.createElement(_reactColor2.default, { color: value, onChange: this.handleChange.bind(this), type: 'chrome' })
 				)
 			);
 		}

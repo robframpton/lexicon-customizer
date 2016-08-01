@@ -24,36 +24,38 @@ class SideMenu extends Component {
 			<div className="side-menu">
 				<h3>{this.props.header}</h3>
 
-				<FilterInput
-					onChange={this.handleFilterInputChange.bind(this)}
-					value={this.state.filterText}
-					placeholder="Filter components..."
-				/>
+				<div className="card side-menu-inner">
+					<FilterInput
+						onChange={this.handleFilterInputChange.bind(this)}
+						value={this.state.filterText}
+						placeholder="Filter components..."
+					/>
 
-				<ul className="side-menu-list">
-					{componentArray.map((item, index) => {
-						let className = 'side-menu-list-item';
+					<ul className="side-menu-list">
+						{componentArray.map((item, index) => {
+							let className = 'side-menu-list-item';
 
-						if (item === selectedItem) {
-							className += ' selected';
-						}
+							if (item === selectedItem) {
+								className += ' selected';
+							}
 
-						return (
-							<li
-								className={className}
-								key={item}
-							>
-								<a
-									data-name={item}
-									href="javascript:;"
-									onClick={onClick}
+							return (
+								<li
+									className={className}
+									key={item}
 								>
-									{getDisplayName(item)}
-								</a>
-							</li>
-						);
-					})}
-				</ul>
+									<a
+										data-name={item}
+										href="javascript:;"
+										onClick={onClick}
+									>
+										{getDisplayName(item)}
+									</a>
+								</li>
+							);
+						})}
+					</ul>
+				</div>
 			</div>
 		);
 	}

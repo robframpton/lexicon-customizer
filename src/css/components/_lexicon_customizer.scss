@@ -32,20 +32,6 @@
 .lexicon-customizer-actions {
 	float: right;
 	margin-right: 20px;
-
-	.btn {
-		-webkit-app-region: no-drag;
-		border-radius: 0;
-		border-width: 0 0 4px;
-		height: 100%;
-		outline: none;
-
-		&:active {
-			border-color: #1F282F;
-			border-width: 4px 0 0;
-			outline: none;
-		}
-	}
 }
 
 .preview-box, .side-menu, .variables-editor {
@@ -54,24 +40,27 @@
 }
 
 .side-menu, .variables-editor {
+	background-color: #F7F7F7;
 	height: 100%;
 }
 
 .preview-box {
 	bottom: 0;
-	left: 215px;
+	left: $side-menu-width;
 	position: absolute;
 	right: 320px;
 	top: 50px;
 }
 
 .side-menu {
+	border-right: 2px solid $brand-gray;
 	overflow-y: scroll;
 	padding: 12px;
-	width: 215px;
+	width: $side-menu-width;
 }
 
 .variables-editor {
+	border-left: 2px solid $brand-gray;
 	float: right;
 	overflow: hidden;
 	width: 320px;
