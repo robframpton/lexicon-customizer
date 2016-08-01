@@ -9,7 +9,7 @@ var _immutable = require('immutable');
 var _redux_util = require('../lib/redux_util');
 
 var actionHandlers = {
-	OVERRIDE_VARIABLES: function OVERRIDE_VARIABLES(state, _ref) {
+	OVERWRITE_VARIABLES: function OVERWRITE_VARIABLES(state, _ref) {
 		var variables = _ref.variables;
 
 		if (_immutable.OrderedMap.isOrderedMap(variables)) {

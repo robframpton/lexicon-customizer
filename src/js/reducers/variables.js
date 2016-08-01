@@ -3,7 +3,7 @@ import {Map, OrderedMap} from 'immutable';
 import {createReducer} from '../lib/redux_util';
 
 const actionHandlers = {
-	OVERRIDE_VARIABLES: (state, {variables}) => {
+	OVERWRITE_VARIABLES: (state, {variables}) => {
 		if (OrderedMap.isOrderedMap(variables)) {
 			return variables;
 		}

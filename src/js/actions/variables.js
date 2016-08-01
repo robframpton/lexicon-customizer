@@ -10,16 +10,10 @@ export function importVariables(filePath) {
 };
 
 export function overwriteVariables(variables) {
-	return function(dispatch, getState) {
-		const state = getState();
-
-		variables = varUtil.removeLockedVariables(variables, state.get('lockedVariables'));
-
-		dispatch({
-			type: 'OVERRIDE_VARIABLES',
-			variables
-		});
-	}
+	return {
+		type: 'OVERWRITE_VARIABLES',
+		variables
+	};
 };
 
 export function resetComponentVariables() {

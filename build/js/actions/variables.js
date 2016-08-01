@@ -34,15 +34,9 @@ function importVariables(filePath) {
 };
 
 function overwriteVariables(variables) {
-	return function (dispatch, getState) {
-		var state = getState();
-
-		variables = varUtil.removeLockedVariables(variables, state.get('lockedVariables'));
-
-		dispatch({
-			type: 'OVERRIDE_VARIABLES',
-			variables: variables
-		});
+	return {
+		type: 'OVERWRITE_VARIABLES',
+		variables: variables
 	};
 };
 
