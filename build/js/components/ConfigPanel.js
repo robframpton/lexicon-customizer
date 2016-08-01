@@ -22,6 +22,10 @@ var _ExportButton = require('../containers/action_buttons/ExportButton');
 
 var _ExportButton2 = _interopRequireDefault(_ExportButton);
 
+var _Icon = require('../components/Icon');
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
 var _ImportButton = require('../containers/action_buttons/ImportButton');
 
 var _ImportButton2 = _interopRequireDefault(_ImportButton);
@@ -29,6 +33,10 @@ var _ImportButton2 = _interopRequireDefault(_ImportButton);
 var _OpenDevToolsButton = require('../components/OpenDevToolsButton');
 
 var _OpenDevToolsButton2 = _interopRequireDefault(_OpenDevToolsButton);
+
+var _PopoutPreviewButton = require('../containers/action_buttons/PopoutPreviewButton');
+
+var _PopoutPreviewButton2 = _interopRequireDefault(_PopoutPreviewButton);
 
 var _ResetButton = require('../containers/action_buttons/ResetButton');
 
@@ -46,13 +54,9 @@ var _ThemeRadio = require('../containers/ThemeRadio');
 
 var _ThemeRadio2 = _interopRequireDefault(_ThemeRadio);
 
-var _Icon = require('../components/Icon');
+var _VariableActionsDropdown = require('../containers/VariableActionsDropdown');
 
-var _Icon2 = _interopRequireDefault(_Icon);
-
-var _PopoutPreviewButton = require('../containers/action_buttons/PopoutPreviewButton');
-
-var _PopoutPreviewButton2 = _interopRequireDefault(_PopoutPreviewButton);
+var _VariableActionsDropdown2 = _interopRequireDefault(_VariableActionsDropdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88,26 +92,7 @@ var ConfigPanel = function (_Component) {
 					{ label: 'Variables' },
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Lexicon Base', value: 'lexiconBase' }),
 					_react2.default.createElement(_ThemeRadio2.default, { label: 'Atlas Theme', value: 'atlasTheme' }),
-					_react2.default.createElement(
-						_ExportButton2.default,
-						null,
-						'Export Variables'
-					),
-					_react2.default.createElement(
-						_ImportButton2.default,
-						null,
-						'Import Variables'
-					),
-					_react2.default.createElement(
-						_ResetButton2.default,
-						null,
-						'Reset All'
-					),
-					_react2.default.createElement(
-						_ResetComponentButton2.default,
-						null,
-						'Reset Component'
-					)
+					_react2.default.createElement(_VariableActionsDropdown2.default, null)
 				),
 				_react2.default.createElement(
 					_ConfigPanelGroup2.default,

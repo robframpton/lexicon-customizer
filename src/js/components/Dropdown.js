@@ -13,11 +13,15 @@ class Dropdown extends Component {
 	}
 
 	render() {
-		const {children} = this.props;
+		let {direction} = this.props;
+
+		direction = direction || 'bottom-left';
+
+		const className = 'dropdown ' + direction;
 
 		return (
-			<div className="dropdown">
-				<a className="dropdown-trigger" href="javascript:;" onClick={this.handleTriggerClick.bind(this)}>{children}</a>
+			<div className={className}>
+				<a className="dropdown-trigger" href="javascript:;" onClick={this.handleTriggerClick.bind(this)}>{this.props.children}</a>
 
 				{this.renderOptions()}
 			</div>
@@ -39,27 +43,34 @@ class Dropdown extends Component {
 		return (
 			<div className={className}>
 				{options.map((option, index) => {
-					const {disabled, icon, label} = option;
+					const {disabled, icon, label, separator} = option;
 
-					let optionClassName = 'dropdown-option';
-
-					if (disabled) {
-						optionClassName += ' disabled';
+					if (separator) {
+						return (
+							<div className="dropdown-separator" key={`separator${index}`}></div>
+						);
 					}
+					else {
+						let optionClassName = 'dropdown-option';
 
-					return (
-						<div className={optionClassName}>
-							<a
-								className="dropdown-option-link"
-								href="javascript:;"
-								onClick={instance.handleOptionClick.bind(instance, option)}
-							>
-								<Icon icon={icon} />
+						if (disabled) {
+							optionClassName += ' disabled';
+						}
 
-								{label}
-							</a>
-						</div>
-					);
+						return (
+							<div className={optionClassName} key={`option${index}`}>
+								<a
+									className="dropdown-option-link"
+									href="javascript:;"
+									onClick={instance.handleOptionClick.bind(instance, option)}
+								>
+									<Icon icon={icon} />
+
+									{label}
+								</a>
+							</div>
+						);
+					}
 				})}
 			</div>
 		);
@@ -102,6 +113,7 @@ class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
+	direction: PropTypes.string,
 	handleOptionClick: PropTypes.func,
 	options: PropTypes.array.isRequired
 };

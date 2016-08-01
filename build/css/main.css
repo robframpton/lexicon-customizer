@@ -132,7 +132,9 @@ input.form-control:focus {
 
 /* Dropdown */
 .dropdown {
-  position: relative; }
+  position: relative;
+  text-align: left;
+  z-index: 20; }
   .dropdown .dropdown-options {
     background-color: #FFF;
     border-radius: 4px;
@@ -140,6 +142,7 @@ input.form-control:focus {
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     display: inline-block;
     display: none;
+    margin-top: 4px;
     min-width: 160px;
     position: absolute;
     z-index: 2; }
@@ -162,6 +165,18 @@ input.form-control:focus {
     cursor: default; }
     .dropdown .dropdown-option.disabled a .lexicon-icon {
       fill: #CCC; }
+  .dropdown .dropdown-separator {
+    border: 1px solid #DDD; }
+  .dropdown.bottom .dropdown-options {
+    left: 0;
+    right: 0;
+    top: 100%; }
+  .dropdown.bottom-left .dropdown-options {
+    right: 0;
+    top: 100%; }
+  .dropdown.bottom-right .dropdown-options {
+    left: 0;
+    top: 100%; }
 
 /* Error popup */
 .error-popup-wrapper {
@@ -481,9 +496,6 @@ div.container {
   .variable-input .dropdown {
     position: absolute;
     right: 0; }
-    .variable-input .dropdown .dropdown-options {
-      right: 0;
-      top: 100%; }
     .variable-input .dropdown .dropdown-trigger {
       opacity: 0; }
   .variable-input:hover .dropdown .dropdown-trigger {

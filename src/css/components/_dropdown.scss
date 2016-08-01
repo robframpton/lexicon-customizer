@@ -2,6 +2,8 @@
 
 .dropdown {
 	position: relative;
+	text-align: left;
+	z-index: 20;
 
 	.dropdown-options {
 		background-color: #FFF;
@@ -10,6 +12,7 @@
 		box-shadow: $basic-box-shadow;
 		display: inline-block;
 		display: none;
+		margin-top: 4px;
 		min-width: 160px;
 		position: absolute;
 		z-index: 2;
@@ -46,5 +49,25 @@
 				fill: #CCC;
 			}
 		}
+	}
+
+	.dropdown-separator {
+		border: 1px solid #DDD;
+	}
+
+	&.bottom .dropdown-options {
+		left: 0;
+		right: 0;
+		top: 100%;
+	}
+
+	&.bottom-left .dropdown-options {
+		right: 0;
+		top: 100%;
+	}
+
+	&.bottom-right .dropdown-options {
+		left: 0;
+		top: 100%;
 	}
 }

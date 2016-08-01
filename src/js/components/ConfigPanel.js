@@ -3,16 +3,15 @@ import React, {Component} from 'react';
 import ClearThemeButton from '../containers/action_buttons/ClearThemeButton';
 import ConfigPanelGroup from '../components/ConfigPanelGroup';
 import ExportButton from '../containers/action_buttons/ExportButton';
+import Icon from '../components/Icon';
 import ImportButton from '../containers/action_buttons/ImportButton';
 import OpenDevToolsButton from '../components/OpenDevToolsButton';
+import PopoutPreviewButton from '../containers/action_buttons/PopoutPreviewButton';
 import ResetButton from '../containers/action_buttons/ResetButton';
 import ResetComponentButton from '../containers/action_buttons/ResetComponentButton';
 import ThemeDropper from '../containers/ThemeDropper';
 import ThemeRadio from '../containers/ThemeRadio';
-
-import Icon from '../components/Icon';
-
-import PopoutPreviewButton from '../containers/action_buttons/PopoutPreviewButton';
+import VariableActionsDropdown from '../containers/VariableActionsDropdown';
 
 class ConfigPanel extends Component {
 	render() {
@@ -28,13 +27,7 @@ class ConfigPanel extends Component {
 					<ThemeRadio label="Lexicon Base" value="lexiconBase" />
 					<ThemeRadio label="Atlas Theme" value="atlasTheme" />
 
-					<ExportButton>Export Variables</ExportButton>
-
-					<ImportButton>Import Variables</ImportButton>
-
-					<ResetButton>Reset All</ResetButton>
-
-					<ResetComponentButton>Reset Component</ResetComponentButton>
+					<VariableActionsDropdown />
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Preview Frame">

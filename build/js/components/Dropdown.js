@@ -43,16 +43,20 @@ var Dropdown = function (_Component) {
 	_createClass(Dropdown, [{
 		key: 'render',
 		value: function render() {
-			var children = this.props.children;
+			var direction = this.props.direction;
 
+
+			direction = direction || 'bottom-left';
+
+			var className = 'dropdown ' + direction;
 
 			return _react2.default.createElement(
 				'div',
-				{ className: 'dropdown' },
+				{ className: className },
 				_react2.default.createElement(
 					'a',
 					{ className: 'dropdown-trigger', href: 'javascript:;', onClick: this.handleTriggerClick.bind(this) },
-					children
+					this.props.children
 				),
 				this.renderOptions()
 			);
@@ -79,28 +83,33 @@ var Dropdown = function (_Component) {
 					var disabled = option.disabled;
 					var icon = option.icon;
 					var label = option.label;
+					var separator = option.separator;
 
 
-					var optionClassName = 'dropdown-option';
+					if (separator) {
+						return _react2.default.createElement('div', { className: 'dropdown-separator', key: 'separator' + index });
+					} else {
+						var optionClassName = 'dropdown-option';
 
-					if (disabled) {
-						optionClassName += ' disabled';
+						if (disabled) {
+							optionClassName += ' disabled';
+						}
+
+						return _react2.default.createElement(
+							'div',
+							{ className: optionClassName, key: 'option' + index },
+							_react2.default.createElement(
+								'a',
+								{
+									className: 'dropdown-option-link',
+									href: 'javascript:;',
+									onClick: instance.handleOptionClick.bind(instance, option)
+								},
+								_react2.default.createElement(_Icon2.default, { icon: icon }),
+								label
+							)
+						);
 					}
-
-					return _react2.default.createElement(
-						'div',
-						{ className: optionClassName },
-						_react2.default.createElement(
-							'a',
-							{
-								className: 'dropdown-option-link',
-								href: 'javascript:;',
-								onClick: instance.handleOptionClick.bind(instance, option)
-							},
-							_react2.default.createElement(_Icon2.default, { icon: icon }),
-							label
-						)
-					);
 				})
 			);
 		}
@@ -151,6 +160,7 @@ var Dropdown = function (_Component) {
 }(_react.Component);
 
 Dropdown.propTypes = {
+	direction: _react.PropTypes.string,
 	handleOptionClick: _react.PropTypes.func,
 	options: _react.PropTypes.array.isRequired
 };
