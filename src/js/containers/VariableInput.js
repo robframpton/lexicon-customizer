@@ -219,17 +219,18 @@ class VariableInput extends Component {
 	}
 
 	getDropdownTemplate() {
-		const {disabled} = this.props;
+		const {disabled, modified} = this.props;
 
 		return [
 			{
 				action: this.handleReset.bind(this),
-				disabled: disabled,
+				disabled: disabled || !modified,
 				icon: 'reload',
 				label: 'Reset'
 			},
 			{
 				action: this.handleLock.bind(this),
+				disabled: !modified,
 				icon: disabled ? 'unlock' : 'lock',
 				label: disabled ? 'Unlock' : 'Lock'
 			}
@@ -409,6 +410,7 @@ class VariableInput extends Component {
 VariableInput.propTypes = {
 	disabled: PropTypes.bool,
 	label: PropTypes.string.isRequired,
+	modified: PropTypes.bool,
 	name: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 	onColorPickerTriggerClick: PropTypes.func.isRequired,
@@ -419,9 +421,12 @@ VariableInput.propTypes = {
 	variables: ImmutablePropTypes.orderedMap.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, {name, value}) => {
+	const sourceVariables = state.get('sourceVariables');
+
 	return {
-		disabled: state.get('lockedVariables').has(ownProps.name),
+		disabled: state.get('lockedVariables').has(name),
+		modified: value !== sourceVariables.get(name).get('value'),
 		sourceVariables: state.get('sourceVariables'),
 		variables: state.get('variables')
 	}

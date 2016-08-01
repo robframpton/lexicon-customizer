@@ -272,16 +272,19 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'getDropdownTemplate',
 		value: function getDropdownTemplate() {
-			var disabled = this.props.disabled;
+			var _props2 = this.props;
+			var disabled = _props2.disabled;
+			var modified = _props2.modified;
 
 
 			return [{
 				action: this.handleReset.bind(this),
-				disabled: disabled,
+				disabled: disabled || !modified,
 				icon: 'reload',
 				label: 'Reset'
 			}, {
 				action: this.handleLock.bind(this),
+				disabled: !modified,
 				icon: disabled ? 'unlock' : 'lock',
 				label: disabled ? 'Unlock' : 'Lock'
 			}];
@@ -291,9 +294,9 @@ var VariableInput = function (_Component) {
 		value: function handleAutoCompleteClick(event) {
 			var value = event.target.getAttribute('data-value');
 
-			var _props2 = this.props;
-			var name = _props2.name;
-			var onChange = _props2.onChange;
+			var _props3 = this.props;
+			var name = _props3.name;
+			var onChange = _props3.onChange;
 
 
 			this.setState({
@@ -319,9 +322,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleColorPickerTriggerClick',
 		value: function handleColorPickerTriggerClick(name, resolvedValue) {
-			var _props3 = this.props;
-			var disabled = _props3.disabled;
-			var onColorPickerTriggerClick = _props3.onColorPickerTriggerClick;
+			var _props4 = this.props;
+			var disabled = _props4.disabled;
+			var onColorPickerTriggerClick = _props4.onColorPickerTriggerClick;
 
 
 			if (disabled) {
@@ -340,9 +343,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleInputChange',
 		value: function handleInputChange(event) {
-			var _props4 = this.props;
-			var onChange = _props4.onChange;
-			var name = _props4.name;
+			var _props5 = this.props;
+			var onChange = _props5.onChange;
+			var name = _props5.name;
 
 
 			onChange(name, event.currentTarget.value);
@@ -375,9 +378,9 @@ var VariableInput = function (_Component) {
 			if (key == 'Enter') {
 				var value = autoCompleteList[autoCompleteIndex].getAttribute('data-value');
 
-				var _props5 = this.props;
-				var name = _props5.name;
-				var onChange = _props5.onChange;
+				var _props6 = this.props;
+				var name = _props6.name;
+				var onChange = _props6.onChange;
 
 
 				this.setState({
@@ -402,10 +405,10 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleLock',
 		value: function handleLock() {
-			var _props6 = this.props;
-			var disabled = _props6.disabled;
-			var name = _props6.name;
-			var onLock = _props6.onLock;
+			var _props7 = this.props;
+			var disabled = _props7.disabled;
+			var name = _props7.name;
+			var onLock = _props7.onLock;
 
 
 			onLock(name, disabled);
@@ -413,11 +416,11 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleRangePickerClick',
 		value: function handleRangePickerClick(up) {
-			var _props7 = this.props;
-			var disabled = _props7.disabled;
-			var name = _props7.name;
-			var onChange = _props7.onChange;
-			var value = _props7.value;
+			var _props8 = this.props;
+			var disabled = _props8.disabled;
+			var name = _props8.name;
+			var onChange = _props8.onChange;
+			var value = _props8.value;
 
 
 			if (disabled) {
@@ -451,9 +454,9 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'handleReset',
 		value: function handleReset() {
-			var _props8 = this.props;
-			var name = _props8.name;
-			var onReset = _props8.onReset;
+			var _props9 = this.props;
+			var name = _props9.name;
+			var onReset = _props9.onReset;
 
 
 			onReset(name);
@@ -510,6 +513,7 @@ var VariableInput = function (_Component) {
 VariableInput.propTypes = {
 	disabled: _react.PropTypes.bool,
 	label: _react.PropTypes.string.isRequired,
+	modified: _react.PropTypes.bool,
 	name: _react.PropTypes.string.isRequired,
 	onChange: _react.PropTypes.func.isRequired,
 	onColorPickerTriggerClick: _react.PropTypes.func.isRequired,
@@ -520,9 +524,15 @@ VariableInput.propTypes = {
 	variables: _reactImmutableProptypes2.default.orderedMap.isRequired
 };
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(state, _ref) {
+	var name = _ref.name;
+	var value = _ref.value;
+
+	var sourceVariables = state.get('sourceVariables');
+
 	return {
-		disabled: state.get('lockedVariables').has(ownProps.name),
+		disabled: state.get('lockedVariables').has(name),
+		modified: value !== sourceVariables.get(name).get('value'),
 		sourceVariables: state.get('sourceVariables'),
 		variables: state.get('variables')
 	};
