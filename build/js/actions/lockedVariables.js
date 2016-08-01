@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.lockVariable = lockVariable;
 exports.toggleLockedVariable = toggleLockedVariable;
+exports.unlockAllVariables = unlockAllVariables;
 exports.unlockVariable = unlockVariable;
 
 var _user_config = require('../lib/system/user_config');
@@ -35,6 +36,12 @@ function toggleLockedVariable(name) {
 		}
 
 		userConfig.setConfig('lockedVariables', getState().get('lockedVariables').toArray());
+	};
+};
+
+function unlockAllVariables() {
+	return {
+		type: 'UNLOCK_ALL_VARIABLES'
 	};
 };
 

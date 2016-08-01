@@ -15,6 +15,10 @@ var actionHandlers = {
 		return state.add(name);
 	},
 
+	UNLOCK_ALL_VARIABLES: function UNLOCK_ALL_VARIABLES(state, action) {
+		return (0, _immutable.Set)();
+	},
+
 	UNLOCK_VARIABLE: function UNLOCK_VARIABLE(state, _ref2) {
 		var name = _ref2.name;
 

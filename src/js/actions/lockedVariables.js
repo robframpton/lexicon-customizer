@@ -26,6 +26,12 @@ export function toggleLockedVariable(name) {
 	};
 };
 
+export function unlockAllVariables() {
+	return {
+		type: 'UNLOCK_ALL_VARIABLES'
+	}
+};
+
 export function unlockVariable(name) {
 	return {
 		name,

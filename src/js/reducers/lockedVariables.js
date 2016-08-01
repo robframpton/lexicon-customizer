@@ -7,6 +7,10 @@ const actionHandlers = {
 		return state.add(name);
 	},
 
+	UNLOCK_ALL_VARIABLES: (state, action) => {
+		return Set();
+	},
+
 	UNLOCK_VARIABLE: (state, {name}) => {
 		return state.delete(name);
 	}
