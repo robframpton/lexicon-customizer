@@ -69,7 +69,7 @@ function resetVariables() {
 		if (confirm('Are you sure you want to reset all variables? This will also erase custom variables from your theme\'s _aui_variables.scss file.')) {
 			var state = getState();
 
-			dispatch(overwriteVariables(state.get('sourceVariables')));
+			dispatch(setVariables(state.get('sourceVariables')));
 
 			sassUtil.clearCustomVariablesFile(state.get('variables'), state.get('lexiconDirs').customDir, state.get('theme')).then(function () {
 				dispatch((0, _index.buildLexicon)());
