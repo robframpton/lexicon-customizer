@@ -35,7 +35,7 @@ function createPreview(component, cssPath) {
 		return data[g1] || match;
 	});
 
-	const filePath = path.join(USER_DATA_PATH, 'preview_markup', fileName);
+	const filePath = path.join(USER_DATA_PATH, app.getVersion(), 'preview_markup', fileName);
 
 	fs.outputFileSync(filePath, fileContent);
 

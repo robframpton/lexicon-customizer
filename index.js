@@ -22,7 +22,7 @@ let appReady = false;
 let lexiconDirs;
 let mainWindow;
 
-lexiconUtil.downloadSassDependencies(lexiconVersion, USER_DATA_PATH, function(err, result) {
+lexiconUtil.downloadSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.getVersion()), function(err, result) {
 	if (err) {
 		throw err;
 	}

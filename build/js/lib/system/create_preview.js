@@ -50,7 +50,7 @@ function createPreview(component, cssPath) {
 		return data[g1] || match;
 	});
 
-	var filePath = _path2.default.join(USER_DATA_PATH, 'preview_markup', fileName);
+	var filePath = _path2.default.join(USER_DATA_PATH, app.getVersion(), 'preview_markup', fileName);
 
 	fs.outputFileSync(filePath, fileContent);
 
