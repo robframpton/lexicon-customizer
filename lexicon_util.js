@@ -5,13 +5,15 @@ const fs = require('fs-extra');
 const path = require('path');
 const tarball = require('tarball-extract');
 
+const REGISTRY_URL = 'https://registry.npmjs.org';
+
 function downloadLexicon(version, dest, cb) {
 	const fileName = 'lexicon-ux-' + version + '.tgz';
 
-	const downloadName = path.join(dest, fileName);
-	const tarballURL = 'https://registry.npmjs.org/lexicon-ux/-/' + fileName;
+	const fileDestination = path.join(dest, fileName);
+	const tarballURL = _getTarballURL('lexicon-ux', fileName);
 
-	_downloadTarball(tarballURL, downloadName, path.join(dest, 'lexicon', version), function(err, pkg) {
+	_installDependency(tarballURL, fileDestination, path.join(dest, 'lexicon', version), function(err, pkg) {
 		const lexiconPath = resolveLexiconPath(version, dest);
 
 		_fixLexiconBaseMain(pkg.srcDir);
@@ -56,49 +58,35 @@ exports.resolveLexiconPath = resolveLexiconPath;
 function _downloadBourbon(dest, cb) {
 	const fileName = 'bourbon-4.2.7.tgz';
 
-	const downloadName = path.join(dest, fileName);
-	const tarballURL = 'https://registry.npmjs.org/bourbon/-/' + fileName;
+	const fileDestination = path.join(dest, fileName);
+	const tarballURL = _getTarballURL('bourbon', fileName);
 
-	_downloadTarball(tarballURL, downloadName, path.join(dest, 'bourbon'), cb);
+	_installDependency(tarballURL, fileDestination, path.join(dest, 'bourbon'), cb);
 }
 
-function _downloadTarball(url, fileDestination, extractionDestination, cb) {
+function _downloadAndExtractTarball(url, fileDestination, extractionDestination, cb) {
 	const pkgPath = path.join(extractionDestination, 'package');
 
-	try {
+	tarball.extractTarballDownload(url, fileDestination, extractionDestination, {}, function(err, result) {
 		const pkg = require(pkgPath);
 
+		cb(err, pkg);
+	});
+}
+
+function _extractCachedTarball(fileDestination, extractionDestination, cb) {
+	const fileName = path.basename(fileDestination);
+	const pkgPath = path.join(extractionDestination, 'package');
+
+	tarball.extractTarball(path.join(__dirname, 'tarballs', fileName), extractionDestination, function(err) {
+		let pkg;
+
+		if (!err) {
+			pkg = require(pkgPath);
+		}
+
 		cb(null, pkg);
-	}
-	catch (err) {
-		async.waterfall([
-			function(cb) {
-				const fileName = path.basename(fileDestination);
-
-				tarball.extractTarball(path.join(__dirname, 'tarballs', fileName), extractionDestination, function(err) {
-					let pkg;
-
-					if (!err) {
-						pkg = require(pkgPath);
-					}
-
-					cb(null, pkg);
-				});
-			},
-			function(pkg, cb) {
-				if (pkg) {
-					cb(null, pkg);
-				}
-				else {
-					tarball.extractTarballDownload(url, fileDestination, extractionDestination, {}, function(err, result) {
-						const pkg = require(pkgPath);
-
-						cb(err, pkg);
-					});
-				}
-			}
-		], cb);
-	}
+	});
 }
 
 function _fixLexiconBaseMain(srcDir) {
@@ -115,4 +103,41 @@ function _fixLexiconBaseMain(srcDir) {
 	fileContent = fileContent.replace('@import "mixins";', '@import "variables";\n@import "mixins";');
 
 	fs.writeFileSync(filePath, fileContent);
+}
+
+function _getTarballURL(packageName, fileName) {
+	return REGISTRY_URL + '/' + packageName + '/-/' + fileName;
+}
+
+function _installDependency(url, fileDestination, extractionDestination, cb) {
+	const pkgPath = path.join(extractionDestination, 'package');
+
+	let pkg;
+
+	try {
+		pkg = require(pkgPath);
+	}
+	catch (err) {
+	}
+
+	if (pkg) {
+		cb(null, pkg);
+
+		return;
+	}
+
+	async.waterfall([
+		function(cb) {
+			_extractCachedTarball(fileDestination, extractionDestination, cb);
+		},
+		function(pkg, cb) {
+			if (pkg) {
+				cb(null, pkg);
+
+				return;
+			}
+
+			_downloadAndExtractTarball(url, fileDestination, extractionDestination, cb);
+		}
+	], cb);
 }
