@@ -8,6 +8,10 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _reactImmutableProptypes = require('react-immutable-proptypes');
 
 var _reactImmutableProptypes2 = _interopRequireDefault(_reactImmutableProptypes);
@@ -245,7 +249,7 @@ var VariableInput = function (_Component) {
 	}, {
 		key: 'calculateNumericalChange',
 		value: function calculateNumericalChange(number, negative, up, unit) {
-			number = _.toNumber(number);
+			number = _lodash2.default.toNumber(number);
 
 			if (negative) {
 				up = !up;
@@ -494,7 +498,7 @@ var VariableInput = function (_Component) {
 		value: function _isColor(name) {
 			var color = false;
 
-			if (name.indexOf('-bg') > -1 || name.indexOf('brand') > -1 || name.indexOf('color') > -1 || name.indexOf('gray') > -1 || _.endsWith(name, '-border') || _.endsWith(name, '-text')) {
+			if (name.indexOf('-bg') > -1 || name.indexOf('brand') > -1 || name.indexOf('color') > -1 || name.indexOf('gray') > -1 || _lodash2.default.endsWith(name, '-border') || _lodash2.default.endsWith(name, '-text')) {
 				color = true;
 			}
 
