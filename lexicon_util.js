@@ -20,7 +20,7 @@ function downloadLexicon(version, dest, cb) {
 
 		try {
 			fs.copySync(path.join(__dirname, 'lexicon/custom'), customDir, {
-				clobber: true
+				clobber: false
 			});
 		}
 		catch (err) {
