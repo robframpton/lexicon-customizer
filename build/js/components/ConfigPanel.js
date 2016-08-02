@@ -22,7 +22,7 @@ var _Icon = require('../components/Icon');
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _OpenDevToolsButton = require('../components/OpenDevToolsButton');
+var _OpenDevToolsButton = require('../containers/action_buttons/OpenDevToolsButton');
 
 var _OpenDevToolsButton2 = _interopRequireDefault(_OpenDevToolsButton);
 

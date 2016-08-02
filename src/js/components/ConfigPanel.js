@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import ClearThemeButton from '../containers/action_buttons/ClearThemeButton';
 import ConfigPanelGroup from '../components/ConfigPanelGroup';
 import Icon from '../components/Icon';
-import OpenDevToolsButton from '../components/OpenDevToolsButton';
+import OpenDevToolsButton from '../containers/action_buttons/OpenDevToolsButton';
 import PopoutPreviewButton from '../containers/action_buttons/PopoutPreviewButton';
 import ThemeDropper from '../containers/ThemeDropper';
 import ThemeRadio from '../containers/ThemeRadio';
