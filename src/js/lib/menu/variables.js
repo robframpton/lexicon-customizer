@@ -2,6 +2,7 @@
 
 import {exportVariables, importVariables} from '../system/import_export';
 import {resetComponentVariables, resetVariables} from '../../actions/variables';
+import {unlockAllVariables} from '../../actions/lockedVariables';
 
 function getVariablesMenu(store) {
 	const template = {
@@ -34,6 +35,15 @@ function getVariablesMenu(store) {
 				label: 'Reset Component',
 				click() {
 					store.dispatch(resetComponentVariables());
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Unlock All',
+				click() {
+					store.dispatch(unlockAllVariables());
 				}
 			}
 		]

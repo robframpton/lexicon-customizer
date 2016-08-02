@@ -8,6 +8,8 @@ var _import_export = require('../system/import_export');
 
 var _variables = require('../../actions/variables');
 
+var _lockedVariables = require('../../actions/lockedVariables');
+
 function getVariablesMenu(store) {
 	var template = {
 		label: 'Variables',
@@ -34,6 +36,13 @@ function getVariablesMenu(store) {
 			label: 'Reset Component',
 			click: function click() {
 				store.dispatch((0, _variables.resetComponentVariables)());
+			}
+		}, {
+			type: 'separator'
+		}, {
+			label: 'Unlock All',
+			click: function click() {
+				store.dispatch((0, _lockedVariables.unlockAllVariables)());
 			}
 		}]
 	};
