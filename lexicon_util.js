@@ -2,6 +2,7 @@
 
 const async = require('async');
 const fs = require('fs-extra');
+const npm = require('npm');
 const path = require('path');
 const tarball = require('tarball-extract');
 
@@ -43,6 +44,9 @@ function downloadSassDependencies(version, dest, cb) {
 		},
 		lexicon: function(cb) {
 			downloadLexicon(version, dest, cb);
+		},
+		sass: function(cb) {
+			_installNodeSass(dest, cb);
 		}
 	}, cb);
 }
@@ -140,4 +144,36 @@ function _installDependency(url, fileDestination, extractionDestination, cb) {
 			_downloadAndExtractTarball(url, fileDestination, extractionDestination, cb);
 		}
 	], cb);
+}
+
+function _installNodeSass(dest, cb) {
+	const pkgPath = path.join(dest, 'node_modules', 'lexicon-node-sass');
+
+	let sass;
+
+	try {
+		sass = require(pkgPath);
+	}
+	catch (err) {
+	}
+
+	if (sass) {
+		cb(null, sass);
+
+		return;
+	}
+
+	npm.load({
+		loaded: false
+	}, function (err) {
+		npm.commands.install(dest, [path.join(__dirname, 'lexicon-node-sass')], function(err, data) {
+			sass = require(pkgPath);
+
+			cb(null, pkgPath);
+		});
+
+		npm.on('log', function (message) {
+			console.log(message);
+		});
+	});
 }

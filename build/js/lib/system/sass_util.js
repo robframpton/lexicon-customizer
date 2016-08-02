@@ -31,10 +31,6 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _nodeSass = require('node-sass');
-
-var _nodeSass2 = _interopRequireDefault(_nodeSass);
-
 var _electron = require('electron');
 
 var _component_scraper = require('./component_scraper');
@@ -48,6 +44,10 @@ var varUtil = _interopRequireWildcard(_var_util);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WIN = _electron.remote.getCurrentWindow();
+
+var sass = WIN.lexicon.sass;
 
 function clearCustomVariablesFile(variables, customDir, themePath) {
 	if (themePath) {
@@ -74,7 +74,7 @@ function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 
 	_path2.default.join(customDir, baseLexiconTheme + '.scss');
 
-	_nodeSass2.default.render({
+	sass.render({
 		file: _path2.default.join(customDir, baseLexiconTheme + '.scss'),
 		includePaths: includePaths.concat(bourbonIncludePaths)
 	}, function (err, result) {
@@ -142,4 +142,4 @@ function _writeThemeFile(variables, variablesString, themePath) {
 
 var _writeThemeFileTask = exports._writeThemeFileTask = _lodash2.default.debounce(_writeThemeFile, 100);
 
-exports.sass = _nodeSass2.default;
+exports.sass = sass;

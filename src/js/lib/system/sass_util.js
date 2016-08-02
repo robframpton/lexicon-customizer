@@ -4,11 +4,14 @@ import _ from 'lodash';
 import fs from 'fs';
 import fsp from 'fs-promise';
 import path from 'path';
-import sass from 'node-sass';
 import {remote} from 'electron';
 
 import * as componentScraper from './component_scraper';
 import * as varUtil from '../var_util';
+
+const WIN = remote.getCurrentWindow();
+
+const sass = WIN.lexicon.sass;
 
 export function clearCustomVariablesFile(variables, customDir, themePath) {
 	if (themePath) {

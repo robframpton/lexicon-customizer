@@ -1,0 +1,17 @@
+{
+  "author": {
+    "name": "Robert-Frampton",
+    "email": "ROBERT.FRAMPTON@LIFERAY.COM",
+    "url": "github.com/Robert-Frampton"
+  },
+  "dependencies": {
+    "node-sass": "^3.8.0"
+  },
+  "description": "A layer for node-sass for use by LexiconCustomizer",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "lexicon-node-sass",
+  "private": true,
+  "repository": "Robert-Frampton/lexicon-customizer",
+  "version": "0.0.0"
+}
