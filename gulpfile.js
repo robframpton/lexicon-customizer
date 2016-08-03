@@ -14,7 +14,7 @@ const watch = require('gulp-watch');
 
 const runSequence = require('run-sequence').use(gulp);
 
-const pathBuild = 'build';
+const pathBuild = 'app/build';
 
 gulp.task('build', (cb) => {
 	runSequence(
@@ -36,24 +36,24 @@ gulp.task('build:clean', () => {
 });
 
 gulp.task('build:css', () => {
-	return gulp.src('src/css/*')
+	return gulp.src('app/src/css/*')
 		.pipe(plumber())
 		.pipe(sass())
 		.pipe(gulp.dest(path.join(pathBuild, 'css')));
 });
 
 gulp.task('build:html', () => {
-	return gulp.src('src/html/**/*.html')
+	return gulp.src('app/src/html/**/*.html')
 		.pipe(gulp.dest(path.join(pathBuild, 'html')));
 });
 
 gulp.task('build:images', () => {
-	return gulp.src('src/images/**/*')
+	return gulp.src('app/src/images/**/*')
 		.pipe(gulp.dest(path.join(pathBuild, 'images')));
 });
 
 gulp.task('build:js', () => {
-	return gulp.src('src/js/**/*.js')
+	return gulp.src('app/src/js/**/*.js')
 		.pipe(plumber())
 		.pipe(babel())
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
@@ -64,7 +64,7 @@ gulp.task('build:ejs', () => {
 
 	const lexiconPath = relativeRootPath + 'node_modules/lexicon-ux/build/';
 
-	gulp.src('src/html/templates/components/*.ejs')
+	gulp.src('app/src/html/templates/components/*.ejs')
 		.pipe(ejs({
 			scripts: [
 				'${appPath}/bower_components/jquery/dist/jquery.js',
@@ -79,7 +79,7 @@ gulp.task('build:ejs', () => {
 });
 
 gulp.task('build:js:resources', () => {
-	return gulp.src('src/js/**/*.!(js)')
+	return gulp.src('app/src/js/**/*.!(js)')
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
 });
 
@@ -92,20 +92,20 @@ gulp.task('cache-tarballs', () => {
 	];
 
 	return download(resources)
-		.pipe(gulp.dest('tarballs'));
+		.pipe(gulp.dest('app/tarballs'));
 });
 
 gulp.task('watch', () => {
-	watch('src/css/**/*', vinyl => {
+	watch('app/src/css/**/*', vinyl => {
 		gulp.start('build:css');
 	});
 
-	watch('src/(html|images)/**/*', vinyl => {
+	watch('app/src/(html|images)/**/*', vinyl => {
 		gulp.start('build:html');
 		gulp.start('build:images');
 	});
 
-	watch('src/js/**/*', vinyl => {
+	watch('app/src/js/**/*', vinyl => {
 		gulp.start('build:js');
 		gulp.start('build:js:resources');
 	});

@@ -44,9 +44,6 @@ var _index3 = require('../js/actions/index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BrowserWindow = _electron.remote.BrowserWindow;
-
-
 var initalState = (0, _immutable.Map)((0, _hydrate_state2.default)());
 
 var enhancerArgs = [(0, _redux.applyMiddleware)(_reduxThunk2.default)];
