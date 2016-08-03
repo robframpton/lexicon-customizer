@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
