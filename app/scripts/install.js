@@ -21,7 +21,7 @@ function installLexicon(version, dest, cb) {
 		const customDir = path.join(lexiconPath, 'custom');
 
 		try {
-			fs.copySync(path.join(__dirname, 'lexicon/custom'), customDir, {
+			fs.copySync(path.join(__dirname, '../lexicon/custom'), customDir, {
 				clobber: false
 			});
 		}
@@ -78,7 +78,7 @@ function _extractCachedTarball(fileDestination, extractionDestination, cb) {
 	const fileName = path.basename(fileDestination);
 	const pkgPath = path.join(extractionDestination, 'package');
 
-	tarball.extractTarball(path.join(__dirname, 'tarballs', fileName), extractionDestination, function(err) {
+	tarball.extractTarball(path.join(__dirname, '../tarballs', fileName), extractionDestination, function(err) {
 		let pkg;
 
 		if (!err) {
