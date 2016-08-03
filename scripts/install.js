@@ -7,7 +7,7 @@ const tarball = require('tarball-extract');
 
 const REGISTRY_URL = 'https://registry.npmjs.org';
 
-function downloadLexicon(version, dest, cb) {
+function installLexicon(version, dest, cb) {
 	const fileName = 'lexicon-ux-' + version + '.tgz';
 
 	const fileDestination = path.join(dest, fileName);
@@ -34,20 +34,20 @@ function downloadLexicon(version, dest, cb) {
 	});
 }
 
-exports.downloadLexicon = downloadLexicon;
+exports.installLexicon = installLexicon;
 
-function downloadSassDependencies(version, dest, cb) {
+function installSassDependencies(version, dest, cb) {
 	async.parallel({
 		bourbon: function(cb) {
-			_downloadBourbon(dest, cb);
+			_installBourbon(dest, cb);
 		},
 		lexicon: function(cb) {
-			downloadLexicon(version, dest, cb);
+			installLexicon(version, dest, cb);
 		}
 	}, cb);
 }
 
-exports.downloadSassDependencies = downloadSassDependencies;
+exports.installSassDependencies = installSassDependencies;
 
 function resolveLexiconPath(version, dest) {
 	return path.join(dest, 'lexicon', version, 'package');
@@ -55,7 +55,7 @@ function resolveLexiconPath(version, dest) {
 
 exports.resolveLexiconPath = resolveLexiconPath;
 
-function _downloadBourbon(dest, cb) {
+function _installBourbon(dest, cb) {
 	const fileName = 'bourbon-4.2.7.tgz';
 
 	const fileDestination = path.join(dest, fileName);

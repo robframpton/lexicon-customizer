@@ -12,7 +12,7 @@ const app = electron.app;
 const USER_DATA_PATH = app.getPath('userData');
 
 const lexiconPkg = require(path.join(lexicon.srcDir, '..', 'package.json'));
-const lexiconUtil = require('./lexicon_util');
+const install = require('./scripts/install');
 
 const lexiconVersion = lexiconPkg.version;
 
@@ -22,7 +22,7 @@ let appReady = false;
 let lexiconDirs;
 let mainWindow;
 
-lexiconUtil.downloadSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.getVersion()), function(err, result) {
+install.installSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.getVersion()), function(err, result) {
 	if (err) {
 		throw err;
 	}
