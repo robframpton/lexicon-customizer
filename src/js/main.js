@@ -8,8 +8,6 @@ import {Map} from 'immutable';
 import {Provider} from 'react-redux';
 import {remote} from 'electron';
 
-const {BrowserWindow} = remote;
-
 import hydrateState from '../js/lib/system/hydrate_state';
 import initMenu from '../js/lib/init_menu';
 import lexiconCustomizerReducer from '../js/reducers/index';
