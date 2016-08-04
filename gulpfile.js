@@ -94,7 +94,7 @@ gulp.task('build:js:resources', () => {
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
 });
 
-gulp.task('build:sass-tarballs', () => {
+gulp.task('build:install-sass-tarballs', () => {
 	const lexiconPkg = require(path.join(require.resolve('lexicon-ux'), '..', 'package.json'));
 
 	const resources = [
