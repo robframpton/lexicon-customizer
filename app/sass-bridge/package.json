@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "node-sass": "^3.8.0"
+  },
+  "main": "index.js",
+  "name": "sass_bridge",
+  "license": "MIT"
+}

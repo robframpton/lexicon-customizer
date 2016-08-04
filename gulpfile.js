@@ -95,6 +95,13 @@ gulp.task('cache-tarballs', () => {
 		.pipe(gulp.dest('app/tarballs'));
 });
 
+gulp.task('setup-win-sass', () => {
+	const nodeBinaryURL = 'https://nodejs.org/download/release/v6.1.0/win-x64/node.exe';
+
+	return download(nodeBinaryURL)
+		.pipe(gulp.dest('app/sass-bridge'));
+});
+
 gulp.task('watch', () => {
 	watch('app/src/css/**/*', vinyl => {
 		gulp.start('build:css');
