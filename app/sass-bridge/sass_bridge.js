@@ -1,10 +1,17 @@
 const spawn = require('cross-spawn').spawn;
 const path = require('path');
 
-module.exports = (config, cb) => {
+module.exports.render = (config, cb) => {
 	config = JSON.stringify(config);
 
-	const child = spawn(path.join(__dirname, 'node.exe'), ['sass.js', '--config', config]);
+	const child = spawn(
+		path.join(__dirname, 'node.exe'),
+		[
+			path.join(__dirname, 'sass.js'),
+			'--config',
+			config
+		]
+	);
 
 	let err;
 	let result;
@@ -18,6 +25,8 @@ module.exports = (config, cb) => {
 	});
 
 	child.on('close', (code) => {
-		cb(err, data);
+		cb(err, {
+			css: result
+		});
 	});
 };

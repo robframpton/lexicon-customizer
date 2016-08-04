@@ -4,7 +4,6 @@ import _ from 'lodash';
 import fs from 'fs';
 import fsp from 'fs-promise';
 import path from 'path';
-import sass from 'node-sass';
 import {remote} from 'electron';
 
 import * as componentScraper from './component_scraper';
@@ -36,7 +35,7 @@ export function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 
 	path.join(customDir, baseLexiconTheme + '.scss')
 
-	sass.render({
+	_render({
 		file: path.join(customDir, baseLexiconTheme + '.scss'),
 		includePaths: includePaths.concat(bourbonIncludePaths)
 	}, function(err, result) {
@@ -47,7 +46,9 @@ export function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 
 			filePath = path.join(customDir, baseLexiconTheme + '.css');
 
-			fs.writeFileSync(filePath, cssString);
+			fs.writeFileSync(filePath, cssString.toString());
+
+			filePath = filePath.split(path.sep).join('/');
 		}
 
 		cb(err, filePath);
@@ -94,6 +95,19 @@ export function _getThemeVariablesFileAbsolutePath(themePath) {
 	return path.join(themePath, 'src/css/_aui_variables.scss');
 };
 
+export function _render(config, cb) {
+	let sass;
+
+	if (process.platform === 'win32') {
+		sass = require('../../../../sass-bridge/sass_bridge');
+	}
+	else {
+		sass = require('node-sass');
+	}
+
+	sass.render(config, cb);
+}
+
 export function _writeThemeFile(variables, variablesString, themePath) {
 	let themeVariables = _getThemeVariables(variables, _getThemeVariablesFileAbsolutePath(themePath));
 
@@ -103,5 +117,3 @@ export function _writeThemeFile(variables, variablesString, themePath) {
 }
 
 export const _writeThemeFileTask = _.debounce(_writeThemeFile, 100);
-
-export {sass};
