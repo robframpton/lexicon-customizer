@@ -24,7 +24,7 @@ class PreviewBox extends Component {
 		const toggleDevTools = this.toggleDevTools.bind(this);
 
 		setTimeout(() => {
-			const {webview} = this.refs;
+			const webview = instance._getWebviewDOMNode();
 
 			webview.addEventListener('dom-ready', () => {
 				const {devToolsOpen} = instance.props;
@@ -35,7 +35,7 @@ class PreviewBox extends Component {
 	}
 
 	componentDidUpdate() {
-		const {webview} = this.refs;
+		const webview = this._getWebviewDOMNode();
 
 		if (webview && !this._hasListeners) {
 			webview.addEventListener('devtools-closed', this.handleDevToolsClosed.bind(this));
@@ -126,14 +126,13 @@ class PreviewBox extends Component {
 				autosize="on"
 				id="webview"
 				maxWidth="100%"
-				ref="webview"
 				src={this.props.htmlPath}
 			></webview>
 		);
 	}
 
 	toggleDevTools(show) {
-		const {webview} = this.refs;
+		const webview = this._getWebviewDOMNode();
 
 		if (webview) {
 			if (show) {
@@ -147,6 +146,10 @@ class PreviewBox extends Component {
 		}
 	}
 
+	_getWebviewDOMNode() {
+		return document.getElementById('webview');
+	}
+
 	_setWebviewCssPath(cssPath) {
 		let scriptString = `
 			var lexiconStylesheetLink = document.getElementById('lexiconStylesheetLink');
@@ -157,8 +160,10 @@ class PreviewBox extends Component {
 			};
 		`;
 
-		if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
-			this.refs.webview.executeJavaScript(scriptString);
+		const webview = this._getWebviewDOMNode();
+
+		if (cssPath && webview && webview.executeJavaScript) {
+			webview.executeJavaScript(scriptString);
 		}
 	}
 };

@@ -45,15 +45,12 @@ var PreviewBox = function (_Component) {
 	_createClass(PreviewBox, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			var _this2 = this;
-
 			var instance = this;
 
 			var toggleDevTools = this.toggleDevTools.bind(this);
 
 			setTimeout(function () {
-				var webview = _this2.refs.webview;
-
+				var webview = instance._getWebviewDOMNode();
 
 				webview.addEventListener('dom-ready', function () {
 					var devToolsOpen = instance.props.devToolsOpen;
@@ -66,8 +63,7 @@ var PreviewBox = function (_Component) {
 	}, {
 		key: 'componentDidUpdate',
 		value: function componentDidUpdate() {
-			var webview = this.refs.webview;
-
+			var webview = this._getWebviewDOMNode();
 
 			if (webview && !this._hasListeners) {
 				webview.addEventListener('devtools-closed', this.handleDevToolsClosed.bind(this));
@@ -176,15 +172,13 @@ var PreviewBox = function (_Component) {
 				autosize: 'on',
 				id: 'webview',
 				maxWidth: '100%',
-				ref: 'webview',
 				src: this.props.htmlPath
 			});
 		}
 	}, {
 		key: 'toggleDevTools',
 		value: function toggleDevTools(show) {
-			var webview = this.refs.webview;
-
+			var webview = this._getWebviewDOMNode();
 
 			if (webview) {
 				if (show) {
@@ -197,12 +191,19 @@ var PreviewBox = function (_Component) {
 			}
 		}
 	}, {
+		key: '_getWebviewDOMNode',
+		value: function _getWebviewDOMNode() {
+			return document.getElementById('webview');
+		}
+	}, {
 		key: '_setWebviewCssPath',
 		value: function _setWebviewCssPath(cssPath) {
 			var scriptString = '\n\t\t\tvar lexiconStylesheetLink = document.getElementById(\'lexiconStylesheetLink\');\n\t\t\tvar lexiconStylesheetLinkHREF = lexiconStylesheetLink.getAttribute(\'href\');\n\n\t\t\tif (lexiconStylesheetLinkHREF != \'' + cssPath + '\') {\n\t\t\t\tlexiconStylesheetLink.setAttribute(\'href\', \'' + cssPath + '\')\n\t\t\t};\n\t\t';
 
-			if (cssPath && this.refs.webview && this.refs.webview.executeJavaScript) {
-				this.refs.webview.executeJavaScript(scriptString);
+			var webview = this._getWebviewDOMNode();
+
+			if (cssPath && webview && webview.executeJavaScript) {
+				webview.executeJavaScript(scriptString);
 			}
 		}
 	}]);
