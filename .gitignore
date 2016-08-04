@@ -1,6 +1,8 @@
 .sass-cache
-/dist
+app/build
+app/tarballs
 bower_components
+dist
 lexicon/_custom_variables.scss
 lexicon/build
 node_modules
