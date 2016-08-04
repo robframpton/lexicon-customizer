@@ -10,6 +10,7 @@ const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const sass = require('gulp-sass');
+const shell = require('gulp-shell');
 const watch = require('gulp-watch');
 
 const runSequence = require('run-sequence').use(gulp);
@@ -17,18 +18,28 @@ const runSequence = require('run-sequence').use(gulp);
 const pathBuild = 'app/build';
 
 gulp.task('build', (cb) => {
-	runSequence(
+	let sequenceArray = [
 		'build:clean',
 		'build:css',
+		'build:ejs',
+		'build:ejs',
 		'build:html',
-		'build:ejs',
 		'build:images',
+		'build:install-sass-tarballs',
 		'build:js',
-		'build:js:resources',
-		'build:ejs',
-		'cache-tarballs',
-		cb
-	);
+		'build:js:resources'
+	];
+
+	if (process.platform === 'win32') {
+		sequenceArray = sequenceArray.concat([
+			'build:win:install-node',
+			'build:win:install-dependencies'
+		]);
+	}
+
+	sequenceArray.push(cb);
+
+	runSequence.apply(null, sequenceArray);
 });
 
 gulp.task('build:clean', () => {
@@ -83,7 +94,7 @@ gulp.task('build:js:resources', () => {
 		.pipe(gulp.dest(path.join(pathBuild, 'js')));
 });
 
-gulp.task('cache-tarballs', () => {
+gulp.task('build:sass-tarballs', () => {
 	const lexiconPkg = require(path.join(require.resolve('lexicon-ux'), '..', 'package.json'));
 
 	const resources = [
@@ -95,7 +106,11 @@ gulp.task('cache-tarballs', () => {
 		.pipe(gulp.dest('app/tarballs'));
 });
 
-gulp.task('setup-win-sass', () => {
+gulp.task('build:win:install-dependencies', shell.task(['npm i'], {
+	cwd: path.join(__dirname, 'app', 'sass-bridge')
+}));
+
+gulp.task('build:win:install-node', function() {
 	const nodeBinaryURL = 'https://nodejs.org/download/release/v6.1.0/win-x64/node.exe';
 
 	return download(nodeBinaryURL)

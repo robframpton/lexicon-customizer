@@ -26,6 +26,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.3.2",
+    "gulp-shell": "^0.5.2",
     "gulp-watch": "^4.3.5",
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
@@ -45,7 +46,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development electron ./app",
     "postinstall": "install-app-deps",
-    "release": "build",
+    "release": "gulp build && build",
     "start": "cross-env NODE_ENV=production electron ./app",
     "test": "xo"
   },
