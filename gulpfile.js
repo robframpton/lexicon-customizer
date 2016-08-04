@@ -95,7 +95,7 @@ gulp.task('build:js:resources', () => {
 });
 
 gulp.task('build:install-sass-tarballs', () => {
-	const lexiconPkg = require(path.join(require.resolve('lexicon-ux'), '..', 'package.json'));
+	const lexiconPkg = require(path.join(__dirname, 'app/node_modules/lexicon-ux/package.json'));
 
 	const resources = [
 		'https://registry.npmjs.org/bourbon/-/bourbon-4.2.7.tgz',
