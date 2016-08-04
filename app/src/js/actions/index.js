@@ -47,7 +47,9 @@ export function renderPreview(component) {
 		const baseLexiconTheme = _.kebabCase(state.get('baseLexiconTheme'));
 		const {customDir} = state.get('lexiconDirs');
 
-		const cssPath = path.join(customDir, baseLexiconTheme + '.css?t=' + Date.now());
+		let cssPath = path.join(customDir, baseLexiconTheme + '.css?t=' + Date.now());
+
+		cssPath = cssPath.split(path.sep).join('/');
 
 		const htmlPath = createPreview(_.snakeCase(component), cssPath);
 
