@@ -1,29 +1,10 @@
 {
-  "name": "lexicon-customizer",
-  "productName": "LexiconCustomizer",
-  "version": "0.0.2",
-  "description": "A desktop app for customizing lexicon look and feel that integrates with Liferay themes.",
-  "license": "MIT",
-  "repository": "Robert-Frampton/lexicon-customizer",
   "author": {
     "name": "Robert-Frampton",
     "email": "ROBERT.FRAMPTON@LIFERAY.COM",
     "url": "github.com/Robert-Frampton"
   },
-  "private": true,
-  "electronVersion": "1.2.5",
-  "scripts": {
-    "dev": "NODE_ENV=development electron .",
-    "test": "xo",
-    "start": "NODE_ENV=production electron .",
-    "build": "electron-packager . $npm_package_productName --out=dist --ignore='^/dist$' --prune --asar --all --version=$npm_package_electronVersion"
-  },
-  "keywords": [
-    "electron",
-    "electron-app",
-    "lexicon",
-    "liferay"
-  ],
+  "description": "A desktop app for customizing lexicon look and feel that integrates with Liferay themes.",
   "dependencies": {
     "async": "^2.0.0",
     "cross-spawn": "^4.0.0",
@@ -50,6 +31,17 @@
     "redux-thunk": "^1.0.3",
     "tarball-extract": "0.0.3"
   },
+  "keywords": [
+    "electron",
+    "electron-app",
+    "lexicon",
+    "liferay"
+  ],
+  "license": "MIT",
+  "name": "lexicon-customizer",
+  "private": true,
+  "repository": "Robert-Frampton/lexicon-customizer",
+  "version": "0.0.2",
   "xo": {
     "esnext": true,
     "envs": [
