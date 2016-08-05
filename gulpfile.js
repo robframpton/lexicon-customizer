@@ -5,12 +5,12 @@ const del = require('del');
 const download = require('gulp-download');
 const ejs = require('gulp-ejs');
 const gulp = require('gulp');
+const install = require('gulp-install');
 const path = require('path');
 const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const sass = require('gulp-sass');
-const shell = require('gulp-shell');
 const watch = require('gulp-watch');
 
 const runSequence = require('run-sequence').use(gulp);
@@ -21,8 +21,7 @@ const PATH_BUILD = path.join(PATH_APP, 'build');
 
 gulp.task('build', (cb) => {
 	let sequenceArray = [
-		'build:npm-dependencies',
-		'build:bower-dependencies',
+		'build:app-dependencies',
 		'build:clean',
 		'build:css',
 		'build:ejs',
@@ -46,9 +45,10 @@ gulp.task('build', (cb) => {
 	runSequence.apply(null, sequenceArray);
 });
 
-gulp.task('build:bower-dependencies', shell.task(['bower i'], {
-	cwd: PATH_APP
-}));
+gulp.task('build:app-dependencies', () => {
+	return gulp.src([path.join(PATH_APP, 'bower.json'), path.join(PATH_APP, 'package.json')])
+		.pipe(install());
+});
 
 gulp.task('build:clean', () => {
 	return del([path.join(PATH_BUILD, '**', '*')]);
@@ -102,10 +102,6 @@ gulp.task('build:js:resources', () => {
 		.pipe(gulp.dest(path.join(PATH_BUILD, 'js')));
 });
 
-gulp.task('build:npm-dependencies', shell.task(['npm i'], {
-	cwd: PATH_APP
-}));
-
 gulp.task('build:install-sass-tarballs', () => {
 	const lexiconPkg = require(path.join(__dirname, 'app/node_modules/lexicon-ux/package.json'));
 
@@ -117,10 +113,10 @@ gulp.task('build:install-sass-tarballs', () => {
 	return download(resources)
 		.pipe(gulp.dest('app/tarballs'));
 });
-
-gulp.task('build:win:install-dependencies', shell.task(['npm i'], {
-	cwd: path.join(__dirname, 'app', 'sass-bridge')
-}));
+gulp.task('build:win:install-dependencies', () => {
+	gulp.src(path.join(PATH_APP, 'sass-bridge/package.json'))
+		.pipe(install());
+});
 
 gulp.task('build:win:install-node', function() {
 	const nodeBinaryURL = 'https://nodejs.org/download/release/v6.1.0/win-x64/node.exe';
