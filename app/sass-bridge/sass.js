@@ -7,7 +7,7 @@ sass.render(config, (err, result) => {
 	let exitCode = 0;
 
 	if (err) {
-		process.stderr.write(err);
+		process.stderr.write(err.toString());
 
 		exitCode = 1;
 	}
