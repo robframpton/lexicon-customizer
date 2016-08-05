@@ -15,10 +15,14 @@ const watch = require('gulp-watch');
 
 const runSequence = require('run-sequence').use(gulp);
 
-const pathBuild = 'app/build';
+const PATH_APP = path.join(__dirname, 'app');
+
+const PATH_BUILD = path.join(PATH_APP, 'build');
 
 gulp.task('build', (cb) => {
 	let sequenceArray = [
+		'build:npm-dependencies',
+		'build:bower-dependencies',
 		'build:clean',
 		'build:css',
 		'build:ejs',
@@ -42,32 +46,19 @@ gulp.task('build', (cb) => {
 	runSequence.apply(null, sequenceArray);
 });
 
+gulp.task('build:bower-dependencies', shell.task(['bower i'], {
+	cwd: PATH_APP
+}));
+
 gulp.task('build:clean', () => {
-	return del([path.join(pathBuild, '**', '*')]);
+	return del([path.join(PATH_BUILD, '**', '*')]);
 });
 
 gulp.task('build:css', () => {
 	return gulp.src('app/src/css/*')
 		.pipe(plumber())
 		.pipe(sass())
-		.pipe(gulp.dest(path.join(pathBuild, 'css')));
-});
-
-gulp.task('build:html', () => {
-	return gulp.src('app/src/html/**/*.html')
-		.pipe(gulp.dest(path.join(pathBuild, 'html')));
-});
-
-gulp.task('build:images', () => {
-	return gulp.src('app/src/images/**/*')
-		.pipe(gulp.dest(path.join(pathBuild, 'images')));
-});
-
-gulp.task('build:js', () => {
-	return gulp.src('app/src/js/**/*.js')
-		.pipe(plumber())
-		.pipe(babel())
-		.pipe(gulp.dest(path.join(pathBuild, 'js')));
+		.pipe(gulp.dest(path.join(PATH_BUILD, 'css')));
 });
 
 gulp.task('build:ejs', () => {
@@ -86,13 +77,34 @@ gulp.task('build:ejs', () => {
 		.pipe(rename({
 			extname: '.html'
 		}))
-		.pipe(gulp.dest(path.join(pathBuild, 'html/components')));
+		.pipe(gulp.dest(path.join(PATH_BUILD, 'html/components')));
+});
+
+gulp.task('build:html', () => {
+	return gulp.src('app/src/html/**/*.html')
+		.pipe(gulp.dest(path.join(PATH_BUILD, 'html')));
+});
+
+gulp.task('build:images', () => {
+	return gulp.src('app/src/images/**/*')
+		.pipe(gulp.dest(path.join(PATH_BUILD, 'images')));
+});
+
+gulp.task('build:js', () => {
+	return gulp.src('app/src/js/**/*.js')
+		.pipe(plumber())
+		.pipe(babel())
+		.pipe(gulp.dest(path.join(PATH_BUILD, 'js')));
 });
 
 gulp.task('build:js:resources', () => {
 	return gulp.src('app/src/js/**/*.!(js)')
-		.pipe(gulp.dest(path.join(pathBuild, 'js')));
+		.pipe(gulp.dest(path.join(PATH_BUILD, 'js')));
 });
+
+gulp.task('build:npm-dependencies', shell.task(['npm i'], {
+	cwd: PATH_APP
+}));
 
 gulp.task('build:install-sass-tarballs', () => {
 	const lexiconPkg = require(path.join(__dirname, 'app/node_modules/lexicon-ux/package.json'));
