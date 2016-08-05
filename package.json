@@ -45,7 +45,6 @@
   "repository": "Robert-Frampton/lexicon-customizer",
   "scripts": {
     "dev": "cross-env NODE_ENV=development electron ./app",
-    "postinstall": "install-app-deps",
     "release": "gulp build && build",
     "start": "cross-env NODE_ENV=production electron ./app",
     "test": "xo"
