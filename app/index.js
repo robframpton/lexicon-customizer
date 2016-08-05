@@ -32,7 +32,7 @@ install.installSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.ge
 	lexiconDirs.bourbonIncludePaths = result.bourbon.includePaths;
 
 	lexiconData.dirs = lexiconDirs;
-	lexiconData.nodePath = result.node;
+	lexiconData.sassBridge = result.sassBridge;
 
 	createMainWindow(indexURL);
 });
