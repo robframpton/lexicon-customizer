@@ -19,7 +19,7 @@ const lexiconVersion = lexiconPkg.version;
 const indexURL = `file://${__dirname}/build/html/index.html`;
 
 let appReady = false;
-let lexiconDirs;
+let lexiconData = {};
 let mainWindow;
 
 install.installSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.getVersion()), function(err, result) {
@@ -27,9 +27,12 @@ install.installSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.ge
 		throw err;
 	}
 
-	lexiconDirs = result.lexicon;
+	let lexiconDirs = result.lexicon;
 
 	lexiconDirs.bourbonIncludePaths = result.bourbon.includePaths;
+
+	lexiconData.dirs = lexiconDirs;
+	lexiconData.nodePath = result.node;
 
 	createMainWindow(indexURL);
 });
@@ -39,7 +42,7 @@ function onClosed() {
 }
 
 function createMainWindow(url) {
-	if (!mainWindow && appReady && lexiconDirs) {
+	if (!mainWindow && appReady && !_.isEmpty(lexiconData)) {
 		const win = new electron.BrowserWindow({
 			height: 800,
 			titleBarStyle: 'hidden',
@@ -48,9 +51,7 @@ function createMainWindow(url) {
 
 		win.loadURL(url);
 
-		win.lexicon = {
-			dirs: lexiconDirs
-		};
+		win.lexicon = lexiconData;
 
 		win.on('closed', onClosed);
 

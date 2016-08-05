@@ -37,14 +37,22 @@ function installLexicon(version, dest, cb) {
 exports.installLexicon = installLexicon;
 
 function installSassDependencies(version, dest, cb) {
-	async.parallel({
+	const series = {
 		bourbon: function(cb) {
 			_installBourbon(dest, cb);
 		},
 		lexicon: function(cb) {
 			installLexicon(version, dest, cb);
 		}
-	}, cb);
+	}
+
+	if (process.platform === 'win32') {
+		series.node = function(cb) {
+			_installNode(dest, cb);
+		}
+	}
+
+	async.parallel(series, cb);
 }
 
 exports.installSassDependencies = installSassDependencies;
@@ -140,4 +148,10 @@ function _installDependency(url, fileDestination, extractionDestination, cb) {
 			_downloadAndExtractTarball(url, fileDestination, extractionDestination, cb);
 		}
 	], cb);
+}
+
+function _installNode(dest, cb) {
+	fs.copy(path.join(__dirname, '../sass-bridge/node.exe'), dest, function(err) {
+		cb(err, path.join(dest, 'node.exe'));
+	});
 }

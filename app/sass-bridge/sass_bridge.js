@@ -1,11 +1,14 @@
-const spawn = require('cross-spawn').spawn;
 const path = require('path');
+const remote = require('electron').remote;
+const spawn = require('cross-spawn').spawn;
+
+const WIN = remote.getCurrentWindow();
 
 module.exports.render = (config, cb) => {
 	config = JSON.stringify(config);
 
 	const child = spawn(
-		path.join(__dirname, 'node.exe'),
+		WIN.lexicon.nodePath,
 		[
 			path.join(__dirname, 'sass.js'),
 			'--config',
