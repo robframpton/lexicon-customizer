@@ -37,6 +37,8 @@ function installLexicon(version, dest, cb) {
 exports.installLexicon = installLexicon;
 
 function installSassDependencies(version, dest, cb) {
+	fs.ensureDirSync(dest);
+
 	const series = {
 		bourbon: function(cb) {
 			_installBourbon(dest, cb);
