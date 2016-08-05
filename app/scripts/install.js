@@ -153,7 +153,36 @@ function _installDependency(url, fileDestination, extractionDestination, cb) {
 function _installSassBridge(dest, cb) {
 	const sassBridgePath = path.join(dest, 'sass-bridge');
 
-	fs.copy(path.join(__dirname, '../sass-bridge'), sassBridgePath, function(err) {
-		cb(err, sassBridgePath)
-	});
+	if (_isSassBridgeInstalled(sassBridgePath)) {
+		cb(null, sassBridgePath);
+	}
+	else {
+		fs.copy(path.join(__dirname, '../sass-bridge'), sassBridgePath, function(err) {
+			cb(err, sassBridgePath)
+		});
+	}
+}
+
+function _isSassBridgeInstalled(sassBridgePath) {
+	let sassBridge;
+
+	try {
+		sassBridge = require(path.join(sassBridgePath, 'sass_bridge.js'))
+	}
+	catch (err) {
+	}
+
+	if (!sassBridge) {
+		return false;
+	}
+
+	let stats;
+
+	try {
+		stats = fs.statSync(path.join(sassBridgePath, 'node.exe'));
+	}
+	catch (err) {
+	}
+
+	return stats && stats.isFile();
 }
