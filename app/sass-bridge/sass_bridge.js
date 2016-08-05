@@ -7,10 +7,14 @@ const WIN = remote.getCurrentWindow();
 module.exports.render = (config, cb) => {
 	config = JSON.stringify(config);
 
+	const {sassBridge} = WIN.lexicon;
+
+	const {nodePath, sassPath} = sassBridge;
+
 	const child = spawn(
-		WIN.lexicon.nodePath,
+		nodePath,
 		[
-			path.join(__dirname, 'sass.js'),
+			sassPath,
 			'--config',
 			config
 		]

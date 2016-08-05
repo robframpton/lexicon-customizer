@@ -47,8 +47,8 @@ function installSassDependencies(version, dest, cb) {
 	}
 
 	if (process.platform === 'win32') {
-		series.node = function(cb) {
-			_installNode(dest, cb);
+		series.sassBridge = function(cb) {
+			_installSassBridge(dest, cb);
 		}
 	}
 
@@ -150,8 +150,15 @@ function _installDependency(url, fileDestination, extractionDestination, cb) {
 	], cb);
 }
 
-function _installNode(dest, cb) {
-	fs.copy(path.join(__dirname, '../sass-bridge/node.exe'), dest, function(err) {
-		cb(err, path.join(dest, 'node.exe'));
+function _installSassBridge(dest, cb) {
+	const nodePath = path.join(dest, 'node.exe');
+	const sassPath = path.join(dest, 'sass.js');
+
+	fs.copySync(path.join(__dirname, '../sass-bridge/node.exe'), nodePath);
+	fs.copySync(path.join(__dirname, '../sass-bridge/sass.js'), sassPath);
+
+	cb(null, {
+		nodePath: nodePath,
+		sassPath: sassPath
 	});
 }
