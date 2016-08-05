@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cross-spawn": "^4.0.0",
     "node-sass": "^3.8.0"
   },
   "main": "index.js",
