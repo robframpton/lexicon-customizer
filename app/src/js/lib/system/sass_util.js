@@ -99,7 +99,9 @@ export function _render(config, cb) {
 	let sass;
 
 	if (process.platform === 'win32') {
-		sass = require('../../../../sass-bridge/sass_bridge');
+		const {lexicon} = remote.getCurrentWindow();
+
+		sass = require(path.join(lexicon.sassBridgePath, 'sass_bridge'));
 	}
 	else {
 		sass = require('node-sass');

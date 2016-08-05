@@ -151,14 +151,9 @@ function _installDependency(url, fileDestination, extractionDestination, cb) {
 }
 
 function _installSassBridge(dest, cb) {
-	const nodePath = path.join(dest, 'node.exe');
-	const sassPath = path.join(dest, 'sass.js');
+	const sassBridgePath = path.join(dest, 'sass-bridge');
 
-	fs.copySync(path.join(__dirname, '../sass-bridge/node.exe'), nodePath);
-	fs.copySync(path.join(__dirname, '../sass-bridge/sass.js'), sassPath);
-
-	cb(null, {
-		nodePath: nodePath,
-		sassPath: sassPath
+	fs.copy(path.join(__dirname, '../sass-bridge'), sassBridgePath, function(err) {
+		cb(err, sassBridgePath)
 	});
 }
