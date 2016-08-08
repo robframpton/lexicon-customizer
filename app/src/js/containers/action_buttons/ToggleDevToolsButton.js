@@ -12,6 +12,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	};
 };
 
-const ClearThemeButton = connect(null, mapDispatchToProps)(Button);
+const ToggleDevToolsButton = connect(null, mapDispatchToProps)(Button);
 
-export default ClearThemeButton;
+export default ToggleDevToolsButton;

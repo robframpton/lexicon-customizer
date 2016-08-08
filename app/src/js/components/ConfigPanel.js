@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import ClearThemeButton from '../containers/action_buttons/ClearThemeButton';
 import ConfigPanelGroup from '../components/ConfigPanelGroup';
 import Icon from '../components/Icon';
-import OpenDevToolsButton from '../containers/action_buttons/OpenDevToolsButton';
-import PopoutPreviewButton from '../containers/action_buttons/PopoutPreviewButton';
+import ToggleDevToolsButton from '../containers/action_buttons/ToggleDevToolsButton';
+import TogglePopoutPreviewButton from '../containers/action_buttons/TogglePopoutPreviewButton';
 import ThemeDropper from '../containers/ThemeDropper';
 import ThemeRadio from '../containers/ThemeRadio';
 import VariableActionsDropdown from '../containers/VariableActionsDropdown';
@@ -27,9 +27,9 @@ class ConfigPanel extends Component {
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Preview Frame">
-					<OpenDevToolsButton>Inspect Preview</OpenDevToolsButton>
+					<ToggleDevToolsButton>Toggle Developer Tools</ToggleDevToolsButton>
 
-					<PopoutPreviewButton>Popout Preview</PopoutPreviewButton>
+					<TogglePopoutPreviewButton>Togle Popout Preview</TogglePopoutPreviewButton>
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Theme">
