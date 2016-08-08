@@ -1,12 +1,12 @@
 'use strict';
 
-const app = require('electron').remote.app;
+const app = require('electron').app;
 const GhReleases = require('electron-gh-releases');
 
 const REPO = 'Robert-Frampton/lexicon-customizer';
 
 function updater() {
-	let options = {
+	const options = {
 		currentVersion: app.getVersion(),
 		repo: REPO
 	}
