@@ -9,9 +9,7 @@
 ```
 $ npm install
 
-$ bower install
-
-$ gulp build
+$ gulp init
 ```
 
 ### Run
@@ -28,7 +26,7 @@ $ npm run dev
 ### Build an `electron` release
 
 ```
-$ npm run build
+$ npm run release
 ```
 
 Builds the app for OS X, Linux, and Windows, using [electron-packager](https://github.com/maxogden/electron-packager).
