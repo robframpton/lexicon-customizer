@@ -113,7 +113,7 @@ export function _render(config, cb) {
 export function _writeThemeFile(variables, variablesString, themePath) {
 	let themeVariables = _getThemeVariables(variables, _getThemeVariablesFileAbsolutePath(themePath));
 
-	variablesString = variablesString + '\n' + _generateVariablesString(themeVariables);
+	variablesString = _generateVariablesString(themeVariables) + '\n' + variablesString;
 
 	fsp.writeFile(path.join(themePath, 'src/css/_aui_variables.scss'), variablesString);
 }
