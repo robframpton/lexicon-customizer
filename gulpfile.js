@@ -19,35 +19,43 @@ const PATH_APP = path.join(__dirname, 'app');
 
 const PATH_BUILD = path.join(PATH_APP, 'build');
 
+gulp.task('init', (cb) => {
+	runSequence(
+		'build',
+		'install',
+		cb
+	);
+});
+
 gulp.task('build', (cb) => {
-	let sequenceArray = [
-		'build:app-dependencies',
+	runSequence(
 		'build:clean',
 		'build:css',
 		'build:ejs',
-		'build:ejs',
 		'build:html',
 		'build:images',
-		'build:install-sass-tarballs',
 		'build:js',
-		'build:js:resources'
+		'build:js:resources',
+		cb
+	);
+});
+
+gulp.task('install', (cb) => {
+	let sequenceArray = [
+		'install:app-dependencies',
+		'install:sass-tarballs'
 	];
 
 	if (process.platform === 'win32') {
 		sequenceArray = sequenceArray.concat([
-			'build:win:install-node',
-			'build:win:install-dependencies'
+			'install:node',
+			'install:sass-bridge-dependencies'
 		]);
 	}
 
 	sequenceArray.push(cb);
 
 	runSequence.apply(null, sequenceArray);
-});
-
-gulp.task('build:app-dependencies', () => {
-	return gulp.src([path.join(PATH_APP, 'bower.json'), path.join(PATH_APP, 'package.json')])
-		.pipe(install());
 });
 
 gulp.task('build:clean', () => {
@@ -102,7 +110,24 @@ gulp.task('build:js:resources', () => {
 		.pipe(gulp.dest(path.join(PATH_BUILD, 'js')));
 });
 
-gulp.task('build:install-sass-tarballs', () => {
+gulp.task('install:app-dependencies', () => {
+	return gulp.src([path.join(PATH_APP, 'bower.json'), path.join(PATH_APP, 'package.json')])
+		.pipe(install());
+});
+
+gulp.task('install:node', function() {
+	const nodeBinaryURL = 'https://nodejs.org/download/release/v6.1.0/win-x64/node.exe';
+
+	return download(nodeBinaryURL)
+		.pipe(gulp.dest('app/sass-bridge'));
+});
+
+gulp.task('install:sass-bridge-dependencies', () => {
+	gulp.src(path.join(PATH_APP, 'sass-bridge/package.json'))
+		.pipe(install());
+});
+
+gulp.task('install:sass-tarballs', () => {
 	const lexiconPkg = require(path.join(__dirname, 'app/node_modules/lexicon-ux/package.json'));
 
 	const resources = [
@@ -112,17 +137,6 @@ gulp.task('build:install-sass-tarballs', () => {
 
 	return download(resources)
 		.pipe(gulp.dest('app/tarballs'));
-});
-gulp.task('build:win:install-dependencies', () => {
-	gulp.src(path.join(PATH_APP, 'sass-bridge/package.json'))
-		.pipe(install());
-});
-
-gulp.task('build:win:install-node', function() {
-	const nodeBinaryURL = 'https://nodejs.org/download/release/v6.1.0/win-x64/node.exe';
-
-	return download(nodeBinaryURL)
-		.pipe(gulp.dest('app/sass-bridge'));
 });
 
 gulp.task('watch', () => {
