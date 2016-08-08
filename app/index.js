@@ -12,7 +12,7 @@ const app = electron.app;
 const USER_DATA_PATH = app.getPath('userData');
 
 const lexiconPkg = require(path.join(lexicon.srcDir, '..', 'package.json'));
-const install = require('./scripts/install');
+const install = require('./lib/install');
 
 const lexiconVersion = lexiconPkg.version;
 
