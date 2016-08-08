@@ -2,7 +2,9 @@
 
 import {shell} from 'electron';
 
-const LEARN_MORE_URL = 'https://liferay.github.io/lexicon/';
+const URL_ISSUES = 'https://github.com/Robert-Frampton/lexicon-customizer/issues';
+
+const URL_LEARN_MORE = 'https://liferay.github.io/lexicon/';
 
 function getHelpMenu(store) {
 	const template = {
@@ -11,7 +13,13 @@ function getHelpMenu(store) {
 			{
 				label: 'Learn More',
 				click() {
-					shell.openExternal(LEARN_MORE_URL);
+					shell.openExternal(URL_LEARN_MORE);
+				}
+			},
+			{
+				label: 'Report Issues',
+				click() {
+					shell.openExternal(URL_ISSUES);
 				}
 			}
 		]
