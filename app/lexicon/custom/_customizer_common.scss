@@ -4,6 +4,12 @@
 	padding: 20px;
 }
 
+.lexicon-customizer-preview-box-header {
+	color: #555 !important;
+	font-size: 24px !important;
+	margin-top: 12px !important;
+}
+
 @mixin color-swatch($name, $color) {
 	.#{$name} {
 		color: $color;
