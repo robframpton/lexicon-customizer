@@ -13,6 +13,7 @@ const USER_DATA_PATH = app.getPath('userData');
 
 const lexiconPkg = require(path.join(lexicon.srcDir, '..', 'package.json'));
 const install = require('./lib/install');
+const updater = require('./lib/updater');
 
 const lexiconVersion = lexiconPkg.version;
 
@@ -71,6 +72,8 @@ app.on('activate', () => {
 
 app.on('ready', () => {
 	appReady = true;
+
+	updater();
 
 	createMainWindow(indexURL);
 });

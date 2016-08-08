@@ -50,7 +50,6 @@
     "start": "cross-env NODE_ENV=production electron ./app",
     "test": "xo"
   },
-  "version": "0.0.2",
   "xo": {
     "esnext": true,
     "envs": [
