@@ -1,10 +1,15 @@
 # Lexicon Customizer
 
-> A desktop app for customizing lexicon look and feel that integrates with Liferay themes
+> A desktop app for customizing Lexicon look and feel that integrates with Liferay themes
 
 ![alt text](https://github.com/robert-frampton/lexicon-customizer/raw/resources/resources/screenshot.png "Lexicon Customizer")
 
-### Install
+## Download
+To download, just go to the [Releases](https://github.com/robert-frampton/lexicon-customizer/releases) tab and download the latest release.
+
+## Running from source
+
+### Install dependencies
 
 ```
 $ npm install
