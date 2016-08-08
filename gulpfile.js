@@ -11,9 +11,13 @@ const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const sass = require('gulp-sass');
+const spawn = require('cross-spawn').spawn;
 const watch = require('gulp-watch');
 
+const args = require('minimist')(process.argv.slice(2));
 const runSequence = require('run-sequence').use(gulp);
+
+const bumpUpdaterJSON = require('./scripts/bump_updater_json');
 
 const PATH_APP = path.join(__dirname, 'app');
 
@@ -137,6 +141,25 @@ gulp.task('install:sass-tarballs', () => {
 
 	return download(resources)
 		.pipe(gulp.dest('app/tarballs'));
+});
+
+gulp.task('version', (cb) => {
+	let type = 'patch';
+
+	if (args.minor) {
+		type = 'minor';
+	}
+	else if (args.major) {
+		type = 'major';
+	}
+
+	spawn('npm', ['version', type], {
+		cwd: PATH_APP
+	}).on('close', () => {
+		bumpUpdaterJSON();
+
+		cb();
+	});
 });
 
 gulp.task('watch', () => {
