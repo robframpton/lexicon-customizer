@@ -1,33 +1,38 @@
 /* Error popup */
 
 .error-popup-wrapper {
+	background-color: #F2DEDE;
+	border-radius: 4px;
+	box-shadow: $basic-box-shadow;
+	color: #A94442;
+	left: 230px;
 	position: absolute;
-	top: 40px;
+	right: 330px;
+	top: 60px;
 	z-index: 1;
 
-	.error-popup {
-		background-color: #F2DEDE;
-		border-right: 4px solid;
-		color: #A94442;
+	.error-popup-clear-btn {
+		float: right;
+		padding: 4px;
+
+		svg {
+			fill: #A94442;
+		}
+
+		&:hover {
+			svg {
+				fill: darken(#A94442, 20%);
+			}
+		}
+	}
+
+	.error-popup-list {
+		max-height: 320px;
+		overflow: auto;
+	}
+
+	.error-popup-item {
 		padding: 10px;
 		position: relative;
 	}
-}
-
-.error-popup-transition-group-enter {
-	left: -100%;
-}
-
-.error-popup-transition-group-enter.error-popup-transition-group-enter-active {
-	left: 0;
-	transition: left 300ms ease-in-out;
-}
-
-.error-popup-transition-group-leave {
-	left: 0;
-}
-
-.error-popup-transition-group-leave.error-popup-transition-group-leave-active {
-	left: -100%;
-	transition: left 300ms ease-in;
 }

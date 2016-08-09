@@ -1,24 +1,39 @@
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import React, {Component} from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import React, {Component, PropTypes} from 'react';
+
+import Icon from '../components/Icon';
 
 class ErrorPopup extends Component {
 	render() {
-		const {errors} = this.props;
+		const {errors, onClear} = this.props;
 
 		return (
 			<div className="error-popup-wrapper">
-				<ReactCSSTransitionGroup
-					transitionEnterTimeout={500}
-					transitionLeaveTimeout={300}
-					transitionName="error-popup-transition-group"
-				>
-					{errors.map((error, index) => {
-						return (<div className="error-popup" key={error}>{error.message}</div>);
+				<a className="error-popup-clear-btn" href="javascript:;" onClick={this.handleClearBtnClick.bind(this)}>
+					<Icon icon="times" />
+				</a>
+
+				<div className="error-popup-list">
+					{errors.toArray().map((error, index) => {
+						const errorString = error.toString();
+
+						return (
+							<div className="error-popup-item" key={errorString}>{errorString}</div>
+						);
 					})}
-				</ReactCSSTransitionGroup>
+				</div>
 			</div>
 		);
 	}
+
+	handleClearBtnClick() {
+		this.props.onClear();
+	}
+};
+
+ErrorPopup.propTypes = {
+	errors: ImmutablePropTypes.list,
+	onClear: PropTypes.func.isRequired
 };
 
 export default ErrorPopup;

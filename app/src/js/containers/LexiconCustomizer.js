@@ -6,6 +6,7 @@ import ErrorPopup from '../components/ErrorPopup';
 import Header from '../components/Header';
 import LexiconPreview from '../containers/LexiconPreview';
 import VariablesEditor from '../containers/VariablesEditor';
+import {clearSassErrors} from '../actions/sassErrors';
 import {renderPreview} from '../actions/index';
 
 class LexiconCustomizer extends Component {
@@ -24,13 +25,7 @@ class LexiconCustomizer extends Component {
 	}
 
 	render() {
-		let errors = [];
-
-		const {previewPopout, sassError} = this.props;
-
-		if (sassError) {
-			errors.push(sassError);
-		}
+		const {previewPopout, sassErrors} = this.props;
 
 		let className = 'lexicon-customizer';
 		let lexiconPreview = '';
@@ -51,7 +46,7 @@ class LexiconCustomizer extends Component {
 			>
 				<Header />
 
-				<ErrorPopup errors={errors} />
+				{this.renderSassErrors()}
 
 				<div className="lexicon-customizer-content">
 					<ComponentSideMenu header="Components" />
@@ -63,13 +58,33 @@ class LexiconCustomizer extends Component {
 			</div>
 		)
 	}
+
+	renderSassErrors() {
+		const {sassErrors} = this.props;
+
+		let content = '';
+
+		if (sassErrors.size) {
+			content = (
+				<ErrorPopup errors={sassErrors} onClear={this.handleSassErrorsClear.bind(this)} />
+			);
+		}
+
+		return content;
+	}
+
+	handleSassErrorsClear() {
+		const {dispatch} = this.props;
+
+		dispatch(clearSassErrors());
+	}
 };
 
 const mapStateToProps = (state, ownProps) => {
 	return {
 		group: state.get('group'),
 		previewPopout: state.get('previewPopout'),
-		sassError: state.get('sassError'),
+		sassErrors: state.get('sassErrors'),
 		selectedComponent: state.get('selectedComponent')
 	};
 };

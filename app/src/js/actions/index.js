@@ -4,8 +4,8 @@ import {remote} from 'electron';
 
 import * as sassUtil from '../lib/system/sass_util';
 import createPreview from '../lib/system/create_preview';
+import {addSassError, clearSassErrors} from './sassErrors';
 import {setPreviewPaths} from './preview';
-import {showSassError} from './sassError';
 
 const APP_PATH = remote.app.getAppPath();
 
@@ -18,10 +18,11 @@ export function buildLexicon() {
 
 		sassUtil.renderLexiconBase(baseLexiconTheme, lexiconDirs, (err, filePath) => {
 			if (err) {
-				dispatch(showSassError(err));
+				dispatch(addSassError(err));
 			}
 			else {
 				dispatch(renderPreview(state.get('selectedComponent')));
+				dispatch(clearSassErrors());
 			}
 		});
 	};

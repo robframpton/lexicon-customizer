@@ -10,7 +10,7 @@ import lexiconVersion from './lexiconVersion';
 import lockedVariables from './lockedVariables';
 import preview from './preview';
 import previewPopout from './previewPopout';
-import sassError from './sassError';
+import sassErrors from './sassErrors';
 import selectedComponent from './selectedComponent';
 import sourceVariables from './sourceVariables';
 import theme from './theme';
@@ -27,7 +27,7 @@ const lexiconCustomizerReducer = combineReducers({
 	lockedVariables,
 	preview,
 	previewPopout,
-	sassError,
+	sassErrors,
 	selectedComponent,
 	sourceVariables,
 	theme,
