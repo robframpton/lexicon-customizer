@@ -44,7 +44,7 @@
   "private": true,
   "productName": "Lexicon Customizer",
   "repository": "Robert-Frampton/lexicon-customizer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "xo": {
     "esnext": true,
     "envs": [
