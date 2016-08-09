@@ -46,14 +46,14 @@ class VariableActionsDropdown extends Component {
 				action: () => {
 					dispatch(resetVariables());
 				},
-				icon: 'reload',
+				icon: 'undo',
 				label: 'Reset All'
 			},
 			{
 				action: () => {
 					dispatch(resetComponentVariables());
 				},
-				icon: 'reload',
+				icon: 'undo',
 				label: 'Reset Component'
 			},
 			separator,

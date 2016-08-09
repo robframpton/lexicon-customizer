@@ -42,6 +42,7 @@ class VariableInput extends Component {
 		let {
 			disabled,
 			label,
+			modified,
 			name,
 			onChange,
 			value,
@@ -78,11 +79,21 @@ class VariableInput extends Component {
 			wrapperClassName += ' disabled';
 		}
 
+		if (modified) {
+			label = (
+				<span>
+					{label}
+
+					<Icon icon="pencil" />
+				</span>
+			);
+		}
+
 		return (
 			<div className={wrapperClassName}>
 				{this.renderDropdown()}
 
-				<label htmlFor={name}>{name}</label>
+				<label htmlFor={name}>{label}</label>
 
 				<input
 					disabled={disabled}
@@ -226,7 +237,7 @@ class VariableInput extends Component {
 			{
 				action: this.handleReset.bind(this),
 				disabled: disabled || !modified,
-				icon: 'reload',
+				icon: 'undo',
 				label: 'Reset'
 			},
 			{
