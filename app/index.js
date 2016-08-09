@@ -1,5 +1,9 @@
 'use strict';
 
+if (require('electron-squirrel-startup')) {
+	return;
+}
+
 const _ = require('lodash');
 const electron = require('electron');
 const lexicon = require('lexicon-ux');
