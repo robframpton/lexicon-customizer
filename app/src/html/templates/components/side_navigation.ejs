@@ -1,0 +1,51 @@
+<%- include("../partials/header.ejs") %>
+	<script src="${lexiconPath}/js/side-navigation.js"></script>
+
+	<section class="row">
+		<div class="col-md-12">
+			<h4>Sidenav</h4>
+
+			<button class="btn btn-default sidenav-toggler" data-target="#mySidenavContainerId">
+				Sidenav Toggler
+			</button>
+
+			<div class="closed sidenav-container" id="mySidenavContainerId">
+				<div class="closed sidenav-menu-slider">
+					<div class="sidenav-menu">
+						<div class="col-md-12">Your Side Nav Content</div>
+					</div>
+				</div>
+
+				<div class="sidenav-content">
+					<div class="col-md-12">Your Main Content</div>
+				</div>
+			</div>
+
+			<script>
+				$('.sidenav-toggler').sideNavigation();
+			</script>
+		</div>
+
+		<div class="col-md-12">
+			<h4>Sidenav Fixed</h4>
+
+			<a class="btn btn-default" data-content="body" data-toggle="sidenav" data-type="fixed-pushed" href="#simpleSidenav2">
+				Sidenav Fixed Toggler
+			</a>
+
+			<div class="closed sidenav-fixed sidenav-fixed-pushed sidenav-menu-slider" id="simpleSidenav2">
+				<div class="sidebar sidebar-default sidenav-menu">
+					<div class="sidebar-header">
+						.sidebar-default
+
+						<a class="pull-right sidenav-close" href="#simpleSidenav2">
+							<svg class="lexicon-icon">
+								<use xlink:href="${iconSpritePath}#times" />
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<%- include("../partials/footer.ejs") %>
