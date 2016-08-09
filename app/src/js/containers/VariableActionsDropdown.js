@@ -20,7 +20,7 @@ class VariableActionsDropdown extends Component {
 	}
 
 	getDropdownTemplate() {
-		const {customDir, dispatch} = this.props;
+		const {dispatch, userDataPath} = this.props;
 
 		const separator = {
 			separator: true
@@ -36,7 +36,7 @@ class VariableActionsDropdown extends Component {
 			},
 			{
 				action: () => {
-					exportVariables(customDir);
+					exportVariables(userDataPath);
 				},
 				icon: 'import-export',
 				label: 'Export'
@@ -70,7 +70,7 @@ class VariableActionsDropdown extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		customDir: state.get('lexiconDirs').customDir
+		userDataPath: state.get('lexiconDirs').userDataPath
 	};
 };
 

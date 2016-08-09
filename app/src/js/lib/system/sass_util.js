@@ -9,12 +9,14 @@ import {remote} from 'electron';
 import * as componentScraper from './component_scraper';
 import * as varUtil from '../var_util';
 
-export function clearCustomVariablesFile(variables, customDir, themePath) {
+const CUSTOM_VARIABLES_SCSS = '_custom_variables.scss';
+
+export function clearCustomVariablesFile(variables, dir, themePath) {
 	if (themePath) {
 		clearModifiedVariablesFromTheme(variables, themePath);
 	}
 
-	return fsp.writeFile(path.join(customDir, '_custom_variables.scss'), '');
+	return fsp.writeFile(path.join(dir, CUSTOM_VARIABLES_SCSS), '');
 };
 
 export function clearModifiedVariablesFromTheme(variables, themePath) {
@@ -28,16 +30,20 @@ export function renderLexiconBaseTask(baseLexiconTheme, lexiconDirs, cb) {
 		bourbonIncludePaths,
 		customDir,
 		includePaths,
-		srcDir
+		userDataPath
 	} = lexiconDirs;
 
 	baseLexiconTheme = _.kebabCase(baseLexiconTheme);
 
 	path.join(customDir, baseLexiconTheme + '.scss')
 
+	const scssIncludePaths = includePaths.concat(bourbonIncludePaths);
+
+	scssIncludePaths.push(userDataPath);
+
 	_render({
 		file: path.join(customDir, baseLexiconTheme + '.scss'),
-		includePaths: includePaths.concat(bourbonIncludePaths)
+		includePaths: scssIncludePaths
 	}, function(err, result) {
 		let filePath;
 
@@ -62,7 +68,7 @@ export function writeCustomVariablesFile(variables, sourceVariables, dir, themeP
 		_writeThemeFileTask(variables, variablesString, themePath);
 	}
 
-	return fsp.writeFile(path.join(dir, '_custom_variables.scss'), variablesString);
+	return fsp.writeFile(path.join(dir, CUSTOM_VARIABLES_SCSS), variablesString);
 };
 
 export function _clearModifiedVariablesFromFile(variables, filePath) {

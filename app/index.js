@@ -6,6 +6,7 @@ if (require('electron-squirrel-startup')) {
 
 const _ = require('lodash');
 const electron = require('electron');
+const fs = require('fs-extra');
 const lexicon = require('lexicon-ux');
 const path = require('path');
 
@@ -32,9 +33,12 @@ install.installSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.ge
 		throw err;
 	}
 
+	fs.ensureFileSync(path.join(USER_DATA_PATH, '_custom_variables.scss'));
+
 	let lexiconDirs = result.lexicon;
 
 	lexiconDirs.bourbonIncludePaths = result.bourbon.includePaths;
+	lexiconDirs.userDataPath = USER_DATA_PATH;
 
 	lexiconData.dirs = lexiconDirs;
 	lexiconData.sassBridgePath = result.sassBridge;

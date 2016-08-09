@@ -10,11 +10,11 @@ const {app, dialog} = remote;
 
 const DOWNLOADS_PATH = app.getPath('downloads');
 
-export function exportVariables(customDir) {
+export function exportVariables(userDataPath) {
 	dialog.showSaveDialog({
 		defaultPath: path.join(DOWNLOADS_PATH, '_variables.scss')
 	}, (filePath) => {
-		fs.copySync(path.join(customDir, '_custom_variables.scss'), filePath);
+		fs.copySync(path.join(userDataPath, '_custom_variables.scss'), filePath);
 	});
 }
 

@@ -13,7 +13,7 @@ const COMPONENT_REDUCER_MAP = {
 const REGEX_BOOTSTRAP_COMPONENT_NAME = /([\w\s]+)\n/;
 
 export function initVariables(baseTheme, lexiconDirs) {
-	const {customDir, srcDir} = lexiconDirs;
+	const {srcDir, userDataPath} = lexiconDirs;
 
 	const bootstrapVariables = mapBootstrapVariables(srcDir);
 
@@ -29,7 +29,7 @@ export function initVariables(baseTheme, lexiconDirs) {
 
 	const sourceVariables = variables;
 
-	mapCustomVariables(customDir).forEach((variable, key) => {
+	mapCustomVariables(userDataPath).forEach((variable, key) => {
 		if (sourceVariables.has(key)) {
 			let sourceVariable = variables.get(key);
 
@@ -51,8 +51,8 @@ export function mapBootstrapVariables(srcDir) {
 	return _mapBootstrapVariablesFile(srcDir);
 };
 
-export function mapCustomVariables(customDir) {
-	return mapVariablesFromFile(path.join(customDir, '_custom_variables.scss'), 'custom', '');
+export function mapCustomVariables(userDataPath) {
+	return mapVariablesFromFile(path.join(userDataPath, '_custom_variables.scss'), 'custom', '');
 };
 
 export function mapThemeVariables(themePath) {

@@ -19,7 +19,7 @@ function getVariablesMenu(store) {
 				click() {
 					const state = store.getState();
 
-					exportVariables(state.get('lexiconDirs').customDir);
+					exportVariables(state.get('lexiconDirs').userDataPath);
 				}
 			},
 			{

@@ -32,9 +32,9 @@ export function createVariablesFile() {
 	return function(dispatch, getState) {
 		const state = getState();
 
-		const {customDir} = state.get('lexiconDirs');
+		const {userDataPath} = state.get('lexiconDirs');
 
-		sassUtil.writeCustomVariablesFile(state.get('variables'), state.get('sourceVariables'), customDir, state.get('theme'))
+		sassUtil.writeCustomVariablesFile(state.get('variables'), state.get('sourceVariables'), userDataPath, state.get('theme'))
 			.then(function() {
 				dispatch(buildLexicon());
 			});
