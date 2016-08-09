@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, compose} from 'redux';
 import {Map} from 'immutable';
 import {Provider} from 'react-redux';
-import {remote} from 'electron';
+import {ipcRenderer, remote} from 'electron';
 
 import hydrateState from '../js/lib/system/hydrate_state';
 import initMenu from '../js/lib/init_menu';
@@ -38,6 +38,12 @@ previewPopoutSubscriber(store);
 initMenu(store);
 
 store.dispatch(buildLexicon());
+
+ipcRenderer.on('confirm-download', () => {
+	if (confirm('There is an update available for Lexicon Customizer. Would you like to update now?')) {
+		ipcRenderer.send('download-update');
+	}
+});
 
 const render = () => {
 	ReactDOM.render(

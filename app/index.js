@@ -64,6 +64,8 @@ function createMainWindow(url) {
 
 		win.on('closed', onClosed);
 
+		updater(win);
+
 		mainWindow = win;
 	}
 }
@@ -80,8 +82,6 @@ app.on('activate', () => {
 
 app.on('ready', () => {
 	appReady = true;
-
-	updater();
 
 	createMainWindow(indexURL);
 });
