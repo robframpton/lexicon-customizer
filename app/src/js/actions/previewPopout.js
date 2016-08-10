@@ -11,7 +11,7 @@ export function createPreviewPopout() {
 		if (!previewPopout) {
 			previewPopout = new BrowserWindow({
 				height: 600,
-				parent: BrowserWindow.getFocusedWindow(),
+				parent: remote.getCurrentWindow(),
 				width: 800
 			});
 

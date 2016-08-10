@@ -16,7 +16,7 @@ class LexiconPopoutPreview extends Component {
 	}
 
 	componentDidMount() {
-		const parentWindow = BrowserWindow.fromId(1);
+		const parentWindow = remote.getCurrentWindow().getParentWindow();
 
 		ipcRenderer.on('preview-data', this.handlePreviewData.bind(this));
 
