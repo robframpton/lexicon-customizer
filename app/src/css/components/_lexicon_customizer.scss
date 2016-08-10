@@ -86,3 +86,12 @@ div.container {
 	overflow: hidden;
 	padding-top: 50px;
 }
+
+.loading-container {
+	text-align: center;
+
+	.loading-label {
+		font-size: 16px;
+		margin-top: 40px;
+	}
+}

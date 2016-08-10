@@ -1,10 +1,13 @@
 'use strict';
 
 const async = require('async');
+const electron = require('electron');
 const fs = require('fs-extra');
 const path = require('path');
 const tarball = require('tarball-extract');
 const unzip = require('unzip');
+
+const app = electron.app;
 
 const REGISTRY_URL = 'https://registry.npmjs.org';
 
@@ -55,7 +58,11 @@ function installSassDependencies(version, dest, cb) {
 		}
 	}
 
-	async.parallel(series, cb);
+	async.parallel(series, (err, result) => {
+		_closeLoadingWindow();
+
+		cb(err, result);
+	});
 }
 
 exports.installSassDependencies = installSassDependencies;
@@ -65,6 +72,37 @@ function resolveLexiconPath(version, dest) {
 }
 
 exports.resolveLexiconPath = resolveLexiconPath;
+
+let loadingWindow;
+
+function _closeLoadingWindow() {
+	if (loadingWindow) {
+		loadingWindow.close();
+
+		loadingWindow = null;
+	}
+}
+
+function _displayLoadingWindow() {
+	app.on('ready', () => {
+		if (!loadingWindow) {
+			const loadingURL = `file://${path.join(__dirname, '..')}/build/html/loading.html`;
+
+			const win = new electron.BrowserWindow({
+				center: true,
+				frame: false,
+				height: 240,
+				movable: false,
+				resizable: false,
+				width: 460
+			});
+
+			win.loadURL(loadingURL);
+
+			loadingWindow = win;
+		}
+	});
+}
 
 function _installBourbon(dest, cb) {
 	const fileName = 'bourbon-4.2.7.tgz';
@@ -137,6 +175,8 @@ function _installDependency(url, fileDestination, extractionDestination, cb) {
 		return;
 	}
 
+	_displayLoadingWindow();
+
 	async.waterfall([
 		function(cb) {
 			_extractCachedTarball(fileDestination, extractionDestination, cb);
@@ -160,6 +200,8 @@ function _installSassBridge(dest, cb) {
 		cb(null, sassBridgePath);
 	}
 	else {
+		_displayLoadingWindow();
+
 		fs.createReadStream(path.join(__dirname, '../tarballs/sass-bridge.zip'))
 			.pipe(unzip.Extract({
 				path: sassBridgePath
