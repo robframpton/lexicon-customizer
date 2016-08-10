@@ -4,6 +4,7 @@ const async = require('async');
 const fs = require('fs-extra');
 const path = require('path');
 const tarball = require('tarball-extract');
+const unzip = require('unzip');
 
 const REGISTRY_URL = 'https://registry.npmjs.org';
 
@@ -163,7 +164,10 @@ function _installSassBridge(dest, cb) {
 			.pipe(unzip.Extract({
 				path: sassBridgePath
 			}))
-			.on('end', () => {
+			.on('error', (err) => {
+				cb(err);
+			})
+			.on('finish', () => {
 				cb(null, sassBridgePath);
 			});
 	}
