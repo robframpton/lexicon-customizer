@@ -5,7 +5,6 @@ const del = require('del');
 const download = require('gulp-download');
 const ejs = require('gulp-ejs');
 const gulp = require('gulp');
-const gzip = require('gulp-gzip');
 const install = require('gulp-install');
 const path = require('path');
 const plumber = require('gulp-plumber');
@@ -13,7 +12,6 @@ const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const sass = require('gulp-sass');
 const spawn = require('cross-spawn').spawn;
-const tar = require('gulp-tar');
 const watch = require('gulp-watch');
 
 const args = require('minimist')(process.argv.slice(2));
@@ -55,8 +53,7 @@ gulp.task('install', (cb) => {
 	if (process.platform === 'win32') {
 		sequenceArray = sequenceArray.concat([
 			'install:node',
-			'install:sass-bridge-dependencies',
-			'install:gzip-sass-bridge'
+			'install:sass-bridge-dependencies'
 		]);
 	}
 
@@ -132,13 +129,6 @@ gulp.task('install:node', function() {
 gulp.task('install:sass-bridge-dependencies', () => {
 	gulp.src(path.join(PATH_APP, 'sass-bridge/package.json'))
 		.pipe(install());
-});
-
-gulp.task('install:gzip-sass-bridge', () => {
-	return gulp.src(path.join(PATH_APP, 'sass-bridge/**/*'))
-		.pipe(tar('sass-bridge.tar'))
-		.pipe(gzip())
-		.pipe(gulp.dest('app/tarballs'));
 });
 
 gulp.task('install:sass-tarballs', () => {
