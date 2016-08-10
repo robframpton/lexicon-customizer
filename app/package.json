@@ -31,7 +31,8 @@
     "redux-devtools": "^3.1.0",
     "redux-immutable": "^3.0.6",
     "redux-thunk": "^1.0.3",
-    "tarball-extract": "0.0.3"
+    "tarball-extract": "0.0.3",
+    "unzip": "^0.1.11"
   },
   "keywords": [
     "electron",

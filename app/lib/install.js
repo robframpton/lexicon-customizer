@@ -159,9 +159,13 @@ function _installSassBridge(dest, cb) {
 		cb(null, sassBridgePath);
 	}
 	else {
-		fs.copy(path.join(__dirname, '../sass-bridge'), sassBridgePath, function(err) {
-			cb(err, sassBridgePath)
-		});
+		fs.createReadStream(path.join(__dirname, '../tarballs/sass-bridge.zip'))
+			.pipe(unzip.Extract({
+				path: sassBridgePath
+			}))
+			.on('end', () => {
+				cb(null, sassBridgePath);
+			});
 	}
 }
 
