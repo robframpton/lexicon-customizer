@@ -48,6 +48,8 @@ install.installSassDependencies(lexiconVersion, path.join(USER_DATA_PATH, app.ge
 
 function onClosed() {
 	mainWindow = null;
+
+	app.quit();
 }
 
 function createMainWindow(url) {
@@ -70,12 +72,6 @@ function createMainWindow(url) {
 	}
 }
 
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
-});
-
 app.on('activate', () => {
 	createMainWindow(indexURL);
 });
@@ -85,3 +81,5 @@ app.on('ready', () => {
 
 	createMainWindow(indexURL);
 });
+
+app.on('window-all-closed', _.noop);
