@@ -2,12 +2,12 @@ import _ from 'lodash';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import colorString from 'color-string';
 
 import Dropdown from '../components/Dropdown';
 import Icon from '../components/Icon';
-import {getInheritableVariables} from '../lib/var_util';
+import {getInheritableVariables, resolveValue} from '../lib/var_util';
 import {resetVariable, setVariable} from '../actions/variables';
-import {resolveColorValue} from '../lib/color';
 import {setColorVariableName} from '../actions/colorVariableName';
 import {toggleLockedVariable} from '../actions/lockedVariables';
 
@@ -51,6 +51,8 @@ class VariableInput extends Component {
 
 		let {autoCompleteActive, focused} = this.state;
 
+		const resolvedValue = resolveValue(name, value, variables);
+
 		let autoComplete = '';
 		let inputPlugin = '';
 
@@ -64,13 +66,13 @@ class VariableInput extends Component {
 
 		let className = 'form-control';
 
-		if (this._isColor(name)) {
+		if (this._isRange(value)) {
+			inputPlugin = this.renderRangePicker(name, value);
+		}
+		else if (colorString.get(resolvedValue)) {
 			className += ' color-input';
 
-			inputPlugin = this.renderColorPickerTrigger(name, value, variables);
-		}
-		else if (this._isRange(value)) {
-			inputPlugin = this.renderRangePicker(name, value);
+			inputPlugin = this.renderColorPickerTrigger(name, resolvedValue);
 		}
 
 		let wrapperClassName = 'form-group variable-input';
@@ -161,9 +163,7 @@ class VariableInput extends Component {
 		);
 	}
 
-	renderColorPickerTrigger(name, value, variables) {
-		const resolvedValue = resolveColorValue(name, value, variables);
-
+	renderColorPickerTrigger(name, resolvedValue) {
 		return (
 			<div className="color-picker-trigger" onClick={this.handleColorPickerTriggerClick.bind(this, name, resolvedValue)}>
 				<div className="color-picker-trigger-preview" style={this._getTriggerStyle(resolvedValue)}></div>
@@ -397,21 +397,6 @@ class VariableInput extends Component {
 		}
 
 		return triggerStyle;
-	}
-
-	_isColor(name) {
-		var color = false;
-
-		if (name.indexOf('-bg') > -1 ||
-			name.indexOf('brand') > -1 ||
-			name.indexOf('color') > -1 ||
-			name.indexOf('gray') > -1 ||
-			_.endsWith(name, '-border') ||
-			_.endsWith(name, '-text')) {
-			color = true;
-		}
-
-		return color;
 	}
 
 	_isRange(value) {
