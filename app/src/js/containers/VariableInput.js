@@ -1,8 +1,9 @@
 import _ from 'lodash';
+import colorString from 'color-string';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import React, {Component, PropTypes} from 'react';
+import ReactTooltip from 'react-tooltip';
 import {connect} from 'react-redux';
-import colorString from 'color-string';
 
 import Dropdown from '../components/Dropdown';
 import Icon from '../components/Icon';
@@ -91,6 +92,8 @@ class VariableInput extends Component {
 			);
 		}
 
+		const tooltipId = `${name}_tooltip`;
+
 		return (
 			<div className={wrapperClassName}>
 				{this.renderDropdown()}
@@ -98,8 +101,11 @@ class VariableInput extends Component {
 				<label htmlFor={name}>{label}</label>
 
 				<input
-					disabled={disabled}
 					className={className}
+					data-for={tooltipId}
+					data-tip
+					disabled={disabled}
+					id={name}
 					name={name}
 					onBlur={this.handleInputBlur.bind(this)}
 					onChange={this.handleInputChange.bind(this)}
@@ -113,6 +119,8 @@ class VariableInput extends Component {
 				{autoComplete}
 
 				{inputPlugin}
+
+				{this.renderTooltip(tooltipId, value, resolvedValue)}
 			</div>
 		);
 	}
@@ -201,6 +209,33 @@ class VariableInput extends Component {
 				<Icon icon="ellipsis-h" />
 			</Dropdown>
 		);
+	}
+
+	renderTooltip(tooltipId, value, resolvedValue) {
+		const {previewPopout} = this.props;
+
+		let place = 'left';
+		let content = '';
+
+		if (previewPopout) {
+			place = 'bottom';
+		}
+
+		if (value != resolvedValue) {
+			content = (
+				<ReactTooltip
+					class="lexicon-customizer-tooltip"
+					effect="solid"
+					id={tooltipId}
+					place={place}
+					type="info"
+				>
+					<span>Resolved value: <strong>{resolvedValue}</strong></span>
+				</ReactTooltip>
+			);
+		}
+
+		return content;
 	}
 
 	calculateNumericalChange(number, negative, up, unit) {
@@ -424,6 +459,7 @@ const mapStateToProps = (state, {name, value}) => {
 	return {
 		disabled: state.get('lockedVariables').has(name),
 		modified: value !== sourceVariables.get(name).get('value'),
+		previewPopout: state.get('previewPopout'),
 		sourceVariables: state.get('sourceVariables'),
 		variables: state.get('variables')
 	}

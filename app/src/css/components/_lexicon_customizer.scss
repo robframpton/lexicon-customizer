@@ -1,5 +1,29 @@
 /* Lexicon customizer */
 
+.lexicon-customizer {
+	.lexicon-customizer-tooltip {
+		&.type-info {
+			background-color: $brand-primary;
+
+			&.place-bottom:after {
+				border-bottom-color: $brand-primary;
+			}
+
+			&.place-left:after {
+				border-left-color: $brand-primary;
+			}
+
+			&.place-right:after {
+				border-right-color: $brand-primary;
+			}
+
+			&.place-top:after {
+				border-top-color: $brand-primary;
+			}
+		}
+	}
+}
+
 .lexicon-customizer-header {
 	background-color: #1F282F;
 	box-shadow: 0 0 4px #222;
