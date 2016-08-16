@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import ColorPickerPanel from '../components/ColorPickerPanel';
-import {resolveColorValue} from '../lib/color';
+import {resolveColorValue} from '../lib/var_util';
 import {setColorVariableName} from '../actions/colorVariableName';
 import {setVariable} from '../actions/variables';
 
