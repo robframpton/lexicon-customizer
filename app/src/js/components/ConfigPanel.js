@@ -29,7 +29,7 @@ class ConfigPanel extends Component {
 				<ConfigPanelGroup label="Preview Frame">
 					<ToggleDevToolsButton>Toggle Developer Tools</ToggleDevToolsButton>
 
-					<TogglePopoutPreviewButton>Togle Popout Preview</TogglePopoutPreviewButton>
+					<TogglePopoutPreviewButton>Toggle Popout Preview</TogglePopoutPreviewButton>
 				</ConfigPanelGroup>
 
 				<ConfigPanelGroup label="Theme">
