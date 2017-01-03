@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import ColorPickerPanel from '../components/ColorPickerPanel';
-import {resolveColorValue} from '../lib/var_util';
+import {resolveValue} from '../lib/var_util';
 import {setColorVariableName} from '../actions/colorVariableName';
 import {setVariable} from '../actions/variables';
 
@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 	if (variables.has(name)) {
 		value = variables.get(name).get('value');
 
-		value = resolveColorValue(name, value, variables);
+		value = resolveValue(name, value, variables);
 	}
 
 	return {
